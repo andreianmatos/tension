@@ -1,6 +1,7 @@
 // before 
 
 function start() {
+  
 }   
 
 // other functions 
@@ -14,3 +15,4 @@ function show(item){
     document.getElementById(item).style.display="none";
   }
 }
+
