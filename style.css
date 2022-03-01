@@ -14,90 +14,6 @@ body, html {
     display: none;
 }
 
-.custombutton {
-    padding: 10px;
-    margin: 5px;
-    width: 65px;
-    text-align: center;
-    color: red;
-    
-}
-
-a {
-    text-decoration: none;
-    display: inline-block;
-    padding: 8px 16px;
-}
-
-a:hover {
-    background-color: whitesmoke;
-    color: black;
-}
-
-/* the notifs */
-
-.overlay {
-  min-height: 100vh;
-  display: flex;
-  justify-content: right;
-  margin-top: 5%;
-}
-
-.overlay h2 {
-  opacity: .7;
-  background:gray;
-  font-weight: 600;
-  margin: 2rem 3rem 0;
-  padding: 15px 20px;
-  text-align: center;
-  position:absolute;
-}
-
-.overlay h3 {
-  border-style: solid;
-  border-color: whitesmoke;
-  background:black;
-  font-weight: 600;
-  margin: 2rem 3rem 0;
-  padding: 15px 20px;
-  text-align: center;
-  position:absolute;
-}
-
-.textNotif{
-  opacity: 1;
-  color: white;
-  display: none;
-}
-
-#donePopup{
-  color: white;
-  height:120px;
-  width:250px ;
-  text-align: center;
-  margin-top: 15%;
-  margin-right: 40%;
-}
-
-/* the video */
-
-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -o-object-position: center;
-     object-position: center;
-}
-
-
-#videoWrapper{
-    margin-top: 5%;
-}
-
 #about {
     display: block;
     margin-left: auto;
@@ -108,34 +24,21 @@ video {
     font-size: 20px;
 }
 
-/* post video */
-
-
-#vimeo:link, #vimeo:visited{
-    color: red;
-}
-
-#player {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-}
-
 .title {
     font-size: 30px;
 }
 
-#filmInfo {
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
-    width: 60%;
-    text-align: justify;
-    font-size: 18px;
+/* pages */
+
+#test1 {
+    display: block;
 }
 
+#test2 {
+    display: none;
+}
 
-  /* the slider */
+/* index - consent slider */
 
 .sliderWrapper{display: inline-block;margin:24px 24px 24px 24px;}
 .sliderWrapper div{display: inline-block;line-height:60px;}
@@ -168,7 +71,7 @@ video {
   
   .slider:before {
     position: absolute;
-    content: "";
+    content: " ";
     height: 26px;
     width: 26px;
     left: 4px;
@@ -192,3 +95,140 @@ video {
     transform: translateX(26px);
   }
 
+  /* buttons */
+
+  .custombutton  {
+    position: absolute;
+    margin: 56px auto 0;
+    padding: 10px 20px;
+    appearance: none;
+    transition: all 0.15s ease-in-out;
+    font-family: inherit;
+    font-size: 24px;
+    font-weight: 600;
+    background: #fff;
+    border: 2px solid #000;
+    color: rgb(17, 17, 17);
+    border-radius: 8px;
+    outline: 0;
+    cursor: pointer;
+  }
+  .custombutton:hover {
+    background: #000;
+    color: #fff;
+  }
+  .custombutton:hover:active {
+    transform: scale(0.9);
+  }
+
+  #nextButton {
+    top: 80%;
+    left: 47%;
+}
+
+/* slider for canvas */
+
+.slidecontainer {
+    position: absolute;
+    width: 34%; 
+    margin-left: 33%;    
+    top: 70%;
+  }
+  
+  /* The slider itself */
+  .sliderCanvas {
+    -webkit-appearance: none;  /* override default */
+    appearance: none;
+    width: 100%; 
+    height: 25px; 
+    background: #d3d3d3; 
+    outline: none; 
+    opacity: 0.7; 
+    -webkit-transition: .2s; 
+    transition: opacity .2s;
+  }
+  
+  /* Mouse-over effects */
+  .sliderCanvas:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+  }
+  
+  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+  .sliderCanvas::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #000; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+  
+  .sliderCanvas::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: black; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+
+  #demo {
+    display: none;
+}
+
+/* radio buttons for the canvas */
+
+.radio-item {
+    position: absolute;
+    padding: 0 6px;
+    margin: 0 auto;
+    left: 43%;
+    top: 75%;
+}
+
+#secondOption {
+    left: 47%;
+}
+
+#thirdOption {
+    left: 51%;
+}
+
+#fourthOption {
+    left: 55%;
+}
+.radio-item input[type='radio'] {
+    display: none;  
+}
+
+.radio-item label {
+    color: #666;
+    font-weight: normal;
+}
+
+.radio-item label:before {
+    content: " ";
+    display: inline-block;
+    position: relative;
+    top: 5px;
+    margin: 0 5px 0 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 11px;
+    border: 2px solid black;
+    background-color: transparent;
+}
+
+.radio-item input[type=radio]:checked + label:after {
+    border-radius: 11px;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    top: 8.6px;
+    left: 9.8px;
+    content: " ";
+    display: block;
+    background: black;
+}
+
+label {
+    display: inline-block;
+}

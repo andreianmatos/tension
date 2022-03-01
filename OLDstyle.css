@@ -1,0 +1,423 @@
+@font-face { font-family: Engschrift; src: url('Engschrift.otf'); }
+
+body, html {
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background:rgb(245, 245, 245);
+  color: rgb(17, 17, 17);
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.custombutton  {
+  position: relative;
+  margin: 56px auto 0;
+  padding: 10px 20px;
+  appearance: none;
+  transition: all 0.15s ease-in-out;
+  font-family: inherit;
+  font-size: 24px;
+  font-weight: 600;
+  background: #fff;
+  border: 2px solid #000;
+  color: rgb(17, 17, 17);
+  border-radius: 8px;
+  outline: 0;
+  cursor: pointer;
+}
+.custombutton:hover {
+  background: #000;
+  color: #fff;
+}
+.custombutton:hover:active {
+  transform: scale(0.9);
+}
+
+
+a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+}
+
+a:hover {
+    background-color: whitesmoke;
+    color: black;
+}
+
+/* the notifs */
+
+.overlay {
+  min-height: 100vh;
+  display: flex;
+  justify-content: right;
+  margin-top: 5%;
+}
+
+.overlay h2 {
+  opacity: .7;
+  background:gray;
+  font-weight: 600;
+  margin: 2rem 3rem 0;
+  padding: 15px 20px;
+  text-align: center;
+  position:absolute;
+}
+
+.overlay h3 {
+  border-style: solid;
+  border-color: whitesmoke;
+  background:black;
+  font-weight: 600;
+  margin: 2rem 3rem 0;
+  padding: 15px 20px;
+  text-align: center;
+  position:absolute;
+}
+
+.textNotif{
+  opacity: 1;
+  color: white;
+  display: none;
+}
+
+#donePopup{
+  color: white;
+  height:120px;
+  width:250px ;
+  text-align: center;
+  margin-top: 15%;
+  margin-right: 40%;
+}
+
+/* the video */
+
+video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+
+
+#videoWrapper{
+    margin-top: 5%;
+}
+
+#about {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    width: 75%;
+    text-align: justify;
+    font-size: 20px;
+}
+
+/* post video */
+
+
+#vimeo:link, #vimeo:visited{
+    color: red;
+}
+
+#player {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.title {
+    font-size: 30px;
+}
+
+#filmInfo {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    width: 60%;
+    text-align: justify;
+    font-size: 18px;
+}
+
+/* continuous slider*/
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;  
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+/* discrete slider */
+
+.sliderWrapper{display: inline-block;margin:24px 24px 24px 24px;}
+.sliderWrapper div{display: inline-block;line-height:60px;}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: red;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: " ";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: green;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px green;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+
+
+/* the slider for the canvas */
+
+#form-wrapper {
+  width: 100%;
+  position: absolute;
+  justify-content: center;
+  margin-top: 31%;
+  text-align: center;
+}
+/*form {
+  width: 90%;
+  max-width: 500px;
+}*/
+form #form-title {
+  font-weight: 400;
+  text-align: center;
+}
+form #debt-amount-slider {
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  position: relative;
+  width: 100%;
+  height: 50px;
+  user-select: none;
+}
+form #debt-amount-slider::before {
+  content: " ";
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  width: calc(100% * (4 / 5));
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #000;
+}
+form #debt-amount-slider input, form #debt-amount-slider label {
+  box-sizing: border-box;
+  flex: 1;
+  user-select: none;
+  cursor: pointer;
+}
+form #debt-amount-slider label {
+  display: inline-block;
+  position: relative;
+  width: 20%;
+  height: 100%;
+  user-select: none;
+}
+form #debt-amount-slider label::before {
+  content: attr(data-debt-amount);
+  position: absolute;
+  left: 50%;
+  padding-top: 10px;
+  transform: translate(-50%, 45px);
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0.85;
+  transition: all 0.15s ease-in-out;
+}
+form #debt-amount-slider label::after {
+  content: " ";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border: 2px solid #000;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+form #debt-amount-slider label:hover::after {
+  transform: translate(-50%, -50%) scale(1.25);
+}
+form #debt-amount-slider input {
+  display: none;
+}
+form #debt-amount-slider input:checked + label::before {
+  font-weight: 800;
+  opacity: 1;
+}
+form #debt-amount-slider input:checked + label::after {
+  border-width: 4px;
+  transform: translate(-50%, -50%) scale(0.75);
+}
+form #debt-amount-slider input:checked ~ #debt-amount-pos {
+  opacity: 1;
+}
+form #debt-amount-slider input:checked:nth-child(1) ~ #debt-amount-pos {
+  left: 10%;
+}
+form #debt-amount-slider input:checked:nth-child(3) ~ #debt-amount-pos {
+  left: 30%;
+}
+form #debt-amount-slider input:checked:nth-child(5) ~ #debt-amount-pos {
+  left: 50%;
+}
+form #debt-amount-slider input:checked:nth-child(7) ~ #debt-amount-pos {
+  left: 70%;
+}
+form #debt-amount-slider input:checked:nth-child(9) ~ #debt-amount-pos {
+  left: 90%;
+}
+form #debt-amount-slider #debt-amount-pos {
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  background: #000;
+  border-radius: 50%;
+  transition: all 0.15s ease-in-out;
+  transform: translate(-50%, -50%);
+  border: 2px solid #fff;
+  opacity: 0;
+  z-index: 2;
+}
+form:valid #debt-amount-slider input + label::before {
+  transform: translate(-50%, 45px) scale(0.9);
+  transition: all 0.15s linear;
+}
+form:valid #debt-amount-slider input:checked + label::before {
+  transform: translate(-50%, 45px) scale(1.1);
+  transition: all 0.15s linear;
+}
+form + button {
+  position: relative;
+  margin: 56px auto 0;
+  padding: 10px 20px;
+  appearance: none;
+  transition: all 0.15s ease-in-out;
+  font-family: inherit;
+  font-size: 24px;
+  font-weight: 600;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 8px;
+  outline: 0;
+  cursor: pointer;
+}
+form + button:hover {
+  background: #000;
+  color: #fff;
+}
+form + button:hover:active {
+  transform: scale(0.9);
+}
+
+
+///// 
+
+<div id="form-wrapper">
+
+      <form action="/p/quote.php" method="GET">
+
+        <h1 id="form-title">Select the most tense...</h1>
+
+        <div id="debt-amount-slider">
+          <input type="radio" name="debt-amount" id="1" value="1" required>
+          <label for="1" onclick="test1();" data-debt-amount="1"></label>
+          <input type="radio" name="debt-amount" id="2" value="2" required>
+          <label for="2" onclick="test2();" data-debt-amount="2"></label>
+          <input type="radio" name="debt-amount" id="3" value="3" required>
+          <label for="3" onclick="test3();" data-debt-amount="3"></label>
+          <input type="radio" name="debt-amount" id="4" value="4" required>
+          <label for="4" onclick="test4();" data-debt-amount="4"></label>
+          <input type="radio" name="debt-amount" id="5" value="5" required>
+          <label for="5" onclick="test5();" data-debt-amount="5"></label>
+          <div id="debt-amount-pos"></div>
+        </div>
+
+      </form>
