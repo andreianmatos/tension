@@ -184,15 +184,15 @@ body, html {
     top: 75%;
 }
 
-#secondOption {
+.radio-item.secondOption {
     left: 47%;
 }
 
-#thirdOption {
+.radio-item.thirdOption {
     left: 51%;
 }
 
-#fourthOption {
+.radio-item.fourthOption {
     left: 55%;
 }
 .radio-item input[type='radio'] {
