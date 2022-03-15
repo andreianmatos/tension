@@ -22,37 +22,31 @@
 <body>
   <main>
 
-    <div id="test1Div" style="display: block;">
-
-      <div class="slidecontainer">
-        <input type="range" min="1" max="9" value="5" class="sliderCanvas" id="myRange">
-        <p><span id="demo"></span></p>
-      </div>
-
-      <div class="radio-item firstOption" id="a" onclick="test1('10','10');">
-        <input type="radio" id="ritema" name="ritem" value="ropt1">
-        <label for="ritema">1</label>
-      </div>
-
-      <div class="radio-item secondOption" id="b" onclick="test1('20','20');">
-          <input type="radio" id="ritemb" name="ritem" value="ropt2">
-          <label for="ritemb">2</label>
-      </div>
-
-      <div class="radio-item thirdOption" id="c" onclick="test1('30','30');">
-        <input type="radio" id="ritemc" name="ritem" value="ropt3">
-        <label for="ritemc">3</label>
-      </div>
-
-      <div class="radio-item fourthOption" id="d" onclick="test1('40','40');">
-          <input type="radio" id="ritemd" name="ritem" value="ropt4">
-          <label for="ritemd">4</label>
-      </div>
-
-      <!-- devia guardar a escolha do user e avançar para prox test -->
-      <button id="nextButton"  class="custombutton"  onclick="next();">Next!</button>
-
+    <div class="slidecontainer">
+      <input type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange">
+      <p><span id="demo"></span></p>
     </div>
+
+    <div class="radio-item firstOption" id="a">
+      <input type="radio" id="ritema" name="ritem" value="ropt1" 
+      onclick="setSliderValue('-8'); test1('0','1');">
+      <label for="ritema">1</label>
+    </div>
+
+    <div class="radio-item secondOption" id="b">
+        <input type="radio" id="ritemb" name="ritem" value="ropt2"
+        onclick="setSliderValue('0');test1('0','1');">
+        <label for="ritemb">2</label>
+    </div>
+
+    <div class="radio-item thirdOption" id="c" >
+      <input type="radio" id="ritemc" name="ritem" value="ropt3"
+        onclick="setSliderValue('8');test1('0','1');">
+      <label for="ritemc">3</label>
+    </div>
+
+    <!-- devia guardar a escolha do user e avançar para prox test -->
+    <button id="nextButton"  class="custombutton"  onclick="next();">Next!</button>
 
   </main>
 </body>

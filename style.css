@@ -185,16 +185,13 @@ body, html {
 }
 
 .radio-item.secondOption {
-    left: 47%;
+    left: 49%;
 }
 
 .radio-item.thirdOption {
-    left: 51%;
-}
-
-.radio-item.fourthOption {
     left: 55%;
 }
+
 .radio-item input[type='radio'] {
     display: none;  
 }
