@@ -28,6 +28,10 @@ body, html {
     font-size: 30px;
 }
 
+#deleteMe {
+  display: block;
+}
+
 /* pages */
 
 #test1 {

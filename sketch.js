@@ -2,11 +2,15 @@
 let black;
 let white;
 
+const Y_AXIS = 1;
+const X_AXIS = 2;
+
 let a = 0, b = 1, c = 1, d = 1;
 let val = 0;
 
 let test1Bol = test2Bol = test3Bol = test4Bol = 
-test5Bol = test6Bol = test7Bol = test8Bol = test9Bol = 0;
+test5Bol = test6Bol = test7Bol = test8Bol = test9Bol = 
+test10Bol = test11Bol = test12Bol = test13Bol = 0;
 
 let testNumber = 1;
 
@@ -17,6 +21,7 @@ function setup() {
   var canvas = createCanvas(500, 500);
   canvas.center('horizontal');
 
+  // Define colors
   black = color('rgb(17, 17, 17)');
   white = color('rgb(245, 245, 245)');
 
@@ -126,61 +131,125 @@ function draw() {
     point(60,20);
     point(100,20);
   }
- 
+
+  // TEST 10 |rectangle verticality
+  if(test10Bol) {
+    strokeWeight(5);
+    rectMode(CENTER);
+    rotate(3 * map(output.innerHTML, -8, 8, 0, 100)); /* fix */
+    rect(0, 0, 300, 100);
+  }
+
+  // TEST 11 |curved line extension
+  if(test11Bol) {
+    curve(73, 24, 73, 61, 15*output.innerHTML, 65*output.innerHTML, 200, 200);
+  }
+
+  // TEST 12 |contrast
+  if(test12Bol) {
+    rectMode(CENTER);
+    rect(0, 0, 308, 208);
+    setGradient(-150, -100, 300, 200, black, white, X_AXIS, output.innerHTML);
+  }
+
+  // TEST 13 |contrast
+  if(test13Bol) {
+    rectMode(CENTER);
+    rect(0, 0, 308, 208);
+    setGradient(-150, -100, 300, 200, black, white, X_AXIS, output.innerHTML);
+  }
+
 }
 
 function test1() {
   test2Bol = test3Bol = test4Bol  = test5Bol = 
-  test6Bol = test7Bol = test8Bol = test9Bol = 0;
+  test6Bol = test7Bol = test8Bol = test9Bol = 
+  test10Bol = test11Bol = test12Bol = test13Bol = 0;
   test1Bol = 1;
 }
 
 function test2() {
   test1Bol = test3Bol = test4Bol = test5Bol = 
-  test6Bol = test7Bol = test8Bol = test9Bol =  0;
+  test6Bol = test7Bol = test8Bol = test9Bol = 
+  test10Bol = test11Bol = test12Bol = test13Bol =  0;
   test2Bol = 1;
 }
 
 function test3() {
   test1Bol = test2Bol = test4Bol = test5Bol = 
-  test6Bol = test7Bol = test8Bol = test9Bol =  0;
+  test6Bol = test7Bol = test8Bol = test9Bol = 
+  test10Bol = test11Bol = test12Bol = test13Bol = 0;
   test3Bol = 1;
 }
 
 function test4() {
   test1Bol = test2Bol = test3Bol = test5Bol = 
-  test6Bol = test7Bol = test8Bol = test9Bol =  0;
+  test6Bol = test7Bol = test8Bol = test9Bol = 
+  test10Bol = test11Bol = test12Bol = test13Bol = 0;
   test4Bol = 1;
 }
 
 function test5() {
   test1Bol = test2Bol = test3Bol = test4Bol = 
-  test6Bol = test7Bol = test8Bol = test9Bol =  0;
+  test6Bol = test7Bol = test8Bol = test9Bol = 
+  test10Bol = test11Bol = test12Bol = test13Bol = 0;
   test5Bol = 1;
 }
 
 function test6() {
   test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test7Bol = test8Bol = test9Bol =  0;
+  test5Bol = test7Bol = test8Bol = test9Bol = 
+  test10Bol = test11Bol = test12Bol = test13Bol = 0;
   test6Bol = 1;
 }
 
 function test7() {
   test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test8Bol = test9Bol =  0;
+  test5Bol = test6Bol = test8Bol = test9Bol = 
+  test10Bol = test11Bol = test12Bol = test13Bol = 0;
   test7Bol = 1;
 }
 
 function test8() {
   test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test9Bol =  0;
+  test5Bol = test6Bol = test7Bol = test9Bol = 
+  test10Bol = test11Bol = test12Bol = test13Bol = 0;
   test8Bol = 1;
 }
 
 function test9() {
   test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test8Bol =  0;
+  test5Bol = test6Bol = test7Bol = test8Bol = 
+  test10Bol = test11Bol = test12Bol = test13Bol = 0;
   test9Bol = 1;
+}
+
+function test10() {
+  test1Bol = test2Bol = test3Bol = test4Bol = 
+  test5Bol = test6Bol = test7Bol = test8Bol = 
+  test9Bol = test11Bol = test12Bol = test13Bol = 0;
+  test10Bol = 1;
+}
+
+function test11() {
+  test1Bol = test2Bol = test3Bol = test4Bol = 
+  test5Bol = test6Bol = test7Bol = test8Bol = 
+  test9Bol = test10Bol = test12Bol = test13Bol = 0;
+  test11Bol = 1;
+}
+
+function test12() {
+  test1Bol = test2Bol = test3Bol = test4Bol = 
+  test5Bol = test6Bol = test7Bol = test8Bol = 
+  test9Bol = test10Bol = test11Bol = test13Bol = 0;
+  test12Bol = 1;
+}
+
+function test13() {
+  test1Bol = test2Bol = test3Bol = test4Bol = 
+  test5Bol = test6Bol = test7Bol = test8Bol = 
+  test9Bol = test10Bol = test11Bol = test12Bol = 0;
+  test13Bol = 1;
 }
 
 function show(item){
@@ -192,10 +261,13 @@ function show(item){
   }
 }  
 
-function next() {
+function next(testNr) {
   setSliderValue(0);
   test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test8Bol = test9Bol =  0;
+  test5Bol = test6Bol = test7Bol = test8Bol = 
+  test9Bol = test10Bol = test11Bol = test12Bol = test13Bol = 0;
+  if(testNr != null)
+    testNumber = testNr;
   testNumber ++; 
   let testFunction = 'test'+testNumber;
   document.getElementById("ritema").checked = false;
@@ -244,4 +316,31 @@ function drawWavyLine(x, y, amp, w) {
   }
 
   endShape();
+}
+
+function setGradient(x, y, w, h, c1, c2, axis, input) {
+  noFill();
+
+  if (axis === Y_AXIS) {
+    // Top to bottom gradient
+    for (let i = y; i <= y + h; i++) {
+      let inter = map(i, y, y + h, 0, 1);
+      let c = lerpColor(c1, c2, inter);
+      stroke(c);
+      line(x, i, x + w, i);
+    }
+  } else if (axis === X_AXIS) {
+    // Left to right gradient
+    for (let i = x; i <= x + w; i++) {
+      let mappedInput = map(input, -8, 8, 1, 10);
+      let inter;
+      if(mappedInput==10) // just to be sharper the difference at the end
+        inter = map(i*mappedInput*60, x, x + w, 0, 1);
+      else
+        inter = map(i*mappedInput, x, x + w, 0, 1);
+      let c = lerpColor(c1, c2, inter);
+      stroke(c);
+      line(i, y, i, y + h);
+    }
+  }
 }
