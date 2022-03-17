@@ -10,7 +10,8 @@ let val = 0;
 
 let test1Bol = test2Bol = test3Bol = test4Bol = 
 test5Bol = test6Bol = test7Bol = test8Bol = test9Bol = 
-test10Bol = test11Bol = test12Bol = test13Bol = 0;
+test10Bol = test11Bol = test12Bol = test13Bol = 
+test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
 
 let testNumber = 1;
 
@@ -142,7 +143,8 @@ function draw() {
 
   // TEST 11 |curved line extension
   if(test11Bol) {
-    curve(73, 24, 73, 61, 15*output.innerHTML, 65*output.innerHTML, 200, 200);
+    let mappedInput = map(output.innerHTML, -8, 8, 1, 360);  
+    arc(0, 0, mappedInput, 200, 0, HALF_PI);
   }
 
   // TEST 12 |contrast
@@ -152,11 +154,65 @@ function draw() {
     setGradient(-150, -100, 300, 200, black, white, X_AXIS, output.innerHTML);
   }
 
-  // TEST 13 |contrast
+  // TEST 13 |brightness
   if(test13Bol) {
-    rectMode(CENTER);
-    rect(0, 0, 308, 208);
-    setGradient(-150, -100, 300, 200, black, white, X_AXIS, output.innerHTML);
+    colorMode(HSB, 100); // put this at the start, change all colors to hsb 
+    rectMode(CENTER);   
+    let mappedInput = map(output.innerHTML, -8, 8, 0, 100);  
+    let c = color(100, 100, mappedInput);
+    fill(hue(c), saturation(c), brightness(c), 100);
+    circle(0, 0, 300);
+  }
+
+  // TEST 14 |saturation
+  if(test14Bol) {
+    colorMode(HSB, 100);
+    rectMode(CENTER);   
+    let mappedInput = map(output.innerHTML, -8, 8, 0, 100);  
+    let c = color(100, mappedInput, 100);
+    fill(hue(c), saturation(c), brightness(c), 100);
+    circle(0, 0, 300);
+  }
+
+  // TEST 15 |hue between high/low arousal colors
+  if(test15Bol) {
+    colorMode(HSB, 100);
+    rectMode(CENTER);   
+    let mappedInput = map(output.innerHTML, -8, 8, 0, 70); // to go from red to blue 
+    let c = color(mappedInput, 100, 100);
+    fill(hue(c), saturation(c), brightness(c), 100);
+    circle(0, 0, 300);
+  }
+
+  // TEST 16 |color area
+  if(test16Bol) {
+    colorMode(HSB, 100);
+    rectMode(CENTER);   
+    let mappedInput = map(output.innerHTML, -8, 8, 1, 10);  
+    let c = color(100, 100, 100);
+    fill(hue(c), saturation(c), brightness(c), 100);
+    circle(0, 0, 40 * mappedInput);
+  }
+
+  // TEST 17 |complementary color
+  if(test17Bol) {
+    colorMode(HSB, 360, 100, 100);
+    rectMode(CENTER);   
+    let mappedInput = map(output.innerHTML, -8, 8, 1, 360);  
+    let c = color(80, 100, 100);
+    fill(c);
+    square(0, 0, 300);
+    fill((hue(c) + 180)%mappedInput, saturation(c), brightness(c), 100);
+    square(0, 0, 150);
+  }
+
+  // TEST 18 |transparency
+  if(test18Bol) {
+    let mappedInput = map(output.innerHTML, -8, 8, 1, 100);  
+    fill(hue(black), saturation(black), brightness(black), 50);
+    circle(-80, 0, 250); 
+    fill(hue(black), saturation(black), brightness(black), mappedInput);
+    circle(80, 0, 250); 
   }
 
 }
@@ -164,92 +220,145 @@ function draw() {
 function test1() {
   test2Bol = test3Bol = test4Bol  = test5Bol = 
   test6Bol = test7Bol = test8Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 0;
+  test10Bol = test11Bol = test12Bol = test13Bol = 
+  test14Bol =  test15Bol = test16Bol = test17Bol = test18Bol = 0;
   test1Bol = 1;
 }
 
 function test2() {
   test1Bol = test3Bol = test4Bol = test5Bol = 
   test6Bol = test7Bol = test8Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol =  0;
+  test10Bol = test11Bol = test12Bol = test13Bol = 
+  test14Bol =  test15Bol = test16Bol = test17Bol = test18Bol = 0;
   test2Bol = 1;
 }
 
 function test3() {
   test1Bol = test2Bol = test4Bol = test5Bol = 
   test6Bol = test7Bol = test8Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 0;
+  test10Bol = test11Bol = test12Bol = test13Bol = 
+  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
   test3Bol = 1;
 }
 
 function test4() {
   test1Bol = test2Bol = test3Bol = test5Bol = 
   test6Bol = test7Bol = test8Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 0;
+  test10Bol = test11Bol = test12Bol = test13Bol = 
+  test14Bol =  test15Bol = test16Bol = test17Bol = test18Bol = 0;
   test4Bol = 1;
 }
 
 function test5() {
   test1Bol = test2Bol = test3Bol = test4Bol = 
   test6Bol = test7Bol = test8Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 0;
+  test10Bol = test11Bol = test12Bol = test13Bol = 
+  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
   test5Bol = 1;
 }
 
 function test6() {
   test1Bol = test2Bol = test3Bol = test4Bol = 
   test5Bol = test7Bol = test8Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 0;
+  test10Bol = test11Bol = test12Bol = test13Bol = 
+  test14Bol =  test15Bol = test16Bol = test17Bol = test18Bol = 0;
   test6Bol = 1;
 }
 
 function test7() {
   test1Bol = test2Bol = test3Bol = test4Bol = 
   test5Bol = test6Bol = test8Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 0;
+  test10Bol = test11Bol = test12Bol = test13Bol = 
+  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
   test7Bol = 1;
 }
 
 function test8() {
   test1Bol = test2Bol = test3Bol = test4Bol = 
   test5Bol = test6Bol = test7Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 0;
+  test10Bol = test11Bol = test12Bol = test13Bol = 
+  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
   test8Bol = 1;
 }
 
 function test9() {
   test1Bol = test2Bol = test3Bol = test4Bol = 
   test5Bol = test6Bol = test7Bol = test8Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 0;
+  test10Bol = test11Bol = test12Bol = test13Bol = 
+  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
   test9Bol = 1;
 }
 
 function test10() {
   test1Bol = test2Bol = test3Bol = test4Bol = 
   test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test11Bol = test12Bol = test13Bol = 0;
+  test9Bol = test11Bol = test12Bol = test13Bol = 
+  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
   test10Bol = 1;
 }
 
 function test11() {
   test1Bol = test2Bol = test3Bol = test4Bol = 
   test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test10Bol = test12Bol = test13Bol = 0;
+  test9Bol = test10Bol = test12Bol = test13Bol = 
+  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
   test11Bol = 1;
 }
 
 function test12() {
   test1Bol = test2Bol = test3Bol = test4Bol = 
   test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test10Bol = test11Bol = test13Bol = 0;
+  test9Bol = test10Bol = test11Bol = test13Bol = 
+  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
   test12Bol = 1;
 }
 
 function test13() {
   test1Bol = test2Bol = test3Bol = test4Bol = 
   test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test10Bol = test11Bol = test12Bol = 0;
+  test9Bol = test10Bol = test11Bol = test12Bol = 
+  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
   test13Bol = 1;
+}
+
+function test14() {
+  test1Bol = test2Bol = test3Bol = test4Bol = 
+  test5Bol = test6Bol = test7Bol = test8Bol = 
+  test9Bol = test10Bol = test11Bol = test12Bol = 
+  test13Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
+  test14Bol = 1;
+}
+
+function test15() {
+  test1Bol = test2Bol = test3Bol = test4Bol = 
+  test5Bol = test6Bol = test7Bol = test8Bol = 
+  test9Bol = test10Bol = test11Bol = test12Bol = 
+  test13Bol = test14Bol = test16Bol = test17Bol = test18Bol = 0;
+  test15Bol = 1;
+}
+
+function test16() {
+  test1Bol = test2Bol = test3Bol = test4Bol = 
+  test5Bol = test6Bol = test7Bol = test8Bol = 
+  test9Bol = test10Bol = test11Bol = test12Bol = 
+  test13Bol = test14Bol = test15Bol = test17Bol = test18Bol = 0;
+  test16Bol = 1;
+}
+
+function test17() {
+  test1Bol = test2Bol = test3Bol = test4Bol = 
+  test5Bol = test6Bol = test7Bol = test8Bol = 
+  test9Bol = test10Bol = test11Bol = test12Bol = 
+  test13Bol = test14Bol = test15Bol = test16Bol = test18Bol = 0;
+  test17Bol = 1;
+}
+
+function test18() {
+  test1Bol = test2Bol = test3Bol = test4Bol = 
+  test5Bol = test6Bol = test7Bol = test8Bol = 
+  test9Bol = test10Bol = test11Bol = test12Bol = 
+  test13Bol = test14Bol = test15Bol = test16Bol = test17Bol = 0;
+  test18Bol = 1;
 }
 
 function show(item){
@@ -265,7 +374,9 @@ function next(testNr) {
   setSliderValue(0);
   test1Bol = test2Bol = test3Bol = test4Bol = 
   test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test10Bol = test11Bol = test12Bol = test13Bol = 0;
+  test9Bol = test10Bol = test11Bol = test12Bol = 
+  test13Bol = test14Bol = test15Bol = test16Bol = 
+  test17Bol = test18Bol = 0;
   if(testNr != null)
     testNumber = testNr;
   testNumber ++; 
