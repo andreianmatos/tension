@@ -1,4 +1,3 @@
-
 let black;
 let white;
 
@@ -33,9 +32,11 @@ function setup() {
 
   output.innerHTML = slider.value;
 
-  currentTestBol = 'test' + Math.floor(Math.random() * 21) + 'Bol';
+  currentTestBol = 'test' + randomIntFromInterval(1,20) + 'Bol';
   currentTest(currentTestBol);
+  window[currentTestBol] = 1;
 
+  setSliderValue(randomIntFromInterval(-8,8));
 }
 
 function draw() {
@@ -50,15 +51,12 @@ function draw() {
   
   // update the current slider value
   slider.oninput = function() {
-    if(this.value == 8)
-      this.value = -8;
-    else if(this.value == -8)
-      this.value = 8;
     output.innerHTML = this.value;
   }
   
   // TEST 1 | straight line - wavy line - straight line - zigzag line - straight line
   if(test1Bol) {
+    console.log("HERE LOL");
     val1 = 0;
     val2 = 10;
     if(output.innerHTML >= 0){
@@ -226,150 +224,6 @@ function draw() {
 
 }
 
-function test1() {
-  test2Bol = test3Bol = test4Bol  = test5Bol = 
-  test6Bol = test7Bol = test8Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 
-  test14Bol =  test15Bol = test16Bol = test17Bol = test18Bol = 0;
-  test1Bol = 1;
-}
-
-function test2() {
-  test1Bol = test3Bol = test4Bol = test5Bol = 
-  test6Bol = test7Bol = test8Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 
-  test14Bol =  test15Bol = test16Bol = test17Bol = test18Bol = 0;
-  test2Bol = 1;
-}
-
-function test3() {
-  test1Bol = test2Bol = test4Bol = test5Bol = 
-  test6Bol = test7Bol = test8Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 
-  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
-  test3Bol = 1;
-}
-
-function test4() {
-  test1Bol = test2Bol = test3Bol = test5Bol = 
-  test6Bol = test7Bol = test8Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 
-  test14Bol =  test15Bol = test16Bol = test17Bol = test18Bol = 0;
-  test4Bol = 1;
-}
-
-function test5() {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test6Bol = test7Bol = test8Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 
-  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
-  test5Bol = 1;
-}
-
-function test6() {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test7Bol = test8Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 
-  test14Bol =  test15Bol = test16Bol = test17Bol = test18Bol = 0;
-  test6Bol = 1;
-}
-
-function test7() {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test8Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 
-  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
-  test7Bol = 1;
-}
-
-function test8() {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test9Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 
-  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
-  test8Bol = 1;
-}
-
-function test9() {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test8Bol = 
-  test10Bol = test11Bol = test12Bol = test13Bol = 
-  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
-  test9Bol = 1;
-}
-
-function test10() {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test11Bol = test12Bol = test13Bol = 
-  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
-  test10Bol = 1;
-}
-
-function test11() {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test10Bol = test12Bol = test13Bol = 
-  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
-  test11Bol = 1;
-}
-
-function test12() {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test10Bol = test11Bol = test13Bol = 
-  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
-  test12Bol = 1;
-}
-
-function test13() {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test10Bol = test11Bol = test12Bol = 
-  test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
-  test13Bol = 1;
-}
-
-function test14() {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test10Bol = test11Bol = test12Bol = 
-  test13Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
-  test14Bol = 1;
-}
-
-function test15() {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test10Bol = test11Bol = test12Bol = 
-  test13Bol = test14Bol = test16Bol = test17Bol = test18Bol = 0;
-  test15Bol = 1;
-}
-
-function test16() {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test10Bol = test11Bol = test12Bol = 
-  test13Bol = test14Bol = test15Bol = test17Bol = test18Bol = 0;
-  test16Bol = 1;
-}
-
-function test17() {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test10Bol = test11Bol = test12Bol = 
-  test13Bol = test14Bol = test15Bol = test16Bol = test18Bol = 0;
-  test17Bol = 1;
-}
-
-function test18() {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test10Bol = test11Bol = test12Bol = 
-  test13Bol = test14Bol = test15Bol = test16Bol = test17Bol = 0;
-  test18Bol = 1;
-}
-
 function show(item){
   if(document.getElementById(item).style.display == "none"){
     document.getElementById(item).style.display = "block";
@@ -380,7 +234,6 @@ function show(item){
 }  
 
 function next(testNr) {
-  setSliderValue(0);
   test1Bol = test2Bol = test3Bol = test4Bol = 
   test5Bol = test6Bol = test7Bol = test8Bol = 
   test9Bol = test10Bol = test11Bol = test12Bol = 
@@ -389,26 +242,27 @@ function next(testNr) {
   if(testNr != null)
     testNumber = testNr;
   testNumber ++; 
-  let testFunction = 'test'+testNumber;
   testBol = 'test'+testNumber+'Bol';
+  window[testBol] = 1;
   currentTest(testBol);
+  /*  let testFunction = 'test'+testNumber;
   document.getElementById("ritema").checked = false;
   document.getElementById("ritemb").checked = false;
   document.getElementById("ritemc").checked = false;
   document.getElementById("a").onclick = function() {setSliderValue('-8'); window[testFunction]()};
   document.getElementById("b").onclick = function() {setSliderValue('0'); window[testFunction]()};
-  document.getElementById("c").onclick = function() {setSliderValue('8'); window[testFunction]()};  
+  document.getElementById("c").onclick = function() {setSliderValue('8'); window[testFunction]()};*/
 }
 
-function currentTest(testNr) {
+function currentTest(testBol) {
   if(currentTestBol != null) {
     console.log("AAAA"+currentTestBol);
     document.getElementById(currentTestBol).style.background = "#addfad";
     document.getElementById(currentTestBol).style.color = "#000";
   }
-  currentTestBol = testNr;
-  document.getElementById(testNr).style.background = "#000";
-  document.getElementById(testNr).style.color = "#fff";
+  currentTestBol = testBol;
+  document.getElementById(testBol).style.background = "#000";
+  document.getElementById(testBol).style.color = "#fff";
 }
 
 function setSliderValue(val) {
@@ -477,3 +331,8 @@ function setGradient(x, y, w, h, c1, c2, axis, input) {
     }
   }
 }
+
+function randomIntFromInterval(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
