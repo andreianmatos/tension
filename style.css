@@ -99,7 +99,15 @@ body, html {
     transform: translateX(26px);
   }
 
+  /* Sketch canvas */ 
+
+  #sketch {
+    margin-top:2%;
+  }
+
   /* buttons */
+
+  /* next button */
 
   .custombutton  {
     position: absolute;
@@ -125,6 +133,36 @@ body, html {
     transform: scale(0.9);
   }
 
+  /* test button */
+
+  .custombutton2  {
+    position: relative;
+    margin: 20px auto 0;
+    padding: 5px 10px;
+    appearance: none;
+    transition: all 0.15s ease-in-out;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    background: #fff;
+    border: 2px solid #000;
+    color: rgb(17, 17, 17);
+    border-radius: 8px;
+    outline: 0;
+    cursor: pointer;
+  }
+  .custombutton2:hover {
+    background: #000;
+    color: #fff;
+  }
+  .custombutton2:hover:active {
+    transform: scale(0.9);
+  }
+
+  #testButtons {
+    text-align: center;
+  }
+
   #nextButton {
     top: 80%;
     left: 47%;
@@ -132,11 +170,12 @@ body, html {
 
 /* slider for canvas */
 
+
 .slidecontainer {
     position: absolute;
     width: 34%; 
     margin-left: 33%;    
-    top: 70%;
+    top: 80%;
   }
   
   /* The slider itself */

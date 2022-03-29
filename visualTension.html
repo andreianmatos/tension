@@ -15,12 +15,41 @@
   <!--<script src="p5/p5.sound.js"></script> -->
   <!-- Styles -->
   <link rel="stylesheet" href="style.css">
+  <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
   <!-- JS -->
+  <!-- P5 -->
   <script type="text/javascript" src="sketch.js"></script>
-</head>
+  <!-- JSPSYCH -->
+  <script src="jspsych/jspsych.js"></script>
+  <script src="jspsych/plugin-html-keyboard-response.js"></script>
 
-<body>
+<body> 
   <main>
+
+    <div id="testButtons">
+      <button class="custombutton2" id="test1Bol" onclick="next('0');">Teste1</button> 
+      <button class="custombutton2" id="test2Bol" onclick="next('1');">Teste2</button>
+      <button class="custombutton2" id="test3Bol" onclick="next('2');">Teste3</button>
+      <button class="custombutton2" id="test4Bol" onclick="next('3');">Teste4</button>
+      <button class="custombutton2" id="test5Bol" onclick="next('4');">Teste5</button>
+      <button class="custombutton2" id="test6Bol" onclick="next('5');">Teste6</button>
+      <button class="custombutton2" id="test7Bol" onclick="next('6');">Teste7</button>
+      <button class="custombutton2" id="test8Bol" onclick="next('7');">Teste8</button>
+      <button class="custombutton2" id="test9Bol" onclick="next('8');">Teste9</button>
+      <button class="custombutton2" id="test10Bol" onclick="next('9');">Teste10</button>
+      <button class="custombutton2" id="test11Bol" onclick="next('10');">Teste11</button>
+      <button class="custombutton2" id="test12Bol" onclick="next('11');">Teste12</button>
+      <button class="custombutton2" id="test13Bol" onclick="next('12');">Teste13</button>
+      <button class="custombutton2" id="test14Bol" onclick="next('13');">Teste14</button>
+      <button class="custombutton2" id="test15Bol" onclick="next('14');">Teste15</button>
+      <button class="custombutton2" id="test16Bol" onclick="next('15');">Teste16</button>
+      <button class="custombutton2" id="test17Bol" onclick="next('16');">Teste17</button>
+      <button class="custombutton2" id="test18Bol" onclick="next('17');">Teste18</button>
+      <button class="custombutton2" id="test19Bol" onclick="next('18');">Teste19</button>
+      <button class="custombutton2" id="test20Bol" onclick="next('19');">Teste20</button>
+    </div>
+
+    <div id="sketch"></div>
 
     <div class="slidecontainer">
       <input type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange">
@@ -37,7 +66,7 @@
         <input type="radio" id="ritemb" name="ritem" value="ropt2"
         onclick="setSliderValue('0');test1('0','1');">
         <label for="ritemb">2</label>
-    </div>
+    </div> 
 
     <div class="radio-item thirdOption" id="c" >
       <input type="radio" id="ritemc" name="ritem" value="ropt3"
@@ -45,32 +74,8 @@
       <label for="ritemc">3</label>
     </div>
 
-    <!-- devia guardar a escolha do user e avançar para prox test -->
-    <button id="nextButton"  class="custombutton"  onclick="next();">Next!</button>
-
-    <div id="deleteMe">
-      <button type="button" onclick="next('0');">Teste1</button> 
-      <button type="button" onclick="next('1');">Teste2</button>
-      <button type="button" onclick="next('2');">Teste3</button>
-      <button type="button" onclick="next('3');">Teste4</button>
-      <button type="button" onclick="next('4');">Teste5</button>
-      <button type="button" onclick="next('5');">Teste6</button>
-      <button type="button" onclick="next('6');">Teste7</button>
-      <button type="button" onclick="next('7');">Teste8</button>
-      <button type="button" onclick="next('8');">Teste9</button>
-      <button type="button" onclick="next('9');">Teste10</button>
-      <button type="button" onclick="next('10');">Teste11</button>
-      <button type="button" onclick="next('11');">Teste12</button>
-      <button type="button" onclick="next('12');">Teste13</button>
-      <button type="button" onclick="next('13');">Teste14</button>
-      <button type="button" onclick="next('14');">Teste15</button>
-      <button type="button" onclick="next('15');">Teste16</button>
-      <button type="button" onclick="next('16');">Teste17</button>
-      <button type="button" onclick="next('17');">Teste18</button>
-      <button type="button" onclick="next('18');">Teste19</button>
-      <button type="button" onclick="next('19');">Teste20</button>
-
-    </div>
+    <!-- devia guardar a escolha do user e avançar para prox test 
+    <button id="nextButton"  class="custombutton"  onclick="next();">Next!</button>-->
 
   </main>
 </body>

@@ -8,6 +8,7 @@ const X_AXIS = 2;
 let a = 0, b = 1, c = 1, d = 1;
 let val = 0;
 
+let currentTestBol;
 let test1Bol = test2Bol = test3Bol = test4Bol = 
 test5Bol = test6Bol = test7Bol = test8Bol = test9Bol = 
 test10Bol = test11Bol = test12Bol = test13Bol = 
@@ -21,8 +22,9 @@ function setup() {
 
   var canvas = createCanvas(500, 500);
   canvas.center('horizontal');
+  canvas.parent('sketch');
 
-  // Define colors
+  // define colors
   black = color('rgb(17, 17, 17)');
   white = color('rgb(245, 245, 245)');
 
@@ -30,6 +32,9 @@ function setup() {
   output = document.getElementById("demo");
 
   output.innerHTML = slider.value;
+
+  currentTestBol = 'test' + Math.floor(Math.random() * 21) + 'Bol';
+  currentTest(currentTestBol);
 
 }
 
@@ -45,17 +50,21 @@ function draw() {
   
   // update the current slider value
   slider.oninput = function() {
+    if(this.value == 8)
+      this.value = -8;
+    else if(this.value == -8)
+      this.value = 8;
     output.innerHTML = this.value;
   }
   
-  // TEST 1 | wavy line - straight line - zigzag line
+  // TEST 1 | straight line - wavy line - straight line - zigzag line - straight line
   if(test1Bol) {
     val1 = 0;
     val2 = 10;
     if(output.innerHTML >= 0){
       if(output.innerHTML > 0)
         val1 = 20;
-      drawZigZagLine(-400, 0, 55, val1 * output.innerHTML);
+        drawZigZagLine(-400, 0, 55, val1 * output.innerHTML);
     }
     else
       drawWavyLine(-400,0, val2 * output.innerHTML, 100);
@@ -99,14 +108,14 @@ function draw() {
 
   // TEST 6 |from acute angle to straight
   if(test6Bol) {
-    let degrees = map(-31*(parseInt(output.innerHTML)+8), 0, width, 0, 181); /* fix */
+    let degrees = map(-31*(abs(parseInt(output.innerHTML))), 0, width, 0, 181); /* fix */
     let v = p5.Vector.fromAngle(radians(degrees), 200);
     let vx = v.x;
     let vy = v.y;
     line(0, 0, 200, 0);
     line(0, 0, vx, vy);
   }
-
+ 
   // TEST 7 |square rotation
   if(test7Bol) {
     rectMode(CENTER);
@@ -381,12 +390,25 @@ function next(testNr) {
     testNumber = testNr;
   testNumber ++; 
   let testFunction = 'test'+testNumber;
+  testBol = 'test'+testNumber+'Bol';
+  currentTest(testBol);
   document.getElementById("ritema").checked = false;
   document.getElementById("ritemb").checked = false;
   document.getElementById("ritemc").checked = false;
   document.getElementById("a").onclick = function() {setSliderValue('-8'); window[testFunction]()};
   document.getElementById("b").onclick = function() {setSliderValue('0'); window[testFunction]()};
   document.getElementById("c").onclick = function() {setSliderValue('8'); window[testFunction]()};  
+}
+
+function currentTest(testNr) {
+  if(currentTestBol != null) {
+    console.log("AAAA"+currentTestBol);
+    document.getElementById(currentTestBol).style.background = "#addfad";
+    document.getElementById(currentTestBol).style.color = "#000";
+  }
+  currentTestBol = testNr;
+  document.getElementById(testNr).style.background = "#000";
+  document.getElementById(testNr).style.color = "#fff";
 }
 
 function setSliderValue(val) {
