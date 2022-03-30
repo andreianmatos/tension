@@ -380,8 +380,9 @@ function printTests(){
                 + currentdate.getSeconds();
   let testResults = "<p><b>" + datetime +"</b></p>" + "\n";
   for(let i = 0; i < 20; i++){
-    testResults += "<p><b>Test:</b> " + i+1 + "; <b>SCROLL:</b> " + tests[i].scroll +
-     "; <b>TENSION:</b> " + tests[i].tension + "; <b>GRID:</b> " + tests[i].grid + "\n</p>";
+    let j = i+1;
+    testResults += "<p><b>TEST " + j + "</b> | <b>scroll:</b> " + tests[i].scroll +
+     " <b>tension:</b> " + tests[i].tension + " <b>grid:</b> " + tests[i].grid + "\n</p>";
   }
   console.log(testResults);
   window.localStorage.setItem('testResults', testResults);
