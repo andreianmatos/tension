@@ -302,28 +302,59 @@ label {
 }
 
 #textGridRight{
-  font-size: 13px;
   position: absolute;
-  left: 50%;
-  top: 135%;
+  font-size: 20px;
+  left: 62%;
+  top: 136%;
 }
-#textGridLeft{
-  font-size: 13px;
+#textGridLeft{  
   position: absolute;
-  left: 50%;
-  top: 135%;
+  font-size: 20px;
+  text-align: right;
+  left: 32%;
+  top: 136%;
 }
 #textGridTop{
-  font-size: 13px;
   position: absolute;
-  left: 50%;
-  top: 135%;
+  font-size: 20px;
+  text-align: center;
+  left: 46.5%;
+  top: 116%;
 }
 #textGridBottom{
-  font-size: 13px;
   position: absolute;
-  left: 50%;
-  top: 135%;
+  font-size: 20px;
+  text-align: center;
+  left: 47.2%;
+  top: 160%;
+}
+#textGridTopR{
+  position: absolute;
+  font-size: 20px;
+  text-align: left;
+  left: 62%;
+  top: 116%;
+}
+#textGridBottomR{
+  position: absolute;
+  font-size: 20px;
+  text-align: left;
+  left: 62%;
+  top: 160%;
+}
+#textGridTopL{
+  position: absolute;
+  font-size: 20px;
+  text-align: right;
+  left: 35%;
+  top: 116%;
+}
+#textGridBottomL{
+  position: absolute;
+  font-size: 20px;
+  text-align: left;
+  left: 32%;
+  top: 160%;
 }
 
 #textQ1 {
@@ -335,7 +366,7 @@ label {
 #textQ2 {
   position: absolute;
   margin-left: 30%;    
-  top: 110%;
+  top: 100%;
 }
 
 
