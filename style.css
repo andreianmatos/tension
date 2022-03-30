@@ -286,7 +286,7 @@ label {
 
 #affectGrid {
   position: absolute;
-  top: 110%;
+  top: 120%;
   left: 35%;
   padding: 5%;
 }
@@ -305,56 +305,56 @@ label {
   position: absolute;
   font-size: 20px;
   left: 62%;
-  top: 136%;
+  top: 146%;
 }
 #textGridLeft{  
   position: absolute;
   font-size: 20px;
   text-align: right;
   left: 32%;
-  top: 136%;
+  top: 146%;
 }
 #textGridTop{
   position: absolute;
   font-size: 20px;
   text-align: center;
   left: 46.5%;
-  top: 116%;
+  top: 126%;
 }
 #textGridBottom{
   position: absolute;
   font-size: 20px;
   text-align: center;
   left: 47.2%;
-  top: 160%;
+  top: 170%;
 }
 #textGridTopR{
   position: absolute;
   font-size: 20px;
   text-align: left;
   left: 62%;
-  top: 116%;
+  top: 126%;
 }
 #textGridBottomR{
   position: absolute;
   font-size: 20px;
   text-align: left;
   left: 62%;
-  top: 160%;
+  top: 170%;
 }
 #textGridTopL{
   position: absolute;
   font-size: 20px;
   text-align: right;
   left: 35%;
-  top: 116%;
+  top: 126%;
 }
 #textGridBottomL{
   position: absolute;
   font-size: 20px;
   text-align: left;
   left: 32%;
-  top: 160%;
+  top: 170%;
 }
 
 #textQ1 {
@@ -365,11 +365,21 @@ label {
 
 #textQ2 {
   position: absolute;
-  margin-left: 30%;    
+  margin-left: 37%;    
+  top: 90%;
+}
+
+#textQ3 {
+  position: absolute;
+  margin-left: 25%;    
   top: 100%;
 }
 
-
+#textQ4 {
+  position: absolute;
+  margin-left: 22%;    
+  top: 110%;
+}
 
 .textGrid{
   position: absolute;
