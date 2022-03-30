@@ -160,12 +160,23 @@ body, html {
   }
 
   #testButtons {
-    text-align: center;
+    position: fixed;
+    z-index: 99 !important; 
+    background-color: whitesmoke;
+    left: 2.5%;
+    margin-top: -2%;
+    padding-bottom: 1%;
+    border-bottom:2px solid black;
   }
 
   #nextButton {
     top: 80%;
     left: 47%;
+  }
+
+#submit {
+  background: darkred;
+  color: white;
 }
 
 /* slider for canvas */
@@ -271,4 +282,65 @@ body, html {
 
 label {
     display: inline-block;
+}
+
+#affectGrid {
+  position: absolute;
+  top: 110%;
+  left: 35%;
+  padding: 5%;
+}
+
+.gridCell {
+  width:40px;
+  height:40px;
+  border: 3px solid black;
+  color: black;
+  background-color: whitesmoke;
+  text-align: center;
+  font-size: 40px;
+}
+
+#textGridRight{
+  font-size: 13px;
+  position: absolute;
+  left: 50%;
+  top: 135%;
+}
+#textGridLeft{
+  font-size: 13px;
+  position: absolute;
+  left: 50%;
+  top: 135%;
+}
+#textGridTop{
+  font-size: 13px;
+  position: absolute;
+  left: 50%;
+  top: 135%;
+}
+#textGridBottom{
+  font-size: 13px;
+  position: absolute;
+  left: 50%;
+  top: 135%;
+}
+
+#textQ1 {
+  position: absolute;
+  margin-left: 35%;    
+  top: 70%;
+}
+
+#textQ2 {
+  position: absolute;
+  margin-left: 30%;    
+  top: 110%;
+}
+
+
+
+.textGrid{
+  position: absolute;
+  top: 90%;
 }

@@ -35,6 +35,11 @@ function setup() {
   currentTestBol = 'test' + randomIntFromInterval(1,20) + 'Bol';
   currentTest(currentTestBol);
   window[currentTestBol] = 1;
+  // see what's up here
+  if(currentTestBol == "test1Bol")
+    test1Bol = 1;
+  else  
+    window[currentTestBol] = 1;
 
   setSliderValue(randomIntFromInterval(-8,8));
 }
@@ -56,7 +61,6 @@ function draw() {
   
   // TEST 1 | straight line - wavy line - straight line - zigzag line - straight line
   if(test1Bol) {
-    console.log("HERE LOL");
     val1 = 0;
     val2 = 10;
     if(output.innerHTML >= 0){
@@ -243,7 +247,11 @@ function next(testNr) {
     testNumber = testNr;
   testNumber ++; 
   testBol = 'test'+testNumber+'Bol';
-  window[testBol] = 1;
+  // see what's up here
+  if(testBol == "test1Bol")
+    test1Bol = 1;
+  else
+    window[testBol] = 1;
   currentTest(testBol);
   /*  let testFunction = 'test'+testNumber;
   document.getElementById("ritema").checked = false;
@@ -336,3 +344,8 @@ function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+function checkGrid(cellNr) {
+  for(let i = 1; i < 37; i++)
+    document.getElementById(i.toString()).value = null;
+  document.getElementById(cellNr).value = "X";
+}
