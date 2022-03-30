@@ -8,10 +8,8 @@ let a = 0, b = 1, c = 1, d = 1;
 let val = 0;
 
 let currentTestBol;
-let test1Bol = test2Bol = test3Bol = test4Bol = 
-test5Bol = test6Bol = test7Bol = test8Bol = test9Bol = 
-test10Bol = test11Bol = test12Bol = test13Bol = 
-test14Bol = test15Bol = test16Bol = test17Bol = test18Bol = 0;
+let lastCheckedGridCell;
+let tests = [];
 
 let testNumber = 1;
 
@@ -32,14 +30,15 @@ function setup() {
 
   output.innerHTML = slider.value;
 
+  for(let i=1; i < 21; i++)
+    tests.push(new Test('test' + i + 'Bol'));
+
   currentTestBol = 'test' + randomIntFromInterval(1,20) + 'Bol';
   currentTest(currentTestBol);
-  window[currentTestBol] = 1;
-  // see what's up here
-  if(currentTestBol == "test1Bol")
-    test1Bol = 1;
-  else  
-    window[currentTestBol] = 1;
+
+  for(let i=1; i < 21; i++)
+    findTest('test' + i + 'Bol').active = 0;
+  findTest(currentTestBol).active = 1;
 
   setSliderValue(randomIntFromInterval(-8,8));
 }
@@ -60,7 +59,7 @@ function draw() {
   }
   
   // TEST 1 | straight line - wavy line - straight line - zigzag line - straight line
-  if(test1Bol) {
+  if(findTest("test1Bol").active) {
     val1 = 0;
     val2 = 10;
     if(output.innerHTML >= 0){
@@ -73,7 +72,7 @@ function draw() {
   }
 
   // TEST 2 |circle to assymetrical ellipse
-  if(test2Bol) {
+  if(findTest("test2Bol").active) {
     if(output.innerHTML == 0) 
       circle(0, 0, 200);
     else {
@@ -83,7 +82,7 @@ function draw() {
   }
 
   // TEST 3 |small square - medium square - big square
-  if(test3Bol) {
+  if(findTest("test3Bol").active) {
     rectMode(CENTER);
     if(output.innerHTML == 0) 
       square(0, 0, 100);
@@ -92,13 +91,13 @@ function draw() {
   }
 
   // TEST 4 |from square to circle
-  if(test4Bol) {
+  if(findTest("test4Bol").active) {
     rectMode(CENTER);
     square(0, 0, 200, 6 * (parseInt(output.innerHTML)+8));
   }
 
   // TEST 5 |assymetrical circle
-  if(test5Bol) {
+  if(findTest("test5Bol").active) {
     if(output.innerHTML == 0) 
       circle(0, 0, 200);
     else {
@@ -109,7 +108,7 @@ function draw() {
   }
 
   // TEST 6 |from acute angle to straight
-  if(test6Bol) {
+  if(findTest("test6Bol").active) {
     let degrees = map(-31*(abs(parseInt(output.innerHTML))), 0, width, 0, 181); /* fix */
     let v = p5.Vector.fromAngle(radians(degrees), 200);
     let vx = v.x;
@@ -119,14 +118,14 @@ function draw() {
   }
  
   // TEST 7 |square rotation
-  if(test7Bol) {
+  if(findTest("test7Bol").active) {
     rectMode(CENTER);
     rotate(PI / output.innerHTML);
     square(0, 0, 200);
   }
 
   // TEST 8 |dot in rectangle
-  if(test8Bol) {
+  if(findTest("test8Bol").active) {
     rectMode(CENTER);
     rect(0, 0, 500, 300);
     strokeWeight(10);
@@ -134,7 +133,7 @@ function draw() {
   }
 
   // TEST 9 |dot sequence
-  if(test9Bol) {
+  if(findTest("test9Bol").active) {
     strokeWeight(10);
     point(-100,20);
     point(-60,20);
@@ -145,7 +144,7 @@ function draw() {
   }
 
   // TEST 10 |rectangle verticality
-  if(test10Bol) {
+  if(findTest("test10Bol").active) {
     strokeWeight(5);
     rectMode(CENTER);
     rotate(3 * map(output.innerHTML, -8, 8, 0, 100)); /* fix */
@@ -153,20 +152,20 @@ function draw() {
   }
 
   // TEST 11 |curved line extension
-  if(test11Bol) {
+  if(findTest("test11Bol").active) {
     let mappedInput = map(output.innerHTML, -8, 8, 1, 360);  
     arc(0, 0, mappedInput, 200, 0, HALF_PI);
   }
 
   // TEST 12 |contrast
-  if(test12Bol) {
+  if(findTest("test12Bol").active) {
     rectMode(CENTER);
     rect(0, 0, 308, 208);
     setGradient(-150, -100, 300, 200, black, white, X_AXIS, output.innerHTML);
   }
 
   // TEST 13 |brightness
-  if(test13Bol) {
+  if(findTest("test13Bol").active) {
     colorMode(HSB, 100); // put this at the start, change all colors to hsb 
     rectMode(CENTER);   
     let mappedInput = map(output.innerHTML, -8, 8, 0, 100);  
@@ -176,7 +175,7 @@ function draw() {
   }
 
   // TEST 14 |saturation
-  if(test14Bol) {
+  if(findTest("test14Bol").active) {
     colorMode(HSB, 100);
     rectMode(CENTER);   
     let mappedInput = map(output.innerHTML, -8, 8, 0, 100);  
@@ -186,7 +185,7 @@ function draw() {
   }
 
   // TEST 15 |hue between high/low arousal colors
-  if(test15Bol) {
+  if(findTest("test15Bol").active) {
     colorMode(HSB, 100);
     rectMode(CENTER);   
     let mappedInput = map(output.innerHTML, -8, 8, 0, 70); // to go from red to blue 
@@ -196,7 +195,7 @@ function draw() {
   }
 
   // TEST 16 |color area
-  if(test16Bol) {
+  if(findTest("test16Bol").active) {
     colorMode(HSB, 100);
     rectMode(CENTER);   
     let mappedInput = map(output.innerHTML, -8, 8, 1, 10);  
@@ -206,7 +205,7 @@ function draw() {
   }
 
   // TEST 17 |complementary color
-  if(test17Bol) {
+  if(findTest("test17Bol").active) {
     colorMode(HSB, 360, 100, 100);
     rectMode(CENTER);   
     let mappedInput = map(output.innerHTML, -8, 8, 1, 360);  
@@ -218,7 +217,7 @@ function draw() {
   }
 
   // TEST 18 |transparency
-  if(test18Bol) {
+  if(findTest("test18Bol").active) {
     let mappedInput = map(output.innerHTML, -8, 8, 1, 100);  
     fill(hue(black), saturation(black), brightness(black), 50);
     circle(-80, 0, 250); 
@@ -238,33 +237,27 @@ function show(item){
 }  
 
 function next(testNr) {
-  test1Bol = test2Bol = test3Bol = test4Bol = 
-  test5Bol = test6Bol = test7Bol = test8Bol = 
-  test9Bol = test10Bol = test11Bol = test12Bol = 
-  test13Bol = test14Bol = test15Bol = test16Bol = 
-  test17Bol = test18Bol = 0;
   if(testNr != null)
     testNumber = testNr;
   testNumber ++; 
   testBol = 'test'+testNumber+'Bol';
-  // see what's up here
-  if(testBol == "test1Bol")
-    test1Bol = 1;
-  else
-    window[testBol] = 1;
-  currentTest(testBol);
-  /*  let testFunction = 'test'+testNumber;
-  document.getElementById("ritema").checked = false;
-  document.getElementById("ritemb").checked = false;
-  document.getElementById("ritemc").checked = false;
-  document.getElementById("a").onclick = function() {setSliderValue('-8'); window[testFunction]()};
-  document.getElementById("b").onclick = function() {setSliderValue('0'); window[testFunction]()};
-  document.getElementById("c").onclick = function() {setSliderValue('8'); window[testFunction]()};*/
+  for(let i=0; i < 20; i++)
+    tests[i].active = 0;
+  findTest(testBol).active = 1;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // save test choices
+  saveTestChoices(currentTestBol);
+  // clear input (tension + grid)
+  clearInput("tensionNumber");
+  for(let i = 1; i < 37; i++)
+    clearInput(i.toString());
+  setSliderValue(randomIntFromInterval(-8,8));
+  // move on to next test
+  currentTest(testBol); 
 }
 
 function currentTest(testBol) {
   if(currentTestBol != null) {
-    console.log("AAAA"+currentTestBol);
     document.getElementById(currentTestBol).style.background = "#addfad";
     document.getElementById(currentTestBol).style.color = "#000";
   }
@@ -346,6 +339,58 @@ function randomIntFromInterval(min, max) {
 
 function checkGrid(cellNr) {
   for(let i = 1; i < 37; i++)
-    document.getElementById(i.toString()).value = null;
+    clearInput(i.toString());
+  lastCheckedGridCell = cellNr;
   document.getElementById(cellNr).value = "X";
+}
+
+function clearInput(id){
+  document.getElementById(id).value = null;
+}
+
+function Test(name){
+  this.active = 0;
+  this.name = name;
+  this.scroll = null;
+  this.tension = null;
+  this.grid = null;
+}
+
+function findTest(name){
+  for(let i = 0; i < 20; i++){
+    if(tests[i].name == name)
+      return tests[i];
+  }
+}
+
+function saveTestChoices(testName){
+  findTest(testName).scroll = output.innerHTML;
+  findTest(testName).tension = document.getElementById("tensionNumber").value;
+  findTest(testName).grid = lastCheckedGridCell;
+}
+
+//TO DO save to document
+function printTests(){
+  var currentdate = new Date(); 
+  var datetime = currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+  let testResults = "<p><b>" + datetime +"</b></p>" + "\n";
+  for(let i = 0; i < 20; i++){
+    testResults += "<p><b>Test:</b> " + i+1 + "; <b>SCROLL:</b> " + tests[i].scroll +
+     "; <b>TENSION:</b> " + tests[i].tension + "; <b>GRID:</b> " + tests[i].grid + "\n</p>";
+  }
+  console.log(testResults);
+  window.localStorage.setItem('testResults', testResults);
+  //console.log(document.getElementById("results").innerHTML);
+  //document.getElementById("results").innerHTML = testResults;
+}
+
+function submit(){
+  saveTestChoices(currentTestBol);
+  printTests();
+  window.location.href="results.html";
 }

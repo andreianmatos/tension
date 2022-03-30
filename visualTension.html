@@ -15,13 +15,13 @@
   <!--<script src="p5/p5.sound.js"></script> -->
   <!-- Styles -->
   <link rel="stylesheet" href="style.css">
-  <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+  <!--<link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />-->
   <!-- JS -->
   <!-- P5 -->
   <script type="text/javascript" src="sketch.js"></script>
-  <!-- JSPSYCH -->
+  <!-- JSPSYCH 
   <script src="jspsych/jspsych.js"></script>
-  <script src="jspsych/plugin-html-keyboard-response.js"></script>
+  <script src="jspsych/plugin-html-keyboard-response.js"></script>-->
 
 <body> 
   <main>
@@ -47,7 +47,7 @@
       <button class="custombutton2" id="test18Bol" onclick="next('17');">Teste18</button>
       <button class="custombutton2" id="test19Bol" onclick="next('18');">Teste19</button>
       <button class="custombutton2" id="test20Bol" onclick="next('19');">Teste20</button>
-      <button class="custombutton2" id="submit" onclick="">SUBMIT</button>
+      <button class="custombutton2" id="submit" onclick="submit()">SUBMIT</button>
     </div>
 
     <div id="sketch"></div>
@@ -67,12 +67,12 @@
 
     <div id="textQ3">
       <h2>From 1 to 10, how would you rate the image in terms of tension?      
-        <input type="text" class="gridCell" style="width: 50px;">
+        <input type="text" class="gridCell" id="tensionNumber" style="width: 50px;">
       </h2>
     </div>
 
     <div id="textQ4">
-      <h2>In the grid below, place a cross where it better represents the way you feel.</h2>
+      <h2>In the grid below, place  cross where it better represents the way you feel.</h2>
     </div>
 
     <div id="textGridTop"><b>High Arousal</b></div>
@@ -128,7 +128,7 @@
 
     <!--
     
-    <div class="radio-item firstOption" id="a">
+    <div class="radio-item firstOption" id="">
       <input type="radio" id="ritema" name="ritem" value="ropt1" 
       onclick="setSliderValue('-8'); test1('0','1');">
       <label for="ritema">1</label>
@@ -148,7 +148,7 @@
 
     -->
 
-    <!-- devia guardar a escolha do user e avançar para prox test 
+    <!-- devia guardar  escolha do user e avançar para prox test 
     <button id="nextButton"  class="custombutton"  onclick="next();">Next!</button>-->
 
   </main>

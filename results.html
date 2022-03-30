@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Meta -->
+        <title>On the Feeling and Perception of Sound? Sonic? and Visual Tension in Generative Art</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Styles -->
+        <link rel="stylesheet" href="style.css">
+    </head>
+   
+    <body onload="getTestResults();"> 
+        
+        <div class="about" >
+
+            <p class="title"><b>TEST RESULTS</b></p> 
+                        
+            <div id="results">
+                results
+            </div>
+        </div>
+                                                
+    </body>
+    <script>
+        function getTestResults() {
+            document.getElementById("results").innerHTML = window.localStorage.getItem('testResults');
+        }
+    </script>
+</html>
