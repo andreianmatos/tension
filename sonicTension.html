@@ -12,13 +12,13 @@
     }
   </style>
   <script src="p5/p5.js"></script>
-  <!--<script src="p5/p5.sound.js"></script> -->
+  <script src="p5/p5.sound.js"></script> 
   <!-- Styles -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styleSound.css">
   <!--<link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />-->
   <!-- JS -->
   <!-- P5 -->
-  <script type="text/javascript" src="sketch.js"></script>
+  <script type="text/javascript" src="sketchSound.js"></script>
   <!-- JSPSYCH 
   <script src="jspsych/jspsych.js"></script>
   <script src="jspsych/plugin-html-keyboard-response.js"></script>-->
@@ -48,9 +48,13 @@
       <button class="custombutton2" id="test19Bol" onclick="next('18');">Teste19</button>
       <button class="custombutton2" id="test20Bol" onclick="next('19');">Teste20</button>
       <button class="custombutton2" id="submit" onclick="submit()">SUBMIT</button>
-    </div>
+    </div> 
 
     <div id="sketch"></div>
+
+    <button class="soundButton" id="playL" onclick="playLeft()">PLAY</button>
+
+    <button class="soundButton" id="playR" onclick="playRight()">PLAY</button>
 
     <div id="textSlider1">
       <h2>Leave the slider at the <i>most</i> tense state.</h2>
@@ -73,11 +77,11 @@
     <div id="leftQuestionnaire">
 
     <div id="textQ2">
-      <h2>&#8595; First consider the chosen image on the left &#8595;</h2>
+      <h2>&#8595; First consider the chosen sound on the left &#8595;</h2>
     </div>
 
     <div id="textQ3">
-      <h2>From 1 to 10, how would you rate the image in terms of tension?   
+      <h2>From 1 to 10, how would you rate the sound in terms of tension?   
         <input type="number" id="tensionNumber" min="1" max="10">
       </h2>
     </div>
@@ -139,11 +143,11 @@
   <div id="rightQuestionnaire">
       
     <div id="textQ5">
-      <h2>&#8595; Then consider the chosen image on the right &#8595;</h2>
+      <h2>&#8595; Then consider the chosen sound on the right &#8595;</h2>
     </div>
 
     <div id="textQ6">
-      <h2>From 1 to 10, how would you rate the image in terms of tension?      
+      <h2>From 1 to 10, how would you rate the sound in terms of tension?      
         <input type="number" id="tensionNumber2" min="1" max="10">
       </h2>
     </div>

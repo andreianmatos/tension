@@ -101,9 +101,40 @@ body, html {
 
   #sketch {
     margin-top:2%;
+    z-index:-1;
   }
 
   /* buttons */
+
+  .soundButton{
+    position: absolute;
+    top: 23%;
+    margin: 56px auto 0;
+    padding: 36px 20px;
+    appearance: none;
+    transition: all 0.15s ease-in-out;
+    font-family: inherit;
+    font-size: 24px;
+    font-weight: 600;
+    border: 6px solid #000;
+    color: white;
+    background: rgb(17, 17, 17);
+    border-radius: 100%;
+    outline: 0;
+    cursor: pointer;
+  }
+  .soundButton:hover {
+    color: darkred;
+    transform: scale(1.1);
+  }
+
+
+  #playL{
+    left: 21%;
+  }
+  #playR{
+    left: 71%;
+  }
 
   /* next button */
 
@@ -322,6 +353,7 @@ label {
 
 #leftQuestionnaire{
   font-size: 11px;
+  text-align: left;
 }
 
 #textGridRight{
@@ -501,4 +533,12 @@ label {
   text-align: left;
   left: 57%;
   top: 170%;
+}
+
+.playButton:hover:active{
+  transform: scale(0.5);
+}
+
+.stopButton:hover:active{
+  transform: scale(0.5);
 }
