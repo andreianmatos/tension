@@ -167,11 +167,11 @@ body, html {
   .custombutton2  {
     position: relative;
     margin: 20px auto 0;
-    padding: 5px 10px;
+    padding: 10px 38px;
     appearance: none;
     transition: all 0.15s ease-in-out;
     font-family: inherit;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 600;
     background: #fff;
     border: 2px solid #000;
@@ -192,7 +192,7 @@ body, html {
     position: fixed;
     z-index: 99 !important; 
     background-color: whitesmoke;
-    left: 2.5%;
+    left: 2%;
     margin-top: -2%;
     padding-bottom: 1%;
     border-bottom:2px solid black;
@@ -212,7 +212,7 @@ body, html {
 
 #textSlider1 {
   position: absolute;
-  margin-left: 10%;    
+  margin-left: 15%;    
   top: 70%;
 }
 .slidecontainer1 {
@@ -221,10 +221,13 @@ body, html {
   margin-left: 8%;    
   top: 80%;
 }
+#slidecontainer1double{
+  top: 80%;
+}
 
 #textSlider2 {
   position: absolute;
-  margin-left: 60%;    
+  margin-left: 64.5%;    
   top: 70%;
 }
 .slidecontainer2 {
@@ -272,6 +275,12 @@ body, html {
 #demo1 {
   display: none;
 }
+#demo1double {
+  display: none;
+}
+#demo2double {
+  display: none;
+}
 #demo2 {
   display: none;
 }
@@ -282,17 +291,34 @@ body, html {
     position: absolute;
     padding: 0 6px;
     margin: 0 auto;
-    left: 43%;
-    top: 75%;
+    left: 11.5%;
+    top: 80%;
 }
 
 .radio-item.secondOption {
-    left: 49%;
+    left: 19.5%;
 }
 
 .radio-item.thirdOption {
-    left: 55%;
+    left: 27.5%;
 }
+.radio-item.fourthOption {
+  left: 35.5%;
+}
+
+.radio-item.fifthOption {
+  left: 61.5%;
+}
+.radio-item.sixthOption {
+  left: 69.5%;
+}
+.radio-item.seventhOption {
+left: 77.5%;
+}
+.radio-item.eighthOption {
+  left: 85.5%;
+}
+  
 
 .radio-item input[type='radio'] {
     display: none;  

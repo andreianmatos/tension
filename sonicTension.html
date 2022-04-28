@@ -37,16 +37,6 @@
       <button class="custombutton2" id="test8Bol" onclick="next('7');">Teste8</button>
       <button class="custombutton2" id="test9Bol" onclick="next('8');">Teste9</button>
       <button class="custombutton2" id="test10Bol" onclick="next('9');">Teste10</button>
-      <button class="custombutton2" id="test11Bol" onclick="next('10');">Teste11</button>
-      <button class="custombutton2" id="test12Bol" onclick="next('11');">Teste12</button>
-      <button class="custombutton2" id="test13Bol" onclick="next('12');">Teste13</button>
-      <button class="custombutton2" id="test14Bol" onclick="next('13');">Teste14</button>
-      <button class="custombutton2" id="test15Bol" onclick="next('14');">Teste15</button>
-      <button class="custombutton2" id="test16Bol" onclick="next('15');">Teste16</button>
-      <button class="custombutton2" id="test17Bol" onclick="next('16');">Teste17</button>
-      <button class="custombutton2" id="test18Bol" onclick="next('17');">Teste18</button>
-      <button class="custombutton2" id="test19Bol" onclick="next('18');">Teste19</button>
-      <button class="custombutton2" id="test20Bol" onclick="next('19');">Teste20</button>
       <button class="custombutton2" id="submit" onclick="submit()">SUBMIT</button>
     </div> 
 
@@ -57,22 +47,80 @@
     <button class="soundButton" id="playR" onclick="playRight()">PLAY</button>
 
     <div id="textSlider1">
-      <h2>Leave the slider at the <i>most</i> tense state.</h2>
+      <h2>Select the <i>most</i> tense state.</h2>
     </div>
 
-    <div class="slidecontainer1">
+    <div id="slidecontainer1" class="slidecontainer1">
       <input type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange1">
       <p><span id="demo1"></span></p>
     </div>
 
-    <div id="textSlider2">
-      <h2>Leave the slider at the <i>least</i> tense state.</h2>
+    <div id="slidecontainer1double" class="slidecontainer1">
+      <input type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange1double">
+      <p><span id="demo1double"></span></p>
     </div>
 
-    <div class="slidecontainer2">
+    <div id = "radiosLeft">
+
+      <div class="radio-item firstOption" id="a">
+        <input type="radio" id="ritema" name="radioLeft" value="opt1">
+        <label for="ritema">1</label>
+      </div>
+
+      <div class="radio-item secondOption" id="b">
+          <input type="radio" id="ritemb" name="radioLeft" value="opt2">
+          <label for="ritemb">2</label>
+      </div>
+
+      <div class="radio-item thirdOption" id="c" >
+        <input type="radio" id="ritemc" name="radioLeft" value="opt3">
+        <label for="ritemc">3</label>
+      </div>
+
+      <div class="radio-item fourthOption" id="d">
+          <input type="radio" id="ritemd" name="radioLeft" value="opt4">
+          <label for="ritemd">4</label>
+      </div>
+    
+    </div>
+
+    <div id="textSlider2">
+      <h2>Select the <i>least</i> tense state.</h2>
+    </div>
+
+    <div id="slidecontainer2" class="slidecontainer2">
       <input type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange2">
       <p><span id="demo2"></span></p>
+    </div>    
+    
+    <div id="slidecontainer2double" class="slidecontainer2">
+      <input type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange2double">
+      <p><span id="demo2double"></span></p>
     </div>
+
+    <div id = "radiosRight">
+
+      <div class="radio-item fifthOption" id="e">
+        <input type="radio" id="riteme" name="radioRight" value="opt5">
+        <label for="riteme">1</label>
+      </div>
+
+      <div class="radio-item sixthOption" id="f">
+          <input type="radio" id="ritemf" name="radioRight" value="opt6">
+          <label for="ritemf">2</label>
+      </div> 
+
+      <div class="radio-item seventhOption" id="g">
+        <input type="radio" id="ritemg" name="radioRight" value="opt7">
+        <label for="ritemg">3</label>
+      </div>
+
+      <div class="radio-item eighthOption" id="h">
+          <input type="radio" id="ritemh" name="radioRight" value="opt8">
+          <label for="ritemh">4</label>
+      </div>
+
+  </div>
 
     <div id="leftQuestionnaire">
 
