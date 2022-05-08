@@ -7,9 +7,7 @@ const X_AXIS = 2;
 let a = 0, b = 1, c = 1, d = 1;
 let val = 0;
 
-let currentTestBol, doubleTest;
 let lastCheckedGrid1Cell, lastCheckedGrid2Cell;
-let tests = [];
 
 let testNumber = 1;
 
@@ -19,6 +17,11 @@ var playingLeft = 0, playingRight = 0;
 var w, osc, env;
 
 let slider = 0, sliderDouble = 0, radioButtons = 0;
+
+let currentTestBol, doubleTest, imageTest, soundTest;
+let tests = [], undoneTests = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+let end = 0;
+
 
 function setup() {
 
@@ -48,20 +51,12 @@ function setup() {
   output2.innerHTML = slider2.value;
   output2double.innerHTML = slider2double.value;
 
-  for(let i=1; i < 11; i++)
+  for(let i=1; i < 21; i++)
     tests.push(new Test('test' + i + 'Bol'));
 
-  currentTestBol = 'test' + randomIntFromInterval(1,10) + 'Bol';
+  currentTestBol = 'test' + randomIntFromInterval(1,20) + 'Bol';
   currentTest(currentTestBol);
-
-  for(let i=1; i < 10; i++)
-    findTest('test' + i + 'Bol').active = 0;
-  findTest(currentTestBol).active = 1;
-
-  setSliderValue(randomIntFromInterval(-8,8),"1");
-  setSliderValue(randomIntFromInterval(-8,8),"1double");
-  setSliderValue(randomIntFromInterval(-8,8),"2");
-  setSliderValue(randomIntFromInterval(-8,8),"2double");
+  undoneTests = undoneTests.filter(item => item !== currentTestBol);
 
   //sound prep
   osc = new p5.Oscillator();
@@ -81,6 +76,15 @@ function setup() {
 function draw() {
 
   background(white);
+
+  if(imageTest){
+    document.getElementById("playL").style.display = 'none';
+    document.getElementById("playR").style.display = 'none';  
+  }
+  if(soundTest){
+    document.getElementById("playL").style.display = 'block';
+    document.getElementById("playR").style.display = 'block';  
+  }
   
   // update the current slider 1 and 2 value
   slider1.oninput = function() {
@@ -172,6 +176,10 @@ function draw() {
  
   // TEST 1 | WAVEFORM + ATTACK (TIME AND VOLUME? ONLY TIME?)
   if(findTest("test1Bol").active) {
+
+    imageTest = 0;
+    soundTest = 1;
+
     radioButtons = 1;
     slider = 1;
     sliderDouble = 0;
@@ -240,6 +248,10 @@ function draw() {
 
   // TEST 2 | WAVEFORM + RELEASE
   if(findTest("test2Bol").active) {
+
+    imageTest = 0;
+    soundTest = 1;
+
     radioButtons = 1;
     slider = 1;
     sliderDouble = 0;
@@ -308,6 +320,10 @@ function draw() {
 
   // TEST 3 | WAVEFORM + REVERB
   if(findTest("test3Bol").active) {
+
+    imageTest = 0;
+    soundTest = 1;
+
     radioButtons = 1;
     slider = 1;
     sliderDouble = 0;
@@ -415,6 +431,9 @@ function draw() {
 
   // TEST 4 | WAVEFORM + DELAY
   if(findTest("test4Bol").active) {
+
+    imageTest = 0;
+    soundTest = 1;
     
     radioButtons = 1;
     slider = 1;
@@ -480,6 +499,10 @@ function draw() {
 
   // TEST 5 | ATTACK + RELEASE
   if(findTest("test5Bol").active) {
+
+    imageTest = 0;
+    soundTest = 1;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -564,6 +587,10 @@ function draw() {
 
   // TEST 6 | ATTACK AND REVERB - is off?
   if(findTest("test6Bol").active) {
+
+    imageTest = 0;
+    soundTest = 1;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -653,6 +680,10 @@ function draw() {
  
   // TEST 7 |  ATTACK + DELAY
   if(findTest("test7Bol").active) {
+
+    imageTest = 0;
+    soundTest = 1;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -719,6 +750,10 @@ function draw() {
 
   // TEST 8 | RELEASE + REVERB
   if(findTest("test8Bol").active) {
+
+    imageTest = 0;
+    soundTest = 1;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -783,6 +818,10 @@ function draw() {
 
   // TEST 9 | RELEASE + DELAY
   if(findTest("test9Bol").active) {
+
+    imageTest = 0;
+    soundTest = 1;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -850,6 +889,10 @@ function draw() {
 
   // TEST 10 | REVERB + DELAY
   if(findTest("test10Bol").active) {
+
+    imageTest = 0;
+    soundTest = 1;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -908,6 +951,102 @@ function draw() {
       }
     }
   }
+
+  if(findTest("test11Bol").active) {
+
+    imageTest = 1;
+    soundTest = 0;
+
+     radioButtons = 0;
+    slider = 1;
+    sliderDouble = 1;
+
+    let sw; 
+
+    push();
+    translate(width/5, height/2);
+    if(output1double.innerHTML > 0)
+      sw = int(map(output1double.innerHTML, 0, 8, 1, 25));
+    if(output1double.innerHTML <= 0)
+      sw = int(map(output1double.innerHTML, -8, 0, 25, 1));
+    strokeWeight(sw);
+    setGradient(-150, -100, 300, 200, black, white, X_AXIS, output1.innerHTML);
+
+    if(output1.innerHTML < 0) 
+      arc(0, 0, map(output1.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(output1.innerHTML >= 0) 
+      arc(0, 0, map(output1.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+    pop();
+
+    push();
+    translate(width/1.21, height/2);
+    if(output2double.innerHTML > 0)
+      sw = int(map(output2double.innerHTML, 0, 8, 1, 25));
+    if(output2double.innerHTML <= 0)
+      sw = int(map(output2double.innerHTML, -8, 0, 25, 1));
+    strokeWeight(sw);
+    if(output2.innerHTML < 0) 
+      arc(0, 0, map(output2.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(output2.innerHTML >= 0) 
+      arc(0, 0, map(output2.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+    pop()
+  }
+
+  if(findTest("test12Bol").active) {
+
+    imageTest = 1;
+    soundTest = 0;
+  }
+  
+  if(findTest("test13Bol").active) {
+
+    imageTest = 1;
+    soundTest = 0;
+  }
+
+  if(findTest("test14Bol").active) {
+
+    imageTest = 1;
+    soundTest = 0;
+  }
+  
+  if(findTest("test15Bol").active) {
+
+    imageTest = 1;
+    soundTest = 0;
+  }
+  
+  if(findTest("test16Bol").active) {
+
+    imageTest = 1;
+    soundTest = 0;
+  }
+  
+  if(findTest("test17Bol").active) {
+
+    imageTest = 1;
+    soundTest = 0;
+  }
+  
+  if(findTest("test18Bol").active) {
+
+    imageTest = 1;
+    soundTest = 0;
+  }
+  
+  if(findTest("test19Bol").active) {
+
+    imageTest = 1;
+    soundTest = 0;
+  }
+  
+  if(findTest("test20Bol").active) {
+
+    imageTest = 1;
+    soundTest = 0;
+  }
   
 }
 
@@ -920,41 +1059,6 @@ function show(item){
   }
 }  
 
-function next(testNr) {
-  if(playingRight)
-    playRight();
-  if(playingLeft)
-    playLeft();
-  if(testNr != null)
-    testNumber = testNr;
-  testNumber ++; 
-  testBol = 'test'+testNumber+'Bol';
-  for(let i=0; i < 10; i++)
-    tests[i].active = 0;
-  findTest(testBol).active = 1;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  // save test choices
-  saveTestChoices(currentTestBol);
-  // clear input (tension + grid)
-  clearInputs(1,1);
-  setSliderValue(randomIntFromInterval(-8,8),"1");
-  setSliderValue(randomIntFromInterval(-8,8),"1double");
-  setSliderValue(randomIntFromInterval(-8,8),"2");
-  setSliderValue(randomIntFromInterval(-8,8),"2double");
-  // move on to next test
-  currentTest(testBol); 
-}
-
-function currentTest(testBol) {
-  if(currentTestBol != null) {
-    console.log(currentTestBol);
-    document.getElementById(currentTestBol).style.background = "#addfad";
-    document.getElementById(currentTestBol).style.color = "#000";
-  }
-  currentTestBol = testBol;
-  document.getElementById(testBol).style.background = "#000";
-  document.getElementById(testBol).style.color = "#fff";
-}
 
 function setSliderValue(val, slider) {
   let range = "myRange" + slider;
@@ -1086,11 +1190,9 @@ function saveTestChoices(testName){
   //findTest(testName).scroll = output1.innerHTML;
   findTest(testName).tension = document.getElementById("tensionNumber").value;
   findTest(testName).grid = lastCheckedGrid1Cell;
-  if(doubleTest){
-    //findTest(testName).scroll2 = output2.innerHTML;
-    findTest(testName).tension2 = document.getElementById("tensionNumber2").value;
-    findTest(testName).grid2 = lastCheckedGrid2Cell;
-  }
+  
+  findTest(testName).tension2 = document.getElementById("tensionNumber2").value;
+  findTest(testName).grid2 = lastCheckedGrid2Cell;
 }
 
 //TO DO save to document
@@ -1151,4 +1253,87 @@ function playRight() {
     document.getElementById("playR").innerHTML = "STOP";
   else 
     document.getElementById("playR").innerHTML = "PLAY";
+}
+
+function chooseNextTest(){
+
+  let chosen = 0;
+
+  while(!chosen){
+    newTestNr = randomIntFromInterval(1,20);
+    newTestBol = 'test' + newTestNr + 'Bol';
+    if(undoneTests.length == 1){
+      document.getElementById("testNext").style.display = 'none';
+      document.getElementById("updateAnswers").style.display = 'block';
+      document.getElementById("lastTest").style.display = 'block';
+      document.getElementById("lastTest2").style.display = 'block';
+      document.getElementById("submit").disabled = false;
+      enableTests();
+      end = 1;
+      break;
+    }
+    if(undoneTests.includes(newTestNr)){
+      chosen = 1;
+    }
+  }
+  // delete the new current test of the undone tests list
+  undoneTests = undoneTests.filter(item => item !== newTestNr);
+  console.log("DA")
+  next(newTestBol);
+  console.log(undoneTests);
+}
+
+function next(newTestBol) {
+
+  console.log("i am here")
+
+  if(playingRight)
+    playRight();
+  if(playingLeft)
+    playLeft();
+
+  for(let i=0; i < 20; i++)
+    tests[i].active = 0;
+  findTest(newTestBol).active = 1;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // save test choices
+  saveTestChoices(currentTestBol);
+
+  //at the end people are reviewing their answers
+  if(!end){
+    // clear input (tension + grid)
+    clearInputs(1,1);
+    setSliderValue(randomIntFromInterval(-8,8),"1");
+    setSliderValue(randomIntFromInterval(-8,8),"1double");
+    setSliderValue(randomIntFromInterval(-8,8),"2");
+    setSliderValue(randomIntFromInterval(-8,8),"2double");
+  }
+  // move on to next test
+  currentTest(newTestBol); 
+}
+
+function currentTest(newTestBol) {
+  if(currentTestBol != null) {
+    console.log(currentTestBol);
+    document.getElementById(currentTestBol).style.background = "#fff";
+    document.getElementById(currentTestBol).style.color = "#000";
+    //document.getElementById(currentTestBol).disabled = false;
+  }
+  currentTestBol = newTestBol;
+  document.getElementById(currentTestBol).style.background = "#000";
+  document.getElementById(currentTestBol).style.color = "#fff";
+}
+
+function enableTests(){
+  for(let i=1; i < 21; i++){
+    document.getElementById('test'+i+'Bol').style.background = "#fff";
+    document.getElementById('test'+i+'Bol').style.color = "#000";
+    document.getElementById('test'+i+'Bol').disabled = false;
+  }
+}
+
+function updateAnswers(){
+  saveTestChoices(currentTestBol);
 }

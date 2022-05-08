@@ -172,6 +172,7 @@ body, html {
     left: 47%;
   }
 
+
 #submit {
   background: darkred;
   color: white;
@@ -437,8 +438,10 @@ label {
 #textNext {
   position: absolute;
   margin-left: 39.5%;  
+  padding-bottom: 5%;
   top: 180%;
 }
+
 
 #affectGrid2 {
   position: absolute;

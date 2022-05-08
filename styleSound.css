@@ -167,11 +167,11 @@ body, html {
   .custombutton2  {
     position: relative;
     margin: 20px auto 0;
-    padding: 10px 38px;
+    padding: 6px 20px;
     appearance: none;
     transition: all 0.15s ease-in-out;
     font-family: inherit;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 600;
     background: #fff;
     border: 2px solid #000;
@@ -187,12 +187,17 @@ body, html {
   .custombutton2:hover:active {
     transform: scale(0.9);
   }
+  .custombutton2:disabled{
+    cursor: not-allowed;
+    pointer-events: none;
+    color: darkgray;
+ }
 
   #testButtons {
     position: fixed;
     z-index: 99 !important; 
     background-color: whitesmoke;
-    left: 2%;
+    left: 2.5%;
     margin-top: -2%;
     padding-bottom: 1%;
     border-bottom:2px solid black;
@@ -201,11 +206,30 @@ body, html {
   #nextButton {
     top: 80%;
     left: 47%;
+    margin-bottom: 10%;
   }
+
+  #testNext{
+    font-size: 20px;
+    left: 46%;
+  }
+
+  #updateAnswers{
+    font-size: 20px;
+    display: none;
+    left: -30%;
+  }
+  
+#lastTest{
+  margin-left: -28%; 
+  display: none;
+ }
+ #lastTest2{
+  display: none;
+ }
 
 #submit {
   background: darkred;
-  color: white;
 }
 
 /* slider for canvas */
@@ -496,6 +520,7 @@ label {
   position: absolute;
   margin-left: 39.5%;  
   top: 180%;
+  padding-bottom: 3%;
 }
 
 #affectGrid2 {

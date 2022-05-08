@@ -63,25 +63,16 @@ function setup() {
   setSliderValue(randomIntFromInterval(-8,8),"2");
   setSliderValue(randomIntFromInterval(-8,8),"2double");
 
-  //sound prep
-  osc = new p5.Oscillator();
-  env = new p5.Envelope();
-  reverb = new p5.Reverb();
-  polySynth = new p5.PolySynth();
-  delay = new p5.Delay();
-
-  //polySynth = new p5.PolySynth();
-
-  //noise = new p5.Noise();
-  /*filter = new p5.BandPass();
-  noise.disconnect();
-  noise.connect(filter);*/
 }
 
 function draw() {
 
   background(white);
   
+  fill(white);
+  stroke(black);
+  strokeWeight(5);
+
   // update the current slider 1 and 2 value
   slider1.oninput = function() {
     output1.innerHTML = this.value;
@@ -146,769 +137,126 @@ function draw() {
         radiosRight_value = radiosRight[i].value;
       }
   }
-  //console.log("L"+radiosLeft_value);
-  //console.log("R"+radiosRight_value);
-
-  if(!playingLeft && !playingRight){
-    osc.start();
-    osc.freq(0);
-    osc.amp(0);
-    //noise.amp(0);
-  }
-
-  /* AMPLITUDE
-  if(playingLeft){
-    if(output1.innerHTML > 0)
-      osc.amp(map(output1.innerHTML, 0, 8, 0, 1));
-    else
-      osc.amp(map(output1.innerHTML, -8, 0, 1, 0));
-  }
-  if(playingRight){
-    if(output2.innerHTML > 0)
-      osc.amp(map(output2.innerHTML, 0, 8, 0, 1));
-    else
-      osc.amp(map(output2.innerHTML, -8, 0, 1, 0));
-  }*/
  
-  // TEST 1 | WAVEFORM + ATTACK (TIME AND VOLUME? ONLY TIME?)
+  // TEST 1 | SYMMETRY + ANGULARITY
   if(findTest("test1Bol").active) {
-    radioButtons = 1;
+    radioButtons = 0;
     slider = 1;
-    sliderDouble = 0;
+    sliderDouble = 1;
 
-    let attackLevel = 1.0;
-    let releaseLevel = 0;
-    let attackTime = 0.001;
-    let decayTime = 0.2;
-    let susPercent = 0.2;
-    let releaseTime = 0;
-    if(playingLeft){
-      if(radiosLeft_value != null){
-        if(output1.innerHTML > 0)
-          attackTime = map(output1.innerHTML, 0, 8, 0, 1);
-        else
-          attackTime = map(output1.innerHTML, -8, 0, 1, 0);
-        // WAVEFORM
-        if(radiosLeft_value == "opt1")
-          osc.setType('sine');
-        else if(radiosLeft_value == "opt2")
-          osc.setType('triangle');
-        else if(radiosLeft_value == "opt3")
-          osc.setType('square');
-        else if(radiosLeft_value == "opt4")
-          osc.setType('sawtooth');
+    let sw; 
 
-        osc.amp(env);
+    push();
+    translate(width/5, height/2);
+    if(output1double.innerHTML > 0)
+      sw = int(map(output1double.innerHTML, 0, 8, 1, 25));
+    if(output1double.innerHTML <= 0)
+      sw = int(map(output1double.innerHTML, -8, 0, 25, 1));
+    strokeWeight(sw);
+    setGradient(-150, -100, 300, 200, black, white, X_AXIS, output1.innerHTML);
 
-        // C - G - D - A - E 
-        if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-          env.setRange(attackLevel, releaseLevel);
-          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play();
-        }
-      }
-    }
-    if(playingRight) {
-      if(radiosRight_value != null ){
-        if(output2.innerHTML > 0)
-          attackTime = map(output2.innerHTML, 0, 8, 0, 1);
-        else
-          attackTime = map(output2.innerHTML, -8, 0, 1, 0);
-        // WAVEFORM
-        if(radiosRight_value == "opt5")
-          osc.setType('sine');
-        else if(radiosRight_value == "opt6")
-          osc.setType('triangle');
-        else if(radiosRight_value == "opt7")
-          osc.setType('square');
-        else if(radiosRight_value == "opt8")
-          osc.setType('sawtooth');
+    if(output1.innerHTML < 0) 
+      arc(0, 0, map(output1.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(output1.innerHTML >= 0) 
+      arc(0, 0, map(output1.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+    pop();
 
-        osc.amp(env);
-
-        // C - G - D - A - E 
-        if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-          env.setRange(attackLevel, releaseLevel);
-          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play();
-        }
-      }
-    }
+    push();
+    translate(width/1.21, height/2);
+    if(output2double.innerHTML > 0)
+      sw = int(map(output2double.innerHTML, 0, 8, 1, 25));
+    if(output2double.innerHTML <= 0)
+      sw = int(map(output2double.innerHTML, -8, 0, 25, 1));
+    strokeWeight(sw);
+    if(output2.innerHTML < 0) 
+      arc(0, 0, map(output2.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(output2.innerHTML >= 0) 
+      arc(0, 0, map(output2.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+    pop()
+   
   }
 
-  // TEST 2 | WAVEFORM + RELEASE
+  // TEST 2 | SYMMETRY + CONTRAST
   if(findTest("test2Bol").active) {
-    radioButtons = 1;
+    radioButtons = 0;
     slider = 1;
-    sliderDouble = 0;
+    sliderDouble = 1;
 
-    let attackLevel = 1.0;
-    let releaseLevel = 0; // to make the note end all the way to silence
-    let attackTime = 0;
-    let decayTime = 0.2;
-    let susPercent = 0.2;
-    let releaseTime = 0.001;
-    if(playingLeft){
-      if(radiosLeft_value != null){
-        if(output1.innerHTML > 0)
-          releaseTime = map(output1.innerHTML, 0, 8, 0, 1);
-        else
-          releaseTime = map(output1.innerHTML, -8, 0, 1, 0);
-        // WAVEFORM
-        if(radiosLeft_value == "opt1")
-          osc.setType('sine');
-        else if(radiosLeft_value == "opt2")
-          osc.setType('triangle');
-        else if(radiosLeft_value == "opt3")
-          osc.setType('square');
-        else if(radiosLeft_value == "opt4")
-          osc.setType('sawtooth') ;
+    let sw;
 
-        osc.amp(env);
+    push();
+    translate(width/5, height/2);
+    if(output1double.innerHTML > 0)
+      sw = int(map(output1double.innerHTML, 0, 8, 1, 25));
+    if(output1double.innerHTML <= 0)
+      sw = int(map(output1double.innerHTML, -8, 0, 25, 1));
+    strokeWeight(sw);
+    if(output1.innerHTML < 0) 
+      arc(0, 0, map(output1.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(output1.innerHTML >= 0) 
+      arc(0, 0, map(output1.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+    pop();
 
-        // C - G - D - A - E 
-        if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-          env.setRange(attackLevel, releaseLevel);
-          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play();
-        }
-      }
-    }
-    if(playingRight) {
-      if(radiosRight_value != null ){
-        if(output2.innerHTML > 0)
-          attackTime = map(output2.innerHTML, 0, 8, 0, 1);
-        else
-          attackTime = map(output2.innerHTML, -8, 0, 1, 0);
-        // WAVEFORM
-        if(radiosRight_value == "opt5")
-          osc.setType('sine');
-        else if(radiosRight_value == "opt6")
-          osc.setType('triangle');
-        else if(radiosRight_value == "opt7")
-          osc.setType('square');
-        else if(radiosRight_value == "opt8")
-          osc.setType('sawtooth');
-
-        osc.amp(env);
-
-        // C - G - D - A - E 
-        if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-          env.setRange(attackLevel, releaseLevel);
-          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play();
-        }
-      }
-    }
+    push();
+    translate(width/1.21, height/2);
+    if(output2double.innerHTML > 0)
+      sw = int(map(output2double.innerHTML, 0, 8, 1, 25));
+    if(output2double.innerHTML <= 0)
+      sw = int(map(output2double.innerHTML, -8, 0, 25, 1));
+    strokeWeight(sw);
+    if(output2.innerHTML < 0) 
+      arc(0, 0, map(output2.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(output2.innerHTML >= 0) 
+      arc(0, 0, map(output2.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+    pop()
   }
 
   // TEST 3 | WAVEFORM + REVERB
   if(findTest("test3Bol").active) {
-    radioButtons = 1;
-    slider = 1;
-    sliderDouble = 0;
+    
 
-    //let dryWet;
-    let reverbTime, decayRate = 2;
-
-    if(playingLeft){
-      if(radiosLeft_value != null){
-        if(output1.innerHTML > 0)
-          reverbTime = map(output1.innerHTML, 0, 8, 0, 10);
-        else
-          reverbTime = map(output1.innerHTML, -8, 0, 10, 0);
-
-        /* com... polySynth? ou oscilador?
-        // note duration (in seconds)
-        let dur = 1.5;
-
-        // time from now (in seconds)
-        let time = 0;
-
-        // velocity (volume, from 0 to 1)
-        let vel = 0.1;
-
-        // notes can overlap with each other
-        polySynth.play('G2', vel, 0, dur);
-        polySynth.play('C3', vel, time += 1/3, dur);
-        polySynth.play('G3', vel, time += 1/3, dur);
-        */
-
-        // WAVEFORM
-        if(radiosLeft_value == "opt1")
-          osc.setType('sine');
-        else if(radiosLeft_value == "opt2")
-          osc.setType('triangle');
-        else if(radiosLeft_value == "opt3")
-          osc.setType('square');
-        else if(radiosLeft_value == "opt4")
-          osc.setType('sawtooth');
-        
-        osc.amp(0.1, 0)
-
-        // C - G - D - A - E 
-        if (frameCount % 100 == 0){
-          //osc.disconnect(); ?? check
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-          osc.connect(reverb);
-          reverb.set(reverbTime,decayRate);
-        }
-
-        //polySynth.connect(reverb);
-        // 0-10 second reverbTime, 0-100% decayRate, reverse
-        //reverb.drywet(dryWet);
-      }
-    }
-    if(playingRight) {
-      if(radiosRight_value != null ){
-        
-        if(output2.innerHTML > 0)
-          reverbTime = map(output2.innerHTML, 0, 8, 0, 10);
-        else
-          reverbTime = map(output2.innerHTML, -8, 0, 10, 0);
-
-        /* com... polySynth? ou oscilador?
-        // note duration (in seconds)
-        let dur = 1.5;
-
-        // time from now (in seconds)
-        let time = 0;
-
-        // velocity (volume, from 0 to 1)
-        let vel = 0.1;
-
-        // notes can overlap with each other
-        polySynth.play('G2', vel, 0, dur);
-        polySynth.play('C3', vel, time += 1/3, dur);
-        polySynth.play('G3', vel, time += 1/3, dur);
-        */
-
-        // WAVEFORM
-        if(radiosRight_value == "opt5")
-          osc.setType('sine');
-        else if(radiosRight_value == "opt6")
-          osc.setType('triangle');
-        else if(radiosRight_value == "opt7")
-          osc.setType('square');
-        else if(radiosRight_value == "opt8")
-          osc.setType('sawtooth');
-        
-        osc.amp(0.1, 0.1)
-        // C - G - D - A - E 
-        if (frameCount % 100 == 0){
-          //osc.disconnect(); ?? check
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-          osc.connect(reverb);
-          reverb.set(reverbTime,2);
-        }
-         
-        //polySynth.connect(reverb);
-        // 0-10 second reverbTime, 0-100% decayRate, reverse
-        //reverb.drywet(dryWet);
-      }
-    }
   }
 
   // TEST 4 | WAVEFORM + DELAY
   if(findTest("test4Bol").active) {
     
-    radioButtons = 1;
-    slider = 1;
-    sliderDouble = 0;
-
-    let delayTime = 0.12;
-    let feedback = 0.7;
-    let filterFreq = 2300;
     
-    if(playingLeft){
-      if(radiosLeft_value != null){
-        if(output1.innerHTML > 0)
-          delayTime = map(output1.innerHTML, 0, 8, 0.0, 0.9);
-        else
-          delayTime = map(output1.innerHTML, -8, 0, 0.9, 0.0);
-        // WAVEFORM
-        if(radiosLeft_value == "opt1")
-          osc.setType('sine');
-        else if(radiosLeft_value == "opt2")
-          osc.setType('triangle');
-        else if(radiosLeft_value == "opt3")
-          osc.setType('square');
-        else if(radiosLeft_value == "opt4")
-          osc.setType('sawtooth') ;
-
-        osc.amp(0.1, 0.1);
-        // delay.process(source, delayTime (in seconds), feedback, filter frequency)
-        delay.process(osc, delayTime, feedback, filterFreq);
-
-        // C - G - D - A - E 
-        if (frameCount % 50 == 0){
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        }
-      }
-    }
-    if(playingRight) {
-      if(radiosRight_value != null ){
-        if(output2.innerHTML > 0)
-          delayTime = map(output2.innerHTML, 0, 8, 0.0, 0.9);
-        else
-          delayTime = map(output2.innerHTML, -8, 0, 0.9, 0.0);
-        // WAVEFORM
-        if(radiosRight_value == "opt5")
-          osc.setType('sine');
-        else if(radiosRight_value == "opt6")
-          osc.setType('triangle');
-        else if(radiosRight_value == "opt7")
-          osc.setType('square');
-        else if(radiosRight_value == "opt8")
-          osc.setType('sawtooth') ;
-
-        osc.amp(0.1, 0.1);
-        // delay.process(source, delayTime (in seconds), feedback, filter frequency)
-        delay.process(osc, delayTime, feedback, filterFreq);
-
-        // C - G - D - A - E 
-        if (frameCount % 50 == 0){
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        }
-      }
-    }
   }
 
   // TEST 5 | ATTACK + RELEASE
   if(findTest("test5Bol").active) {
-    radioButtons = 0;
-    slider = 1;
-    sliderDouble = 1;
-    let attackLevel = 1.0;
-    let releaseLevel = 0;
-    let attackTime = 0.001;
-    let decayTime = 0.2;
-    let susPercent = 0.2;
-    let releaseTime = 0;
-    if(playingLeft){
-      if(output1.innerHTML > 0)
-        attackTime = map(output1.innerHTML, 0, 8, 0, 1);
-      else
-        attackTime = map(output1.innerHTML, -8, 0, 1, 0);
-
-      if(output1double.innerHTML > 0)
-        releaseTime = map(output1double.innerHTML, 0, 8, 0, 1);
-      else
-        releaseTime = map(output1double.innerHTML, -8, 0, 1, 0);
-
-      osc.amp(env);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
-      }
-    }
-    if(playingRight) {
-      if(output2.innerHTML > 0)
-        attackTime = map(output2.innerHTML, 0, 8, 0, 1);
-      else
-        attackTime = map(output2.innerHTML, -8, 0, 1, 0);
-
-      if(output2double.innerHTML > 0)
-        releaseTime = map(output2double.innerHTML, 0, 8, 0, 1);
-      else
-        releaseTime = map(output2double.innerHTML, -8, 0, 1, 0);
-
-      osc.amp(env);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
-      }
-    }
-
-    /* BEFORE: PAN LEFT AND RIGHT
-    osc.setType('sine'); // Sine, Triangle, Square and Sawtooth
-    if(playingLeft){
-      osc.start();
-      osc.freq(500);
-      osc.amp(100);
-      if(output1.innerHTML <= -4)
-        osc.pan(map(output1.innerHTML, -8, -4, 0, -1));
-      else if(output1.innerHTML <= 0)
-        osc.pan(map(output1.innerHTML, -4, 0, -1, 0)); 
-      else if(output1.innerHTML <= 4)
-        osc.pan(map(output1.innerHTML, 0, 4, 0, 1));
-      else if(output1.innerHTML <= 8)
-        osc.pan(map(output1.innerHTML, 4, 8, 1, 0)); 
-    }
-    if(playingRight){
-      osc.start();
-      osc.freq(500);
-      osc.amp(100);
-      if(output2.innerHTML <= -4)
-        osc.pan(map(output2.innerHTML, -8, -4, 0, -1));
-      else if(output2.innerHTML <= 0)
-        osc.pan(map(output1.innerHTML, -4, 0, -1, 0)); 
-      else if(output2.innerHTML <= 4)
-        osc.pan(map(output2.innerHTML, 0, 4, 0, 1));
-      else if(output2.innerHTML <= 8)
-        osc.pan(map(output2.innerHTML, 4, 8, 1, 0)); 
-    } */
+    
   }
 
   // TEST 6 | ATTACK AND REVERB - is off?
   if(findTest("test6Bol").active) {
-    radioButtons = 0;
-    slider = 1;
-    sliderDouble = 1;
-
-    let attackLevel = 1.0;
-    let releaseLevel = 0;
-    let attackTime = 0.001;
-    let decayTime = 0.2;
-    let susPercent = 0.2;
-    let releaseTime = 0;
-
-    //let dryWet;
-    let reverbTime;
-    let decayRate = 2;
-
-    if(playingLeft){
-      if(output1.innerHTML > 0)
-        attackTime = map(output1.innerHTML, 0, 8, 0, 1);
-      else
-        attackTime = map(output1.innerHTML, -8, 0, 1, 0);
-
-      if(output1double.innerHTML > 0)
-        reverbTime = map(output1double.innerHTML, 0, 8, 0, 10);
-      else
-        reverbTime = map(output1double.innerHTML, -8, 0, 10, 0);
-        
-      osc.amp(env);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        osc.connect(reverb);
-        reverb.set(reverbTime,decayRate);
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
-      }
-    }
-    if(playingRight) {
-      if(output2.innerHTML > 0)
-        attackTime = map(output2.innerHTML, 0, 8, 0, 1);
-      else
-        attackTime = map(output2.innerHTML, -8, 0, 1, 0);
-
-      if(output2double.innerHTML > 0)
-        reverbTime = map(output2double.innerHTML, 0, 8, 0, 10);
-      else
-        reverbTime = map(output2double.innerHTML, -8, 0, 10, 0);
-
-      osc.amp(env);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        osc.connect(reverb);
-        reverb.set(reverbTime,decayRate);
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
-      }
-    }
-    /*
-    //osc.setType('sine'); // Sine, Triangle, Square and Sawtooth
-    if(playingLeft){
-      // attack time in seconds, attack level 0.0 to 1.0, same for decay
-      slider1.oninput = function() {
-        output1.innerHTML = this.value;
-        env = new p5.Envelope(map(output1.innerHTML, -8, 8, 0, 4), 0.5, map(output1.innerHTML, -8, 8, 0, 4), 0.5);
-        osc.start();
-        osc.freq(500);
-        osc.amp(0);
-        env.play(osc);
-      }
-    }
-    if(playingRight){
-      // attack time in seconds, attack level 0.0 to 1.0, same for decay
-      slider1.oninput = function() {
-        output2.innerHTML = this.value;
-        env = new p5.Envelope(map(output2.innerHTML, -8, 8, 0, 4), 0.5, map(output2.innerHTML, -8, 8, 0, 4), 0.5);
-        osc.start();
-        osc.freq(500);
-        osc.amp(0);
-        env.play(osc);
-      }
-    } */
+  
   }
  
   // TEST 7 |  ATTACK + DELAY
   if(findTest("test7Bol").active) {
-    radioButtons = 0;
-    slider = 1;
-    sliderDouble = 1;
-
-    let attackLevel = 1.0;
-    let releaseLevel = 0;
-    let attackTime = 0.001;
-    let decayTime = 0.2;
-    let susPercent = 0.2;
-    let releaseTime = 0;
-
-    let delayTime = 0.12;
-    let feedback = 0.7;
-    let filterFreq = 2300;
-
-    if(playingLeft){
-      if(output1.innerHTML > 0)
-        attackTime = map(output1.innerHTML, 0, 8, 0, 1);
-      else
-        attackTime = map(output1.innerHTML, -8, 0, 1, 0);
-
-      if(output1double.innerHTML > 0)
-        delayTime = map(output1double.innerHTML, 0, 8, 0.0, 0.9);
-      else
-        delayTime = map(output1double.innerHTML, -8, 0, 0.9, 0.0);
-        
-      osc.amp(env);
-
-      // delay.process(source, delayTime (in seconds), feedback, filter frequency)
-      delay.process(osc, delayTime, feedback, filterFreq);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
-      }
-    }
-    if(playingRight) {
-      if(output2.innerHTML > 0)
-        attackTime = map(output2.innerHTML, 0, 8, 0, 1);
-      else
-        attackTime = map(output2.innerHTML, -8, 0, 1, 0);
-
-      if(output2double.innerHTML > 0)
-        reverbTime = map(output2double.innerHTML, 0, 8, 0, 10);
-      else
-        reverbTime = map(output2double.innerHTML, -8, 0, 10, 0);
-
-      osc.amp(env);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        osc.connect(reverb);
-        reverb.set(reverbTime,decayRate);
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
-      }
-    }
+    
   }
 
   // TEST 8 | RELEASE + REVERB
   if(findTest("test8Bol").active) {
-    radioButtons = 0;
-    slider = 1;
-    sliderDouble = 1;
-
-    let attackLevel = 1.0;
-    let releaseLevel = 0;
-    let attackTime = 0.001;
-    let decayTime = 0.2;
-    let susPercent = 0.2;
-    let releaseTime = 0;
-
-    //let dryWet;
-    let reverbTime, decayRate = 2;
-
-    if(playingLeft){
-      if(output1.innerHTML > 0)
-        releaseTime = map(output1.innerHTML, 0, 8, 0, 1);
-      else
-        releaseTime = map(output1.innerHTML, -8, 0, 1, 0);
-
-      if(output1double.innerHTML > 0)
-        reverbTime = map(output1double.innerHTML, 0, 8, 0, 10);
-      else
-        reverbTime = map(output1double.innerHTML, -8, 0, 10, 0);
-      
-      osc.amp(env);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        osc.connect(reverb);
-        reverb.set(reverbTime,decayRate);
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
-      }
-    }
-    if(playingRight) {
-      if(output2.innerHTML > 0)
-        releaseTime = map(output2.innerHTML, 0, 8, 0, 1);
-      else
-        releaseTime = map(output2.innerHTML, -8, 0, 1, 0);
-
-      if(output2double.innerHTML > 0)
-        reverbTime = map(output2double.innerHTML, 0, 8, 0, 10);
-      else
-        reverbTime = map(output2double.innerHTML, -8, 0, 10, 0);
-      
-      osc.amp(env);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        osc.connect(reverb);
-        reverb.set(reverbTime,decayRate);
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
-      }
-    }
+    
   }
 
   // TEST 9 | RELEASE + DELAY
   if(findTest("test9Bol").active) {
-    radioButtons = 0;
-    slider = 1;
-    sliderDouble = 1;
-
-    let attackLevel = 1.0;
-    let releaseLevel = 0;
-    let attackTime = 0.001;
-    let decayTime = 0.2;
-    let susPercent = 0.2;
-    let releaseTime = 0;
-
-    let delayTime = 0.12;
-    let feedback = 0.7;
-    let filterFreq = 2300;
-
-    if(playingLeft){
-      if(output1.innerHTML > 0)
-        releaseTime = map(output1.innerHTML, 0, 8, 0, 1);
-      else
-        releaseTime = map(output1.innerHTML, -8, 0, 1, 0);
-
-      if(output1double.innerHTML > 0)
-        delayTime = map(output1double.innerHTML, 0, 8, 0.0, 0.9);
-      else
-        delayTime = map(output1double.innerHTML, -8, 0, 0.9, 0.0);
-        
-      osc.amp(env);
-
-      // delay.process(source, delayTime (in seconds), feedback, filter frequency)
-      delay.process(osc, delayTime, feedback, filterFreq);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
-      }
-    }
-    if(playingRight) {
-      if(output2.innerHTML > 0)
-        releaseTime = map(output2.innerHTML, 0, 8, 0, 1);
-      else
-        releaseTime = map(output2.innerHTML, -8, 0, 1, 0);
-
-      if(output2double.innerHTML > 0)
-        delayTime = map(output2double.innerHTML, 0, 8, 0.0, 0.9);
-      else
-        delayTime = map(output2double.innerHTML, -8, 0, 0.9, 0.0);
-
-      osc.amp(env);
-      
-      // delay.process(source, delayTime (in seconds), feedback, filter frequency)
-      delay.process(osc, delayTime, feedback, filterFreq);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
-      }
-    }
+   
   }
 
   // TEST 10 | REVERB + DELAY
   if(findTest("test10Bol").active) {
-    radioButtons = 0;
-    slider = 1;
-    sliderDouble = 1;
-
-    //let dryWet;
-    let reverbTime, decayRate = 2;
-
-    let delayTime = 0.12;
-    let feedback = 0.7;
-    let filterFreq = 2300;
-
-    if(playingLeft){
-      if(output1.innerHTML > 0)
-        reverbTime = map(output1.innerHTML, 0, 8, 0, 10);
-      else
-        reverbTime = map(output1.innerHTML, -8, 0, 10, 0);
-
-      if(output1double.innerHTML > 0)
-        delayTime = map(output1double.innerHTML, 0, 8, 0.0, 0.9);
-      else
-        delayTime = map(output1double.innerHTML, -8, 0, 0.9, 0.0);
-        
-      osc.amp(0.5);
-
-      // delay.process(source, delayTime (in seconds), feedback, filter frequency)
-      delay.process(osc, delayTime, feedback, filterFreq);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        osc.connect(reverb);
-        reverb.set(reverbTime,decayRate);
-      }
-    }
-    if(playingRight) {
-      if(output2.innerHTML > 0)
-        reverbTime = map(output2.innerHTML, 0, 8, 0, 10);
-      else
-        reverbTime = map(output2.innerHTML, -8, 0, 10, 0);
-
-      if(output2double.innerHTML > 0)
-        delayTime = map(output2double.innerHTML, 0, 8, 0.0, 0.9);
-      else
-        delayTime = map(output2double.innerHTML, -8, 0, 0.9, 0.0);
-        
-      osc.amp(0.5);
-
-      // delay.process(source, delayTime (in seconds), feedback, filter frequency)
-      delay.process(osc, delayTime, feedback, filterFreq);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        osc.connect(reverb);
-        reverb.set(reverbTime,decayRate);
-      }
-    }
+    
   }
-  
+
 }
 
 function show(item){
