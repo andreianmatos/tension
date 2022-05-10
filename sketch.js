@@ -55,10 +55,11 @@ function setup() {
   for(let i=1; i < 21; i++)
     tests.push(new Test('test' + i + 'Bol'));
 
-  currentTestBol = 'test' + randomIntFromInterval(1,20) + 'Bol';
+  var randtestNr = randomIntFromInterval(1,20);
+  currentTestBol = 'test' + randtestNr + 'Bol';
   findTest(currentTestBol).active = 1;
   currentTest(currentTestBol);
-  undoneTests = undoneTests.filter(item => item !== currentTestBol);
+  undoneTests = undoneTests.filter(item => item !== randtestNr);
 
   var radiosLeft = document.getElementsByName('radioLeft');
   var radiosRight = document.getElementsByName('radioRight');
@@ -1777,7 +1778,6 @@ function chooseNextTest(){
       break;
     }
     if(undoneTests.includes(newTestNr)){
-      console.log("FIRST" + undoneTests)
       chosen = 1;
     }
   }
