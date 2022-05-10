@@ -552,14 +552,14 @@ function draw() {
     }
     if(playingRight) {
       if(output2.innerHTML > 0)
-        decayTime = map(output2.innerHTML, 0, 8, 0, 1);
+        attackTime = map(output2.innerHTML, 0, 8, 0, 1);
       else
-        decayTime = map(output2.innerHTML, -8, 0, 1, 0);
+        attackTime = map(output2.innerHTML, -8, 0, 1, 0);
 
       if(output2double.innerHTML > 0)
-        reverbTime = map(output2double.innerHTML, 0, 8, 0, 10);
+        decayTime = map(output2double.innerHTML, 0, 8, 0, 1);
       else
-        reverbTime = map(output2double.innerHTML, -8, 0, 10, 0);
+        decayTime = map(output2double.innerHTML, -8, 0, 1, 0);
 
       osc.amp(env);
 
@@ -1783,8 +1783,6 @@ function chooseNextTest(){
   }
   // delete the new current test of the undone tests list
   undoneTests = undoneTests.filter(item => item !== newTestNr);
-  console.log("HER" +newTestNr)
-  console.log("LAST" +undoneTests)
   next(newTestBol);
 
 }
