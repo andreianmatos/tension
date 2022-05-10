@@ -352,9 +352,9 @@ function draw() {
       if(radiosRight_value != null ){
         
         if(output2.innerHTML > 0)
-          decayTime = map(output1.innerHTML, 0, 8, 0, 1);
+          decayTime = map(output2.innerHTML, 0, 8, 0, 1);
         else
-          decayTime = map(output1.innerHTML, -8, 0, 1, 0);
+          decayTime = map(output2.innerHTML, -8, 0, 1, 0);
 
         // WAVEFORM
         if(radiosRight_value == "2.1")
