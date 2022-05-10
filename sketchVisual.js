@@ -13,7 +13,8 @@ let tests = [];
 
 let testNumber = 1;
 
-var slider1, output1;
+var slider1, slider1double, slider2, slider2double;
+var output1, output1double, output2, output2double;
 
 var playingLeft = 0, playingRight = 0;
 var w, osc, env;
@@ -124,14 +125,12 @@ function draw() {
   }
 
   var radiosLeft = document.getElementsByName('radioLeft');
-  var radiosLeft_value;
   for(var i = 0; i < radiosLeft.length; i++){
       if(radiosLeft[i].checked){
         radiosLeft_value = radiosLeft[i].value;
       }
   }
   var radiosRight = document.getElementsByName('radioRight');
-  var radiosRight_value;
   for(var i = 0; i < radiosRight.length; i++){
       if(radiosRight[i].checked){
         radiosRight_value = radiosRight[i].value;

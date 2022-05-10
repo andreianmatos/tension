@@ -13,17 +13,30 @@
         
         <div class="about" >
 
-            <p class="title"><b>TEST DATA</b></p> 
+            <p class="title"><b>Thank you! Please email us this test data! :)</b></p> 
                         
             <div id="results">
                 results
             </div>
+            
         </div>
                                                 
     </body>
     <script>
         function getTestResults() {
             document.getElementById("results").innerHTML = window.localStorage.getItem('testResults');
+            sendEmail();
+        }
+
+        function sendEmail() { 
+            var currentdate = new Date(); 
+            var datetime = currentdate.getDate() + "/"
+                            + (currentdate.getMonth()+1)  + "/" 
+                            + currentdate.getFullYear() + " @ "  
+                            + currentdate.getHours() + ":"  
+                            + currentdate.getMinutes() + ":" 
+                            + currentdate.getSeconds();
+            window.location="mailto:andreianmatos@tecnico.ulisboa.pt?subject=Results "+datetime+"&body="+document.getElementById("results").innerHTML;
         }
     </script>
 </html>

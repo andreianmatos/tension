@@ -431,7 +431,7 @@ label {
   font-size: 20px;
   text-align: center;
   left: 20.9%;
-  top: 170%;
+  top: 171%;
 }
 #textGridTopR{
   position: absolute;
@@ -445,7 +445,7 @@ label {
   font-size: 20px;
   text-align: left;
   left: 35.2%;
-  top: 170%;
+  top: 171%;
 }
 #textGridTopL{
   position: absolute;
@@ -459,7 +459,7 @@ label {
   font-size: 20px;
   text-align: left;
   left: 6.1%;
-  top: 170%;
+  top: 171%;
 }
 
 #textQ2 {
@@ -555,7 +555,7 @@ label {
   font-size: 20px;
   text-align: center;
   left: 72%;
-  top: 170%;
+  top: 171%;
 }
 #textGridTopR2{
   position: absolute;
@@ -569,7 +569,7 @@ label {
   font-size: 20px;
   text-align: left;
   left: 86.5%;
-  top: 170%;
+  top: 171%;
 }
 #textGridTopL2{
   position: absolute;
@@ -583,7 +583,7 @@ label {
   font-size: 20px;
   text-align: left;
   left: 57%;
-  top: 170%;
+  top: 171%;
 }
 
 .playButton:hover:active{

@@ -17,6 +17,7 @@ var playingLeft = 0, playingRight = 0;
 var w, osc, env;
 
 let slider = 0, sliderDouble = 0, radioButtons = 0;
+var radiosLeft_value, radiosRight_value;
 
 let currentTestBol, doubleTest, imageTest, soundTest;
 let tests = [], undoneTests = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
@@ -55,8 +56,14 @@ function setup() {
     tests.push(new Test('test' + i + 'Bol'));
 
   currentTestBol = 'test' + randomIntFromInterval(1,20) + 'Bol';
+  findTest(currentTestBol).active = 1;
   currentTest(currentTestBol);
   undoneTests = undoneTests.filter(item => item !== currentTestBol);
+
+  var radiosLeft = document.getElementsByName('radioLeft');
+  var radiosRight = document.getElementsByName('radioRight');
+  radiosLeft[Math.floor(Math.random() * 4)].checked = true;
+  radiosRight[Math.floor(Math.random() * 4 )].checked = true;
 
   //sound prep
   osc = new p5.Oscillator();
@@ -80,10 +87,18 @@ function draw() {
   if(imageTest){
     document.getElementById("playL").style.display = 'none';
     document.getElementById("playR").style.display = 'none';  
+    document.getElementById("textQ2").innerHTML = '<h2>&#8595; First consider the chosen image on the left &#8595;</h2>';  
+    document.getElementById("textQ3").innerHTML = '<h2>From 1 to 10, how would you rate the image in terms of tension?<input type="number" id="tensionNumber" min="1" max="10"></h2>';  
+    document.getElementById("textQ5").innerHTML = '<h2>&#8595; First consider the chosen image on the left &#8595;</h2>';  
+    document.getElementById("textQ6").innerHTML = '<h2>From 1 to 10, how would you rate the image in terms of tension?<input type="number" id="tensionNumber2" min="1" max="10"></h2>';
   }
   if(soundTest){
     document.getElementById("playL").style.display = 'block';
     document.getElementById("playR").style.display = 'block';  
+    document.getElementById("textQ2").innerHTML = '<h2>&#8595; First consider the chosen sound on the left &#8595;</h2>';  
+    document.getElementById("textQ3").innerHTML = '<h2>From 1 to 10, how would you rate the sound in terms of tension?<input type="number" id="tensionNumber" min="1" max="10"></h2>';  
+    document.getElementById("textQ5").innerHTML = '<h2>&#8595; First consider the chosen sound on the left &#8595;</h2>';  
+    document.getElementById("textQ6").innerHTML = '<h2>From 1 to 10, how would you rate the sound in terms of tension?<input type="number" id="tensionNumber2" min="1" max="10"></h2>';
   }
   
   // update the current slider 1 and 2 value
@@ -137,44 +152,25 @@ function draw() {
   }
 
   var radiosLeft = document.getElementsByName('radioLeft');
-  var radiosLeft_value;
   for(var i = 0; i < radiosLeft.length; i++){
       if(radiosLeft[i].checked){
         radiosLeft_value = radiosLeft[i].value;
       }
   }
   var radiosRight = document.getElementsByName('radioRight');
-  var radiosRight_value;
   for(var i = 0; i < radiosRight.length; i++){
       if(radiosRight[i].checked){
         radiosRight_value = radiosRight[i].value;
       }
   }
-  //console.log("L"+radiosLeft_value);
-  //console.log("R"+radiosRight_value);
 
   if(!playingLeft && !playingRight){
     osc.start();
     osc.freq(0);
     osc.amp(0);
-    //noise.amp(0);
   }
 
-  /* AMPLITUDE
-  if(playingLeft){
-    if(output1.innerHTML > 0)
-      osc.amp(map(output1.innerHTML, 0, 8, 0, 1));
-    else
-      osc.amp(map(output1.innerHTML, -8, 0, 1, 0));
-  }
-  if(playingRight){
-    if(output2.innerHTML > 0)
-      osc.amp(map(output2.innerHTML, 0, 8, 0, 1));
-    else
-      osc.amp(map(output2.innerHTML, -8, 0, 1, 0));
-  }*/
- 
-  // TEST 1 | WAVEFORM + ATTACK (TIME AND VOLUME? ONLY TIME?)
+  // TEST 1 | WAVEFORM + ATTACK 
   if(findTest("test1Bol").active) {
 
     imageTest = 0;
@@ -197,20 +193,20 @@ function draw() {
         else
           attackTime = map(output1.innerHTML, -8, 0, 1, 0);
         // WAVEFORM
-        if(radiosLeft_value == "opt1")
+        if(radiosLeft_value == "1.1")
           osc.setType('sine');
-        else if(radiosLeft_value == "opt2")
+        else if(radiosLeft_value == "1.2")
           osc.setType('triangle');
-        else if(radiosLeft_value == "opt3")
+        else if(radiosLeft_value == "1.3")
           osc.setType('square');
-        else if(radiosLeft_value == "opt4")
+        else if(radiosLeft_value == "1.4")
           osc.setType('sawtooth');
 
         osc.amp(env);
-
-        // C - G - D - A - E 
+ 
+        // C - G - D - A - E (before) C2 C3 C4 (now)
         if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
+          osc.freq(midiToFreq(int(random(36, 48, 60))));
           env.setRange(attackLevel, releaseLevel);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.play();
@@ -224,20 +220,19 @@ function draw() {
         else
           attackTime = map(output2.innerHTML, -8, 0, 1, 0);
         // WAVEFORM
-        if(radiosRight_value == "opt5")
+        if(radiosRight_value == "2.1")
           osc.setType('sine');
-        else if(radiosRight_value == "opt6")
+        else if(radiosRight_value == "2.2")
           osc.setType('triangle');
-        else if(radiosRight_value == "opt7")
+        else if(radiosRight_value == "2.3")
           osc.setType('square');
-        else if(radiosRight_value == "opt8")
+        else if(radiosRight_value == "2.4")
           osc.setType('sawtooth');
 
         osc.amp(env);
 
-        // C - G - D - A - E 
         if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
+          osc.freq(midiToFreq(int(random(36, 48, 60))));
           env.setRange(attackLevel, releaseLevel);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.play();
@@ -269,20 +264,20 @@ function draw() {
         else
           releaseTime = map(output1.innerHTML, -8, 0, 1, 0);
         // WAVEFORM
-        if(radiosLeft_value == "opt1")
+        if(radiosLeft_value == "1.1")
           osc.setType('sine');
-        else if(radiosLeft_value == "opt2")
+        else if(radiosLeft_value == "1.2")
           osc.setType('triangle');
-        else if(radiosLeft_value == "opt3")
+        else if(radiosLeft_value == "1.3")
           osc.setType('square');
-        else if(radiosLeft_value == "opt4")
+        else if(radiosLeft_value == "1.4")
           osc.setType('sawtooth') ;
 
         osc.amp(env);
 
-        // C - G - D - A - E 
+        //C2 C3 C4 
         if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
+          osc.freq(midiToFreq(int(random(36, 48, 60))));
           env.setRange(attackLevel, releaseLevel);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.play();
@@ -292,24 +287,24 @@ function draw() {
     if(playingRight) {
       if(radiosRight_value != null ){
         if(output2.innerHTML > 0)
-          attackTime = map(output2.innerHTML, 0, 8, 0, 1);
+          releaseTime = map(output2.innerHTML, 0, 8, 0, 1);
         else
-          attackTime = map(output2.innerHTML, -8, 0, 1, 0);
+          releaseTime = map(output2.innerHTML, -8, 0, 1, 0);
         // WAVEFORM
-        if(radiosRight_value == "opt5")
+        if(radiosRight_value == "2.1")
           osc.setType('sine');
-        else if(radiosRight_value == "opt6")
+        else if(radiosRight_value == "2.2")
           osc.setType('triangle');
-        else if(radiosRight_value == "opt7")
+        else if(radiosRight_value == "2.3")
           osc.setType('square');
-        else if(radiosRight_value == "opt8")
+        else if(radiosRight_value == "2.4")
           osc.setType('sawtooth');
 
         osc.amp(env);
 
-        // C - G - D - A - E 
+        //C2 C3 C4 
         if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
+          osc.freq(midiToFreq(int(random(36, 48, 60))));
           env.setRange(attackLevel, releaseLevel);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.play();
@@ -318,7 +313,7 @@ function draw() {
     }
   }
 
-  // TEST 3 | WAVEFORM + REVERB
+  // TEST 3 | WAVEFORM + DECAY
   if(findTest("test3Bol").active) {
 
     imageTest = 0;
@@ -328,108 +323,75 @@ function draw() {
     slider = 1;
     sliderDouble = 0;
 
-    //let dryWet;
-    let reverbTime, decayRate = 2;
+    let attackLevel = 1.0;
+    let releaseLevel = 0; // to make the note end all the way to silence
+    let attackTime = 0;
+    let decayTime = 0.2;
+    let susPercent = 0.2;
+    let releaseTime = 0.001;
 
     if(playingLeft){
       if(radiosLeft_value != null){
         if(output1.innerHTML > 0)
-          reverbTime = map(output1.innerHTML, 0, 8, 0, 10);
+          decayTime = map(output1.innerHTML, 0, 8, 0, 1);
         else
-          reverbTime = map(output1.innerHTML, -8, 0, 10, 0);
-
-        /* com... polySynth? ou oscilador?
-        // note duration (in seconds)
-        let dur = 1.5;
-
-        // time from now (in seconds)
-        let time = 0;
-
-        // velocity (volume, from 0 to 1)
-        let vel = 0.1;
-
-        // notes can overlap with each other
-        polySynth.play('G2', vel, 0, dur);
-        polySynth.play('C3', vel, time += 1/3, dur);
-        polySynth.play('G3', vel, time += 1/3, dur);
-        */
+          decayTime = map(output1.innerHTML, -8, 0, 1, 0);
 
         // WAVEFORM
-        if(radiosLeft_value == "opt1")
+        if(radiosLeft_value == "1.1")
           osc.setType('sine');
-        else if(radiosLeft_value == "opt2")
+        else if(radiosLeft_value == "1.2")
           osc.setType('triangle');
-        else if(radiosLeft_value == "opt3")
+        else if(radiosLeft_value == "1.3")
           osc.setType('square');
-        else if(radiosLeft_value == "opt4")
+        else if(radiosLeft_value == "1.4")
           osc.setType('sawtooth');
-        
-        osc.amp(0.1, 0)
 
-        // C - G - D - A - E 
+        osc.amp(env);
+        
+        //C2 C3 C4 
         if (frameCount % 100 == 0){
-          //osc.disconnect(); ?? check
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-          osc.connect(reverb);
-          reverb.set(reverbTime,decayRate);
+          osc.freq(midiToFreq(int(random(36, 48, 60))));
+          env.setRange(attackLevel, releaseLevel);
+          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+          env.play();
         }
 
-        //polySynth.connect(reverb);
-        // 0-10 second reverbTime, 0-100% decayRate, reverse
-        //reverb.drywet(dryWet);
       }
     }
     if(playingRight) {
       if(radiosRight_value != null ){
         
         if(output2.innerHTML > 0)
-          reverbTime = map(output2.innerHTML, 0, 8, 0, 10);
+          decayTime = map(output1.innerHTML, 0, 8, 0, 1);
         else
-          reverbTime = map(output2.innerHTML, -8, 0, 10, 0);
-
-        /* com... polySynth? ou oscilador?
-        // note duration (in seconds)
-        let dur = 1.5;
-
-        // time from now (in seconds)
-        let time = 0;
-
-        // velocity (volume, from 0 to 1)
-        let vel = 0.1;
-
-        // notes can overlap with each other
-        polySynth.play('G2', vel, 0, dur);
-        polySynth.play('C3', vel, time += 1/3, dur);
-        polySynth.play('G3', vel, time += 1/3, dur);
-        */
+          decayTime = map(output1.innerHTML, -8, 0, 1, 0);
 
         // WAVEFORM
-        if(radiosRight_value == "opt5")
+        if(radiosRight_value == "2.1")
           osc.setType('sine');
-        else if(radiosRight_value == "opt6")
+        else if(radiosRight_value == "2.2")
           osc.setType('triangle');
-        else if(radiosRight_value == "opt7")
+        else if(radiosRight_value == "2.3")
           osc.setType('square');
-        else if(radiosRight_value == "opt8")
+        else if(radiosRight_value == "2.4")
           osc.setType('sawtooth');
+
+        osc.amp(env);
         
-        osc.amp(0.1, 0.1)
-        // C - G - D - A - E 
+        //C2 C3 C4 
         if (frameCount % 100 == 0){
-          //osc.disconnect(); ?? check
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-          osc.connect(reverb);
-          reverb.set(reverbTime,2);
+          osc.freq(midiToFreq(int(random(36, 48, 60))));
+          env.setRange(attackLevel, releaseLevel);
+          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+          env.play();
         }
-         
-        //polySynth.connect(reverb);
-        // 0-10 second reverbTime, 0-100% decayRate, reverse
-        //reverb.drywet(dryWet);
+
       }
     }
   }
 
-  // TEST 4 | WAVEFORM + DELAY
+  // TEST 4 | WAVEFORM + SUSTAIN
   if(findTest("test4Bol").active) {
 
     imageTest = 0;
@@ -439,59 +401,65 @@ function draw() {
     slider = 1;
     sliderDouble = 0;
 
-    let delayTime = 0.12;
-    let feedback = 0.7;
-    let filterFreq = 2300;
+    let attackLevel = 1.0;
+    let releaseLevel = 0; // to make the note end all the way to silence
+    let attackTime = 0;
+    let decayTime = 0.2;
+    let susPercent = 0.2;
+    let releaseTime = 0.001;
     
     if(playingLeft){
       if(radiosLeft_value != null){
         if(output1.innerHTML > 0)
-          delayTime = map(output1.innerHTML, 0, 8, 0.0, 0.9);
+          susPercent = map(output1.innerHTML, 0, 8, 0.0, 1);
         else
-          delayTime = map(output1.innerHTML, -8, 0, 0.9, 0.0);
+          susPercent = map(output1.innerHTML, -8, 0, 1, 0.0);
+
         // WAVEFORM
         if(radiosLeft_value == "opt1")
           osc.setType('sine');
-        else if(radiosLeft_value == "opt2")
+        else if(radiosLeft_value == "1.2")
           osc.setType('triangle');
-        else if(radiosLeft_value == "opt3")
+        else if(radiosLeft_value == "1.3")
           osc.setType('square');
-        else if(radiosLeft_value == "opt4")
+        else if(radiosLeft_value == "1.4")
           osc.setType('sawtooth') ;
 
-        osc.amp(0.1, 0.1);
-        // delay.process(source, delayTime (in seconds), feedback, filter frequency)
-        delay.process(osc, delayTime, feedback, filterFreq);
+        osc.amp(env);
 
-        // C - G - D - A - E 
-        if (frameCount % 50 == 0){
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
+        //C2 C3 C4 
+        if (frameCount % 100 == 0){
+          osc.freq(midiToFreq(int(random(36, 48, 60))));
+          env.setRange(attackLevel, releaseLevel);
+          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+          env.play();
         }
       }
     }
     if(playingRight) {
       if(radiosRight_value != null ){
         if(output2.innerHTML > 0)
-          delayTime = map(output2.innerHTML, 0, 8, 0.0, 0.9);
+          susPercent = map(output2.innerHTML, 0, 8, 0.0, 1);
         else
-          delayTime = map(output2.innerHTML, -8, 0, 0.9, 0.0);
+          susPercent = map(output2.innerHTML, -8, 0, 1, 0.0);
         // WAVEFORM
-        if(radiosRight_value == "opt5")
+        if(radiosRight_value == "2.1")
           osc.setType('sine');
-        else if(radiosRight_value == "opt6")
+        else if(radiosRight_value == "2.2")
           osc.setType('triangle');
-        else if(radiosRight_value == "opt7")
+        else if(radiosRight_value == "2.3")
           osc.setType('square');
-        else if(radiosRight_value == "opt8")
+        else if(radiosRight_value == "2.4")
           osc.setType('sawtooth') ;
 
-        osc.amp(0.1, 0.1);
-        // delay.process(source, delayTime (in seconds), feedback, filter frequency)
-        delay.process(osc, delayTime, feedback, filterFreq);
+        osc.amp(env);
 
-        // C - G - D - A - E 
-        if (frameCount % 50 == 0){
-          osc.freq(midiToFreq(int(random(60,67,62,69,64))));
+         //C2 C3 C4 
+         if (frameCount % 100 == 0){
+          osc.freq(midiToFreq(int(random(36, 48, 60))));
+          env.setRange(attackLevel, releaseLevel);
+          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+          env.play();
         }
       }
     }
@@ -525,9 +493,9 @@ function draw() {
 
       osc.amp(env);
 
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
+      //C2 C3 C4 
+      if (frameCount % 100 == 0){
+        osc.freq(midiToFreq(int(random(36, 48, 60))));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
@@ -546,46 +514,17 @@ function draw() {
 
       osc.amp(env);
 
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
+      // C2 C3 C4 
+      if (frameCount % 100 == 0){
+        osc.freq(midiToFreq(int(random(36, 48, 60))));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
       }
     }
-
-    /* BEFORE: PAN LEFT AND RIGHT
-    osc.setType('sine'); // Sine, Triangle, Square and Sawtooth
-    if(playingLeft){
-      osc.start();
-      osc.freq(500);
-      osc.amp(100);
-      if(output1.innerHTML <= -4)
-        osc.pan(map(output1.innerHTML, -8, -4, 0, -1));
-      else if(output1.innerHTML <= 0)
-        osc.pan(map(output1.innerHTML, -4, 0, -1, 0)); 
-      else if(output1.innerHTML <= 4)
-        osc.pan(map(output1.innerHTML, 0, 4, 0, 1));
-      else if(output1.innerHTML <= 8)
-        osc.pan(map(output1.innerHTML, 4, 8, 1, 0)); 
-    }
-    if(playingRight){
-      osc.start();
-      osc.freq(500);
-      osc.amp(100);
-      if(output2.innerHTML <= -4)
-        osc.pan(map(output2.innerHTML, -8, -4, 0, -1));
-      else if(output2.innerHTML <= 0)
-        osc.pan(map(output1.innerHTML, -4, 0, -1, 0)); 
-      else if(output2.innerHTML <= 4)
-        osc.pan(map(output2.innerHTML, 0, 4, 0, 1));
-      else if(output2.innerHTML <= 8)
-        osc.pan(map(output2.innerHTML, 4, 8, 1, 0)); 
-    } */
   }
 
-  // TEST 6 | ATTACK AND REVERB - is off?
+  // TEST 6 | ATTACK + DECAY
   if(findTest("test6Bol").active) {
 
     imageTest = 0;
@@ -602,10 +541,6 @@ function draw() {
     let susPercent = 0.2;
     let releaseTime = 0;
 
-    //let dryWet;
-    let reverbTime;
-    let decayRate = 2;
-
     if(playingLeft){
       if(output1.innerHTML > 0)
         attackTime = map(output1.innerHTML, 0, 8, 0, 1);
@@ -613,17 +548,15 @@ function draw() {
         attackTime = map(output1.innerHTML, -8, 0, 1, 0);
 
       if(output1double.innerHTML > 0)
-        reverbTime = map(output1double.innerHTML, 0, 8, 0, 10);
+        decayTime = map(output1.innerHTML, 0, 8, 0, 1);
       else
-        reverbTime = map(output1double.innerHTML, -8, 0, 10, 0);
-        
+        decayTime = map(output1.innerHTML, -8, 0, 1, 0);
+
       osc.amp(env);
 
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        osc.connect(reverb);
-        reverb.set(reverbTime,decayRate);
+      // C2 C3 C4 
+      if (frameCount % 100 == 0){
+        osc.freq(midiToFreq(int(random(36, 48, 60))));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
@@ -631,9 +564,9 @@ function draw() {
     }
     if(playingRight) {
       if(output2.innerHTML > 0)
-        attackTime = map(output2.innerHTML, 0, 8, 0, 1);
+        decayTime = map(output2.innerHTML, 0, 8, 0, 1);
       else
-        attackTime = map(output2.innerHTML, -8, 0, 1, 0);
+        decayTime = map(output2.innerHTML, -8, 0, 1, 0);
 
       if(output2double.innerHTML > 0)
         reverbTime = map(output2double.innerHTML, 0, 8, 0, 10);
@@ -642,43 +575,17 @@ function draw() {
 
       osc.amp(env);
 
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        osc.connect(reverb);
-        reverb.set(reverbTime,decayRate);
+      // C2 C3 C4 
+      if (frameCount % 100 == 0){
+        osc.freq(midiToFreq(int(random(36, 48, 60))));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
       }
     }
-    /*
-    //osc.setType('sine'); // Sine, Triangle, Square and Sawtooth
-    if(playingLeft){
-      // attack time in seconds, attack level 0.0 to 1.0, same for decay
-      slider1.oninput = function() {
-        output1.innerHTML = this.value;
-        env = new p5.Envelope(map(output1.innerHTML, -8, 8, 0, 4), 0.5, map(output1.innerHTML, -8, 8, 0, 4), 0.5);
-        osc.start();
-        osc.freq(500);
-        osc.amp(0);
-        env.play(osc);
-      }
-    }
-    if(playingRight){
-      // attack time in seconds, attack level 0.0 to 1.0, same for decay
-      slider1.oninput = function() {
-        output2.innerHTML = this.value;
-        env = new p5.Envelope(map(output2.innerHTML, -8, 8, 0, 4), 0.5, map(output2.innerHTML, -8, 8, 0, 4), 0.5);
-        osc.start();
-        osc.freq(500);
-        osc.amp(0);
-        env.play(osc);
-      }
-    } */
   }
  
-  // TEST 7 |  ATTACK + DELAY
+  // TEST 7 |  ATTACK + SUSTAIN
   if(findTest("test7Bol").active) {
 
     imageTest = 0;
@@ -695,10 +602,6 @@ function draw() {
     let susPercent = 0.2;
     let releaseTime = 0;
 
-    let delayTime = 0.12;
-    let feedback = 0.7;
-    let filterFreq = 2300;
-
     if(playingLeft){
       if(output1.innerHTML > 0)
         attackTime = map(output1.innerHTML, 0, 8, 0, 1);
@@ -706,18 +609,15 @@ function draw() {
         attackTime = map(output1.innerHTML, -8, 0, 1, 0);
 
       if(output1double.innerHTML > 0)
-        delayTime = map(output1double.innerHTML, 0, 8, 0.0, 0.9);
+        susPercent = map(output1double.innerHTML, 0, 8, 0.0, 1);
       else
-        delayTime = map(output1double.innerHTML, -8, 0, 0.9, 0.0);
+        susPercent = map(output1double.innerHTML, -8, 0, 1, 0.0);
         
       osc.amp(env);
 
-      // delay.process(source, delayTime (in seconds), feedback, filter frequency)
-      delay.process(osc, delayTime, feedback, filterFreq);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
+      // C2 C3 C4
+      if (frameCount % 100 == 0){
+        osc.freq(midiToFreq(int(random(36, 48, 60))));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
@@ -730,17 +630,15 @@ function draw() {
         attackTime = map(output2.innerHTML, -8, 0, 1, 0);
 
       if(output2double.innerHTML > 0)
-        reverbTime = map(output2double.innerHTML, 0, 8, 0, 10);
+        susPercent = map(output1double.innerHTML, 0, 8, 0.0, 1);
       else
-        reverbTime = map(output2double.innerHTML, -8, 0, 10, 0);
-
+        susPercent = map(output1double.innerHTML, -8, 0, 1, 0.0);
+        
       osc.amp(env);
 
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        osc.connect(reverb);
-        reverb.set(reverbTime,decayRate);
+      // C2 C3 C4
+      if (frameCount % 100 == 0){
+        osc.freq(midiToFreq(int(random(36, 48, 60))));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
@@ -748,7 +646,7 @@ function draw() {
     }
   }
 
-  // TEST 8 | RELEASE + REVERB
+  // TEST 8 | RELEASE + DECAY
   if(findTest("test8Bol").active) {
 
     imageTest = 0;
@@ -775,17 +673,15 @@ function draw() {
         releaseTime = map(output1.innerHTML, -8, 0, 1, 0);
 
       if(output1double.innerHTML > 0)
-        reverbTime = map(output1double.innerHTML, 0, 8, 0, 10);
+        decayTime = map(output1double.innerHTML, 0, 8, 0, 1);
       else
-        reverbTime = map(output1double.innerHTML, -8, 0, 10, 0);
+        decayTime = map(output1double.innerHTML, -8, 0, 1, 0);
       
       osc.amp(env);
 
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        osc.connect(reverb);
-        reverb.set(reverbTime,decayRate);
+      // C2 C3 C4
+      if (frameCount % 100 == 0){
+        osc.freq(midiToFreq(int(random(36, 48, 60))));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
@@ -798,17 +694,15 @@ function draw() {
         releaseTime = map(output2.innerHTML, -8, 0, 1, 0);
 
       if(output2double.innerHTML > 0)
-        reverbTime = map(output2double.innerHTML, 0, 8, 0, 10);
+        decayTime = map(output1double.innerHTML, 0, 8, 0, 1);
       else
-        reverbTime = map(output2double.innerHTML, -8, 0, 10, 0);
+        decayTime = map(output1double.innerHTML, -8, 0, 1, 0);
       
       osc.amp(env);
 
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        osc.connect(reverb);
-        reverb.set(reverbTime,decayRate);
+      // C2 C3 C4
+      if (frameCount % 100 == 0){
+        osc.freq(midiToFreq(int(random(36, 48, 60))));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
@@ -816,7 +710,7 @@ function draw() {
     }
   }
 
-  // TEST 9 | RELEASE + DELAY
+  // TEST 9 | RELEASE + SUSTAIN
   if(findTest("test9Bol").active) {
 
     imageTest = 0;
@@ -833,10 +727,6 @@ function draw() {
     let susPercent = 0.2;
     let releaseTime = 0;
 
-    let delayTime = 0.12;
-    let feedback = 0.7;
-    let filterFreq = 2300;
-
     if(playingLeft){
       if(output1.innerHTML > 0)
         releaseTime = map(output1.innerHTML, 0, 8, 0, 1);
@@ -844,18 +734,15 @@ function draw() {
         releaseTime = map(output1.innerHTML, -8, 0, 1, 0);
 
       if(output1double.innerHTML > 0)
-        delayTime = map(output1double.innerHTML, 0, 8, 0.0, 0.9);
+        susPercent = map(output1double.innerHTML, 0, 8, 0.0, 1);
       else
-        delayTime = map(output1double.innerHTML, -8, 0, 0.9, 0.0);
+        susPercent = map(output1double.innerHTML, -8, 0, 1, 0.0);
         
       osc.amp(env);
 
-      // delay.process(source, delayTime (in seconds), feedback, filter frequency)
-      delay.process(osc, delayTime, feedback, filterFreq);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
+      // C2 C3 C4
+      if (frameCount % 100 == 0){
+        osc.freq(midiToFreq(int(random(36, 48, 60))));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
@@ -868,18 +755,15 @@ function draw() {
         releaseTime = map(output2.innerHTML, -8, 0, 1, 0);
 
       if(output2double.innerHTML > 0)
-        delayTime = map(output2double.innerHTML, 0, 8, 0.0, 0.9);
+        susPercent = map(output2double.innerHTML, 0, 8, 0.0, 1);
       else
-        delayTime = map(output2double.innerHTML, -8, 0, 0.9, 0.0);
+        susPercent = map(output2double.innerHTML, -8, 0, 1, 0.0);
 
       osc.amp(env);
       
-      // delay.process(source, delayTime (in seconds), feedback, filter frequency)
-      delay.process(osc, delayTime, feedback, filterFreq);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
+      // C2 C3 C4
+      if (frameCount % 100 == 0){
+        osc.freq(midiToFreq(int(random(36, 48, 60))));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
@@ -887,7 +771,7 @@ function draw() {
     }
   }
 
-  // TEST 10 | REVERB + DELAY
+  // TEST 10 | DECAY + SUSTAIN
   if(findTest("test10Bol").active) {
 
     imageTest = 0;
@@ -897,89 +781,86 @@ function draw() {
     slider = 1;
     sliderDouble = 1;
 
-    //let dryWet;
-    let reverbTime, decayRate = 2;
-
-    let delayTime = 0.12;
-    let feedback = 0.7;
-    let filterFreq = 2300;
+    let attackLevel = 1.0;
+    let releaseLevel = 0;
+    let attackTime = 0.001;
+    let decayTime = 0.2;
+    let susPercent = 0.2;
+    let releaseTime = 0;
 
     if(playingLeft){
       if(output1.innerHTML > 0)
-        reverbTime = map(output1.innerHTML, 0, 8, 0, 10);
+        decayTime = map(output2.innerHTML, 0, 8, 0, 1);
       else
-        reverbTime = map(output1.innerHTML, -8, 0, 10, 0);
+        decayTime = map(output2.innerHTML, -8, 0, 1, 0);
 
       if(output1double.innerHTML > 0)
-        delayTime = map(output1double.innerHTML, 0, 8, 0.0, 0.9);
+        susPercent = map(output2double.innerHTML, 0, 8, 0.0, 1);
       else
-        delayTime = map(output1double.innerHTML, -8, 0, 0.9, 0.0);
+        susPercent = map(output2double.innerHTML, -8, 0, 1, 0.0);
         
-      osc.amp(0.5);
-
-      // delay.process(source, delayTime (in seconds), feedback, filter frequency)
-      delay.process(osc, delayTime, feedback, filterFreq);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        osc.connect(reverb);
-        reverb.set(reverbTime,decayRate);
+      osc.amp(env);
+      
+      // C2 C3 C4
+      if (frameCount % 100 == 0){
+        osc.freq(midiToFreq(int(random(36, 48, 60))));
+        env.setRange(attackLevel, releaseLevel);
+        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+        env.play();
       }
     }
     if(playingRight) {
       if(output2.innerHTML > 0)
-        reverbTime = map(output2.innerHTML, 0, 8, 0, 10);
+        decayTime = map(output2.innerHTML, 0, 8, 0, 1);
       else
-        reverbTime = map(output2.innerHTML, -8, 0, 10, 0);
+        decayTime = map(output2.innerHTML, -8, 0, 1, 0);
 
       if(output2double.innerHTML > 0)
-        delayTime = map(output2double.innerHTML, 0, 8, 0.0, 0.9);
+        susPercent = map(output2double.innerHTML, 0, 8, 0.0, 1);
       else
-        delayTime = map(output2double.innerHTML, -8, 0, 0.9, 0.0);
+        susPercent = map(output2double.innerHTML, -8, 0, 1, 0.0);
         
-      osc.amp(0.5);
-
-      // delay.process(source, delayTime (in seconds), feedback, filter frequency)
-      delay.process(osc, delayTime, feedback, filterFreq);
-
-      // C - G - D - A - E 
-      if (frameCount % 50 == 0){
-        osc.freq(midiToFreq(int(random(60,67,62,69,64))));
-        osc.connect(reverb);
-        reverb.set(reverbTime,decayRate);
+      osc.amp(env);
+      
+      // C2 C3 C4
+      if (frameCount % 100 == 0){
+        osc.freq(midiToFreq(int(random(36, 48, 60))));
+        env.setRange(attackLevel, releaseLevel);
+        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+        env.play();
       }
     }
   }
 
+  // TESTE 11 | SYMMETRY + THICKNESS
   if(findTest("test11Bol").active) {
 
     imageTest = 1;
     soundTest = 0;
 
-     radioButtons = 0;
+    radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
 
     let sw; 
 
     push();
+    noFill();
     translate(width/5, height/2);
     if(output1double.innerHTML > 0)
       sw = int(map(output1double.innerHTML, 0, 8, 1, 25));
     if(output1double.innerHTML <= 0)
       sw = int(map(output1double.innerHTML, -8, 0, 25, 1));
     strokeWeight(sw);
-    setGradient(-150, -100, 300, 200, black, white, X_AXIS, output1.innerHTML);
-
     if(output1.innerHTML < 0) 
       arc(0, 0, map(output1.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
     if(output1.innerHTML >= 0) 
       arc(0, 0, map(output1.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
     arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
-    pop();
+    pop()
 
     push();
+    noFill();
     translate(width/1.21, height/2);
     if(output2double.innerHTML > 0)
       sw = int(map(output2double.innerHTML, 0, 8, 1, 25));
@@ -994,58 +875,612 @@ function draw() {
     pop()
   }
 
+  // TESTE 12 | SYMMETRY + ORIENTATION
   if(findTest("test12Bol").active) {
 
     imageTest = 1;
     soundTest = 0;
+
+    radioButtons = 0;
+    slider = 1;
+    sliderDouble = 1;
+
+    push();
+    noFill();
+    translate(width/5, height/2);
+    strokeWeight(10);
+    let angle = map(output1double.innerHTML, 0, 8, 0, 180);
+    if(output1double.innerHTML > 0)
+      rotate(PI / 180 * angle);
+    if(output1double.innerHTML <= 0)
+    rotate(PI / 180 * angle);
+    if(output1.innerHTML < 0) 
+      arc(0, 0, map(output1.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(output1.innerHTML >= 0) 
+      arc(0, 0, map(output1.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+    pop();
+
+    push();
+    noFill();
+    translate(width/1.21, height/2);
+
+    strokeWeight(10);
+    let angle2 = map(output2double.innerHTML, 0, 8, 0, 180);
+    if(output2double.innerHTML > 0)
+      rotate(PI / 180 * angle2);
+    if(output2double.innerHTML <= 0)
+      rotate(PI / 180 * angle2);
+    if(output2.innerHTML < 0) 
+      arc(0, 0, map(output2.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(output2.innerHTML >= 0) 
+      arc(0, 0, map(output2.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+
+    pop();
   }
   
+  // TESTE 13 | SYMMETRY + IRREGULARITY
   if(findTest("test13Bol").active) {
 
     imageTest = 1;
     soundTest = 0;
+
+    radioButtons = 0;
+    slider = 1;
+    sliderDouble = 1;
+
+    push();
+    noFill();
+    translate(width/5, height/2);
+    strokeWeight(10);
+    //console.log(lerp(5, 5, map(output1double.innerHTML, -8, 0, 0, 1)));
+    let irregularList;
+   
+    if(output1double.innerHTML > 0) {
+      irregularList = [ 1,  map(output1double.innerHTML, 0, 8, 25, 15)];
+      setLineDash(irregularList);  
+    }
+    if(output1double.innerHTML <= 0) {
+      irregularList = [ 1,  map(output1double.innerHTML, -8, 0, 15, 25)];
+      setLineDash(irregularList);  
+    }
+    if(output1.innerHTML < 0) 
+      arc(0, 0, map(output1.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(output1.innerHTML >= 0) 
+      arc(0, 0, map(output1.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+    pop();
+
+    push();
+    noFill();
+    translate(width/1.21, height/2);
+
+    strokeWeight(10);
+    console.log(lerp(5, 5, map(output2double.innerHTML, -8, 0, 0, 1)));
+    let irregularList2;
+   
+    if(output2double.innerHTML > 0) {
+      irregularList2 = [ 1,  map(output2double.innerHTML, 0, 8, 25, 15)];
+      setLineDash(irregularList2);  
+    }
+    if(output2double.innerHTML <= 0) {
+      irregularList2 = [ 1,  map(output2double.innerHTML, -8, 0, 15, 25)];
+      setLineDash(irregularList2);  
+    }
+    if(output2.innerHTML < 0) 
+      arc(0, 0, map(output2.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(output2.innerHTML >= 0) 
+      arc(0, 0, map(output2.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+    pop();
+
   }
 
+  // TESTE 14 | SYMMETRY + ANGULARITY
   if(findTest("test14Bol").active) {
 
     imageTest = 1;
     soundTest = 0;
+
+    radioButtons = 0;
+    slider = 1;
+    sliderDouble = 1;
+
+    push();
+    noFill();
+    translate(width/5, height/2);
+    strokeWeight(10);
+
+    const numVertices = 10;
+    let radius = 100;
+    const spacing = 360 / numVertices;
+
+    let angleChange = 180;
+    let asymmetry = 0, asymmetry2 = 0;
+
+    beginShape();
+
+    for(let i = 0; i < numVertices+1; i++) {
+
+      if(output1double.innerHTML <= 0) {
+        angleChange = map(output1double.innerHTML, -8, 0, 50, 150);
+      }
+      if(output1double.innerHTML > 0) {
+        angleChange = map(output1double.innerHTML, 0, 8, 150, 50);
+      }
+
+      if(output1.innerHTML <= 0) {
+        asymmetry = map(output1.innerHTML, -8, 0, 0, 50)
+        asymmetry2 = map(output1.innerHTML, -8, 0, 0, 10)
+      }
+      if(output1.innerHTML > 0) {
+        asymmetry = map(output1.innerHTML, 0, 8, 50, 0)
+        asymmetry2 = map(output1.innerHTML, 0, 8, 10, 0)
+      }
+
+      const angle = i * spacing;
+      const x = cos(radians(angle)) * radius;
+      const y = sin(radians(angle)) * radius;    
+
+      if(i == 0){
+        vertex(x, y);
+      }
+      
+      if(output1double.innerHTML > 4 || output1double.innerHTML < -4 ){
+        if(i == 0)
+          rotate(PI / 180 * 70);
+        star(0, 0, 150 - angleChange + 30, 100, 10, asymmetry2);
+      }
+      else if(i != 0){
+        if( i < 3 || i > 8)
+          angleChange += asymmetry;  
+        const cAngle = angle - spacing/2;
+        const cX = cos(radians(cAngle)) * angleChange;
+        const cY = sin(radians(cAngle)) * angleChange;
+        quadraticVertex(cX, cY, x, y);
+      }
+    }
+
+    endShape();
+    
+    /*if(output1.innerHTML < 0) 
+      arc(0, 0, map(output1.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(output1.innerHTML >= 0) 
+      arc(0, 0, map(output1.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);*/
+    pop();
+
+    push();
+    noFill();
+    translate(width/1.21, height/2);
+
+    strokeWeight(10);
+   
+    if(output2double.innerHTML > 0) {
+    }
+    if(output2double.innerHTML <= 0) {
+    }
+    if(output2.innerHTML < 0) 
+      arc(0, 0, map(output2.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(output2.innerHTML >= 0) 
+      arc(0, 0, map(output2.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+    pop();
+
   }
   
+  // TESTE 15 | THICKNESS + ORIENTATION
   if(findTest("test15Bol").active) {
 
     imageTest = 1;
     soundTest = 0;
+
+    radioButtons = 0;
+    slider = 1;
+    sliderDouble = 1;
+
+    let sw; 
+
+    push();
+    noFill();
+    translate(width/5, height/2);
+    rectMode(CENTER);
+    if(output1double.innerHTML > 0)
+      sw = int(map(output1double.innerHTML, 0, 8, 1, 25));
+    if(output1double.innerHTML <= 0)
+      sw = int(map(output1double.innerHTML, -8, 0, 25, 1));
+    strokeWeight(sw);
+    let angle = map(output1.innerHTML, 0, 8, 0, 45);
+    if(output1.innerHTML > 0)
+      rotate(PI / 180 * angle);
+    if(output1.innerHTML <= 0)
+    rotate(PI / 180 * angle);
+    rect(0, 0, 200, 200);
+    pop()
+
+    push();
+    noFill();
+    translate(width/1.21, height/2);
+    rectMode(CENTER);
+    if(output2double.innerHTML > 0)
+      sw = int(map(output2double.innerHTML, 0, 8, 1, 25));
+    if(output2double.innerHTML <= 0)
+      sw = int(map(output2double.innerHTML, -8, 0, 25, 1));
+    strokeWeight(sw);
+    let angle2 = map(output2.innerHTML, 0, 8, 0, 45);
+    if(output2.innerHTML > 0)
+      rotate(PI / 180 * angle2);
+    if(output2.innerHTML <= 0)
+    rotate(PI / 180 * angle2);
+    rect(0, 0, 200, 200);
+    pop()
   }
-  
+
+  // TESTE 16 | THICKNESS + IRREGULARITY  
   if(findTest("test16Bol").active) {
 
     imageTest = 1;
     soundTest = 0;
+
+    radioButtons = 0;
+    slider = 1;
+    sliderDouble = 1;
+
+    let sw, irregularList;
+
+    push();
+    noFill();
+    translate(width/5, height/2);
+   
+    if(output1double.innerHTML > 0) {
+      irregularList = [ 1,  map(output1double.innerHTML, 0, 8, 25, 15)];
+      setLineDash(irregularList);  
+    }
+    if(output1double.innerHTML <= 0) {
+      irregularList = [ 1,  map(output1double.innerHTML, -8, 0, 15, 25)];
+      setLineDash(irregularList);  
+    }
+    if(output1.innerHTML > 0) 
+      sw = int(map(output1.innerHTML, 0, 8, 1, 25));
+    if(output1.innerHTML <= 0) 
+      sw = int(map(output1.innerHTML, -8, 0, 25, 1));
+    strokeWeight(sw);
+    ellipse(0,0, 200, 200);
+    pop();
+
+    push();
+    noFill();
+    translate(width/1.21, height/2);output1double
+
+    if(output2double.innerHTML > 0) {
+      irregularList = [ 1,  map(output2double.innerHTML, 0, 8, 25, 15)];
+      setLineDash(irregularList);  
+    }
+    if(output2double.innerHTML <= 0) {
+      irregularList = [ 1,  map(output2double.innerHTML, -8, 0, 15, 25)];
+      setLineDash(irregularList);  
+    }
+    if(output2.innerHTML > 0) 
+      sw = int(map(output2.innerHTML, 0, 8, 1, 25));
+    if(output2.innerHTML <= 0) 
+      sw = int(map(output2.innerHTML, -8, 0, 25, 1));
+    strokeWeight(sw);
+    ellipse(0,0, 200, 200);
+    pop();  
   }
   
+  // TESTE 17 | THICKNESS + ANGULARITY  
   if(findTest("test17Bol").active) {
 
     imageTest = 1;
     soundTest = 0;
+
+    const numVertices = 10;
+    let radius = 100;
+    const spacing = 360 / numVertices;
+
+    let angleChange = 180;
+
+    push();
+    noFill();
+    translate(width/5, height/2);
+    
+    if(output1.innerHTML > 0)
+      sw = int(map(output1.innerHTML, 0, 8, 1, 25));
+    if(output1.innerHTML <= 0)
+      sw = int(map(output1.innerHTML, -8, 0, 25, 1));
+    strokeWeight(sw);
+
+    beginShape();
+
+    for(let i = 0; i < numVertices+1; i++) {
+
+      if(output1double.innerHTML <= 0) {
+        angleChange = map(output1double.innerHTML, -8, 0, 50, 150);
+      }
+      if(output1double.innerHTML > 0) {
+        angleChange = map(output1double.innerHTML, 0, 8, 150, 50);
+      }
+
+      const angle = i * spacing;
+      const x = cos(radians(angle)) * radius;
+      const y = sin(radians(angle)) * radius;
+
+      if(i == 0)
+        vertex(x, y);
+      else if(output1double.innerHTML > 4 || output1double.innerHTML < -4 ){
+        star(0, 0, 150 - angleChange + 30, 100, 10, 0);
+      }
+      else{
+        const cAngle = angle - spacing/2;
+        const cX = cos(radians(cAngle)) * angleChange;
+        const cY = sin(radians(cAngle)) * angleChange;
+        quadraticVertex(cX, cY, x, y);
+      }
+    }
+
+    endShape();
+
+    pop();
+
+    push();
+    noFill();
+    translate(width/1.21, height/2);
+    
+    if(output2.innerHTML > 0)
+      sw = int(map(output2.innerHTML, 0, 8, 1, 25));
+    if(output2.innerHTML <= 0)
+      sw = int(map(output2.innerHTML, -8, 0, 25, 1));
+    strokeWeight(sw);
+
+    beginShape();
+
+    for(let i = 0; i < numVertices+1; i++) {
+
+      if(output2double.innerHTML <= 0) {
+        angleChange = map(output2double.innerHTML, -8, 0, 50, 150);
+      }
+      if(output2double.innerHTML > 0) {
+        angleChange = map(output2double.innerHTML, 0, 8, 150, 50);
+      }
+
+      const angle = i * spacing;
+      const x = cos(radians(angle)) * radius;
+      const y = sin(radians(angle)) * radius;
+
+      if(i == 0)
+        vertex(x, y);
+      else if(output2double.innerHTML > 4 || output2double.innerHTML < -4 ){
+        star(0, 0, 150 - angleChange + 30, 100, 10, 0);
+      }
+      else{
+        const cAngle = angle - spacing/2;
+        const cX = cos(radians(cAngle)) * angleChange;
+        const cY = sin(radians(cAngle)) * angleChange;
+        quadraticVertex(cX, cY, x, y);
+      }
+    }
+
+    endShape();
+
+    pop();
   }
-  
+
+  // TESTE 18 |ORIENTATION + IRREGULARITY  
   if(findTest("test18Bol").active) {
 
     imageTest = 1;
     soundTest = 0;
+
+    radioButtons = 0;
+    slider = 1;
+    sliderDouble = 1;
+
+    let sw, irregularList;
+
+    push();
+    noFill();
+    translate(width/5, height/2);
+
+    rectMode(CENTER);
+    strokeWeight(10);
+   
+    if(output1double.innerHTML > 0) {
+      irregularList = [ 1,  map(output1double.innerHTML, 0, 8, 25, 15)];
+      setLineDash(irregularList);  
+    }
+    if(output1double.innerHTML <= 0) {
+      irregularList = [ 1,  map(output1double.innerHTML, -8, 0, 15, 25)];
+      setLineDash(irregularList);  
+    }
+    let angle = map(output1.innerHTML, 0, 8, 0, 45);
+    if(output1.innerHTML > 0)
+      rotate(PI / 180 * angle);
+    if(output1.innerHTML <= 0)
+    rotate(PI / 180 * angle);
+    rect(0, 0, 200, 200);
+    pop();
+
+    push();
+    noFill();
+    translate(width/1.21, height/2);
+
+    rectMode(CENTER);
+    strokeWeight(10);
+
+    if(output2double.innerHTML > 0) {
+      irregularList = [ 1,  map(output2double.innerHTML, 0, 8, 25, 15)];
+      setLineDash(irregularList);  
+    }
+    if(output2double.innerHTML <= 0) {
+      irregularList = [ 1,  map(output2double.innerHTML, -8, 0, 15, 25)];
+      setLineDash(irregularList);  
+    }
+    let angle2 = map(output2.innerHTML, 0, 8, 0, 45);
+    if(output2.innerHTML > 0)
+      rotate(PI / 180 * angle2);
+    if(output2.innerHTML <= 0)
+      rotate(PI / 180 * angle2);
+    rect(0, 0, 200, 200);
+    pop();  
+
   }
-  
+
+  // TESTE 19 |ORIENTATION + ANGULARITY  
   if(findTest("test19Bol").active) {
 
     imageTest = 1;
     soundTest = 0;
+
+    radioButtons = 0;
+    slider = 1;
+    sliderDouble = 1;
+
+    push();
+    noFill();
+    translate(width/5, height/2);
+    strokeWeight(10);
+    rectMode(CENTER);
+    let angle = map(output1double.innerHTML, 0, 8, 0, 45);
+    if(output1double.innerHTML > 0)
+      rotate(PI / 180 * angle);
+    if(output1double.innerHTML <= 0)
+      rotate(PI / 180 * angle);
+    if(output1.innerHTML < 0) 
+      square(0, 0, 200, map(output1.innerHTML, -8, 0, 0, 100));
+    if(output1.innerHTML >= 0) 
+      square(0, 0, 200, map(output1.innerHTML, 0, 8, 100, 0));
+    pop();
+
+    push();
+    noFill();
+    translate(width/1.21, height/2);
+
+    strokeWeight(10);
+    rectMode(CENTER);
+    let angle2 = map(output2double.innerHTML, 0, 8, 0, 45);
+    if(output2double.innerHTML > 0)
+      rotate(PI / 180 * angle2);
+    if(output2double.innerHTML <= 0)
+      rotate(PI / 180 * angle2);
+    if(output2.innerHTML < 0) 
+      square(0, 0, 200, map(output2.innerHTML, -8, 0, 0, 100));
+    if(output2.innerHTML >= 0) 
+      square(0, 0, 200, map(output2.innerHTML, 0, 8, 100, 0));
+    pop();
   }
   
+  // TESTE 20 |IRREGULARITY + ANGULARITY  
   if(findTest("test20Bol").active) {
 
     imageTest = 1;
     soundTest = 0;
+
+    radioButtons = 0;
+    slider = 1;
+    sliderDouble = 1;
+
+    const numVertices = 10;
+    let radius = 100;
+    const spacing = 360 / numVertices;
+
+    let angleChange = 180;
+    let irregularList;
+
+    push();
+    noFill();
+    translate(width/5, height/2);
+
+    strokeWeight(10);
+       
+    if(output1.innerHTML > 0) {
+      irregularList = [ 1,  map(output1.innerHTML, 0, 8, 5, 25)];
+      setLineDash(irregularList);  
+    }
+    if(output1.innerHTML <= 0) {
+      irregularList = [ 1,  map(output1.innerHTML, -8, 0, 25, 5)];
+      setLineDash(irregularList);  
+    }
+
+    beginShape();
+
+    for(let i = 0; i < numVertices+1; i++) {
+
+      if(output1double.innerHTML <= 0) {
+        angleChange = map(output1double.innerHTML, -8, 0, 50, 150);
+      }
+      if(output1double.innerHTML > 0) {
+        angleChange = map(output1double.innerHTML, 0, 8, 150, 50);
+      }
+
+      const angle = i * spacing;
+      const x = cos(radians(angle)) * radius;
+      const y = sin(radians(angle)) * radius;
+
+      if(i == 0)
+        vertex(x, y);
+      else if(output1double.innerHTML > 4 || output1double.innerHTML < -4 ){
+        star(0, 0, 150 - angleChange + 30, 100, 10, 0);
+      }
+      else{
+        const cAngle = angle - spacing/2;
+        const cX = cos(radians(cAngle)) * angleChange;
+        const cY = sin(radians(cAngle)) * angleChange;
+        quadraticVertex(cX, cY, x, y);
+      }
+    }
+
+    endShape();
+
+    pop();
+
+    push();
+    noFill();
+    translate(width/1.21, height/2);
+
+    strokeWeight(10);
+    
+     if(output2.innerHTML > 0) {
+      irregularList = [ 1,  map(output2.innerHTML, 0, 8, 25, 15)];
+      setLineDash(irregularList);  
+    }
+    if(output2.innerHTML <= 0) {
+      irregularList = [ 1,  map(output2.innerHTML, -8, 0, 15, 25)];
+      setLineDash(irregularList);  
+    }
+
+    beginShape();
+
+    for(let i = 0; i < numVertices+1; i++) {
+
+      if(output2double.innerHTML <= 0) {
+        angleChange = map(output2double.innerHTML, -8, 0, 50, 150);
+      }
+      if(output2double.innerHTML > 0) {
+        angleChange = map(output2double.innerHTML, 0, 8, 150, 50);
+      }
+
+      const angle = i * spacing;
+      const x = cos(radians(angle)) * radius;
+      const y = sin(radians(angle)) * radius;
+
+      if(i == 0)
+        vertex(x, y);
+      else if(output2double.innerHTML > 4 || output2double.innerHTML < -4 ){
+        star(0, 0, 150 - angleChange + 30, 100, 10, 0);
+      }
+      else{
+        const cAngle = angle - spacing/2;
+        const cX = cos(radians(cAngle)) * angleChange;
+        const cY = sin(radians(cAngle)) * angleChange;
+        quadraticVertex(cX, cY, x, y);
+      }
+    }
+
+    endShape();
+
+    pop();
   }
   
 }
@@ -1072,6 +1507,25 @@ function setSliderValue(val, slider) {
   else if(slider == "2double")
     output2double.innerHTML = val;
 }
+
+function star(x, y, radius1, radius2, npoints, symmetry) {
+  let angle = TWO_PI / npoints;
+  let halfAngle = angle / 2.0;
+  beginShape();
+  for (let a = 0; a < TWO_PI; a += angle) {
+    if(symmetry != 0)
+      if(a  > PI )
+        radius1 += symmetry; 
+    let sx = x + cos(a) * radius2;
+    let sy = y + sin(a) * radius2;
+    vertex(sx, sy);
+    sx = x + cos(a + halfAngle) * radius1;
+    sy = y + sin(a + halfAngle) * radius1;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
+}
+
 
 function drawZigZagLine(x, y, w, h, max) {
   beginShape();
@@ -1106,6 +1560,11 @@ function drawWavyLine(x, y, amp, w, max) {
   }
 
   endShape();
+}
+
+
+function setLineDash(list) {
+  drawingContext.setLineDash(list);
 }
 
 function setGradient(x, y, w, h, c1, c2, axis, input) {
@@ -1171,10 +1630,12 @@ function clearInputs(test1, test2){
 function Test(name){
   this.active = 0;
   this.name = name;
-  this.scroll = null;
+  this.scroll11 = null;
+  this.scroll12 = null;
   this.tension = null;
   this.grid = null;
-  this.scroll2 = null;
+  this.scroll21 = null;
+  this.scroll22 = null;
   this.tension2 = null;
   this.grid2 = null;
 }
@@ -1187,10 +1648,20 @@ function findTest(name){
 }
 
 function saveTestChoices(testName){
-  //findTest(testName).scroll = output1.innerHTML;
+  if(radioButtons){
+    findTest(testName).scroll1double = radiosLeft_value;
+    findTest(testName).scroll2double = radiosRight_value;
+  }
+  else{
+    findTest(testName).scroll1double = output1double.innerHTML;
+    findTest(testName).scroll2double = output2double.innerHTML;
+  }
+  console.log("saved")
+  findTest(testName).scroll1 = output1.innerHTML;
   findTest(testName).tension = document.getElementById("tensionNumber").value;
   findTest(testName).grid = lastCheckedGrid1Cell;
   
+  findTest(testName).scroll2 = output2.innerHTML;
   findTest(testName).tension2 = document.getElementById("tensionNumber2").value;
   findTest(testName).grid2 = lastCheckedGrid2Cell;
 }
@@ -1207,14 +1678,15 @@ function printTests(){
   let testResults = "<p><b>" + datetime +"</b></p>" + "\n";
   for(let i = 0; i < 20; i++){
     let j = i+1;
-    testResults += "<b>TEST " + j + "</b> | <b>LEFT: scroll:</b> " + tests[i].scroll +
+    testResults += "TEST" + j + "|" + tests[i].scroll1double + "_" + tests[i].scroll1 + "_" +  tests[i].tension + "_" + tests[i].grid + "|" + tests[i].scroll2double + "_" + tests[i].scroll2 + "_" +  tests[i].tension2 + "_" + tests[i].grid2+ "\n<br>";
+    /*testResults += "<b>TEST " + j + "</b> | <b>LEFT: scroll:</b> " + tests[i].scroll +
      " <b>tension:</b> " + tests[i].tension + " <b>grid:</b> " + tests[i].grid + 
      "</b> | <b>RIGHT: scroll:</b> " + tests[i].scroll2 +
-     " <b>tension:</b> " + tests[i].tension2 + " <b>grid:</b> " + tests[i].grid2 + "\n<br>";
+     " <b>tension:</b> " + tests[i].tension2 + " <b>grid:</b> " + tests[i].grid2 + "\n<br>";*/
   }
   console.log(testResults);
   //sendEmail(testResults, datetime);
-  window.location="mailto:andreianmatos@tecnico.ulisboa.pt?subject=Results"+datetime+"&body="+testResults;
+  //window.location="mailto:andreianmatos@tecnico.ulisboa.pt?subject=Results"+datetime+"&body="+testResults;
   window.localStorage.setItem('testResults', testResults);
   //console.log(document.getElementById("results").innerHTML);
   //document.getElementById("results").innerHTML = testResults;
@@ -1228,7 +1700,7 @@ function sendEmail(results, date) {
 function submit(){
   saveTestChoices(currentTestBol);
   printTests();
-  //window.location.href="results.html";
+  window.location.href="results.html";
 }
 
 function mousePressed() {
@@ -1259,6 +1731,11 @@ function chooseNextTest(){
 
   let chosen = 0;
 
+  // save test choices
+  saveTestChoices(currentTestBol);
+  //console.log("SAVED FOR TEST" + currentTestBol + " and slider left is " + output1.innerHTML + " and slider right is " + output2.innerHTML);
+
+
   while(!chosen){
     newTestNr = randomIntFromInterval(1,20);
     newTestBol = 'test' + newTestNr + 'Bol';
@@ -1278,14 +1755,11 @@ function chooseNextTest(){
   }
   // delete the new current test of the undone tests list
   undoneTests = undoneTests.filter(item => item !== newTestNr);
-  console.log("DA")
   next(newTestBol);
   console.log(undoneTests);
 }
 
 function next(newTestBol) {
-
-  console.log("i am here")
 
   if(playingRight)
     playRight();
@@ -1298,13 +1772,14 @@ function next(newTestBol) {
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // save test choices
-  saveTestChoices(currentTestBol);
-
   //at the end people are reviewing their answers
   if(!end){
     // clear input (tension + grid)
     clearInputs(1,1);
+    var radiosLeft = document.getElementsByName('radioLeft');
+    var radiosRight = document.getElementsByName('radioRight');
+    radiosLeft[Math.floor(Math.random() * 4)].checked = true;
+    radiosRight[Math.floor(Math.random() * 4 )].checked = true;
     setSliderValue(randomIntFromInterval(-8,8),"1");
     setSliderValue(randomIntFromInterval(-8,8),"1double");
     setSliderValue(randomIntFromInterval(-8,8),"2");
