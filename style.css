@@ -101,9 +101,40 @@ body, html {
 
   #sketch {
     margin-top:2%;
+    z-index:-1;
   }
 
   /* buttons */
+
+  .soundButton{
+    position: absolute;
+    top: 23%;
+    margin: 56px auto 0;
+    padding: 36px 20px;
+    appearance: none;
+    transition: all 0.15s ease-in-out;
+    font-family: inherit;
+    font-size: 24px;
+    font-weight: 600;
+    border: 6px solid #000;
+    color: white;
+    background: rgb(17, 17, 17);
+    border-radius: 100%;
+    outline: 0;
+    cursor: pointer;
+  }
+  .soundButton:hover {
+    color: darkred;
+    transform: scale(1.1);
+  }
+
+
+  #playL{
+    left: 21%;
+  }
+  #playR{
+    left: 71%;
+  }
 
   /* next button */
 
@@ -136,11 +167,11 @@ body, html {
   .custombutton2  {
     position: relative;
     margin: 20px auto 0;
-    padding: 5px 10px;
+    padding: 6px 20px;
     appearance: none;
     transition: all 0.15s ease-in-out;
     font-family: inherit;
-    font-size: 12px;
+    font-size: 17px;
     font-weight: 600;
     background: #fff;
     border: 2px solid #000;
@@ -156,6 +187,11 @@ body, html {
   .custombutton2:hover:active {
     transform: scale(0.9);
   }
+  .custombutton2:disabled{
+    cursor: not-allowed;
+    pointer-events: none;
+    color: darkgray;
+ }
 
   #testButtons {
     position: fixed;
@@ -170,19 +206,37 @@ body, html {
   #nextButton {
     top: 80%;
     left: 47%;
+    margin-bottom: 10%;
   }
 
+  #testNext{
+    font-size: 20px;
+    left: 46%;
+  }
+
+  #updateAnswers{
+    font-size: 20px;
+    display: none;
+    left: -30%;
+  }
+  
+#lastTest{
+  margin-left: -28%; 
+  display: none;
+ }
+ #lastTest2{
+  display: none;
+ }
 
 #submit {
   background: darkred;
-  color: white;
 }
 
 /* slider for canvas */
 
 #textSlider1 {
   position: absolute;
-  margin-left: 10%;    
+  margin-left: 15%;    
   top: 70%;
 }
 .slidecontainer1 {
@@ -191,10 +245,13 @@ body, html {
   margin-left: 8%;    
   top: 80%;
 }
+#slidecontainer1double{
+  top: 80%;
+}
 
 #textSlider2 {
   position: absolute;
-  margin-left: 60%;    
+  margin-left: 64.5%;    
   top: 70%;
 }
 .slidecontainer2 {
@@ -242,6 +299,12 @@ body, html {
 #demo1 {
   display: none;
 }
+#demo1double {
+  display: none;
+}
+#demo2double {
+  display: none;
+}
 #demo2 {
   display: none;
 }
@@ -252,17 +315,34 @@ body, html {
     position: absolute;
     padding: 0 6px;
     margin: 0 auto;
-    left: 43%;
-    top: 75%;
+    left: 11.5%;
+    top: 80%;
 }
 
 .radio-item.secondOption {
-    left: 49%;
+    left: 19.5%;
 }
 
 .radio-item.thirdOption {
-    left: 55%;
+    left: 27.5%;
 }
+.radio-item.fourthOption {
+  left: 35.5%;
+}
+
+.radio-item.fifthOption {
+  left: 61.5%;
+}
+.radio-item.sixthOption {
+  left: 69.5%;
+}
+.radio-item.seventhOption {
+left: 77.5%;
+}
+.radio-item.eighthOption {
+  left: 85.5%;
+}
+  
 
 .radio-item input[type='radio'] {
     display: none;  
@@ -323,6 +403,7 @@ label {
 
 #leftQuestionnaire{
   font-size: 11px;
+  text-align: left;
 }
 
 #textGridRight{
@@ -350,7 +431,7 @@ label {
   font-size: 20px;
   text-align: center;
   left: 20.9%;
-  top: 170%;
+  top: 171%;
 }
 #textGridTopR{
   position: absolute;
@@ -364,7 +445,7 @@ label {
   font-size: 20px;
   text-align: left;
   left: 35.2%;
-  top: 170%;
+  top: 171%;
 }
 #textGridTopL{
   position: absolute;
@@ -378,7 +459,7 @@ label {
   font-size: 20px;
   text-align: left;
   left: 6.1%;
-  top: 170%;
+  top: 171%;
 }
 
 #textQ2 {
@@ -438,10 +519,9 @@ label {
 #textNext {
   position: absolute;
   margin-left: 39.5%;  
-  padding-bottom: 5%;
   top: 180%;
+  padding-bottom: 3%;
 }
-
 
 #affectGrid2 {
   position: absolute;
@@ -475,7 +555,7 @@ label {
   font-size: 20px;
   text-align: center;
   left: 72%;
-  top: 170%;
+  top: 171%;
 }
 #textGridTopR2{
   position: absolute;
@@ -489,7 +569,7 @@ label {
   font-size: 20px;
   text-align: left;
   left: 86.5%;
-  top: 170%;
+  top: 171%;
 }
 #textGridTopL2{
   position: absolute;
@@ -503,5 +583,13 @@ label {
   font-size: 20px;
   text-align: left;
   left: 57%;
-  top: 170%;
+  top: 171%;
+}
+
+.playButton:hover:active{
+  transform: scale(0.5);
+}
+
+.stopButton:hover:active{
+  transform: scale(0.5);
 }
