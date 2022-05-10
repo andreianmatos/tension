@@ -96,6 +96,7 @@ function draw() {
     document.getElementById("textQ2").innerHTML = '<h2>&#8595; First consider the chosen sound on the left &#8595;</h2>';  
     document.getElementById("textQ5").innerHTML = '<h2>&#8595; First consider the chosen sound on the left &#8595;</h2>';  
   }
+
   
   // update the current slider 1 and 2 value
   slider1.oninput = function() {
@@ -983,14 +984,16 @@ function draw() {
     slider = 1;
     sliderDouble = 1;
 
+    const numVertices = 10;
+    const spacing = 360 / numVertices;
+
     push();
     noFill();
     translate(width/5, height/2);
     strokeWeight(10);
 
-    const numVertices = 10;
+   
     let radius = 100;
-    const spacing = 360 / numVertices;
 
     let angleChange = 180;
     let asymmetry = 0, asymmetry2 = 0;
@@ -1039,12 +1042,6 @@ function draw() {
     }
 
     endShape();
-    
-    /*if(output1.innerHTML < 0) 
-      arc(0, 0, map(output1.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(output1.innerHTML >= 0) 
-      arc(0, 0, map(output1.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
-    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);*/
     pop();
 
     push();
@@ -1052,16 +1049,56 @@ function draw() {
     translate(width/1.21, height/2);
 
     strokeWeight(10);
-   
-    if(output2double.innerHTML > 0) {
+
+    let radius2 = 100;
+
+    let angleChange2 = 180;
+    let asymmetry3 = 0, asymmetry4 = 0;
+
+    beginShape();
+
+    for(let i = 0; i < numVertices+1; i++) {
+
+      if(output2double.innerHTML <= 0) {
+        angleChange2 = map(output2double.innerHTML, -8, 0, 50, 150);
+      }
+      if(output2double.innerHTML > 0) {
+        angleChange2 = map(output2double.innerHTML, 0, 8, 150, 50);
+      }
+
+      if(output2.innerHTML <= 0) {
+        asymmetry3 = map(output2.innerHTML, -8, 0, 0, 50)
+        asymmetry4 = map(output2.innerHTML, -8, 0, 0, 10)
+      }
+      if(output2.innerHTML > 0) {
+        asymmetry3 = map(output2.innerHTML, 0, 8, 50, 0)
+        asymmetry4 = map(output2.innerHTML, 0, 8, 10, 0)
+      }
+
+      const angle = i * spacing;
+      const x = cos(radians(angle)) * radius2;
+      const y = sin(radians(angle)) * radius2;    
+
+      if(i == 0){
+        vertex(x, y);
+      }
+      
+      if(output2double.innerHTML > 4 || output2double.innerHTML < -4 ){
+        if(i == 0)
+          rotate(PI / 180 * 70);
+        star(0, 0, 150 - angleChange2 + 30, 100, 10, asymmetry4);
+      }
+      else if(i != 0){
+        if( i < 3 || i > 8)
+        angleChange2 += asymmetry3;  
+        const cAngle = angle - spacing/2;
+        const cX = cos(radians(cAngle)) * angleChange2;
+        const cY = sin(radians(cAngle)) * angleChange2;
+        quadraticVertex(cX, cY, x, y);
+      }
     }
-    if(output2double.innerHTML <= 0) {
-    }
-    if(output2.innerHTML < 0) 
-      arc(0, 0, map(output2.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(output2.innerHTML >= 0) 
-      arc(0, 0, map(output2.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
-    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+
+    endShape();
     pop();
 
   }
@@ -1750,13 +1787,16 @@ function chooseNextTest(){
       break;
     }
     if(undoneTests.includes(newTestNr)){
+      console.log("FIRST" + undoneTests)
       chosen = 1;
     }
   }
   // delete the new current test of the undone tests list
   undoneTests = undoneTests.filter(item => item !== newTestNr);
+  console.log("HER" +newTestNr)
+  console.log("LAST" +undoneTests)
   next(newTestBol);
-  console.log(undoneTests);
+
 }
 
 function next(newTestBol) {
