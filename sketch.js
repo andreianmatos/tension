@@ -68,16 +68,6 @@ function setup() {
   //sound prep
   osc = new p5.Oscillator();
   env = new p5.Envelope();
-  reverb = new p5.Reverb();
-  polySynth = new p5.PolySynth();
-  delay = new p5.Delay();
-
-  //polySynth = new p5.PolySynth();
-
-  //noise = new p5.Noise();
-  /*filter = new p5.BandPass();
-  noise.disconnect();
-  noise.connect(filter);*/
 }
 
 function draw() {
