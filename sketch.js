@@ -10,6 +10,7 @@ let val = 0;
 let lastCheckedGrid1Cell, lastCheckedGrid2Cell;
 
 let testNumber = 1;
+let chosen;
 
 var slider1, output1;
 
@@ -778,14 +779,14 @@ function draw() {
 
     if(playingLeft){
       if(output1.innerHTML > 0)
-        decayTime = map(output2.innerHTML, 0, 8, 0, 1);
+        decayTime = map(output1.innerHTML, 0, 8, 0, 1);
       else
-        decayTime = map(output2.innerHTML, -8, 0, 1, 0);
+        decayTime = map(output1.innerHTML, -8, 0, 1, 0);
 
       if(output1double.innerHTML > 0)
-        susPercent = map(output2double.innerHTML, 0, 8, 0.0, 1);
+        susPercent = map(output1double.innerHTML, 0, 8, 0.0, 1);
       else
-        susPercent = map(output2double.innerHTML, -8, 0, 1, 0.0);
+        susPercent = map(output1double.innerHTML, -8, 0, 1, 0.0);
         
       osc.amp(env);
       
@@ -1757,7 +1758,7 @@ function playRight() {
 
 function chooseNextTest(){
 
-  let chosen = 0;
+  chosen = 0;
 
   // save test choices
   saveTestChoices(currentTestBol);
@@ -1774,17 +1775,20 @@ function chooseNextTest(){
       document.getElementById("lastTest2").style.display = 'block';
       document.getElementById("submit").disabled = false;
       enableTests();
+      newTestNr = undoneTests[0];
+      newTestBol = 'test' + newTestNr + 'Bol';
       end = 1;
-      break;
+      chosen = 1;
     }
-    if(undoneTests.includes(newTestNr)){
+    else if(undoneTests.includes(newTestNr)){
       chosen = 1;
     }
   }
+  //console.log("before delete"+undoneTests);
   // delete the new current test of the undone tests list
   undoneTests = undoneTests.filter(item => item !== newTestNr);
+  //console.log(undoneTests);
   next(newTestBol);
-
 }
 
 function next(newTestBol) {
@@ -1801,8 +1805,10 @@ function next(newTestBol) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
   //at the end people are reviewing their answers
-  if(!end){
+  if(!end ||(end && chosen)){
     // clear input (tension + grid)
+    if(end && chosen)
+      chosen = 0;
     clearInputs(1,1);
     var radiosLeft = document.getElementsByName('radioLeft');
     var radiosRight = document.getElementsByName('radioRight');
