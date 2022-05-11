@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TENSION</title>
+  <title>p5.js example</title>
   <style>
     body {
       padding: 0;
@@ -12,13 +12,15 @@
     }
   </style>
   <script src="p5/p5.js"></script>
-  <script src="p5/p5.sound.js"></script> 
+  <!--<script src="p5/p5.sound.js"></script> -->
   <!-- Styles -->
   <link rel="stylesheet" href="style.css">
   <!--<link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />-->
   <!-- JS -->
   <!-- P5 -->
   <script type="text/javascript" src="sketch.js"></script>
+  <script type="text/javascript" src="sketchSound.js"></script>
+
   <!-- JSPSYCH 
   <script src="jspsych/jspsych.js"></script>
   <script src="jspsych/plugin-html-keyboard-response.js"></script>-->
@@ -27,120 +29,57 @@
   <main>
 
     <div id="testButtons">
-        <!-- add disabled="true" -->
-      <button disabled="true" class="custombutton2" id="test1Bol" onclick="next('test1Bol');">01</button> 
-      <button disabled="true" class="custombutton2" id="test2Bol" onclick="next('test2Bol');">02</button>
-      <button disabled="true" class="custombutton2" id="test3Bol" onclick="next('test3Bol');">03</button>
-      <button disabled="true" class="custombutton2" id="test4Bol" onclick="next('test4Bol');">04</button>
-      <button disabled="true" class="custombutton2" id="test5Bol" onclick="next('test5Bol');">05</button>
-      <button disabled="true" class="custombutton2" id="test6Bol" onclick="next('test6Bol');">06</button>
-      <button disabled="true" class="custombutton2" id="test7Bol" onclick="next('test7Bol');">07</button>
-      <button disabled="true" class="custombutton2" id="test8Bol" onclick="next('test8Bol');">08</button>
-      <button disabled="true" class="custombutton2" id="test9Bol" onclick="next('test9Bol');">09</button>
-      <button disabled="true" class="custombutton2" id="test10Bol" onclick="next('test10Bol');">10</button>
-      <button disabled="true" class="custombutton2" id="test11Bol" onclick="next('test11Bol');">11</button>
-      <button disabled="true" class="custombutton2" id="test12Bol" onclick="next('test12Bol');">12</button>
-      <button disabled="true" class="custombutton2" id="test13Bol" onclick="next('test13Bol');">13</button>
-      <button disabled="true" class="custombutton2" id="test14Bol" onclick="next('test14Bol');">14</button>
-      <button disabled="true" class="custombutton2" id="test15Bol" onclick="next('test15Bol');">15</button>
-      <button disabled="true" class="custombutton2" id="test16Bol" onclick="next('test16Bol');">16</button>
-      <button disabled="true" class="custombutton2" id="test17Bol" onclick="next('test17Bol');">17</button>
-      <button disabled="true" class="custombutton2" id="test18Bol" onclick="next('test18Bol');">18</button>
-      <button disabled="true" class="custombutton2" id="test19Bol" onclick="next('test19Bol');">19</button>
-      <button disabled="true" class="custombutton2" id="test20Bol" onclick="next('test20Bol');">20</button>
-      <button disabled="true" class="custombutton2" id="submit" onclick="submit()">SUBMIT</button>
-    </div> 
+      <button class="custombutton2" id="test1Bol" onclick="next('0');">Teste1</button> 
+      <button class="custombutton2" id="test2Bol" onclick="next('1');">Teste2</button>
+      <button class="custombutton2" id="test3Bol" onclick="next('2');">Teste3</button>
+      <button class="custombutton2" id="test4Bol" onclick="next('3');">Teste4</button>
+      <button class="custombutton2" id="test5Bol" onclick="next('4');">Teste5</button>
+      <button class="custombutton2" id="test6Bol" onclick="next('5');">Teste6</button>
+      <button class="custombutton2" id="test7Bol" onclick="next('6');">Teste7</button>
+      <button class="custombutton2" id="test8Bol" onclick="next('7');">Teste8</button>
+      <button class="custombutton2" id="test9Bol" onclick="next('8');">Teste9</button>
+      <button class="custombutton2" id="test10Bol" onclick="next('9');">Teste10</button>
+      <button class="custombutton2" id="test11Bol" onclick="next('10');">Teste11</button>
+      <button class="custombutton2" id="test12Bol" onclick="next('11');">Teste12</button>
+      <button class="custombutton2" id="test13Bol" onclick="next('12');">Teste13</button>
+      <button class="custombutton2" id="test14Bol" onclick="next('13');">Teste14</button>
+      <button class="custombutton2" id="test15Bol" onclick="next('14');">Teste15</button>
+      <button class="custombutton2" id="test16Bol" onclick="next('15');">Teste16</button>
+      <button class="custombutton2" id="test17Bol" onclick="next('16');">Teste17</button>
+      <button class="custombutton2" id="test18Bol" onclick="next('17');">Teste18</button>
+      <button class="custombutton2" id="test19Bol" onclick="next('18');">Teste19</button>
+      <button class="custombutton2" id="test20Bol" onclick="next('19');">Teste20</button>
+      <button class="custombutton2" id="submit" onclick="submit()">SUBMIT</button>
+    </div>
 
     <div id="sketch"></div>
 
-    <button class="soundButton" id="playL" onclick="playLeft()">PLAY</button>
-
-    <button class="soundButton" id="playR" onclick="playRight()">PLAY</button>
-
     <div id="textSlider1">
-      <h2>Select the <b><i>most</i></b> tense state.</h2>
+      <h2>Leave the slider at the <i>most</i> tense state.</h2>
     </div>
 
-    <div id="slidecontainer1" class="slidecontainer1">
+    <div class="slidecontainer1">
       <input type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange1">
       <p><span id="demo1"></span></p>
     </div>
 
-    <div id="slidecontainer1double" class="slidecontainer1">
-      <input type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange1double">
-      <p><span id="demo1double"></span></p>
-    </div>
-
-    <div id = "radiosLeft">
-
-      <div class="radio-item firstOption" id="a">
-        <input type="radio" id="ritema" name="radioLeft" value="1.1">
-        <label for="ritema">1</label>
-      </div>
-
-      <div class="radio-item secondOption" id="b">
-          <input type="radio" id="ritemb" name="radioLeft" value="1.2">
-          <label for="ritemb">2</label>
-      </div>
-
-      <div class="radio-item thirdOption" id="c" >
-        <input type="radio" id="ritemc" name="radioLeft" value="1.3">
-        <label for="ritemc">3</label>
-      </div>
-
-      <div class="radio-item fourthOption" id="d">
-          <input type="radio" id="ritemd" name="radioLeft" value="1.4">
-          <label for="ritemd">4</label>
-      </div>
-    
-    </div>
-
     <div id="textSlider2">
-      <h2>Select the <b><i>least</i></b> tense state.</h2>
+      <h2>Leave the slider at the <i>least</i> tense state.</h2>
     </div>
 
-    <div id="slidecontainer2" class="slidecontainer2">
+    <div class="slidecontainer2">
       <input type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange2">
       <p><span id="demo2"></span></p>
-    </div>    
-    
-    <div id="slidecontainer2double" class="slidecontainer2">
-      <input type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange2double">
-      <p><span id="demo2double"></span></p>
-    </div>
-
-    <div id = "radiosRight">
-
-      <div class="radio-item fifthOption" id="e">
-        <input type="radio" id="riteme" name="radioRight" value="2.1">
-        <label for="riteme">1</label>
-      </div>
-
-      <div class="radio-item sixthOption" id="f">
-          <input type="radio" id="ritemf" name="radioRight" value="2.2">
-          <label for="ritemf">2</label>
-      </div> 
-
-      <div class="radio-item seventhOption" id="g">
-        <input type="radio" id="ritemg" name="radioRight" value="2.3">
-        <label for="ritemg">3</label>
-      </div>
-
-      <div class="radio-item eighthOption" id="h">
-          <input type="radio" id="ritemh" name="radioRight" value="2.4">
-          <label for="ritemh">4</label>
-      </div>
-
-  </div>
+    </div>                
 
     <div id="leftQuestionnaire">
 
     <div id="textQ2">
-      <h2>&#8595; First consider the chosen sound on the left &#8595;</h2>
+      <h2>&#8595; First consider the chosen image on the left &#8595;</h2>
     </div>
 
     <div id="textQ3">
-      <h2>From 1 to 10, how would you rate it in terms of tension?   
+      <h2>From 1 to 10, how would you rate the image in terms of tension?   
         <input type="number" id="tensionNumber" min="1" max="10">
       </h2>
     </div>
@@ -202,11 +141,11 @@
   <div id="rightQuestionnaire">
       
     <div id="textQ5">
-      <h2>&#8595; Then consider the chosen sound on the right &#8595;</h2>
+      <h2>&#8595; Then consider the chosen image on the right &#8595;</h2>
     </div>
 
     <div id="textQ6">
-      <h2>From 1 to 10, how would you rate it in terms of tension?      
+      <h2>From 1 to 10, how would you rate the image in terms of tension?      
         <input type="number" id="tensionNumber2" min="1" max="10">
       </h2>
     </div>
@@ -266,12 +205,33 @@
     </div>
 
     <div id="textNext">
-      <button class="custombutton2" id="testNext" onclick="chooseNextTest()">NEXT TEST!</button>
-      <h3 id="lastTest">You have done all the tests! You may now go back and alter your answers if you wish.</h3>
-      <button class="custombutton2" id="updateAnswers" onclick="updateAnswers()">SAVE ANSWERS</button>
-      <h3 id="lastTest2">When you are done, please submit!</h3>
-  
+      <h2>You can choose the next test!</h2>
     </div>
+
+    <!--
+    
+    <div class="radio-item firstOption" id="">
+      <input type="radio" id="ritema" name="ritem" value="ropt1" 
+      onclick="setSliderValue('-8'); test1('0','1');">
+      <label for="ritema">1</label>
+    </div>
+
+    <div class="radio-item secondOption" id="b">
+        <input type="radio" id="ritemb" name="ritem" value="ropt2"
+        onclick="setSliderValue('0');test1('0','1');">
+        <label for="ritemb">2</label>
+    </div> 
+
+    <div class="radio-item thirdOption" id="c" >
+      <input type="radio" id="ritemc" name="ritem" value="ropt3"
+        onclick="setSliderValue('8');test1('0','1');">
+      <label for="ritemc">3</label>
+    </div> 
+
+    -->
+
+    <!-- devia guardar  escolha do user e avançar para prox test 
+    <button id="nextButton"  class="custombutton"  onclick="next();">Next!</button>-->
 
   </main>
 </body>

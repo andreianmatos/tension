@@ -80,13 +80,13 @@ function draw() {
     document.getElementById("playL").style.display = 'none';
     document.getElementById("playR").style.display = 'none';  
     document.getElementById("textQ2").innerHTML = '<h2>&#8595; First consider the chosen image on the left &#8595;</h2>';  
-    document.getElementById("textQ5").innerHTML = '<h2>&#8595; First consider the chosen image on the left &#8595;</h2>';  
+    document.getElementById("textQ5").innerHTML = '<h2>&#8595; Now consider the chosen image on the right &#8595;</h2>';  
   }
   if(soundTest){
     document.getElementById("playL").style.display = 'block';
     document.getElementById("playR").style.display = 'block';  
     document.getElementById("textQ2").innerHTML = '<h2>&#8595; First consider the chosen sound on the left &#8595;</h2>';  
-    document.getElementById("textQ5").innerHTML = '<h2>&#8595; First consider the chosen sound on the left &#8595;</h2>';  
+    document.getElementById("textQ5").innerHTML = '<h2>&#8595; Now consider the chosen sound on the right &#8595;</h2>';  
   }
 
   
@@ -153,7 +153,7 @@ function draw() {
       }
   }
 
-  if(!playingLeft && !playingRight){
+  if(imageTest ||  !playingLeft && !playingRight){
     osc.start();
     osc.freq(0);
     osc.amp(0);
@@ -405,7 +405,7 @@ function draw() {
           susPercent = map(output1.innerHTML, -8, 0, 1, 0.0);
 
         // WAVEFORM
-        if(radiosLeft_value == "opt1")
+        if(radiosLeft_value == "1.1")
           osc.setType('sine');
         else if(radiosLeft_value == "1.2")
           osc.setType('triangle');
@@ -537,9 +537,9 @@ function draw() {
         attackTime = map(output1.innerHTML, -8, 0, 1, 0);
 
       if(output1double.innerHTML > 0)
-        decayTime = map(output1.innerHTML, 0, 8, 0, 1);
+        decayTime = map(output1double.innerHTML, 0, 8, 0, 1);
       else
-        decayTime = map(output1.innerHTML, -8, 0, 1, 0);
+        decayTime = map(output1double.innerHTML, -8, 0, 1, 0);
 
       osc.amp(env);
 
