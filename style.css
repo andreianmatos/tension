@@ -172,7 +172,7 @@ body, html {
   .custombutton2  {
     position: relative;
     margin: 1% auto 0;
-    padding: 1% 2.6vh;
+    padding: 1% 1.3vw;
     appearance: none;
     transition: all 0.15s ease-in-out;
     font-family: inherit;
