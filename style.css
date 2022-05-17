@@ -277,6 +277,7 @@ body, html {
     margin: 0 auto;
     left: 11.5%;
     top: 85%;
+    z-index: 98 !important; 
 }
 
 .radio-item.secondOption {
@@ -560,26 +561,26 @@ label {
   position: absolute;
   margin-left: 3.5%;
   top: 52.5%;
-  z-index: 98 !important; 
+  z-index: 97 !important; 
 }
 #app3 {
   position: absolute;
   margin-left: 21.5%;
   top: 52.5%;
-  z-index: 98 !important; 
+  z-index: 97 !important; 
 }
 
 #app2 {
   position: absolute;
   margin-left: 53.5%;
   top: 52.5%;
-  z-index: 98 !important; 
+  z-index: 97 !important; 
 }
 #app4 {
   position: absolute;
   margin-left: 71.5%;
   top: 52.5%;
-  z-index: 98 !important; 
+  z-index: 97 !important; 
 }
 
 h1 {

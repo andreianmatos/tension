@@ -9,15 +9,17 @@
         <link rel="stylesheet" href="style.css">
     </head>
    
-    <body onload="getTestResults();"> 
+    <body> 
         
         <div class="about" >
 
-            <p class="title"><b>Thank you! Please email us this test data! :)</b></p> 
+            <p class="title"><b>Thank you! The experiment is over. :)</b></p> 
                         
+             <!-- then update on load with getTestResults if I want to print results
             <div id="results">
                 results
             </div>
+            -->
             
         </div>
                                                 
@@ -25,7 +27,7 @@
     <script>
         function getTestResults() {
             document.getElementById("results").innerHTML = window.localStorage.getItem('testResults');
-            sendEmail();
+            //sendEmail();
         }
 
         function sendEmail() { 
