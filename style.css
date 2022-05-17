@@ -47,61 +47,6 @@ body, html {
 
 /* index - consent slider */
 
-.sliderWrapper{display: inline-block;margin:24px 24px 24px 24px;}
-.sliderWrapper div{display: inline-block;line-height:20px;}
-
-.switch {
-    position: relative;
-    display: inline-block;
-    vertical-align: middle;
-    width: 60px;
-    height: 34px;
-  }
-  
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: red;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: " ";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  
-  input:checked + .slider {
-    background-color: green;
-  }
-  
-  input:focus + .slider {
-    box-shadow: 0 0 1px green;
-  }
-  
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-
   /* Sketch canvas */ 
 
   #sketch {
@@ -205,6 +150,7 @@ body, html {
     left: 2.5%;
     margin-top: -2%;
     padding-bottom: 1%;
+    border:1px solid whitesmoke;
     border-bottom:2px solid black;
   }
 
@@ -242,7 +188,7 @@ body, html {
 #textSlider1 {
   position: absolute;
   margin-left: 15%;    
-  top: 70%;
+  top: 60%;
 }
 .slidecontainer1 {
   position: absolute;
@@ -257,7 +203,7 @@ body, html {
 #textSlider2 {
   position: absolute;
   margin-left: 64.5%;    
-  top: 70%;
+  top: 60%;
 }
 .slidecontainer2 {
   position: absolute;
@@ -265,6 +211,15 @@ body, html {
   margin-left: 58%;    
   top: 80%;
 }
+
+/* gradient of slider to appear circular */
+
+:root {
+  --red-color:127;
+  --blue-color:127;
+  --green-color:127;
+ }
+
   
   /* The slider itself */
   .sliderCanvas {
@@ -272,9 +227,9 @@ body, html {
     appearance: none;
     width: 100%; 
     height: 25px; 
-    background: #d3d3d3; 
+    background: linear-gradient(to left, #ebebeb, #7d7d7d 25%, #7d7d7d 75%, #ebebeb 100%);
     outline: none; 
-    opacity: 0.7; 
+    opacity: 0.9; 
     -webkit-transition: .2s; 
     transition: opacity .2s;
   }
@@ -598,3 +553,64 @@ label {
 .stopButton:hover:active{
   transform: scale(0.5);
 }
+
+.red { color: darkred; }
+
+#app {
+  position: absolute;
+  margin-left: 11.5%;
+  top: 52.5%;
+  z-index: 98 !important; 
+}
+
+#app2 {
+  position: absolute;
+  margin-left: 61.5%;
+  top: 52.5%;
+  z-index: 98 !important; 
+}
+
+h1 {
+  margin-bottom: 2rem;
+  font-size: 3rem;
+}
+
+.sliderCircular__legend {
+  padding: 1rem 3rem 0 0;
+  list-style: none;
+}
+
+.sliderCircular__legend h2 {
+  margin-bottom: 1rem;
+}
+
+.sliderCircular__legend li {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.sliderCircular__legend li span {
+  display: inline-block;
+}
+
+.sliderCircular__legend li span:first-child {
+  height: 20px;
+  width: 20px;
+  margin-bottom: -2px;
+}
+
+.sliderCircular__legend li span:nth-child(2) {
+  margin: 0 0.5rem;
+}
+
+.sliderCircular__legend li span:last-child {
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  min-width: 60px;
+}
+
+
+
+
+

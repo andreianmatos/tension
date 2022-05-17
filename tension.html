@@ -28,27 +28,27 @@
 
     <div id="testButtons">
         <!-- add disabled="true" -->
-      <button disabled="true" class="custombutton2" id="test1Bol" onclick="next('test1Bol');">01</button> 
-      <button disabled="true" class="custombutton2" id="test2Bol" onclick="next('test2Bol');">02</button>
-      <button disabled="true" class="custombutton2" id="test3Bol" onclick="next('test3Bol');">03</button>
-      <button disabled="true" class="custombutton2" id="test4Bol" onclick="next('test4Bol');">04</button>
-      <button disabled="true" class="custombutton2" id="test5Bol" onclick="next('test5Bol');">05</button>
-      <button disabled="true" class="custombutton2" id="test6Bol" onclick="next('test6Bol');">06</button>
-      <button disabled="true" class="custombutton2" id="test7Bol" onclick="next('test7Bol');">07</button>
-      <button disabled="true" class="custombutton2" id="test8Bol" onclick="next('test8Bol');">08</button>
-      <button disabled="true" class="custombutton2" id="test9Bol" onclick="next('test9Bol');">09</button>
-      <button disabled="true" class="custombutton2" id="test10Bol" onclick="next('test10Bol');">10</button>
-      <button disabled="true" class="custombutton2" id="test11Bol" onclick="next('test11Bol');">11</button>
-      <button disabled="true" class="custombutton2" id="test12Bol" onclick="next('test12Bol');">12</button>
-      <button disabled="true" class="custombutton2" id="test13Bol" onclick="next('test13Bol');">13</button>
-      <button disabled="true" class="custombutton2" id="test14Bol" onclick="next('test14Bol');">14</button>
-      <button disabled="true" class="custombutton2" id="test15Bol" onclick="next('test15Bol');">15</button>
-      <button disabled="true" class="custombutton2" id="test16Bol" onclick="next('test16Bol');">16</button>
-      <button disabled="true" class="custombutton2" id="test17Bol" onclick="next('test17Bol');">17</button>
-      <button disabled="true" class="custombutton2" id="test18Bol" onclick="next('test18Bol');">18</button>
-      <button disabled="true" class="custombutton2" id="test19Bol" onclick="next('test19Bol');">19</button>
-      <button disabled="true" class="custombutton2" id="test20Bol" onclick="next('test20Bol');">20</button>
-      <button disabled="true" class="custombutton2" id="submit" onclick="submit()">SUBMIT</button>
+      <button  class="custombutton2" id="test1Bol" onclick="next('test1Bol');">01</button> 
+      <button  class="custombutton2" id="test2Bol" onclick="next('test2Bol');">02</button>
+      <button  class="custombutton2" id="test3Bol" onclick="next('test3Bol');">03</button>
+      <button  class="custombutton2" id="test4Bol" onclick="next('test4Bol');">04</button>
+      <button  class="custombutton2" id="test5Bol" onclick="next('test5Bol');">05</button>
+      <button  class="custombutton2" id="test6Bol" onclick="next('test6Bol');">06</button>
+      <button  class="custombutton2" id="test7Bol" onclick="next('test7Bol');">07</button>
+      <button  class="custombutton2" id="test8Bol" onclick="next('test8Bol');">08</button>
+      <button  class="custombutton2" id="test9Bol" onclick="next('test9Bol');">09</button>
+      <button  class="custombutton2" id="test10Bol" onclick="next('test10Bol');">10</button>
+      <button  class="custombutton2" id="test11Bol" onclick="next('test11Bol');">11</button>
+      <button  class="custombutton2" id="test12Bol" onclick="next('test12Bol');">12</button>
+      <button  class="custombutton2" id="test13Bol" onclick="next('test13Bol');">13</button>
+      <button  class="custombutton2" id="test14Bol" onclick="next('test14Bol');">14</button>
+      <button  class="custombutton2" id="test15Bol" onclick="next('test15Bol');">15</button>
+      <button  class="custombutton2" id="test16Bol" onclick="next('test16Bol');">16</button>
+      <button  class="custombutton2" id="test17Bol" onclick="next('test17Bol');">17</button>
+      <button  class="custombutton2" id="test18Bol" onclick="next('test18Bol');">18</button>
+      <button  class="custombutton2" id="test19Bol" onclick="next('test19Bol');">19</button>
+      <button  class="custombutton2" id="test20Bol" onclick="next('test20Bol');">20</button>
+      <button  class="custombutton2" id="submit" onclick="submit()">SUBMIT</button>
     </div> 
 
     <div id="sketch"></div>
@@ -58,16 +58,16 @@
     <button class="soundButton" id="playR" onclick="playRight()">PLAY</button>
 
     <div id="textSlider1">
-      <h2>Select the <b><i>most</i></b> tense state.</h2>
+      <h2>Select the <span class="red">most</span> tense state.</h2>
     </div>
 
-    <div id="slidecontainer1" class="slidecontainer1">
-      <input type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange1">
+    <div id="slidecontainer1" class="slidecontainer1" style="display: none;">
+      <input style="display: none;" type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange1">
       <p><span id="demo1"></span></p>
     </div>
 
-    <div id="slidecontainer1double" class="slidecontainer1">
-      <input type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange1double">
+    <div id="slidecontainer1double" class="slidecontainer1" style="display: none;">
+      <input style="display: none;" type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange1double">
       <p><span id="demo1double"></span></p>
     </div>
 
@@ -96,16 +96,16 @@
     </div>
 
     <div id="textSlider2">
-      <h2>Select the <b><i>least</i></b> tense state.</h2>
+      <h2>Select the <span class="red">least</span> tense state.</h2>
     </div>
 
-    <div id="slidecontainer2" class="slidecontainer2">
-      <input type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange2">
+    <div id="slidecontainer2" class="slidecontainer2" style="display: none;">
+      <input style="display: none;" type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange2">
       <p><span id="demo2"></span></p>
     </div>    
     
-    <div id="slidecontainer2double" class="slidecontainer2">
-      <input type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange2double">
+    <div id="slidecontainer2double" class="slidecontainer2" style="display: none;">
+      <input style="display: none;" type="range" min="-8" max="8" value="0" class="sliderCanvas" id="myRange2double">
       <p><span id="demo2double"></span></p>
     </div>
 
@@ -267,13 +267,19 @@
 
     <div id="textNext">
       <button class="custombutton2" id="testNext" onclick="chooseNextTest()">NEXT TEST!</button>
-      <h3 id="lastTest">You have done all the tests! You may now go back and alter your answers if you wish.</h3>
+      <h3 id="lastTest">You have done all the tests! You may now go back asnd alter your answers if you wish.</h3>
       <button class="custombutton2" id="updateAnswers" onclick="updateAnswers()">SAVE ANSWERS</button>
       <h3 id="lastTest2">When you are done, please submit!</h3>
-  
     </div>
 
+      <!-- sliderCircular app container -->
+      <div id="app"></div>
+
+      <div id="app2"></div>
+      
+
   </main>
+
 </body>
 
 </html>

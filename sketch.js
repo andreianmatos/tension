@@ -24,6 +24,58 @@ let currentTestBol, doubleTest, imageTest, soundTest;
 let tests = [], undoneTests = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 let end = 0;
 
+var currentValueSlider1, currentValueSlider1double, currentValueSlider2, currentValueSlider2double;
+
+ // sliderCircular app options
+ const opts = {
+  DOMselector: '#app',
+  sliderCirculars: [
+      {
+          radius: 70,
+          min: -8,
+          max: 8,
+          step: 1,
+          initialValue: 0,
+          color: '',
+          displayName: 'Slider 1'
+      },
+      {
+          radius: 40,
+          min: -8,
+          max: 8,
+          step: 1,
+          initialValue: 0,
+          color: '',
+          displayName: 'Slider 2'
+      }
+  ]
+};
+
+
+ // sliderCircular app options
+ const opts2 = {
+  DOMselector: '#app2',
+  sliderCirculars: [
+      {
+          radius: 70,
+          min: -8,
+          max: 8,
+          step: 1,
+          initialValue: 0,
+          color: '',
+          displayName: 'Slider 3'
+      },
+      {
+          radius: 40,
+          min: -8,
+          max: 8,
+          step: 1,
+          initialValue: 0,
+          color: '',
+          displayName: 'Slider 4'
+      }
+  ]
+};
 
 function setup() {
 
@@ -35,6 +87,12 @@ function setup() {
   black = color('rgb(17, 17, 17)');
   white = color('rgb(245, 245, 245)');
 
+  // instantiate the sliderCircular
+  sliderCircular1 =  new sliderCircular(opts);
+  sliderCircular1.draw();
+  sliderCircular2 = new sliderCircular(opts2);
+  sliderCircular2.draw();
+  
   slider1 = document.getElementById("myRange1");
   output1 = document.getElementById("demo1");
 
@@ -48,10 +106,22 @@ function setup() {
   output2double = document.getElementById("demo2double");
 
 
-  output1.innerHTML = slider1.value;
+  currentValueSlider1 = randomIntFromInterval(-8,8);
+  currentValueSlider1double = randomIntFromInterval(-8,8);
+
+  currentValueSlider2 = randomIntFromInterval(-8,8);
+  currentValueSlider2double = randomIntFromInterval(-8,8);
+
+  output1.innerHTML = currentValueSlider1;
+  output1double.innerHTML = currentValueSlider1double;
+  
+  output2.innerHTML = currentValueSlider2;
+  output2double.innerHTML = currentValueSlider2double;
+
+  /*output1.innerHTML = slider1.value;
   output1double.innerHTML = slider1double.value;
   output2.innerHTML = slider2.value;
-  output2double.innerHTML = slider2double.value;
+  output2double.innerHTML = slider2double.value;*/
 
   for(let i=1; i < 21; i++)
     tests.push(new Test('test' + i + 'Bol'));
@@ -89,20 +159,26 @@ function draw() {
     document.getElementById("textQ5").innerHTML = '<h2>&#8595; Now consider the chosen sound on the right &#8595;</h2>';  
   }
 
+  output1.innerHTML = currentValueSlider1;
+  output1double.innerHTML = currentValueSlider1double;
+
+  output2.innerHTML = currentValueSlider2;
+  output2double.innerHTML = currentValueSlider2double;
   
+  /*
   // update the current slider 1 and 2 value
   slider1.oninput = function() {
     output1.innerHTML = this.value;
   }
   slider1double.oninput = function() {
     output1double.innerHTML = this.value;
-  }
+  } 
   slider2.oninput = function() {
     output2.innerHTML = this.value;
   }
   slider2double.oninput = function() {
     output2double.innerHTML = this.value;
-  }
+  */
 
   if(slider){
     document.getElementById("slidecontainer1").style.display = 'block';
@@ -153,7 +229,7 @@ function draw() {
       }
   }
 
-  if(imageTest ||  !playingLeft && !playingRight){
+  if(imageTest || !playingLeft && !playingRight){
     osc.start();
     osc.freq(0);
     osc.amp(0);
@@ -683,9 +759,9 @@ function draw() {
         releaseTime = map(output2.innerHTML, -8, 0, 1, 0);
 
       if(output2double.innerHTML > 0)
-        decayTime = map(output1double.innerHTML, 0, 8, 0, 1);
+        decayTime = map(output2double.innerHTML, 0, 8, 0, 1);
       else
-        decayTime = map(output1double.innerHTML, -8, 0, 1, 0);
+        decayTime = map(output2double.innerHTML, -8, 0, 1, 0);
       
       osc.amp(env);
 
@@ -1205,11 +1281,12 @@ function draw() {
     slider = 1;
     sliderDouble = 1;
 
+
     const numVertices = 10;
     let radius = 100;
     const spacing = 360 / numVertices;
 
-    let angleChange = 180;
+    let sw, angleChange = 180;
 
     push();
     noFill();
@@ -1846,3 +1923,509 @@ function enableTests(){
 function updateAnswers(){
   saveTestChoices(currentTestBol);
 }
+
+/* SLIDERS from https://github.com/tadejf84/js-range-slider */
+
+class sliderCircular {
+
+  /**
+   * @constructor
+   * 
+   * @param {string} DOM selector
+   * @param {array} sliderCirculars
+   */
+  constructor({ DOMselector, sliderCirculars }) {
+      this.DOMselector = DOMselector;
+      this.container = document.querySelector(this.DOMselector);  // sliderCircular container
+      this.sliderCircularWidth = 400;                                     // sliderCircular width
+      this.sliderCircularHeight = 400;                                    // sliderCircular length
+      this.cx = this.sliderCircularWidth / 2;                             // sliderCircular center X coordinate
+      this.cy = this.sliderCircularHeight / 2;                            // sliderCircular center Y coordinate
+      this.tau = 2 * Math.PI;                                     // Tau constant
+      this.sliderCirculars = sliderCirculars;                                     // sliderCirculars array with opts for each sliderCircular
+      this.arcFractionSpacing = 0;                             // Spacing between arc fractions
+      this.arcFractionLength = 13;                                // Arc fraction length
+      this.arcFractionThickness = 25;                             // Arc fraction thickness
+      this.arcBgFractionColor = '#D8D8D8';                        // Arc fraction color for background sliderCircular
+      this.handleFillColor = '#fff';                              // sliderCircular handle fill color
+      this.handleStrokeColor = black;                         // sliderCircular handle stroke color
+      this.handleStrokeThickness = 3;                             // sliderCircular handle stroke thickness    
+      this.mouseDown = false;                                     // Is mouse down
+      this.activesliderCircular = null;                                   // Stores active (selected) sliderCircular
+      this.currentValue = null;
+  }
+
+  /**
+   * Draw sliderCirculars on init
+   * 
+   */
+  draw() {
+
+      // Create legend UI
+      //this.createLegendUI();
+
+      // Create and append SVG holder
+
+      let svgContainer, svg;
+
+      if(this.DOMselector === "#app"){
+         svgContainer = document.createElement('div');
+        svgContainer.classList.add('sliderCircular__data1');
+         svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('height', this.sliderCircularWidth);
+        svg.setAttribute('width', this.sliderCircularHeight);
+        svgContainer.appendChild(svg);
+        this.container.appendChild(svgContainer);
+      }
+      if(this.DOMselector === "#app2"){
+         svgContainer = document.createElement('div');
+        svgContainer.classList.add('sliderCircular__data2');
+         svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('height', this.sliderCircularWidth);
+        svg.setAttribute('width', this.sliderCircularHeight);
+        svgContainer.appendChild(svg);
+        this.container.appendChild(svgContainer);
+      }
+      
+
+      // Draw sliderCirculars
+      this.sliderCirculars.forEach((sliderCircular, index) => this.drawSinglesliderCircularOnInit(svg, sliderCircular, index));
+
+      // Event listeners
+      svgContainer.addEventListener('mousedown', this.mouseTouchStart.bind(this), false);
+      svgContainer.addEventListener('touchstart', this.mouseTouchStart.bind(this), false);
+      svgContainer.addEventListener('mousemove', this.mouseTouchMove.bind(this), false);
+      svgContainer.addEventListener('touchmove', this.mouseTouchMove.bind(this), false);
+      window.addEventListener('mouseup', this.mouseTouchEnd.bind(this), false);
+      window.addEventListener('touchend', this.mouseTouchEnd.bind(this), false);
+  }
+
+  /**
+   * Draw single sliderCircular on init
+   * 
+   * @param {object} svg 
+   * @param {object} sliderCircular 
+   * @param {number} index 
+   */
+  drawSinglesliderCircularOnInit(svg, sliderCircular, index) {
+
+      // Default sliderCircular opts, if none are set
+      sliderCircular.radius = sliderCircular.radius ?? 50;
+      sliderCircular.min = sliderCircular.min ?? 0;
+      sliderCircular.max = sliderCircular.max ?? 1000;
+      sliderCircular.step = sliderCircular.step ?? 50;
+      sliderCircular.initialValue = sliderCircular.initialValue ?? 0;
+      sliderCircular.color = sliderCircular.color ?? '#FF5733';
+
+      // Calculate sliderCircular circumference
+      const circumference = sliderCircular.radius * this.tau;
+
+      // Calculate initial angle
+      const initialAngle = Math.floor( ( sliderCircular.initialValue / (sliderCircular.max - sliderCircular.min) ) * 360 );
+
+      // Calculate spacing between arc fractions
+      const arcFractionSpacing = this.calculateSpacingBetweenArcFractions(circumference, this.arcFractionLength, this.arcFractionSpacing);
+
+      // Create a single sliderCircular group - holds all paths and handle
+      const sliderCircularGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      sliderCircularGroup.setAttribute('class', 'sliderCircularSingle');
+      sliderCircularGroup.setAttribute('data-sliderCircular', index);
+      sliderCircularGroup.setAttribute('transform', 'rotate(-90,' + this.cx + ',' + this.cy + ')');
+      sliderCircularGroup.setAttribute('rad', sliderCircular.radius);
+      svg.appendChild(sliderCircularGroup);
+      
+      // Draw background arc path
+      this.drawArcPath(this.arcBgFractionColor, sliderCircular.radius, 360, arcFractionSpacing, 'bg', sliderCircularGroup);
+
+      // Draw active arc path
+      this.drawArcPath(sliderCircular.color, sliderCircular.radius, initialAngle, arcFractionSpacing, 'active', sliderCircularGroup);
+
+      // Draw handle
+      this.drawHandle(sliderCircular, initialAngle, sliderCircularGroup);
+  }
+
+  /**
+   * Output arch path
+   * 
+   * @param {number} cx 
+   * @param {number} cy 
+   * @param {string} color 
+   * @param {number} angle 
+   * @param {number} singleSpacing 
+   * @param {string} type 
+   */
+  drawArcPath( color, radius, angle, singleSpacing, type, group ) {
+
+      // sliderCircular path class
+      const pathClass = (type === 'active') ? 'sliderCircularSinglePathActive' : 'sliderCircularSinglePath';
+
+      // Create svg path
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.classList.add(pathClass);
+      path.setAttribute('d', this.describeArc(this.cx, this.cy, radius, 0, angle));
+      path.style.stroke = color;
+      path.style.strokeWidth = this.arcFractionThickness;
+      path.style.fill = 'none';
+      path.setAttribute('stroke-dasharray', this.arcFractionLength + ' ' + singleSpacing);
+      group.appendChild(path);
+  }
+
+  /**
+   * Draw handle for single sliderCircular
+   * 
+   * @param {object} sliderCircular 
+   * @param {number} initialAngle 
+   * @param {group} group 
+   */
+  drawHandle(sliderCircular, initialAngle, group) {
+
+      // Calculate handle center
+      const handleCenter = this.calculateHandleCenter(initialAngle * this.tau / 360, sliderCircular.radius);
+
+      // Draw handle
+      const handle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      handle.setAttribute('class', 'sliderCircularHandle');
+      handle.setAttribute('cx', handleCenter.x);
+      handle.setAttribute('cy', handleCenter.y);
+      handle.setAttribute('r', this.arcFractionThickness / 2);
+      handle.style.stroke = this.handleStrokeColor;
+      handle.style.strokeWidth = this.handleStrokeThickness;
+      handle.style.fill = this.handleFillColor;
+      group.appendChild(handle);
+  }
+
+  /**
+   * Create legend UI on init
+   * 
+   */
+  createLegendUI() {
+
+      // Create legend
+      const display = document.createElement('ul');
+      display.classList.add('sliderCircular__legend');
+
+      // Legend heading
+      const heading = document.createElement('h2');
+      heading.innerText = 'Legend';
+      display.appendChild(heading);
+
+      // Legend data for all sliderCirculars
+      this.sliderCirculars.forEach((sliderCircular, index) => {
+          const li = document.createElement('li');
+          li.setAttribute('data-sliderCircular', index);
+          const firstSpan = document.createElement('span');
+          firstSpan.style.backgroundColor = sliderCircular.color ?? '#FF5733';
+          firstSpan.classList.add('colorSquare');
+          const secondSpan = document.createElement('span');
+          secondSpan.innerText = sliderCircular.displayName ?? 'Unnamed value';
+          const thirdSpan = document.createElement('span');
+          thirdSpan.innerText = sliderCircular.initialValue ?? 0;
+          thirdSpan.classList.add('sliderCircularValue');
+          li.appendChild(firstSpan);
+          li.appendChild(secondSpan);
+          li.appendChild(thirdSpan);
+          display.appendChild(li);
+      });
+
+      // Append to DOM
+      this.container.appendChild(display);
+  }
+
+  /**
+   * Redraw active sliderCircular
+   * 
+   * @param {element} activesliderCircular
+   * @param {obj} rmc
+   */
+  redrawActivesliderCircular(rmc) {
+    console.log(this.activesliderCircular);
+      const activePath = this.activesliderCircular.querySelector('.sliderCircularSinglePathActive');
+      const radius = +this.activesliderCircular.getAttribute('rad');
+      const currentAngle = this.calculateMouseAngle(rmc) * 0.999;
+
+      // Redraw active path
+      activePath.setAttribute('d', this.describeArc(this.cx, this.cy, radius, 0, this.radiansToDegrees(currentAngle)));
+
+      // Redraw handle
+      const handle = this.activesliderCircular.querySelector('.sliderCircularHandle');
+      const handleCenter = this.calculateHandleCenter(currentAngle, radius);
+      handle.setAttribute('cx', handleCenter.x);
+      handle.setAttribute('cy', handleCenter.y);
+
+      // Update legend
+      //this.updateLegendUI(currentAngle);
+
+      this.updateSliderValues(currentAngle);
+
+  }
+
+  /**
+   * MY FUNCTION - ANDREIA
+   * 
+   * @param {number} currentAngle 
+   */
+  updateSliderValues(currentAngle) {
+    const targetsliderCircular = this.activesliderCircular.getAttribute('data-sliderCircular');
+    const currentsliderCircular = this.sliderCirculars[targetsliderCircular];
+    const currentsliderCircularRange = currentsliderCircular.max - currentsliderCircular.min;
+    let currentValue = currentAngle / this.tau * currentsliderCircularRange;
+    const numOfSteps =  Math.round(currentValue / currentsliderCircular.step);
+    currentValue = currentsliderCircular.min + numOfSteps * currentsliderCircular.step;
+    //console.log(this.DOMselector + targetsliderCircular)
+    //console.log(this)
+    if(this.DOMselector === "#app"){
+      if(targetsliderCircular == 0 && typeof currentValue === 'number')
+        currentValueSlider1 = currentValue;
+      if(targetsliderCircular == 1 && typeof currentValue === 'number')
+        currentValueSlider1double = currentValue;
+    }
+    else if(this.DOMselector === "#app2"){
+      console.log("here ath slider right" + currentValue )
+      if(targetsliderCircular == 0 && typeof currentValue === 'number')
+        currentValueSlider2 = currentValue;
+      if(targetsliderCircular == 1 && typeof currentValue === 'number')
+        currentValueSlider2double = currentValue;
+    }
+}
+
+  /**
+   * Update legend UI
+   * 
+   * @param {number} currentAngle 
+   */
+  updateLegendUI(currentAngle) {
+      const targetsliderCircular = this.activesliderCircular.getAttribute('data-sliderCircular');
+      const targetLegend = document.querySelector(`li[data-sliderCircular="${targetsliderCircular}"] .sliderCircularValue`);
+      const currentsliderCircular = this.sliderCirculars[targetsliderCircular];
+      const currentsliderCircularRange = currentsliderCircular.max - currentsliderCircular.min;
+      let currentValue = currentAngle / this.tau * currentsliderCircularRange;
+      const numOfSteps =  Math.round(currentValue / currentsliderCircular.step);
+      currentValue = currentsliderCircular.min + numOfSteps * currentsliderCircular.step;
+      targetLegend.innerText = currentValue;
+  }
+
+  /**
+   * Mouse down / Touch start event
+   * 
+   * @param {object} e 
+   */
+  mouseTouchStart(e) {
+      if (this.mouseDown) return;
+      this.mouseDown = true;
+      const rmc = this.getRelativeMouseOrTouchCoordinates(e);
+      this.findClosestsliderCircular(rmc);
+      this.redrawActivesliderCircular(rmc);
+  }
+
+  /**
+   * Mouse move / touch move event
+   * 
+   * @param {object} e 
+   */
+  mouseTouchMove(e) {
+      if (!this.mouseDown) return;
+      e.preventDefault();
+      const rmc = this.getRelativeMouseOrTouchCoordinates(e);
+      this.redrawActivesliderCircular(rmc);
+  }
+
+  /**
+   * Mouse move / touch move event
+   * Deactivate sliderCircular
+   * 
+   */
+  mouseTouchEnd() {
+      if (!this.mouseDown) return;
+      this.mouseDown = false;
+      this.activesliderCircular = null;
+  }
+
+  /**
+   * Calculate number of arc fractions and space between them
+   * 
+   * @param {number} circumference 
+   * @param {number} arcBgFractionLength 
+   * @param {number} arcBgFractionBetweenSpacing 
+   * 
+   * @returns {number} arcFractionSpacing
+   */
+  calculateSpacingBetweenArcFractions(circumference, arcBgFractionLength, arcBgFractionBetweenSpacing) {
+      const numFractions = Math.floor((circumference / arcBgFractionLength) * arcBgFractionBetweenSpacing);
+      const totalSpacing = circumference - numFractions * arcBgFractionLength;
+      return totalSpacing / numFractions;
+  }
+
+  /**
+   * Helper functiom - describe arc
+   * 
+   * @param {number} x 
+   * @param {number} y 
+   * @param {number} radius 
+   * @param {number} startAngle 
+   * @param {number} endAngle 
+   * 
+   * @returns {string} path
+   */
+  describeArc (x, y, radius, startAngle, endAngle) {
+      let path,
+          endAngleOriginal = endAngle, 
+          start, 
+          end, 
+          arcSweep;
+
+      if(endAngleOriginal - startAngle === 360)
+      {
+          endAngle = 359;
+      }
+
+      start = this.polarToCartesian(x, y, radius, endAngle);
+      end = this.polarToCartesian(x, y, radius, startAngle);
+      arcSweep = endAngle - startAngle <= 180 ? '0' : '1';
+
+      path = [
+          'M', start.x, start.y,
+          'A', radius, radius, 0, arcSweep, 0, end.x, end.y
+      ];
+
+      if (endAngleOriginal - startAngle === 360) 
+      {
+          path.push('z');
+      } 
+
+      return path.join(' ');
+  }
+
+  /**
+   * Helper function - polar to cartesian transformation
+   * 
+   * @param {number} centerX 
+   * @param {number} centerY 
+   * @param {number} radius 
+   * @param {number} angleInDegrees 
+   * 
+   * @returns {object} coords
+   */
+   polarToCartesian (centerX, centerY, radius, angleInDegrees) {
+      const angleInRadians = angleInDegrees * Math.PI / 180;
+      const x = centerX + (radius * Math.cos(angleInRadians));
+      const y = centerY + (radius * Math.sin(angleInRadians));
+      return { x, y };
+  }
+
+  /**
+   * Helper function - calculate handle center
+   * 
+   * @param {number} angle 
+   * @param {number} radius
+   * 
+   * @returns {object} coords 
+   */
+  calculateHandleCenter (angle, radius) {
+      const x = this.cx + Math.cos(angle) * radius;
+      const y = this.cy + Math.sin(angle) * radius;
+      return { x, y };
+  }
+
+  /**
+   * Get mouse/touch coordinates relative to the top and left of the container
+   *  
+   * @param {object} e
+   * 
+   * @returns {object} coords
+   */ 
+  getRelativeMouseOrTouchCoordinates (e) {
+    let containerRect;
+      if(this.DOMselector === "#app")
+        containerRect = document.querySelector('.sliderCircular__data1').getBoundingClientRect();
+      if(this.DOMselector === "#app2")
+        containerRect = document.querySelector('.sliderCircular__data2').getBoundingClientRect();
+          
+      let x, 
+          y, 
+          clientPosX, 
+          clientPosY;
+
+      // Touch Event triggered
+      if (e instanceof TouchEvent) 
+      {
+          clientPosX = e.touches[0].pageX;
+          clientPosY = e.touches[0].pageY;
+      }
+      // Mouse Event Triggered
+      else 
+      {
+          clientPosX = e.clientX;
+          clientPosY = e.clientY;
+      }
+
+      // Get Relative Position
+      x = clientPosX - containerRect.left;
+      y = clientPosY - containerRect.top;
+
+      return { x, y };
+  }
+
+  /**
+   * Calculate mouse angle in radians
+   * 
+   * @param {object} rmc 
+   * 
+   * @returns {number} angle
+   */
+  calculateMouseAngle(rmc) {
+      const angle = Math.atan2(rmc.y - this.cy, rmc.x - this.cx);
+
+      if (angle > - this.tau / 2 && angle < - this.tau / 4) 
+      {
+          return angle + this.tau * 1.25;
+      } 
+      else 
+      {
+          return angle + this.tau * 0.25;
+      }
+  }
+
+  /**
+   * Helper function - transform radians to degrees
+   * 
+   * @param {number} angle 
+   * 
+   * @returns {number} angle
+   */
+  radiansToDegrees(angle) {
+      return angle / (Math.PI / 180);
+  }
+
+  /**
+   * Find closest sliderCircular to mouse pointer
+   * Activate the sliderCircular
+   * 
+   * @param {object} rmc
+   */
+  findClosestsliderCircular(rmc) {
+      let container;
+      const mouseDistanceFromCenter = Math.hypot(rmc.x - this.cx, rmc.y - this.cy);
+      console.log("container of closesst slider circular");
+      if(this.DOMselector === "#app"){
+        console.log(document.querySelector('.sliderCircular__data1'));
+        container = document.querySelector('.sliderCircular__data1');
+      }
+      if(this.DOMselector === "#app2"){
+        console.log(document.querySelector('.sliderCircular__data2'));
+        container = document.querySelector('.sliderCircular__data2');
+      }
+      let sliderCircularGroups = Array.from(container.querySelectorAll('g'));
+
+      // Get distances from client coordinates to each sliderCircular
+      const distances = sliderCircularGroups.map(sliderCircular => {
+          const rad = parseInt(sliderCircular.getAttribute('rad'));
+          return Math.min( Math.abs(mouseDistanceFromCenter - rad) );
+      });
+
+      // Find closest sliderCircular
+      const closestsliderCircularIndex = distances.indexOf(Math.min(...distances));
+      this.activesliderCircular = sliderCircularGroups[closestsliderCircularIndex];
+  }
+}
+
+
