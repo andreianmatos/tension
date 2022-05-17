@@ -31,14 +31,22 @@ var currentValueSlider1, currentValueSlider1double, currentValueSlider2, current
   DOMselector: '#app',
   sliderCirculars: [
       {
-          radius: 70,
+          radius: 40,
           min: -8,
           max: 8,
           step: 1,
           initialValue: 0,
           color: '',
           displayName: 'Slider 1'
-      },
+      }
+  ]
+};
+
+
+ // sliderCircular app options
+ const opts2 = {
+  DOMselector: '#app2',
+  sliderCirculars: [
       {
           radius: 40,
           min: -8,
@@ -51,8 +59,40 @@ var currentValueSlider1, currentValueSlider1double, currentValueSlider2, current
   ]
 };
 
+ // sliderCircular app options
+ const opts3 = {
+  DOMselector: '#app3',
+  sliderCirculars: [
+      {
+          radius: 40,
+          min: -8,
+          max: 8,
+          step: 1,
+          initialValue: 0,
+          color: '',
+          displayName: 'Slider 3'
+      }
+  ]
+};
 
  // sliderCircular app options
+ const opts4 = {
+  DOMselector: '#app4',
+  sliderCirculars: [
+      {
+          radius: 40,
+          min: -8,
+          max: 8,
+          step: 1,
+          initialValue: 0,
+          color: '',
+          displayName: 'Slider 4'
+      }
+  ]
+};
+
+
+ /*for the end sliderCircular app options
  const opts2 = {
   DOMselector: '#app2',
   sliderCirculars: [
@@ -75,7 +115,7 @@ var currentValueSlider1, currentValueSlider1double, currentValueSlider2, current
           displayName: 'Slider 4'
       }
   ]
-};
+}; */
 
 function setup() {
 
@@ -92,6 +132,11 @@ function setup() {
   sliderCircular1.draw();
   sliderCircular2 = new sliderCircular(opts2);
   sliderCircular2.draw();
+  sliderCircular3 =  new sliderCircular(opts3);
+  sliderCircular3.draw();
+  sliderCircular4 = new sliderCircular(opts4);
+  sliderCircular4.draw();
+  
   
   slider1 = document.getElementById("myRange1");
   output1 = document.getElementById("demo1");
@@ -180,6 +225,7 @@ function draw() {
     output2double.innerHTML = this.value;
   */
 
+    // deletee
   if(slider){
     document.getElementById("slidecontainer1").style.display = 'block';
     document.getElementById("slidecontainer2").style.display = 'block';
@@ -207,13 +253,25 @@ function draw() {
     document.getElementById("radiosLeft").style.display = 'none';
   }
 
-  if(slider && radioButtons || slider && sliderDouble){
-    document.getElementById("slidecontainer1").style.top = '85%';
-    document.getElementById("slidecontainer2").style.top = '85%';
+  // NEEDED
+  if(slider && radioButtons){
+    document.getElementById("app3").style.display = 'none';
+    document.getElementById("app4").style.display = 'none';
+    
+    document.getElementById("app").style.top = '49.5%';
+    document.getElementById("app2").style.top = '49.5%';
+    document.getElementById("app").style.marginLeft = '12.5%';
+    document.getElementById("app2").style.marginLeft = '62.5%';
+
   }
   else{
-    document.getElementById("slidecontainer1").style.top = '80%';
-    document.getElementById("slidecontainer2").style.top = '80%';
+    document.getElementById("app3").style.display = 'block';
+    document.getElementById("app4").style.display = 'block';
+    
+    document.getElementById("app").style.top =  '52.5%';
+    document.getElementById("app2").style.top =  '52.5%';
+    document.getElementById("app").style.marginLeft = '3.5%';
+    document.getElementById("app2").style.marginLeft = '53.5%';
   }
 
   var radiosLeft = document.getElementsByName('radioLeft');
@@ -1986,6 +2044,24 @@ class sliderCircular {
         svgContainer.appendChild(svg);
         this.container.appendChild(svgContainer);
       }
+      if(this.DOMselector === "#app3"){
+        svgContainer = document.createElement('div');
+       svgContainer.classList.add('sliderCircular__data3');
+        svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+       svg.setAttribute('height', this.sliderCircularWidth);
+       svg.setAttribute('width', this.sliderCircularHeight);
+       svgContainer.appendChild(svg);
+       this.container.appendChild(svgContainer);
+     }
+     if(this.DOMselector === "#app4"){
+      svgContainer = document.createElement('div');
+     svgContainer.classList.add('sliderCircular__data4');
+      svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+     svg.setAttribute('height', this.sliderCircularWidth);
+     svg.setAttribute('width', this.sliderCircularHeight);
+     svgContainer.appendChild(svg);
+     this.container.appendChild(svgContainer);
+   }
       
 
       // Draw sliderCirculars
@@ -2171,19 +2247,26 @@ class sliderCircular {
     let currentValue = currentAngle / this.tau * currentsliderCircularRange;
     const numOfSteps =  Math.round(currentValue / currentsliderCircular.step);
     currentValue = currentsliderCircular.min + numOfSteps * currentsliderCircular.step;
-    //console.log(this.DOMselector + targetsliderCircular)
-    //console.log(this)
+
+    // corresponds to the 1st slider of the Left
     if(this.DOMselector === "#app"){
       if(targetsliderCircular == 0 && typeof currentValue === 'number')
         currentValueSlider1 = currentValue;
-      if(targetsliderCircular == 1 && typeof currentValue === 'number')
+    }
+    // corresponds to the 2nd slider of the Left
+    else if(this.DOMselector === "#app3"){
+      if(targetsliderCircular == 0 && typeof currentValue === 'number')
         currentValueSlider1double = currentValue;
     }
+
+    // corresponds to the 1st slider of the Right
     else if(this.DOMselector === "#app2"){
-      console.log("here ath slider right" + currentValue )
       if(targetsliderCircular == 0 && typeof currentValue === 'number')
         currentValueSlider2 = currentValue;
-      if(targetsliderCircular == 1 && typeof currentValue === 'number')
+    }
+    // corresponds to the 2nd slider of the Right    
+    else if(this.DOMselector === "#app4"){
+      if(targetsliderCircular == 0 && typeof currentValue === 'number')
         currentValueSlider2double = currentValue;
     }
 }
@@ -2339,6 +2422,10 @@ class sliderCircular {
         containerRect = document.querySelector('.sliderCircular__data1').getBoundingClientRect();
       if(this.DOMselector === "#app2")
         containerRect = document.querySelector('.sliderCircular__data2').getBoundingClientRect();
+      if(this.DOMselector === "#app3")
+        containerRect = document.querySelector('.sliderCircular__data3').getBoundingClientRect();
+      if(this.DOMselector === "#app4")
+        containerRect = document.querySelector('.sliderCircular__data4').getBoundingClientRect();
           
       let x, 
           y, 
@@ -2414,6 +2501,13 @@ class sliderCircular {
         console.log(document.querySelector('.sliderCircular__data2'));
         container = document.querySelector('.sliderCircular__data2');
       }
+      if(this.DOMselector === "#app3"){
+        container = document.querySelector('.sliderCircular__data3');
+      }
+      if(this.DOMselector === "#app4"){
+        container = document.querySelector('.sliderCircular__data4');
+      }
+      
       let sliderCircularGroups = Array.from(container.querySelectorAll('g'));
 
       // Get distances from client coordinates to each sliderCircular
