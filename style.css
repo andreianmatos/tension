@@ -16,7 +16,7 @@ body, html {
     margin-left: auto;
     margin-right: auto;
     margin-top: 5%;
-    width: 75%;
+    width: 73%;
     text-align: justify;
     font-size: 20px;
 }
@@ -221,40 +221,40 @@ body, html {
  }
 
   
-  /* The slider itself */
-  .sliderCanvas {
-    -webkit-appearance: none;  /* override default */
-    appearance: none;
-    width: 100%; 
-    height: 25px; 
-    background: linear-gradient(to left, #ebebeb, #7d7d7d 25%, #7d7d7d 75%, #ebebeb 100%);
-    outline: none; 
-    opacity: 0.9; 
-    -webkit-transition: .2s; 
-    transition: opacity .2s;
-  }
-  
-  /* Mouse-over effects */
-  .sliderCanvas:hover {
-    opacity: 1; /* Fully shown on mouse-over */
-  }
-  
-  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-  .sliderCanvas::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #000; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-  }
-  
-  .sliderCanvas::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: black; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-  }
+ .slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 24px;
+  border-radius: 5px;  
+  background: #d3d3d3;
+  outline: none;
+  opacity: 1;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; 
+  stroke-width:3px;
+  fill: black;
+  background: white;
+  cursor: pointer;
+  border:3.2px solid black;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: black; 
+  stroke-width:3px;
+  fill: black;
+  cursor: pointer;
+}
 
 #demo1 {
   display: none;
@@ -435,14 +435,20 @@ label {
 
 #textQ3 {
   position: absolute;
-  margin-left: 5%;    
+  margin-left: 10.5%;    
   top: 100%;
+}
+
+#tensionValueLeft{
+  font-size: 25px;
+  text-align: center;
+  z-index: 98 !important;
 }
 
 #textQ4 {
   position: absolute;
   margin-left: 3%;    
-  top: 110%;
+  top: 120%;
 }
 
 #resultsText{
@@ -467,14 +473,20 @@ label {
 
 #textQ6 {
   position: absolute;
-  margin-left: 56%;    
+  margin-left: 61%;    
   top: 100%;
+  z-index: 98 !important;
+}
+
+#tensionValueRight{
+  font-size: 25px;
+  text-align: center;
 }
 
 #textQ7 {
   position: absolute;
   margin-left: 54%;    
-  top: 110%;
+  top: 120%;
 }
 
 #textNext {

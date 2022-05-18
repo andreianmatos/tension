@@ -12,7 +12,6 @@ let lastCheckedGrid1Cell, lastCheckedGrid2Cell;
 let testNumber = 1;
 let chosen;
 
-var slider1, output1;
 
 var playingLeft = 0, playingRight = 0;
 var w, osc, env;
@@ -24,9 +23,17 @@ let currentTestBol, doubleTest, imageTest, soundTest;
 let tests = [], undoneTests = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 let end = 0;
 
+var output1, output1double, output2, output2double;
 var currentValueSlider1, currentValueSlider1double, currentValueSlider2, currentValueSlider2double;
+var sliderTensionLeft, sliderTensionRight, outputsliderTensionLeft, outputsliderTensionRight;
 
- // sliderCircular app options
+var initialSlider1 = randomIntFromInterval(-8,8), 
+initialSlider1double = randomIntFromInterval(-8,8), 
+initialSlider2 = randomIntFromInterval(-8,8), 
+initialSlider2double = randomIntFromInterval(-8,8);
+
+
+ // LEFT: SLIDER 1 sliderCircular app options
  const opts = {
   DOMselector: '#app',
   sliderCirculars: [
@@ -35,31 +42,13 @@ var currentValueSlider1, currentValueSlider1double, currentValueSlider2, current
           min: -8,
           max: 8,
           step: 1,
-          initialValue: 0,
+          initialValue: initialSlider1,
           color: '',
           displayName: 'Slider 1'
       }
   ]
 };
-
-
- // sliderCircular app options
- const opts2 = {
-  DOMselector: '#app2',
-  sliderCirculars: [
-      {
-          radius: 40,
-          min: -8,
-          max: 8,
-          step: 1,
-          initialValue: 0,
-          color: '',
-          displayName: 'Slider 2'
-      }
-  ]
-};
-
- // sliderCircular app options
+ // LEFT: SLIDER 2 sliderCircular app options
  const opts3 = {
   DOMselector: '#app3',
   sliderCirculars: [
@@ -68,14 +57,29 @@ var currentValueSlider1, currentValueSlider1double, currentValueSlider2, current
           min: -8,
           max: 8,
           step: 1,
-          initialValue: 0,
+          initialValue: initialSlider1double,
           color: '',
           displayName: 'Slider 3'
       }
   ]
 };
 
- // sliderCircular app options
+ // RIGHT: SLIDER 1 sliderCircular app options
+ const opts2 = {
+  DOMselector: '#app2',
+  sliderCirculars: [
+      {
+          radius: 40,
+          min: -8,
+          max: 8,
+          step: 1,
+          initialValue: initialSlider2,
+          color: '',
+          displayName: 'Slider 2'
+      }
+  ]
+};
+ //RIGHT: SLIDER 2 sliderCircular app options
  const opts4 = {
   DOMselector: '#app4',
   sliderCirculars: [
@@ -84,7 +88,7 @@ var currentValueSlider1, currentValueSlider1double, currentValueSlider2, current
           min: -8,
           max: 8,
           step: 1,
-          initialValue: 0,
+          initialValue: initialSlider2double,
           color: '',
           displayName: 'Slider 4'
       }
@@ -136,8 +140,20 @@ function setup() {
   sliderCircular3.draw();
   sliderCircular4 = new sliderCircular(opts4);
   sliderCircular4.draw();
+
+
+  //tension sliders for left and right
+ 
+  sliderTensionLeft = document.getElementById("myRangeTensionLeft");
+  outputSliderTensionLeft = document.getElementById("tensionValueLeft");
+
+  sliderTensionRight = document.getElementById("myRangeTensionRight");
+  outputSliderTensionRight = document.getElementById("tensionValueRight");
+
+  outputSliderTensionLeft.innerHTML = sliderTensionLeft.value;
+  outputSliderTensionRight.innerHTML = sliderTensionRight.value;
   
-  
+  /// not being used atm, plain sliders for pics
   slider1 = document.getElementById("myRange1");
   output1 = document.getElementById("demo1");
 
@@ -151,11 +167,11 @@ function setup() {
   output2double = document.getElementById("demo2double");
 
 
-  currentValueSlider1 = randomIntFromInterval(-8,8);
-  currentValueSlider1double = randomIntFromInterval(-8,8);
+  currentValueSlider1 = initialSlider1;
+  currentValueSlider1double = initialSlider1double;
 
-  currentValueSlider2 = randomIntFromInterval(-8,8);
-  currentValueSlider2double = randomIntFromInterval(-8,8);
+  currentValueSlider2 = initialSlider2;
+  currentValueSlider2double = initialSlider2double;
 
   output1.innerHTML = currentValueSlider1;
   output1double.innerHTML = currentValueSlider1double;
@@ -209,7 +225,18 @@ function draw() {
 
   output2.innerHTML = currentValueSlider2;
   output2double.innerHTML = currentValueSlider2double;
-  
+
+
+  // tension sliders update value
+
+  sliderTensionLeft.oninput = function() {
+    outputSliderTensionLeft.innerHTML = this.value;
+  }
+
+  sliderTensionRight.oninput = function() {
+    outputSliderTensionRight.innerHTML = this.value;
+  }
+
   /*
   // update the current slider 1 and 2 value
   slider1.oninput = function() {
@@ -1080,7 +1107,7 @@ function draw() {
     translate(width/1.21, height/2);
 
     strokeWeight(10);
-    console.log(lerp(5, 5, map(output2double.innerHTML, -8, 0, 0, 1)));
+    //console.log(lerp(5, 5, map(output2double.innerHTML, -8, 0, 0, 1)));
     let irregularList2;
    
     if(output2double.innerHTML > 0) {
@@ -1785,10 +1812,6 @@ function clearInputs(test1, test2){
       document.getElementById("2_" + i.toString()).value = null;
     }
   }
-  if(test1 && test2){
-    document.getElementById("tensionNumber").value = null;
-    document.getElementById("tensionNumber2").value = null;
-  }
 }
 
 function Test(name){
@@ -1820,13 +1843,12 @@ function saveTestChoices(testName){
     findTest(testName).scroll1double = output1double.innerHTML;
     findTest(testName).scroll2double = output2double.innerHTML;
   }
-  console.log("saved")
   findTest(testName).scroll1 = output1.innerHTML;
-  findTest(testName).tension = document.getElementById("tensionNumber").value;
+  findTest(testName).tension = outputSliderTensionLeft.innerHTML;
   findTest(testName).grid = lastCheckedGrid1Cell;
   
   findTest(testName).scroll2 = output2.innerHTML;
-  findTest(testName).tension2 = document.getElementById("tensionNumber2").value;
+  findTest(testName).tension2 = outputSliderTensionRight.innerHTML;
   findTest(testName).grid2 = lastCheckedGrid2Cell;
 }
 
