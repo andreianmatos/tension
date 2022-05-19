@@ -45,6 +45,7 @@ body, html {
   left: 47%;
 }
 
+
 /* index - consent slider */
 
   /* Sketch canvas */ 
@@ -220,6 +221,7 @@ body, html {
   --green-color:127;
  }
 
+ /* TENSION SLIDER */
   
  .slider {
   -webkit-appearance: none;
@@ -345,17 +347,22 @@ label {
 
 /*IMAGE LEFT*/
 
+.slidecontainer {
+  position: absolute;
+  width: 89%; 
+}
+
 #affectGrid {
   position: absolute;
-  top: 120%;
-  left: 9%;
+  top: 130%;
+  left: 11%;
   padding: 5%;
 }
 
 .gridCell {
   width:40px;
   height:40px;
-  border: 3px solid black;
+  border: 3px solid gray;
   color: black;
   background-color: whitesmoke;
   text-align: center;
@@ -370,57 +377,73 @@ label {
 #textGridRight{
   position: absolute;
   font-size: 20px;
-  left: 35.5%;
-  top: 146%;
+  left: 34.5%;
+  color: gray;
+  top: 153%;
+  font-size: 1.5em;
 }
 #textGridLeft{  
   position: absolute;
   font-size: 20px;
   text-align: right;
-  left: 6%;
-  top: 146%;
+  left: 9%;
+  top: 153.5%;
+  color: gray;
+  font-size: 1.5em;
 }
 #textGridTop{
   position: absolute;
   font-size: 20px;
   text-align: center;
-  left: 20.2%;
-  top: 126%;
+  color: gray;
+  left: 21.6%;
+  top: 136%;
+  font-size: 1.5em;
 }
 #textGridBottom{
   position: absolute;
   font-size: 20px;
   text-align: center;
-  left: 20.9%;
-  top: 171%;
+  color: gray;
+  left: 22%;
+  top: 173%;
+  font-size: 1.5em;
 }
 #textGridTopR{
   position: absolute;
   font-size: 20px;
   text-align: left;
-  left: 35.2%;
-  top: 126%;
+  left: 34.5%;
+  top: 136%;
+  color: gray;
+  font-size: 1.5em;
 }
 #textGridBottomR{
   position: absolute;
   font-size: 20px;
   text-align: left;
-  left: 35.2%;
-  top: 171%;
+  left: 34.5%;
+  top: 173%;
+  color: gray;
+  font-size: 1.5em;
 }
 #textGridTopL{
   position: absolute;
   font-size: 20px;
   text-align: right;
-  left: 9.5%;
-  top: 126%;
+  left: 11.5%;
+  top: 136%;
+  color: gray;
+  font-size: 1.5em;
 }
 #textGridBottomL{
   position: absolute;
   font-size: 20px;
-  text-align: left;
-  left: 6.1%;
-  top: 171%;
+  text-align: right;
+  left: 9%;
+  top: 173%;
+  color: gray;
+  font-size: 1.5em;
 }
 
 #textQ2 {
@@ -448,7 +471,7 @@ label {
 #textQ4 {
   position: absolute;
   margin-left: 3%;    
-  top: 120%;
+  top: 125%;
 }
 
 #resultsText{
@@ -486,7 +509,7 @@ label {
 #textQ7 {
   position: absolute;
   margin-left: 54%;    
-  top: 120%;
+  top: 125%;
 }
 
 #textNext {
@@ -498,66 +521,82 @@ label {
 
 #affectGrid2 {
   position: absolute;
-  top: 120%;
-  left: 60%;
+  top: 130%;
+  left: 62%;
   padding: 5%;
 }
-
 #textGridRight2{
   position: absolute;
   font-size: 20px;
-  left: 86.5%;
-  top: 146%;
+  left: 85.5%;
+  color: gray;
+  top: 153.5%;
+  font-size: 1.5em;
 }
 #textGridLeft2{  
   position: absolute;
   font-size: 20px;
   text-align: right;
-  left: 57%;
-  top: 146%;
+  left: 60%;
+  top: 153.5%;
+  color: gray;
+  font-size: 1.5em;
 }
 #textGridTop2{
   position: absolute;
   font-size: 20px;
   text-align: center;
-  left: 71.1%;
-  top: 126%;
+  color: gray;
+  left: 72.5%;
+  top: 136%;
+  font-size: 1.5em;
 }
 #textGridBottom2{
   position: absolute;
   font-size: 20px;
   text-align: center;
-  left: 72%;
-  top: 171%;
+  color: gray;
+  left: 73%;
+  top: 173%;
+  font-size: 1.5em;
 }
 #textGridTopR2{
   position: absolute;
   font-size: 20px;
   text-align: left;
-  left:  86.1%;
-  top: 126.1%;
+  left: 85.5%;
+  top: 136%;
+  color: gray;
+  font-size: 1.5em;
 }
 #textGridBottomR2{
   position: absolute;
   font-size: 20px;
   text-align: left;
-  left: 86.5%;
-  top: 171%;
+  left: 85.5%;
+  top: 173%;
+  color: gray;
+  font-size: 1.5em;
 }
 #textGridTopL2{
   position: absolute;
   font-size: 20px;
   text-align: right;
-  left: 60.2%;
-  top: 126.1%;
+  left: 62.5%;
+  top: 136%;
+  color: gray;
+  font-size: 1.5em;
 }
 #textGridBottomL2{
   position: absolute;
   font-size: 20px;
-  text-align: left;
-  left: 57%;
-  top: 171%;
+  text-align: right;
+  left: 60%;
+  top: 173%;
+  color: gray;
+  font-size: 1.5em;
 }
+
 
 .playButton:hover:active{
   transform: scale(0.5);

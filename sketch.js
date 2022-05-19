@@ -1803,12 +1803,12 @@ function checkGrid2(cellNr) {
 
 function clearInputs(test1, test2){
   if(test1){
-    for(let i = 1; i < 37; i++){
+    for(let i = 1; i < 26; i++){
       document.getElementById(i.toString()).value = null;
     }
   }
   if(test2){
-    for(let i = 1; i < 37; i++){
+    for(let i = 1; i < 26; i++){
       document.getElementById("2_" + i.toString()).value = null;
     }
   }
