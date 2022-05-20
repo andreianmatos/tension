@@ -165,12 +165,15 @@ body, html {
     color: darkgray;
  }
 
+ #alignCenter{
+  display: flex;
+  justify-content: center;
+}
+
   #testButtons {
     position: fixed;
     z-index: 99 !important; 
     background-color: whitesmoke;
-    left: 0.5%;
-    margin-top: -2%;
     padding-bottom: 1%;
     border:0.5vh solid whitesmoke;
     border-bottom:0.3vh solid black;
