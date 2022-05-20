@@ -143,12 +143,12 @@ body, html {
     appearance: none;
     transition: all 0.15s ease-in-out;
     font-family: inherit;
-    font-size: 17px;
+    font-size: 1em;
     font-weight: 600;
     background: #fff;
     border: 1% solid #000;
     color: rgb(17, 17, 17);
-    border-radius: 8px;
+    border-radius: 6%;
     outline: 0;
     cursor: pointer;
   }
@@ -172,8 +172,8 @@ body, html {
     left: 0.5%;
     margin-top: -2%;
     padding-bottom: 1%;
-    border:1px solid whitesmoke;
-    border-bottom:2px solid black;
+    border:0.5vh solid whitesmoke;
+    border-bottom:0.3vh solid black;
   }
 
   #nextButton {
