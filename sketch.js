@@ -315,6 +315,10 @@ function draw() {
   }
 
   if(imageTest || !playingLeft && !playingRight){
+    osc.stop();
+  }
+
+  if(soundTest && (playingLeft || playingRight)){
     osc.start();
     osc.freq(0);
     osc.amp(0);
@@ -338,6 +342,7 @@ function draw() {
     let susPercent = 0.2;
     let releaseTime = 0;
     if(playingLeft){
+
       if(radiosLeft_value != null){
         if(output1.innerHTML > 0)
           attackTime = map(output1.innerHTML, 0, 8, 0, 1);
@@ -644,6 +649,9 @@ function draw() {
     let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0;
+
+    osc.setType('sine');
+
     if(playingLeft){
       if(output1.innerHTML > 0)
         attackTime = map(output1.innerHTML, 0, 8, 0, 1);
@@ -707,6 +715,8 @@ function draw() {
     let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0;
+
+    osc.setType('sine');
 
     if(playingLeft){
       if(output1.innerHTML > 0)
@@ -772,6 +782,8 @@ function draw() {
     let susPercent = 0.2;
     let releaseTime = 0;
 
+    osc.setType('sine');
+
     if(playingLeft){
       if(output1.innerHTML > 0)
         attackTime = map(output1.innerHTML, 0, 8, 0, 1);
@@ -835,6 +847,8 @@ function draw() {
     let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0;
+
+    osc.setType('sine');
 
     //let dryWet;
     let reverbTime, decayRate = 2;
@@ -903,6 +917,8 @@ function draw() {
     let susPercent = 0.2;
     let releaseTime = 0;
 
+    osc.setType('sine');
+
     if(playingLeft){
       if(output1.innerHTML > 0)
         releaseTime = map(output1.innerHTML, 0, 8, 0, 1);
@@ -966,6 +982,8 @@ function draw() {
     let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0;
+
+    osc.setType('sine');
 
     if(playingLeft){
       if(output1.innerHTML > 0)
