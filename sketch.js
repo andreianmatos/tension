@@ -123,7 +123,7 @@ initialSlider2double = randomIntFromInterval(-8,8);
 
 function setup() {
 
-  var canvas = createCanvas(0.8*windowWidth, 0.7*windowHeight);
+  var canvas = createCanvas(0.85*windowWidth, 0.7*windowHeight);
   canvas.center('horizontal');
   canvas.parent('sketch');
 

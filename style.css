@@ -400,7 +400,6 @@ label {
 
 #textGridRight{
   position: absolute;
-  font-size: 20px;
   left: 34.5%;
   color: gray;
   top: 153%;
@@ -408,7 +407,6 @@ label {
 }
 #textGridLeft{  
   position: absolute;
-  font-size: 20px;
   text-align: right;
   left: 9%;
   top: 153.5%;
@@ -417,7 +415,6 @@ label {
 }
 #textGridTop{
   position: absolute;
-  font-size: 20px;
   text-align: center;
   color: gray;
   left: 21.6%;
@@ -426,7 +423,6 @@ label {
 }
 #textGridBottom{
   position: absolute;
-  font-size: 20px;
   text-align: center;
   color: gray;
   left: 22%;
@@ -435,7 +431,6 @@ label {
 }
 #textGridTopR{
   position: absolute;
-  font-size: 20px;
   text-align: left;
   left: 34.5%;
   top: 136%;
@@ -444,7 +439,6 @@ label {
 }
 #textGridBottomR{
   position: absolute;
-  font-size: 20px;
   text-align: left;
   left: 34.5%;
   top: 173%;
@@ -453,7 +447,6 @@ label {
 }
 #textGridTopL{
   position: absolute;
-  font-size: 20px;
   text-align: right;
   left: 11.5%;
   top: 136%;
@@ -462,7 +455,6 @@ label {
 }
 #textGridBottomL{
   position: absolute;
-  font-size: 20px;
   text-align: right;
   left: 9%;
   top: 173%;
@@ -551,7 +543,6 @@ label {
 }
 #textGridRight2{
   position: absolute;
-  font-size: 20px;
   left: 85.5%;
   color: gray;
   top: 153.5%;
@@ -559,7 +550,6 @@ label {
 }
 #textGridLeft2{  
   position: absolute;
-  font-size: 20px;
   text-align: right;
   left: 60%;
   top: 153.5%;
@@ -568,7 +558,6 @@ label {
 }
 #textGridTop2{
   position: absolute;
-  font-size: 20px;
   text-align: center;
   color: gray;
   left: 72.5%;
@@ -577,7 +566,6 @@ label {
 }
 #textGridBottom2{
   position: absolute;
-  font-size: 20px;
   text-align: center;
   color: gray;
   left: 73%;
@@ -586,7 +574,6 @@ label {
 }
 #textGridTopR2{
   position: absolute;
-  font-size: 20px;
   text-align: left;
   left: 85.5%;
   top: 136%;
@@ -595,7 +582,6 @@ label {
 }
 #textGridBottomR2{
   position: absolute;
-  font-size: 20px;
   text-align: left;
   left: 85.5%;
   top: 173%;
@@ -604,7 +590,6 @@ label {
 }
 #textGridTopL2{
   position: absolute;
-  font-size: 20px;
   text-align: right;
   left: 62.5%;
   top: 136%;
@@ -613,7 +598,6 @@ label {
 }
 #textGridBottomL2{
   position: absolute;
-  font-size: 20px;
   text-align: right;
   left: 60%;
   top: 173%;
