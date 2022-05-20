@@ -8,28 +8,42 @@
         <!-- Styles -->
         <link rel="stylesheet" href="style.css">
         <!-- JS -->
-        <script src="p5/p5.js"></script>
+        <script src="sketch.js"></script>
     </head>
    
     <body>  
+
+        <button style="left:1%;z-index: 2;" class="custombutton2" id="definitions" onclick="definitionOpen(); show('definitionPopUp');">?</button> 
+        <img src="data/arrow.png" style="position: absolute; width:12.5%; top: 11%; left: 1%; z-index: 1;">
+
+        <div id="definitionPopUp" style="display: none;">
+            Click the <b>?</b> to unsee.
+            <p><b>AROUSAL: </b>A state of excitement or energy spent on an emotion. Related to the intensity of the stimulus.</p>
+            <p><b>VALENCE: </b>The inate attractiveness (positive valence) or averseness (negative valence) of the stimulus.</p>
+      
+            <p><b>TENSION: </b>The emotional state which relates to conflict, instability or uncertainty; that creates a desire for resolution; that increases as does expectaction, anticipation. In art, it may be considered as a balance between opposing forces; the controlled dynamic.</p>
+                
+            <p>In this test, you must consider felt tension when answering, as opposed to perceived tension.</p>
+            <p><b>FELT TENSION: </b>Your own subjective emotional experience.</p>
+            <p><b>PERCEIVED TENSION: </b>The tension you assume the stimulus is supposed to express. </p>
+          </div>
+
             
         <div class="about" >
 
-            <p class="title"> <b>Welcome!</b></p> 
+            <p class="title"> <b>Please read the information below! Then...</b>            
+                <a style="margin-left: 2%; top: 12%;" type="button" class="custombutton" href="questionnaire.html">Next!</a>
+            </p> 
 
-            <p>In this experiment, you will have to go through 20 tests. The estimated duration is around 20 minutes. </p>
-            <p>Each test will present to you an image or a sound and offer you some way to manipulate it.</p>
-            <p>Then, there is a questionnaire regarding your reaction to it, namely the tension you felt. There is also a grid in which you must click on the cell that better suits your underlying emotional state when considering the image or sound, which we will use to place you on the arousal/valence spectrum. </p>
+            <p><b>Click on the  <b>?</b> button to read some important definitions.</b></p>
+            <p><b>Make sure you understand them.</b></p> 
+            <p><b>This button will be available all throughout the experiment in case you need to reread them.</b></p> 
 
-            <p>Make sure your environment allows you to focus on the tests with no distractions. Please do this on a computer (no tablets/smartphones) and use headphones. </p>
-
-            <p>Once you get to the first sound test, set your audio to a volume that is comfortable to you for all the sounds displayed and keep it the same throughout the remaing tests. Play only one sound at a time.</p>
-
-            <p>Every time you finish a test, click on <b>Next test!</b> and another will be randomly chosen. Use only the buttons within the website. At the end, you will be able to manually select any test and update your answers if you want to. Save your answers at the end of every test!</p>
         
-            <p>Once you finish, <b>Submit</b>! You will be asked to send us your results.</p>
+            <p class="title"> <b>Sound check!</b></p>
+            <p><b>Adjust your sound in order to comfortably be able to hear both of the sounds below.</b></p>
 
-            <!--<div id = "radiosLeft">
+            <div id = "radiosLeft">
                 <div class="radio-item firstOption" id="a">
                   <input type="radio" id="ritema" name="radioLeft" value="1.1" >
                   <label for="ritema">1</label>
@@ -45,18 +59,7 @@
                   <label for="ritemc">NONE</label>
                 </div>
           
-            </div>-->
-
-            <div class="sliderWrapperConsent" >
-                <label class="switch">
-                    <input type="checkbox" >
-                    <span class="sliderConsent"  onclick="show('startButton')"> </span>
-                </label>
-                
-                <div> &nbsp;&nbsp; I agree to the conditions of the experiment.</div>
             </div>
-
-            <p id="startButton" style="display:none;"> <a type="button" class="custombutton" class="hide" href="soundTest.html">Next!</a></p>
                                     
         </div>
 

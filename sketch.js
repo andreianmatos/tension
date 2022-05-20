@@ -2071,6 +2071,18 @@ function updateAnswers(){
   saveTestChoices(currentTestBol);
 }
 
+function definitionOpen(){
+  let def = document.getElementById("definitions");
+  if(def.style.background === "rgb(17, 17, 17)"){
+    def.style.background = '#d3d3d3';
+    def.style.color = black;
+  }
+  else{
+    def.style.background = "rgb(17, 17, 17)";
+    def.style.color = white;
+  }
+}
+
 /* SLIDERS from https://github.com/tadejf84/js-range-slider */
 
 class sliderCircular {

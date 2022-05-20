@@ -28,6 +28,7 @@
 
     <div id="testButtons">
         <!-- add disabled="true" -->
+      <button  class="custombutton2" id="definitions" onclick="definitionOpen(); show('definitionPopUp');">?</button> 
       <button  class="custombutton2" id="test1Bol" onclick="next('test1Bol');">01</button> 
       <button  class="custombutton2" id="test2Bol" onclick="next('test2Bol');">02</button>
       <button  class="custombutton2" id="test3Bol" onclick="next('test3Bol');">03</button>
@@ -50,6 +51,18 @@
       <button  class="custombutton2" id="test20Bol" onclick="next('test20Bol');">20</button>
       <button  class="custombutton2" id="submit" onclick="submit()">SUBMIT</button>
     </div> 
+
+    <div id="definitionPopUp" style="display: none;">
+      Click the <b>?</b> to unsee.
+      <p><b>AROUSAL: </b>A state of excitement or energy spent on an emotion. Related to the intensity of the stimulus.</p>
+      <p><b>VALENCE: </b>The inate attractiveness (positive valence) or averseness (negative valence) of the stimulus.</p>
+
+      <p><b>TENSION: </b>The emotional state which relates to conflict, instability or uncertainty; that creates a desire for resolution; that increases as does expectaction, anticipation. In art, it may be considered as a balance between opposing forces; the controlled dynamic.</p>
+          
+      <p>In this test, you must consider felt tension when answering, as opposed to perceived tension.</p>
+      <p><b>FELT TENSION: </b>Your own subjective emotional experience.</p>
+      <p><b>PERCEIVED TENSION: </b>The tension you assume the stimulus is supposed to express. </p>
+    </div>
 
     <div id="sketch"></div>
 
@@ -270,7 +283,7 @@
 
       <div id="app2"></div>
       <div id="app4"></div>
-v
+
   </main>
 
 </body>
