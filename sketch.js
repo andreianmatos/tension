@@ -32,7 +32,6 @@ initialSlider1double = randomIntFromInterval(-8,8),
 initialSlider2 = randomIntFromInterval(-8,8), 
 initialSlider2double = randomIntFromInterval(-8,8);
 
-
  // LEFT: SLIDER 1 sliderCircular app options
  const opts = {
   DOMselector: '#app',
@@ -313,7 +312,6 @@ function draw() {
         radiosRight_value = radiosRight[i].value;
       }
   }
-
 
   // in between always stop the oscillator
   if(isStarted && !playingLeft && !playingRight){

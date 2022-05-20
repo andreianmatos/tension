@@ -295,6 +295,63 @@ body, html {
   display: none;
 }
 
+
+.radio-itemSoundCheck {
+  position: absolute;
+  padding: 0 6px;
+  margin: 0 auto;
+  left:  15.5%;
+  top: 65%;
+  z-index: 98 !important; 
+}
+
+.radio-itemSoundCheck.secondOption {
+  left: 23.5%;
+}
+
+.radio-itemSoundCheck.thirdOption {
+  left: 31.5%;
+}
+
+.radio-itemSoundCheck input[type='radio'] {
+  display: none;  
+}
+
+.radio-itemSoundCheck label {
+  color: #666;
+  font-weight: normal;
+}
+
+.radio-itemSoundCheck label:before {
+  content: " ";
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  margin: 0 5px 0 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 11px;
+  border: 2px solid black;
+  background-color: transparent;
+}
+
+.radio-itemSoundCheck input[type=radio]:checked + label:after {
+  border-radius: 11px;
+  width: 17px;
+  height: 17px;
+  position: absolute;
+  top: 8.6px;
+  left: 9.8px;
+  content: " ";
+  display: block;
+  background: black;
+}
+
+label {
+  display: inline-block;
+}
+
+
 /* radio buttons for the canvas */
 
 .radio-item {
