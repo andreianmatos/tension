@@ -373,7 +373,9 @@ label {
 
 .slidecontainer {
   position: absolute;
-  width: 89%; 
+  width: 89%;
+  display: flex;
+  justify-content: center; 
 }
 
 #affectGrid {
