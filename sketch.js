@@ -334,6 +334,7 @@ function draw() {
     let releaseLevel = 0;
     let attackTime = 0.001;
     let decayTime = 0.2;
+    let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0;
     if(playingLeft){
@@ -357,6 +358,7 @@ function draw() {
         // C - G - D - A - E (before) C2 C3 C4 (now)
         if (frameCount % 100 == 0){
           osc.freq(midiToFreq(int(random(36, 48, 60))));
+          env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setRange(attackLevel, releaseLevel);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.play();
@@ -383,6 +385,7 @@ function draw() {
 
         if (frameCount % 100 == 0){
           osc.freq(midiToFreq(int(random(36, 48, 60))));
+          env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setRange(attackLevel, releaseLevel);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.play();
@@ -405,6 +408,7 @@ function draw() {
     let releaseLevel = 0; // to make the note end all the way to silence
     let attackTime = 0;
     let decayTime = 0.2;
+    let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0.001;
     if(playingLeft){
@@ -423,6 +427,7 @@ function draw() {
         else if(radiosLeft_value == "1.4")
           osc.setType('sawtooth') ;
 
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         osc.amp(env);
 
         //C2 C3 C4 
@@ -450,6 +455,7 @@ function draw() {
         else if(radiosRight_value == "2.4")
           osc.setType('sawtooth');
 
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         osc.amp(env);
 
         //C2 C3 C4 
@@ -477,6 +483,7 @@ function draw() {
     let releaseLevel = 0; // to make the note end all the way to silence
     let attackTime = 0;
     let decayTime = 0.2;
+    let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0.001;
 
@@ -497,6 +504,7 @@ function draw() {
         else if(radiosLeft_value == "1.4")
           osc.setType('sawtooth');
 
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         osc.amp(env);
         
         //C2 C3 C4 
@@ -527,11 +535,13 @@ function draw() {
         else if(radiosRight_value == "2.4")
           osc.setType('sawtooth');
 
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         osc.amp(env);
         
         //C2 C3 C4 
         if (frameCount % 100 == 0){
           osc.freq(midiToFreq(int(random(36, 48, 60))));
+          env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setRange(attackLevel, releaseLevel);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.play();
@@ -555,6 +565,7 @@ function draw() {
     let releaseLevel = 0; // to make the note end all the way to silence
     let attackTime = 0;
     let decayTime = 0.2;
+    let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0.001;
     
@@ -574,7 +585,8 @@ function draw() {
           osc.setType('square');
         else if(radiosLeft_value == "1.4")
           osc.setType('sawtooth') ;
-
+        
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         osc.amp(env);
 
         //C2 C3 C4 
@@ -602,6 +614,7 @@ function draw() {
         else if(radiosRight_value == "2.4")
           osc.setType('sawtooth') ;
 
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         osc.amp(env);
 
          //C2 C3 C4 
@@ -628,6 +641,7 @@ function draw() {
     let releaseLevel = 0;
     let attackTime = 0.001;
     let decayTime = 0.2;
+    let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0;
     if(playingLeft){
@@ -640,7 +654,8 @@ function draw() {
         releaseTime = map(output1double.innerHTML, 0, 8, 0, 1);
       else
         releaseTime = map(output1double.innerHTML, -8, 0, 1, 0);
-
+      
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.amp(env);
 
       //C2 C3 C4 
@@ -662,6 +677,7 @@ function draw() {
       else
         releaseTime = map(output2double.innerHTML, -8, 0, 1, 0);
 
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.amp(env);
 
       // C2 C3 C4 
@@ -688,6 +704,7 @@ function draw() {
     let releaseLevel = 0;
     let attackTime = 0.001;
     let decayTime = 0.2;
+    let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0;
 
@@ -702,6 +719,7 @@ function draw() {
       else
         decayTime = map(output1double.innerHTML, -8, 0, 1, 0);
 
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.amp(env);
 
       // C2 C3 C4 
@@ -723,6 +741,7 @@ function draw() {
       else
         decayTime = map(output2double.innerHTML, -8, 0, 1, 0);
 
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.amp(env);
 
       // C2 C3 C4 
@@ -749,6 +768,7 @@ function draw() {
     let releaseLevel = 0;
     let attackTime = 0.001;
     let decayTime = 0.2;
+    let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0;
 
@@ -762,7 +782,8 @@ function draw() {
         susPercent = map(output1double.innerHTML, 0, 8, 0.0, 1);
       else
         susPercent = map(output1double.innerHTML, -8, 0, 1, 0.0);
-        
+      
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.amp(env);
 
       // C2 C3 C4
@@ -783,7 +804,8 @@ function draw() {
         susPercent = map(output1double.innerHTML, 0, 8, 0.0, 1);
       else
         susPercent = map(output1double.innerHTML, -8, 0, 1, 0.0);
-        
+      
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.amp(env);
 
       // C2 C3 C4
@@ -810,6 +832,7 @@ function draw() {
     let releaseLevel = 0;
     let attackTime = 0.001;
     let decayTime = 0.2;
+    let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0;
 
@@ -827,6 +850,7 @@ function draw() {
       else
         decayTime = map(output1double.innerHTML, -8, 0, 1, 0);
       
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.amp(env);
 
       // C2 C3 C4
@@ -848,6 +872,7 @@ function draw() {
       else
         decayTime = map(output2double.innerHTML, -8, 0, 1, 0);
       
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.amp(env);
 
       // C2 C3 C4
@@ -874,6 +899,7 @@ function draw() {
     let releaseLevel = 0;
     let attackTime = 0.001;
     let decayTime = 0.2;
+    let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0;
 
@@ -888,6 +914,7 @@ function draw() {
       else
         susPercent = map(output1double.innerHTML, -8, 0, 1, 0.0);
         
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.amp(env);
 
       // C2 C3 C4
@@ -909,6 +936,7 @@ function draw() {
       else
         susPercent = map(output2double.innerHTML, -8, 0, 1, 0.0);
 
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.amp(env);
       
       // C2 C3 C4
@@ -935,6 +963,7 @@ function draw() {
     let releaseLevel = 0;
     let attackTime = 0.001;
     let decayTime = 0.2;
+    let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0;
 
@@ -948,7 +977,8 @@ function draw() {
         susPercent = map(output1double.innerHTML, 0, 8, 0.0, 1);
       else
         susPercent = map(output1double.innerHTML, -8, 0, 1, 0.0);
-        
+      
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.amp(env);
       
       // C2 C3 C4
@@ -970,6 +1000,7 @@ function draw() {
       else
         susPercent = map(output2double.innerHTML, -8, 0, 1, 0.0);
         
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.amp(env);
       
       // C2 C3 C4
@@ -1011,7 +1042,7 @@ function draw() {
 
     push();
     noFill();
-    translate(width/1.21, height/2);
+    translate(width/1.25, height/2);
     if(output2double.innerHTML > 0)
       sw = int(map(output2double.innerHTML, 0, 8, 1, 25));
     if(output2double.innerHTML <= 0)
@@ -1053,7 +1084,7 @@ function draw() {
 
     push();
     noFill();
-    translate(width/1.21, height/2);
+    translate(width/1.25, height/2);
 
     strokeWeight(10);
     let angle2 = map(output2double.innerHTML, 0, 8, 0, 180);
@@ -1104,7 +1135,7 @@ function draw() {
 
     push();
     noFill();
-    translate(width/1.21, height/2);
+    translate(width/1.25, height/2);
 
     strokeWeight(10);
     //console.log(lerp(5, 5, map(output2double.innerHTML, -8, 0, 0, 1)));
@@ -1199,7 +1230,7 @@ function draw() {
 
     push();
     noFill();
-    translate(width/1.21, height/2);
+    translate(width/1.25, height/2);
 
     strokeWeight(10);
 
@@ -1287,7 +1318,7 @@ function draw() {
 
     push();
     noFill();
-    translate(width/1.21, height/2);
+    translate(width/1.25, height/2);
     rectMode(CENTER);
     if(output2double.innerHTML > 0)
       sw = int(map(output2double.innerHTML, 0, 8, 1, 25));
@@ -1337,7 +1368,7 @@ function draw() {
 
     push();
     noFill();
-    translate(width/1.21, height/2);output1double
+    translate(width/1.25, height/2);output1double
 
     if(output2double.innerHTML > 0) {
       irregularList = [ 1,  map(output2double.innerHTML, 0, 8, 25, 15)];
@@ -1417,7 +1448,7 @@ function draw() {
 
     push();
     noFill();
-    translate(width/1.21, height/2);
+    translate(width/1.25, height/2);
     
     if(output2.innerHTML > 0)
       sw = int(map(output2.innerHTML, 0, 8, 1, 25));
@@ -1495,7 +1526,7 @@ function draw() {
 
     push();
     noFill();
-    translate(width/1.21, height/2);
+    translate(width/1.25, height/2);
 
     rectMode(CENTER);
     strokeWeight(10);
@@ -1546,7 +1577,7 @@ function draw() {
 
     push();
     noFill();
-    translate(width/1.21, height/2);
+    translate(width/1.25, height/2);
 
     strokeWeight(10);
     rectMode(CENTER);
@@ -1628,7 +1659,7 @@ function draw() {
 
     push();
     noFill();
-    translate(width/1.21, height/2);
+    translate(width/1.25, height/2);
 
     strokeWeight(10);
     
