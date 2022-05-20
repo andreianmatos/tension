@@ -13,7 +13,7 @@ let testNumber = 1;
 let chosen;
 
 
-var playingLeft = 0, playingRight = 0;
+var playingLeft = 0, playingRight = 0, isStarted = 0;
 var w, osc, env;
 
 let slider = 0, sliderDouble = 0, radioButtons = 0;
@@ -314,14 +314,11 @@ function draw() {
       }
   }
 
-  if(imageTest || !playingLeft && !playingRight){
-    osc.stop();
-  }
 
-  if(soundTest && (playingLeft || playingRight)){
-    osc.start();
-    osc.freq(0);
-    osc.amp(0);
+  // in between always stop the oscillator
+  if(isStarted && !playingLeft && !playingRight){
+    osc.stop(0.1);
+    isStarted = 0;
   }
 
   // TEST 1 | WAVEFORM + ATTACK 
@@ -342,6 +339,8 @@ function draw() {
     let susPercent = 0.2;
     let releaseTime = 0;
     if(playingLeft){
+
+      console.log(isStarted)
 
       if(radiosLeft_value != null){
         if(output1.innerHTML > 0)
@@ -371,6 +370,7 @@ function draw() {
       }
     }
     if(playingRight) {
+
       if(radiosRight_value != null ){
         if(output2.innerHTML > 0)
           attackTime = map(output2.innerHTML, 0, 8, 0, 1);
@@ -649,9 +649,6 @@ function draw() {
     let decayLevel = 0.1; // decay level  0.0 to 1.0
     let susPercent = 0.2;
     let releaseTime = 0;
-
-    osc.setType('sine');
-
     if(playingLeft){
       if(output1.innerHTML > 0)
         attackTime = map(output1.innerHTML, 0, 8, 0, 1);
@@ -664,6 +661,7 @@ function draw() {
         releaseTime = map(output1double.innerHTML, -8, 0, 1, 0);
       
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      osc.setType('sine');
       osc.amp(env);
 
       //C2 C3 C4 
@@ -686,6 +684,7 @@ function draw() {
         releaseTime = map(output2double.innerHTML, -8, 0, 1, 0);
 
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      osc.setType('sine');
       osc.amp(env);
 
       // C2 C3 C4 
@@ -716,8 +715,6 @@ function draw() {
     let susPercent = 0.2;
     let releaseTime = 0;
 
-    osc.setType('sine');
-
     if(playingLeft){
       if(output1.innerHTML > 0)
         attackTime = map(output1.innerHTML, 0, 8, 0, 1);
@@ -730,6 +727,7 @@ function draw() {
         decayTime = map(output1double.innerHTML, -8, 0, 1, 0);
 
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      osc.setType('sine');
       osc.amp(env);
 
       // C2 C3 C4 
@@ -752,6 +750,7 @@ function draw() {
         decayTime = map(output2double.innerHTML, -8, 0, 1, 0);
 
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      osc.setType('sine');
       osc.amp(env);
 
       // C2 C3 C4 
@@ -782,8 +781,6 @@ function draw() {
     let susPercent = 0.2;
     let releaseTime = 0;
 
-    osc.setType('sine');
-
     if(playingLeft){
       if(output1.innerHTML > 0)
         attackTime = map(output1.innerHTML, 0, 8, 0, 1);
@@ -796,6 +793,7 @@ function draw() {
         susPercent = map(output1double.innerHTML, -8, 0, 1, 0.0);
       
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      osc.setType('sine');
       osc.amp(env);
 
       // C2 C3 C4
@@ -818,6 +816,7 @@ function draw() {
         susPercent = map(output1double.innerHTML, -8, 0, 1, 0.0);
       
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      osc.setType('sine');
       osc.amp(env);
 
       // C2 C3 C4
@@ -848,8 +847,6 @@ function draw() {
     let susPercent = 0.2;
     let releaseTime = 0;
 
-    osc.setType('sine');
-
     //let dryWet;
     let reverbTime, decayRate = 2;
 
@@ -865,6 +862,7 @@ function draw() {
         decayTime = map(output1double.innerHTML, -8, 0, 1, 0);
       
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      osc.setType('sine');
       osc.amp(env);
 
       // C2 C3 C4
@@ -887,6 +885,7 @@ function draw() {
         decayTime = map(output2double.innerHTML, -8, 0, 1, 0);
       
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      osc.setType('sine');
       osc.amp(env);
 
       // C2 C3 C4
@@ -917,8 +916,6 @@ function draw() {
     let susPercent = 0.2;
     let releaseTime = 0;
 
-    osc.setType('sine');
-
     if(playingLeft){
       if(output1.innerHTML > 0)
         releaseTime = map(output1.innerHTML, 0, 8, 0, 1);
@@ -931,6 +928,7 @@ function draw() {
         susPercent = map(output1double.innerHTML, -8, 0, 1, 0.0);
         
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      osc.setType('sine');
       osc.amp(env);
 
       // C2 C3 C4
@@ -953,6 +951,7 @@ function draw() {
         susPercent = map(output2double.innerHTML, -8, 0, 1, 0.0);
 
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      osc.setType('sine');
       osc.amp(env);
       
       // C2 C3 C4
@@ -983,8 +982,6 @@ function draw() {
     let susPercent = 0.2;
     let releaseTime = 0;
 
-    osc.setType('sine');
-
     if(playingLeft){
       if(output1.innerHTML > 0)
         decayTime = map(output1.innerHTML, 0, 8, 0, 1);
@@ -997,6 +994,7 @@ function draw() {
         susPercent = map(output1double.innerHTML, -8, 0, 1, 0.0);
       
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      osc.setType('sine');
       osc.amp(env);
       
       // C2 C3 C4
@@ -1019,6 +1017,7 @@ function draw() {
         susPercent = map(output2double.innerHTML, -8, 0, 1, 0.0);
         
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      osc.setType('sine');
       osc.amp(env);
       
       // C2 C3 C4
@@ -1734,6 +1733,10 @@ function show(item){
   }
 }  
 
+function startOscillator(){
+  osc.start(0.1);
+  isStarted = 1;
+}
 
 function setSliderValue(val, slider) {
   let range = "myRange" + slider;
@@ -2671,5 +2674,4 @@ class sliderCircular {
       this.activesliderCircular = sliderCircularGroups[closestsliderCircularIndex];
   }
 }
-
 
