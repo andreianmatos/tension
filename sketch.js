@@ -356,8 +356,7 @@ function draw() {
           osc.setType('sawtooth');
 
         osc.amp(env);
- 
-        // C - G - D - A - E (before) C2 C3 C4 (now)
+
         if (frameCount % 100 == 0){
           osc.freq(midiToFreq(int(random(36, 48, 60))));
           env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
