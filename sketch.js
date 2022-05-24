@@ -32,6 +32,11 @@ initialSlider1double = randomIntFromInterval(-8,8),
 initialSlider2 = randomIntFromInterval(-8,8), 
 initialSlider2double = randomIntFromInterval(-8,8);
 
+//C2 C3 C4 o C2 é um pouco baixo (?) 
+var midiNotesConsidered = Array(36, 48, 60);
+var seconds; // between notes
+// before the setinterval: worked: frameCount % 100 == 0
+
  // LEFT: SLIDER 1 sliderCircular app options
  const opts = {
   DOMselector: '#app',
@@ -200,11 +205,19 @@ function setup() {
   //sound prep
   osc = new p5.Oscillator();
   env = new p5.Envelope();
+
+  seconds = 0;
+  //increment the seconds
+  setInterval(incrementSeconds, 1000);
+
 }
 
 function draw() {
 
   background(white);
+
+  console.log(seconds);
+
 
   if(imageTest){
     document.getElementById("playL").style.display = 'none';
@@ -319,6 +332,7 @@ function draw() {
     isStarted = 0;
   }
 
+
   // TEST 1 | WAVEFORM + ATTACK 
   if(findTest("test1Bol").active) {
 
@@ -329,22 +343,25 @@ function draw() {
     slider = 1;
     sliderDouble = 0;
 
-    let attackLevel = 1.0;
-    let releaseLevel = 0;
-    let attackTime = 0.001;
-    let decayTime = 0.2;
-    let decayLevel = 0.1; // decay level  0.0 to 1.0
-    let susPercent = 0.2;
-    let releaseTime = 0;
-    if(playingLeft){
 
-      console.log(isStarted)
+     // keeping these levels always up to the maximum (0.0 and 1.0)
+     let attackLevel = 1.0;
+     let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
+     let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
+    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
+    //let susPercent = 0.5;
+ 
+     let attackTime = 0.5;
+     let decayTime = 0.2;
+     let releaseTime = 0.5;
+
+    if(playingLeft){
 
       if(radiosLeft_value != null){
         if(output1.innerHTML > 0)
-          attackTime = map(output1.innerHTML, 0, 8, 0, 1);
+          attackTime = map(output1.innerHTML, 0, 8, 0, 2.0);
         else
-          attackTime = map(output1.innerHTML, -8, 0, 1, 0);
+          attackTime = map(output1.innerHTML, -8, 0, 2.0, 0);
         // WAVEFORM
         if(radiosLeft_value == "1.1")
           osc.setType('sine');
@@ -357,12 +374,14 @@ function draw() {
 
         osc.amp(env);
 
-        if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(36, 48, 60))));
-          env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+        if (seconds == 3 || seconds > 3){
+          osc.freq(midiToFreq(int(getNote())));
+          env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
           env.setRange(attackLevel, releaseLevel);
-          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+          //unecessary
+          //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.play();
+          seconds=0;
         }
       }
     }
@@ -385,12 +404,14 @@ function draw() {
 
         osc.amp(env);
 
-        if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(36, 48, 60))));
+        if (seconds == 3 || seconds > 3){
+          osc.freq(midiToFreq(int(getNote())));
           env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setRange(attackLevel, releaseLevel);
-          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+          //unecessary
+          //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.play();
+          seconds=0;
         }
       }
     }
@@ -406,13 +427,17 @@ function draw() {
     slider = 1;
     sliderDouble = 0;
 
-    let attackLevel = 1.0;
-    let releaseLevel = 0; // to make the note end all the way to silence
-    let attackTime = 0;
-    let decayTime = 0.2;
-    let decayLevel = 0.1; // decay level  0.0 to 1.0
-    let susPercent = 0.2;
-    let releaseTime = 0.001;
+     // keeping these levels always up to the maximum (0.0 and 1.0)
+     let attackLevel = 1.0;
+     let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
+     let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
+    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
+    //let susPercent = 0.5;
+ 
+     let attackTime = 0.5;
+     let decayTime = 0.2;
+     let releaseTime = 0.5;
+
     if(playingLeft){
       if(radiosLeft_value != null){
         if(output1.innerHTML > 0)
@@ -429,15 +454,17 @@ function draw() {
         else if(radiosLeft_value == "1.4")
           osc.setType('sawtooth') ;
 
-        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         osc.amp(env);
 
-        //C2 C3 C4 
-        if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(36, 48, 60))));
+        
+        if (seconds == 3 || seconds > 3){
+          osc.freq(midiToFreq(int(getNote())));
+          env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
           env.setRange(attackLevel, releaseLevel);
-          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+          //unecessary
+          //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.play();
+          seconds = 0;
         }
       }
     }
@@ -457,15 +484,16 @@ function draw() {
         else if(radiosRight_value == "2.4")
           osc.setType('sawtooth');
 
-        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         osc.amp(env);
 
-        //C2 C3 C4 
-        if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(36, 48, 60))));
+        if (seconds == 3 || seconds > 3){
+          osc.freq(midiToFreq(int(getNote())));
+          env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
           env.setRange(attackLevel, releaseLevel);
-          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+         //unecessary 
+          //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.play();
+          seconds = 0;
         }
       }
     }
@@ -481,13 +509,16 @@ function draw() {
     slider = 1;
     sliderDouble = 0;
 
-    let attackLevel = 1.0;
-    let releaseLevel = 0; // to make the note end all the way to silence
-    let attackTime = 0;
-    let decayTime = 0.2;
-    let decayLevel = 0.1; // decay level  0.0 to 1.0
-    let susPercent = 0.2;
-    let releaseTime = 0.001;
+     // keeping these levels always up to the maximum (0.0 and 1.0)
+     let attackLevel = 1.0;
+     let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
+     let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
+    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
+    //let susPercent = 0.5;
+ 
+     let attackTime = 0.5;
+     let decayTime = 0.2;
+     let releaseTime = 0.5;
 
     if(playingLeft){
       if(radiosLeft_value != null){
@@ -506,15 +537,17 @@ function draw() {
         else if(radiosLeft_value == "1.4")
           osc.setType('sawtooth');
 
-        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         osc.amp(env);
         
         //C2 C3 C4 
-        if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(36, 48, 60))));
+        if (seconds == 3 || seconds > 3){
+          osc.freq(midiToFreq(int(getNote())));
+          env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
           env.setRange(attackLevel, releaseLevel);
-          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+          //unecessary
+          //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.play();
+          seconds = 0;
         }
 
       }
@@ -537,16 +570,17 @@ function draw() {
         else if(radiosRight_value == "2.4")
           osc.setType('sawtooth');
 
-        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         osc.amp(env);
         
         //C2 C3 C4 
-        if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(36, 48, 60))));
+        if (seconds == 3 || seconds > 3){
+          osc.freq(midiToFreq(int(getNote())));
           env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setRange(attackLevel, releaseLevel);
-          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+          //unecessary
+          //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.play();
+          seconds = 0;
         }
 
       }
@@ -563,13 +597,16 @@ function draw() {
     slider = 1;
     sliderDouble = 0;
 
-    let attackLevel = 1.0;
-    let releaseLevel = 0; // to make the note end all the way to silence
-    let attackTime = 0;
-    let decayTime = 0.2;
-    let decayLevel = 0.1; // decay level  0.0 to 1.0
-    let susPercent = 0.2;
-    let releaseTime = 0.001;
+     // keeping these levels always up to the maximum (0.0 and 1.0)
+     let attackLevel = 1.0;
+     let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
+     let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
+    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
+    let susPercent = 0.5;
+ 
+     let attackTime = 0.5;
+     let decayTime = 0.2;
+     let releaseTime = 0.5;
     
     if(playingLeft){
       if(radiosLeft_value != null){
@@ -588,15 +625,17 @@ function draw() {
         else if(radiosLeft_value == "1.4")
           osc.setType('sawtooth') ;
         
-        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         osc.amp(env);
 
         //C2 C3 C4 
-        if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(36, 48, 60))));
-          env.setRange(attackLevel, releaseLevel);
+        if (seconds == 3 || seconds > 3){
+          osc.freq(midiToFreq(int(getNote())));
+          //here is the other way around to keep the sustainTime
+          //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+          env.setRange(attackLevel, releaseLevel);
           env.play();
+          seconds = 0;
         }
       }
     }
@@ -616,15 +655,15 @@ function draw() {
         else if(radiosRight_value == "2.4")
           osc.setType('sawtooth') ;
 
-        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         osc.amp(env);
 
-         //C2 C3 C4 
-         if (frameCount % 100 == 0){
-          osc.freq(midiToFreq(int(random(36, 48, 60))));
+         if (seconds == 3 || seconds > 3){
+          osc.freq(midiToFreq(int(getNote())));
+          //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setRange(attackLevel, releaseLevel);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.play();
+          seconds = 0;
         }
       }
     }
@@ -657,16 +696,18 @@ function draw() {
       else
         releaseTime = map(output1double.innerHTML, -8, 0, 1, 0);
       
-      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.setType('sine');
       osc.amp(env);
 
       //C2 C3 C4 
-      if (frameCount % 100 == 0){
-        osc.freq(midiToFreq(int(random(36, 48, 60))));
+      if (seconds == 3 || seconds > 3){
+        osc.freq(midiToFreq(int(getNote())));
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+        //unecessary
+        //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
+        seconds = 0;
       }
     }
     if(playingRight) {
@@ -680,16 +721,17 @@ function draw() {
       else
         releaseTime = map(output2double.innerHTML, -8, 0, 1, 0);
 
-      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.setType('sine');
       osc.amp(env);
 
-      // C2 C3 C4 
-      if (frameCount % 100 == 0){
-        osc.freq(midiToFreq(int(random(36, 48, 60))));
+      if (seconds == 3 || seconds > 3){
+        osc.freq(midiToFreq(int(getNote())));
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+        //unecessary
+        //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
+        seconds = 0;
       }
     }
   }
@@ -723,16 +765,17 @@ function draw() {
       else
         decayTime = map(output1double.innerHTML, -8, 0, 1, 0);
 
-      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.setType('sine');
       osc.amp(env);
 
-      // C2 C3 C4 
-      if (frameCount % 100 == 0){
-        osc.freq(midiToFreq(int(random(36, 48, 60))));
+      if (seconds == 3 || seconds > 3){
+        osc.freq(midiToFreq(int(getNote())));
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+        //unecessary
+        //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
+        seconds = 0;
       }
     }
     if(playingRight) {
@@ -746,16 +789,17 @@ function draw() {
       else
         decayTime = map(output2double.innerHTML, -8, 0, 1, 0);
 
-      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.setType('sine');
       osc.amp(env);
 
-      // C2 C3 C4 
-      if (frameCount % 100 == 0){
-        osc.freq(midiToFreq(int(random(36, 48, 60))));
+      if (seconds == 3 || seconds > 3){
+        osc.freq(midiToFreq(int(getNote())));
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+        //unecessary
+        //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
+        seconds = 0;
       }
     }
   }
@@ -794,11 +838,12 @@ function draw() {
       osc.amp(env);
 
       // C2 C3 C4
-      if (frameCount % 100 == 0){
-        osc.freq(midiToFreq(int(random(36, 48, 60))));
+      if (seconds == 3 || seconds > 3){
+        osc.freq(midiToFreq(int(getNote())));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
+        seconds = 0;
       }
     }
     if(playingRight) {
@@ -817,11 +862,12 @@ function draw() {
       osc.amp(env);
 
       // C2 C3 C4
-      if (frameCount % 100 == 0){
-        osc.freq(midiToFreq(int(random(36, 48, 60))));
+      if (seconds == 3 || seconds > 3){
+        osc.freq(midiToFreq(int(getNote())));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
+        seconds = 0;
       }
     }
   }
@@ -863,11 +909,12 @@ function draw() {
       osc.amp(env);
 
       // C2 C3 C4
-      if (frameCount % 100 == 0){
-        osc.freq(midiToFreq(int(random(36, 48, 60))));
+      if (seconds == 3 || seconds > 3){
+        osc.freq(midiToFreq(int(getNote())));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
+        seconds = 0;
       }
     }
     if(playingRight) {
@@ -886,11 +933,12 @@ function draw() {
       osc.amp(env);
 
       // C2 C3 C4
-      if (frameCount % 100 == 0){
-        osc.freq(midiToFreq(int(random(36, 48, 60))));
+      if (seconds == 3 || seconds > 3){
+        osc.freq(midiToFreq(int(getNote())));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
+        seconds = 0;
       }
     }
   }
@@ -929,11 +977,12 @@ function draw() {
       osc.amp(env);
 
       // C2 C3 C4
-      if (frameCount % 100 == 0){
-        osc.freq(midiToFreq(int(random(36, 48, 60))));
+      if (seconds == 3 || seconds > 3){
+        osc.freq(midiToFreq(int(getNote())));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
+        seconds = 0;
       }
     }
     if(playingRight) {
@@ -952,11 +1001,12 @@ function draw() {
       osc.amp(env);
       
       // C2 C3 C4
-      if (frameCount % 100 == 0){
-        osc.freq(midiToFreq(int(random(36, 48, 60))));
+      if (seconds == 3 || seconds > 3){
+        osc.freq(midiToFreq(int(getNote())));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
+        seconds = 0;
       }
     }
   }
@@ -995,11 +1045,12 @@ function draw() {
       osc.amp(env);
       
       // C2 C3 C4
-      if (frameCount % 100 == 0){
+      if (seconds == 3 || seconds > 3){
         osc.freq(midiToFreq(int(random(36, 48, 60))));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
+        seconds = 0;
       }
     }
     if(playingRight) {
@@ -1018,11 +1069,12 @@ function draw() {
       osc.amp(env);
       
       // C2 C3 C4
-      if (frameCount % 100 == 0){
+      if (seconds == 3 || seconds > 3){
         osc.freq(midiToFreq(int(random(36, 48, 60))));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.play();
+        seconds = 0;
       }
     }
   }
@@ -1747,6 +1799,20 @@ function setSliderValue(val, slider) {
   else if(slider == "2double")
     output2double.innerHTML = val;
 }
+
+function getNote(){
+  return midiNotesConsidered[Math.floor(Math.random() * midiNotesConsidered.length)];
+}
+
+function incrementSeconds() {
+  console.log("HERE")
+  seconds += 1;
+}
+
+function setSeconds(){
+  seconds = 1; 
+}
+
 
 function star(x, y, radius1, radius2, npoints, symmetry) {
   let angle = TWO_PI / npoints;
