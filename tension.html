@@ -19,6 +19,7 @@
   <!-- JS -->
   <!-- P5 -->
   <script type="text/javascript" src="sketch.js"></script>
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
   <!-- JSPSYCH 
   <script src="jspsych/jspsych.js"></script>
   <script src="jspsych/plugin-html-keyboard-response.js"></script>-->
@@ -52,7 +53,7 @@
         <button disabled="true" class="custombutton2" id="test20Bol" style="background-color: #9bc2b1;" onclick="next('test20Bol');">20</button>        
         <button disabled="true" class="custombutton2" id="test21Bol" style="background-color: rgb(196,174,173);" onclick="next('test21Bol');">*</button>
         <button disabled="true" class="custombutton2" id="test22Bol" style="background-color: rgb(196,174,173);" onclick="next('test22Bol');">*</button>
-        <button class="custombutton2" id="submit" onclick="submit()">SUBMIT</button>
+        <button  class="custombutton2" id="submit" onclick="submit();">SUBMIT</button>
       </div> 
     </div>
 
@@ -304,5 +305,30 @@
   </main>
 
 </body>
+<script>
+
+    var results = "";
+  function sendEmail() {
+    var currentdate = new Date(); 
+    var datetime = currentdate.getDate() + "/"
+                        + (currentdate.getMonth()+1)  + "/" 
+                        + currentdate.getFullYear() + " @ "  
+                        + currentdate.getHours() + ":"  
+                        + currentdate.getMinutes() + ":" 
+                        + currentdate.getSeconds();
+    results += window.localStorage.getItem('testResults');
+    Email.send({
+      Host : "smtp.elasticemail.com",
+      Username : "andreianogueiramatos@gmail.com",
+      Password : "BAAD2F5FEB57CF4B821B28A42169F24D8782",
+      To : 'andreianmatos@tecnico.ulisboa.pt',
+      From : "elasticemail.com",
+      Subject : "RESULTS | " + datetime,
+      Body : results
+  }).then(
+      message => alert(message)
+    );
+  }
+</script>
 
 </html>

@@ -11,33 +11,42 @@
     </head>
    
     <!--<body onload="sendEmail();">  -->
-    <body>
+    <body onload="getTestResults();">
         
         <div class="about">
 
-            <p class="title"><b>Thank you for participating in this study!</b></p> 
+            <p class="title"><b>Thank you for participating in this study!</b></p>
+            
+            <p>An email pop-up should've now opened. Please hit send to give us your results. Your personal email will not be kept.</p> 
+            <p>If there is no pop-up, please manually copy the results underneath and send them to: <em>andreianmatos@tecnico.ulisboa.pt</em>.</p> 
                         
-            <!-- Just update the onload to get the results 
-            <div id="results">
+            <div id="results" style="font-size: 14px;">
                 results
-            </div>-->
+            </div>
             
         </div>
                                                 
     </body>
     <script>
-
+        var datetime;
         function getTestResults() {
             document.getElementById("results").innerHTML = window.localStorage.getItem('testResults');
             sendEmail();
         }
 
-        function sendEmail() {            
+        function sendEmail() { 
+            var currentdate = new Date(); 
+            datetime = currentdate.getDate() + "/"
+                            + (currentdate.getMonth()+1)  + "/" 
+                            + currentdate.getFullYear() + " @ "  
+                            + currentdate.getHours() + ":"  
+                            + currentdate.getMinutes() + ":" 
+                            + currentdate.getSeconds();
             window.location="mailto:andreianmatos@tecnico.ulisboa.pt?subject=Results "+datetime+"&body="+window.localStorage.getItem('testResults');
         }
 
-        var currentdate = new Date(); 
-        var datetime = currentdate.getDate() + "/"
+        /*var currentdate = new Date(); 
+            datetime = currentdate.getDate() + "/"
                             + (currentdate.getMonth()+1)  + "/" 
                             + currentdate.getFullYear() + " @ "  
                             + currentdate.getHours() + ":"  
@@ -53,7 +62,7 @@
             Subject : "RESULTS | " + datetime,
             Body : window.localStorage.getItem('testResults')
         }).then(
-            message => alert("YOUR RESULTS HAVE BEEN SUCCESSFULY REGISTERED!")
-        );
+            message => alert(message)
+        );*/
     </script>
 </html> 
