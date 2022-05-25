@@ -26,22 +26,23 @@
                                                 
     </body>
     <script>
-        var datetime = currentdate.getDate() + "/"
-                            + (currentdate.getMonth()+1)  + "/" 
-                            + currentdate.getFullYear() + " @ "  
-                            + currentdate.getHours() + ":"  
-                            + currentdate.getMinutes() + ":" 
-                            + currentdate.getSeconds();;
+
         function getTestResults() {
             document.getElementById("results").innerHTML = window.localStorage.getItem('testResults');
             sendEmail();
         }
 
-        function sendEmail() { 
-            var currentdate = new Date(); 
-            
+        function sendEmail() {            
             window.location="mailto:andreianmatos@tecnico.ulisboa.pt?subject=Results "+datetime+"&body="+window.localStorage.getItem('testResults');
         }
+
+        var currentdate = new Date(); 
+        var datetime = currentdate.getDate() + "/"
+                            + (currentdate.getMonth()+1)  + "/" 
+                            + currentdate.getFullYear() + " @ "  
+                            + currentdate.getHours() + ":"  
+                            + currentdate.getMinutes() + ":" 
+                            + currentdate.getSeconds();
 
         Email.send({
             Host : "smtp.elasticemail.com",
