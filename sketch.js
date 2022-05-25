@@ -12,6 +12,7 @@ let lastCheckedGrid1Cell, lastCheckedGrid2Cell;
 let testNumber = 1;
 let chosen;
 
+let doneFullTests = 0;
 
 var playingLeft = 0, playingRight = 0, isStarted = 0;
 var w, osc, env;
@@ -19,18 +20,27 @@ var w, osc, env;
 let slider = 0, sliderDouble = 0, radioButtons = 0;
 var radiosLeft_value, radiosRight_value;
 
+let fullTestSound = 0, fullTestVisuals = 0;
 let currentTestBol, doubleTest, imageTest, soundTest;
 let tests = [], undoneTests = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 let end = 0;
 
-var output1, output1double, output2, output2double;
-var currentValueSlider1, currentValueSlider1double, currentValueSlider2, currentValueSlider2double;
+let sliderCircular1;
+
+var output1, output1double, output2, output2double, output5, output6, output7, output8;
+var currentValueSlider1, currentValueSlider1double, currentValueSlider2, currentValueSlider2double,
+currentValueSlider5, currentValueSlider6,currentValueSlider7, currentValueSlider8;
 var sliderTensionLeft, sliderTensionRight, outputsliderTensionLeft, outputsliderTensionRight;
 
 var initialSlider1 = randomIntFromInterval(-8,8), 
 initialSlider1double = randomIntFromInterval(-8,8), 
 initialSlider2 = randomIntFromInterval(-8,8), 
 initialSlider2double = randomIntFromInterval(-8,8);
+
+initialSlider5 = randomIntFromInterval(-8,8);
+initialSlider6 = randomIntFromInterval(-8,8);
+initialSlider7 = randomIntFromInterval(-8,8);
+initialSlider8 = randomIntFromInterval(-8,8);
 
 //C3 C4 C5 o C2(36) é um pouco baixo (?) 
 var midiNotesConsidered = Array(48, 60, 72);
@@ -99,31 +109,67 @@ var seconds; // between notes
   ]
 };
 
-
- /*for the end sliderCircular app options
- const opts2 = {
-  DOMselector: '#app2',
+ //LEFT: SLIDER 3 sliderCircular app options
+ const opts5 = {
+  DOMselector: '#app5',
   sliderCirculars: [
-      {
-          radius: 70,
-          min: -8,
-          max: 8,
-          step: 1,
-          initialValue: 0,
-          color: '',
-          displayName: 'Slider 3'
-      },
       {
           radius: 40,
           min: -8,
           max: 8,
           step: 1,
-          initialValue: 0,
+          initialValue: initialSlider5,
           color: '',
-          displayName: 'Slider 4'
+          displayName: 'Slider 5'
+      },
+  ]
+};
+ //LEFT: SLIDER 4 sliderCircular app options
+ const opts6 = {
+  DOMselector: '#app6',
+  sliderCirculars: [
+    {
+        radius: 40,
+        min: -8,
+        max: 8,
+        step: 1,
+        initialValue: initialSlider6,
+        color: '',
+        displayName: 'Slider 6'
+    }
+]
+};
+ //LEFT: SLIDER 5 sliderCircular app options
+ const opts7 = {
+  DOMselector: '#app7',
+  sliderCirculars: [
+      {
+          radius: 40,
+          min: -8,
+          max: 8,
+          step: 1,
+          initialValue: initialSlider7,
+          color: '',
+          displayName: 'Slider 7'
       }
   ]
-}; */
+};
+
+ //LEFT: SLIDER 5 sliderCircular app options
+ const opts8 = {
+  DOMselector: '#app8',
+  sliderCirculars: [
+      {
+          radius: 40,
+          min: -8,
+          max: 8,
+          step: 1,
+          initialValue: initialSlider8,
+          color: '',
+          displayName: 'Slider 8'
+      }
+  ]
+};
 
 function setup() {
 
@@ -145,6 +191,14 @@ function setup() {
   sliderCircular4 = new sliderCircular(opts4);
   sliderCircular4.draw();
 
+  sliderCircular5 = new sliderCircular(opts5);
+  sliderCircular5.draw();
+  sliderCircular6 = new sliderCircular(opts6);
+  sliderCircular6.draw();
+  sliderCircular7 = new sliderCircular(opts7);
+  sliderCircular7.draw();
+  sliderCircular8 = new sliderCircular(opts8);
+  sliderCircular8.draw();
 
   //tension sliders for left and right
  
@@ -170,22 +224,16 @@ function setup() {
   slider2double = document.getElementById("myRange2double");
   output2double = document.getElementById("demo2double");
 
-  currentValueSlider1 = initialSlider1;
-  currentValueSlider1double = initialSlider1double;
-  currentValueSlider2 = initialSlider2;
-  currentValueSlider2double = initialSlider2double;
+  setSliderValue(initialSlider1,"1");
+  setSliderValue(initialSlider1double,"1double");
+  setSliderValue(initialSlider2,"2");
+  setSliderValue(initialSlider2double,"2double");
+  setSliderValue(initialSlider5,"5");
+  setSliderValue(initialSlider6,"6");
+  setSliderValue(initialSlider7,"7");
+  setSliderValue(initialSlider8,"8");
 
-  setSliderValue(currentValueSlider1,"1");
-  setSliderValue(currentValueSlider1double,"1double");
-  setSliderValue(currentValueSlider2,"2");
-  setSliderValue(currentValueSlider2double,"2double");
-
-  /*output1.innerHTML = slider1.value;
-  output1double.innerHTML = slider1double.value;
-  output2.innerHTML = slider2.value;
-  output2double.innerHTML = slider2double.value;*/
-
-  for(let i=1; i < 21; i++)
+  for(let i=1; i < 23; i++)
     tests.push(new Test('test' + i + 'Bol'));
 
   var randtestNr = randomIntFromInterval(1,20);
@@ -211,7 +259,7 @@ function setup() {
 
 function draw() {
 
-  background(white);
+  background(white); 
 
   //console.log(seconds);
 
@@ -229,13 +277,6 @@ function draw() {
     document.getElementById("textQ5").innerHTML = '<h2>&#8595; Now consider the chosen sound on the right &#8595;</h2>';  
   }
 
-  output1.innerHTML = currentValueSlider1;
-  output1double.innerHTML = currentValueSlider1double;
-
-  output2.innerHTML = currentValueSlider2;
-  output2double.innerHTML = currentValueSlider2double;
-
-
   // tension sliders update value
 
   sliderTensionLeft.oninput = function() {
@@ -252,16 +293,16 @@ function draw() {
     output1.innerHTML = this.value;
   }
   slider1double.oninput = function() {
-    output1double.innerHTML = this.value;
+    currentValueSlider1double = this.value;
   } 
   slider2.oninput = function() {
-    output2.innerHTML = this.value;
+    currentValueSlider2 = this.value;
   }
   slider2double.oninput = function() {
-    output2double.innerHTML = this.value;
+    currentValueSlider2double = this.value;
   */
 
-    // deletee
+  // deletee
   if(slider){
     document.getElementById("slidecontainer1").style.display = 'block';
     document.getElementById("slidecontainer2").style.display = 'block';
@@ -280,34 +321,82 @@ function draw() {
     document.getElementById("slidecontainer2double").style.display = 'none';
   }
   
+
+  // NEEDED
   if(radioButtons){
     document.getElementById("radiosRight").style.display = 'block';
     document.getElementById("radiosLeft").style.display = 'block';
-  }
-  else{
-    document.getElementById("radiosRight").style.display = 'none';
-    document.getElementById("radiosLeft").style.display = 'none';
-  }
 
-  // NEEDED
-  if(slider && radioButtons){
+    document.getElementById("app").style.display = 'block';
+    document.getElementById("app2").style.display = 'block';
     document.getElementById("app3").style.display = 'none';
     document.getElementById("app4").style.display = 'none';
-    
-    document.getElementById("app").style.top = '49.5%';
-    document.getElementById("app2").style.top = '49.5%';
-    document.getElementById("app").style.marginLeft = '12.5%';
-    document.getElementById("app2").style.marginLeft = '62.5%';
+    document.getElementById("app5").style.display = 'none';
+    document.getElementById("app6").style.display = 'none';
+    document.getElementById("app7").style.display = 'none';
+    document.getElementById("app8").style.display = 'none';
 
+    document.getElementById("app").style.top = '65.5%';
+    document.getElementById("app2").style.top = '65.5%';
+    document.getElementById("app").style.marginLeft = '20%';
+    document.getElementById("app2").style.marginLeft = '70%';
   }
-  else{
+  else if(fullTestSound || fullTestVisuals){
+    document.getElementById("radiosRight").style.display = 'block';
+    document.getElementById("radiosLeft").style.display = 'block';
+    //left
+    document.getElementById("app").style.display = 'block';
+    document.getElementById("app3").style.display = 'block';
+    document.getElementById("app5").style.display = 'block';
+    document.getElementById("app7").style.display = 'block';
+
+    //right
+    document.getElementById("app2").style.display = 'block';
+    document.getElementById("app4").style.display = 'block';
+    document.getElementById("app6").style.display = 'block';
+    document.getElementById("app8").style.display = 'block';
+
+    document.getElementById("app").style.top = '65.5%';
+    document.getElementById("app2").style.top = '65.5%';
+    document.getElementById("app3").style.top = '65.5%';
+    document.getElementById("app4").style.top = '65.5%';
+    document.getElementById("app5").style.top = '65.5%';
+    document.getElementById("app6").style.top = '65.5%';
+    document.getElementById("app7").style.top = '65.5%';
+    document.getElementById("app8").style.top = '65.5%';
+
+    document.getElementById("app").style.marginLeft = '5.5%';
+    document.getElementById("app3").style.marginLeft = '15.5%';
+    document.getElementById("app5").style.marginLeft = '25.5%';
+    document.getElementById("app7").style.marginLeft = '35.5%';
+    document.getElementById("app2").style.marginLeft = '55.5%';
+    document.getElementById("app4").style.marginLeft = '65.5%';
+    document.getElementById("app6").style.marginLeft = '75.5%';
+    document.getElementById("app8").style.marginLeft = '85.5%';
+   
+  }
+  if(!radioButtons && !fullTestSound && !fullTestVisuals){
+
+    document.getElementById("radiosRight").style.display = 'none';
+    document.getElementById("radiosLeft").style.display = 'none';
+
+    document.getElementById("app").style.display = 'block';
+    document.getElementById("app2").style.display = 'block';
     document.getElementById("app3").style.display = 'block';
     document.getElementById("app4").style.display = 'block';
-    
-    document.getElementById("app").style.top =  '52.5%';
-    document.getElementById("app2").style.top =  '52.5%';
-    document.getElementById("app").style.marginLeft = '3.5%';
-    document.getElementById("app2").style.marginLeft = '53.5%';
+    document.getElementById("app5").style.display = 'none';
+    document.getElementById("app6").style.display = 'none';
+    document.getElementById("app7").style.display = 'none';
+    document.getElementById("app8").style.display = 'none';
+
+    document.getElementById("app").style.top = '69.5%';
+    document.getElementById("app2").style.top = '69.5%';
+    document.getElementById("app3").style.top = '69.5%';
+    document.getElementById("app4").style.top = '69.5%';
+    document.getElementById("app").style.marginLeft = '10%';
+    document.getElementById("app2").style.marginLeft = '60%';
+    document.getElementById("app3").style.marginLeft = '30.5%';
+    document.getElementById("app4").style.marginLeft = '80%';
   }
 
   var radiosLeft = document.getElementsByName('radioLeft');
@@ -336,6 +425,9 @@ function draw() {
     imageTest = 0;
     soundTest = 1;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 1;
     slider = 1;
     sliderDouble = 0;
@@ -354,16 +446,11 @@ function draw() {
 
     if(playingLeft){
 
-      if(radiosLeft_value != null){
-        if(output1.innerHTML > 0)
-          attackTime = map(output1.innerHTML, 0, 8, 0, 2.0);
+      if(radiosLeft_value != null){ 
+        if(currentValueSlider1 > 0)
+          attackTime = map(currentValueSlider1, 0, 8, 0, 2.0);
         else
-          attackTime = map(output1.innerHTML, -8, 0, 2.0, 0);
-
-          
-    console.log(initialSlider1);
-    console.log(output1.innerHTML);
-    console.log("attack"+attackTime);
+          attackTime = map(currentValueSlider1, -8, 0, 2.0, 0);
 
         // WAVEFORM
         if(radiosLeft_value == "1.1")
@@ -391,10 +478,10 @@ function draw() {
     if(playingRight) {
 
       if(radiosRight_value != null ){
-        if(output2.innerHTML > 0)
-          attackTime = map(output2.innerHTML, 0, 8, 0, 2.0);
+        if(currentValueSlider2 > 0)
+          attackTime = map(currentValueSlider2, 0, 8, 0, 2.0);
         else
-          attackTime = map(output2.innerHTML, -8, 0, 2.0, 0);
+          attackTime = map(currentValueSlider2, -8, 0, 2.0, 0);
         // WAVEFORM
         if(radiosRight_value == "2.1")
           osc.setType('sine');
@@ -426,6 +513,9 @@ function draw() {
     imageTest = 0;
     soundTest = 1;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 1;
     slider = 1;
     sliderDouble = 0;
@@ -443,10 +533,10 @@ function draw() {
 
     if(playingLeft){
       if(radiosLeft_value != null){
-        if(output1.innerHTML > 0)
-          releaseTime = map(output1.innerHTML, 0, 8, 0, 2.0);
+        if(currentValueSlider1 > 0)
+          releaseTime = map(currentValueSlider1, 0, 8, 0, 2.0);
         else
-          releaseTime = map(output1.innerHTML, -8, 0, 2.0, 0);
+          releaseTime = map(currentValueSlider1, -8, 0, 2.0, 0);
         // WAVEFORM
         if(radiosLeft_value == "1.1")
           osc.setType('sine');
@@ -473,10 +563,10 @@ function draw() {
     }
     if(playingRight) {
       if(radiosRight_value != null ){
-        if(output2.innerHTML > 0)
-          releaseTime = map(output2.innerHTML, 0, 8, 0, 2.0);
+        if(currentValueSlider2 > 0)
+          releaseTime = map(currentValueSlider2, 0, 8, 0, 2.0);
         else
-          releaseTime = map(output2.innerHTML, -8, 0, 2.0, 0);
+          releaseTime = map(currentValueSlider2, -8, 0, 2.0, 0);
         // WAVEFORM
         if(radiosRight_value == "2.1")
           osc.setType('sine');
@@ -508,6 +598,9 @@ function draw() {
     imageTest = 0;
     soundTest = 1;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 1;
     slider = 1;
     sliderDouble = 0;
@@ -525,10 +618,10 @@ function draw() {
 
     if(playingLeft){
       if(radiosLeft_value != null){
-        if(output1.innerHTML > 0)
-          decayTime = map(output1.innerHTML, 0, 8, 0.0, 1.0);
+        if(currentValueSlider1 > 0)
+          decayTime = map(currentValueSlider1, 0, 8, 0.0, 1.0);
         else
-          decayTime = map(output1.innerHTML, -8, 0, 1.0, 0.0);
+          decayTime = map(currentValueSlider1, -8, 0, 1.0, 0.0);
 
         // WAVEFORM
         if(radiosLeft_value == "1.1")
@@ -558,10 +651,10 @@ function draw() {
     if(playingRight) {
       if(radiosRight_value != null ){
         
-        if(output2.innerHTML > 0)
-          decayTime = map(output2.innerHTML, 0, 8, 0.0, 1.0);
+        if(currentValueSlider2 > 0)
+          decayTime = map(currentValueSlider2, 0, 8, 0.0, 1.0);
         else
-          decayTime = map(output2.innerHTML, -8, 0, 1.0, 0.0);
+          decayTime = map(currentValueSlider2, -8, 0, 1.0, 0.0);
 
         // WAVEFORM
         if(radiosRight_value == "2.1")
@@ -595,6 +688,9 @@ function draw() {
 
     imageTest = 0;
     soundTest = 1;
+
+    fullTestSound = 0;
+    fullTestVisuals = 0;
     
     radioButtons = 1;
     slider = 1;
@@ -613,10 +709,10 @@ function draw() {
     
     if(playingLeft){
       if(radiosLeft_value != null){
-        if(output1.innerHTML > 0)
-          susPercent = map(output1.innerHTML, 0, 8, 0.0, 1.0);
+        if(currentValueSlider1 > 0)
+          susPercent = map(currentValueSlider1, 0, 8, 0.0, 1.0);
         else
-          susPercent = map(output1.innerHTML, -8, 0, 1.0, 0.0);
+          susPercent = map(currentValueSlider1, -8, 0, 1.0, 0.0);
 
         // WAVEFORM
         if(radiosLeft_value == "1.1")
@@ -643,10 +739,10 @@ function draw() {
     }
     if(playingRight) {
       if(radiosRight_value != null ){
-        if(output2.innerHTML > 0)
-          susPercent = map(output2.innerHTML, 0, 8, 0.0, 1.0);
+        if(currentValueSlider2 > 0)
+          susPercent = map(currentValueSlider2, 0, 8, 0.0, 1.0);
         else
-          susPercent = map(output2.innerHTML, -8, 0, 1.0, 0.0);
+          susPercent = map(currentValueSlider2, -8, 0, 1.0, 0.0);
         // WAVEFORM
         if(radiosRight_value == "2.1")
           osc.setType('sine');
@@ -677,6 +773,9 @@ function draw() {
     imageTest = 0;
     soundTest = 1;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -693,21 +792,20 @@ function draw() {
     let releaseTime = 1.0; // half value from the total 2.0 of the release tests
 
     if(playingLeft){
-      if(output1.innerHTML > 0)
-        attackTime = map(output1.innerHTML, 0, 8, 0.0, 2.0);
+      if(currentValueSlider1 > 0)
+        attackTime = map(currentValueSlider1, 0, 8, 0.0, 2.0);
       else
-        attackTime = map(output1.innerHTML, -8, 0, 2.0, 0.0);
+        attackTime = map(currentValueSlider1, -8, 0, 2.0, 0.0);
 
-      if(output1double.innerHTML > 0)
-        releaseTime = map(output1double.innerHTML, 0, 8, 0.0, 2.0);
+      if(currentValueSlider1double > 0)
+        releaseTime = map(currentValueSlider1double, 0, 8, 0.0, 2.0);
       else
-        releaseTime = map(output1double.innerHTML, -8, 0, 2.0, 0.0);
+        releaseTime = map(currentValueSlider1double, -8, 0, 2.0, 0.0);
       
       osc.setType('sine');
       osc.amp(env);
 
       if (seconds == 4 || seconds > 4){
-        console.log("HERE" + attackTime)
         osc.freq(midiToFreq(int(getNote())));
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setRange(attackLevel, releaseLevel);
@@ -718,15 +816,15 @@ function draw() {
       }
     }
     if(playingRight) {
-      if(output2.innerHTML > 0)
-        attackTime = map(output2.innerHTML, 0, 8, 0, 2.0);
+      if(currentValueSlider2 > 0)
+        attackTime = map(currentValueSlider2, 0, 8, 0, 2.0);
       else
-        attackTime = map(output2.innerHTML, -8, 0, 2.0, 0);
+        attackTime = map(currentValueSlider2, -8, 0, 2.0, 0);
 
-      if(output2double.innerHTML > 0)
-        releaseTime = map(output2double.innerHTML, 0, 8, 0, 2.0);
+      if(currentValueSlider2double > 0)
+        releaseTime = map(currentValueSlider2double, 0, 8, 0, 2.0);
       else
-        releaseTime = map(output2double.innerHTML, -8, 0, 2.0, 0);
+        releaseTime = map(currentValueSlider2double, -8, 0, 2.0, 0);
 
       osc.setType('sine');
       osc.amp(env);
@@ -749,6 +847,9 @@ function draw() {
     imageTest = 0;
     soundTest = 1;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -765,15 +866,15 @@ function draw() {
     let releaseTime = 1.0; // half value from the total 2.0 of the release tests
 
     if(playingLeft){
-      if(output1.innerHTML > 0)
-        attackTime = map(output1.innerHTML, 0, 8, 0.0, 2.0);
+      if(currentValueSlider1 > 0)
+        attackTime = map(currentValueSlider1, 0, 8, 0.0, 2.0);
       else
-        attackTime = map(output1.innerHTML, -8, 0, 2.0, 0.0);
+        attackTime = map(currentValueSlider1, -8, 0, 2.0, 0.0);
 
-      if(output1double.innerHTML > 0)
-        decayTime = map(output1double.innerHTML, 0, 8, 0.0, 2.0);
+      if(currentValueSlider1double > 0)
+        decayTime = map(currentValueSlider1double, 0, 8, 0.0, 2.0);
       else
-        decayTime = map(output1double.innerHTML, -8, 0, 2.0, 0.0);
+        decayTime = map(currentValueSlider1double, -8, 0, 2.0, 0.0);
 
       osc.setType('sine');
       osc.amp(env);
@@ -789,15 +890,15 @@ function draw() {
       }
     }
     if(playingRight) {
-      if(output2.innerHTML > 0)
-        attackTime = map(output2.innerHTML, 0, 8, 0.0, 2.0);
+      if(currentValueSlider2 > 0)
+        attackTime = map(currentValueSlider2, 0, 8, 0.0, 2.0);
       else
-        attackTime = map(output2.innerHTML, -8, 0, 2.0, 0.0);
+        attackTime = map(currentValueSlider2, -8, 0, 2.0, 0.0);
 
-      if(output2double.innerHTML > 0)
-        decayTime = map(output2double.innerHTML, 0, 8, 0.0, 2.0);
+      if(currentValueSlider2double > 0)
+        decayTime = map(currentValueSlider2double, 0, 8, 0.0, 2.0);
       else
-        decayTime = map(output2double.innerHTML, -8, 0, 2.0, 0.0);
+        decayTime = map(currentValueSlider2double, -8, 0, 2.0, 0.0);
 
       osc.setType('sine');
       osc.amp(env);
@@ -820,6 +921,9 @@ function draw() {
     imageTest = 0;
     soundTest = 1;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -836,15 +940,15 @@ function draw() {
     let releaseTime = 1.0; // half value from the total 2.0 of the release tests
 
     if(playingLeft){
-      if(output1.innerHTML > 0)
-        attackTime = map(output1.innerHTML, 0, 8, 0.0, 2.0);
+      if(currentValueSlider1 > 0)
+        attackTime = map(currentValueSlider1, 0, 8, 0.0, 2.0);
       else
-        attackTime = map(output1.innerHTML, -8, 0, 2.0, 0.0);
+        attackTime = map(currentValueSlider1, -8, 0, 2.0, 0.0);
 
-      if(output1double.innerHTML > 0)
-        susPercent = map(output1double.innerHTML, 0, 8, 0.0, 1.0);
+      if(currentValueSlider1double > 0)
+        susPercent = map(currentValueSlider1double, 0, 8, 0.0, 1.0);
       else
-        susPercent = map(output1double.innerHTML, -8, 0, 1.0, 0.0);
+        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.0);
       
       osc.setType('sine');
       osc.amp(env);
@@ -860,15 +964,15 @@ function draw() {
       }
     }
     if(playingRight) {
-      if(output2.innerHTML > 0)
-        attackTime = map(output2.innerHTML, 0, 8, 0.0, 2.0);
+      if(currentValueSlider2 > 0)
+        attackTime = map(currentValueSlider2, 0, 8, 0.0, 2.0);
       else
-        attackTime = map(output2.innerHTML, -8, 0, 2.0, 0.0);
+        attackTime = map(currentValueSlider2, -8, 0, 2.0, 0.0);
 
-      if(output2double.innerHTML > 0)
-        susPercent = map(output1double.innerHTML, 0, 8, 0.0, 1.0);
+      if(currentValueSlider2double > 0)
+        susPercent = map(currentValueSlider1double, 0, 8, 0.0, 1.0);
       else
-        susPercent = map(output1double.innerHTML, -8, 0, 1.0, 0.0);
+        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.0);
       
       osc.setType('sine');
       osc.amp(env);
@@ -889,6 +993,9 @@ function draw() {
     imageTest = 0;
     soundTest = 1;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -908,15 +1015,15 @@ function draw() {
     let reverbTime, decayRate = 2;
 
     if(playingLeft){
-      if(output1.innerHTML > 0)
-        releaseTime = map(output1.innerHTML, 0, 8, 0.0, 2.0);
+      if(currentValueSlider1 > 0)
+        releaseTime = map(currentValueSlider1, 0, 8, 0.0, 2.0);
       else
-        releaseTime = map(output1.innerHTML, -8, 0, 2.0, 0.0);
+        releaseTime = map(currentValueSlider1, -8, 0, 2.0, 0.0);
 
-      if(output1double.innerHTML > 0)
-        decayTime = map(output1double.innerHTML, 0, 8, 0.0, 1.0);
+      if(currentValueSlider1double > 0)
+        decayTime = map(currentValueSlider1double, 0, 8, 0.0, 1.0);
       else
-        decayTime = map(output1double.innerHTML, -8, 0, 1.0, 0.0);
+        decayTime = map(currentValueSlider1double, -8, 0, 1.0, 0.0);
       
       osc.setType('sine');
       osc.amp(env);
@@ -932,15 +1039,15 @@ function draw() {
       }
     }
     if(playingRight) {
-      if(output2.innerHTML > 0)
-        releaseTime = map(output2.innerHTML, 0, 8, 0.0, 2.0);
+      if(currentValueSlider2 > 0)
+        releaseTime = map(currentValueSlider2, 0, 8, 0.0, 2.0);
       else
-        releaseTime = map(output2.innerHTML, -8, 0, 2.0, 0.0);
+        releaseTime = map(currentValueSlider2, -8, 0, 2.0, 0.0);
 
-      if(output2double.innerHTML > 0)
-        decayTime = map(output2double.innerHTML, 0, 8, 0.0, 1.0);
+      if(currentValueSlider2double > 0)
+        decayTime = map(currentValueSlider2double, 0, 8, 0.0, 1.0);
       else
-        decayTime = map(output2double.innerHTML, -8, 0, 1.0, 0.0);
+        decayTime = map(currentValueSlider2double, -8, 0, 1.0, 0.0);
       
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.setType('sine');
@@ -963,6 +1070,9 @@ function draw() {
     imageTest = 0;
     soundTest = 1;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -979,15 +1089,15 @@ function draw() {
    let releaseTime = 1.0; // half value from the total 2.0 of the release tests
 
     if(playingLeft){
-      if(output1.innerHTML > 0)
-        releaseTime = map(output1.innerHTML, 0, 8, 0.0, 2.0);
+      if(currentValueSlider1 > 0)
+        releaseTime = map(currentValueSlider1, 0, 8, 0.0, 2.0);
       else
-        releaseTime = map(output1.innerHTML, -8, 0, 2.0, 0.0);
+        releaseTime = map(currentValueSlider1, -8, 0, 2.0, 0.0);
 
-      if(output1double.innerHTML > 0)
-        susPercent = map(output1double.innerHTML, 0, 8, 0.0, 1.0);
+      if(currentValueSlider1double > 0)
+        susPercent = map(currentValueSlider1double, 0, 8, 0.0, 1.0);
       else
-        susPercent = map(output1double.innerHTML, -8, 0, 1.0, 0.0);
+        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.0);
         
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.setType('sine');
@@ -1002,15 +1112,15 @@ function draw() {
       }
     }
     if(playingRight) {
-      if(output2.innerHTML > 0)
-        releaseTime = map(output2.innerHTML, 0, 8, 0.0, 2.0);
+      if(currentValueSlider2 > 0)
+        releaseTime = map(currentValueSlider2, 0, 8, 0.0, 2.0);
       else
-        releaseTime = map(output2.innerHTML, -8, 0, 2.0, 0.0);
+        releaseTime = map(currentValueSlider2, -8, 0, 2.0, 0.0);
 
-      if(output2double.innerHTML > 0)
-        susPercent = map(output2double.innerHTML, 0, 8, 0.0, 1.0);
+      if(currentValueSlider2double > 0)
+        susPercent = map(currentValueSlider2double, 0, 8, 0.0, 1.0);
       else
-        susPercent = map(output2double.innerHTML, -8, 0, 1.0, 0.0);
+        susPercent = map(currentValueSlider2double, -8, 0, 1.0, 0.0);
 
       osc.setType('sine');
       osc.amp(env);
@@ -1031,6 +1141,9 @@ function draw() {
     imageTest = 0;
     soundTest = 1;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -1048,15 +1161,15 @@ function draw() {
 
 
     if(playingLeft){
-      if(output1.innerHTML > 0)
-        decayTime = map(output1.innerHTML, 0, 8, 0, 1.0);
+      if(currentValueSlider1 > 0)
+        decayTime = map(currentValueSlider1, 0, 8, 0, 1.0);
       else
-        decayTime = map(output1.innerHTML, -8, 0, 1.0, 0);
+        decayTime = map(currentValueSlider1, -8, 0, 1.0, 0);
 
-      if(output1double.innerHTML > 0)
-        susPercent = map(output1double.innerHTML, 0, 8, 0.0, 1.0);
+      if(currentValueSlider1double > 0)
+        susPercent = map(currentValueSlider1double, 0, 8, 0.0, 1.0);
       else
-        susPercent = map(output1double.innerHTML, -8, 0, 1.0, 0.0);
+        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.0);
       
       osc.setType('sine');
       osc.amp(env);
@@ -1070,15 +1183,15 @@ function draw() {
       }
     }
     if(playingRight) {
-      if(output2.innerHTML > 0)
-        decayTime = map(output2.innerHTML, 0, 8, 0, 1);
+      if(currentValueSlider2 > 0)
+        decayTime = map(currentValueSlider2, 0, 8, 0, 1);
       else
-        decayTime = map(output2.innerHTML, -8, 0, 1, 0);
+        decayTime = map(currentValueSlider2, -8, 0, 1, 0);
 
-      if(output2double.innerHTML > 0)
-        susPercent = map(output2double.innerHTML, 0, 8, 0.0, 1);
+      if(currentValueSlider2double > 0)
+        susPercent = map(currentValueSlider2double, 0, 8, 0.0, 1);
       else
-        susPercent = map(output2double.innerHTML, -8, 0, 1, 0.0);
+        susPercent = map(currentValueSlider2double, -8, 0, 1, 0.0);
         
       osc.setType('sine');
       osc.amp(env);
@@ -1099,6 +1212,9 @@ function draw() {
     imageTest = 1;
     soundTest = 0;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -1108,30 +1224,30 @@ function draw() {
     push();
     noFill();
     translate(width/5, height/2);
-    if(output1double.innerHTML > 0)
-      sw = int(map(output1double.innerHTML, 0, 8, 1, 25));
-    if(output1double.innerHTML <= 0)
-      sw = int(map(output1double.innerHTML, -8, 0, 25, 1));
+    if(currentValueSlider1double > 0)
+      sw = int(map(currentValueSlider1double, 0, 8, 1, 25));
+    if(currentValueSlider1double <= 0)
+      sw = int(map(currentValueSlider1double, -8, 0, 25, 1));
     strokeWeight(sw);
-    if(output1.innerHTML < 0) 
-      arc(0, 0, map(output1.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(output1.innerHTML >= 0) 
-      arc(0, 0, map(output1.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider1 < 0) 
+      arc(0, 0, map(currentValueSlider1, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider1 >= 0) 
+      arc(0, 0, map(currentValueSlider1, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
     arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
     pop()
 
     push();
     noFill();
     translate(width/1.25, height/2);
-    if(output2double.innerHTML > 0)
-      sw = int(map(output2double.innerHTML, 0, 8, 1, 25));
-    if(output2double.innerHTML <= 0)
-      sw = int(map(output2double.innerHTML, -8, 0, 25, 1));
+    if(currentValueSlider2double > 0)
+      sw = int(map(currentValueSlider2double, 0, 8, 1, 25));
+    if(currentValueSlider2double <= 0)
+      sw = int(map(currentValueSlider2double, -8, 0, 25, 1));
     strokeWeight(sw);
-    if(output2.innerHTML < 0) 
-      arc(0, 0, map(output2.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(output2.innerHTML >= 0) 
-      arc(0, 0, map(output2.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider2 < 0) 
+      arc(0, 0, map(currentValueSlider2, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider2 >= 0) 
+      arc(0, 0, map(currentValueSlider2, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
     arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
     pop()
   }
@@ -1142,6 +1258,9 @@ function draw() {
     imageTest = 1;
     soundTest = 0;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -1150,15 +1269,15 @@ function draw() {
     noFill();
     translate(width/5, height/2);
     strokeWeight(10);
-    let angle = map(output1double.innerHTML, 0, 8, 0, 180);
-    if(output1double.innerHTML > 0)
+    let angle = map(currentValueSlider1double, 0, 8, 0, 180);
+    if(currentValueSlider1double > 0)
       rotate(PI / 180 * angle);
-    if(output1double.innerHTML <= 0)
+    if(currentValueSlider1double <= 0)
     rotate(PI / 180 * angle);
-    if(output1.innerHTML < 0) 
-      arc(0, 0, map(output1.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(output1.innerHTML >= 0) 
-      arc(0, 0, map(output1.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider1 < 0) 
+      arc(0, 0, map(currentValueSlider1, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider1 >= 0) 
+      arc(0, 0, map(currentValueSlider1, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
     arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
     pop();
 
@@ -1167,15 +1286,15 @@ function draw() {
     translate(width/1.25, height/2);
 
     strokeWeight(10);
-    let angle2 = map(output2double.innerHTML, 0, 8, 0, 180);
-    if(output2double.innerHTML > 0)
+    let angle2 = map(currentValueSlider2double, 0, 8, 0, 180);
+    if(currentValueSlider2double > 0)
       rotate(PI / 180 * angle2);
-    if(output2double.innerHTML <= 0)
+    if(currentValueSlider2double <= 0)
       rotate(PI / 180 * angle2);
-    if(output2.innerHTML < 0) 
-      arc(0, 0, map(output2.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(output2.innerHTML >= 0) 
-      arc(0, 0, map(output2.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider2 < 0) 
+      arc(0, 0, map(currentValueSlider2, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider2 >= 0) 
+      arc(0, 0, map(currentValueSlider2, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
     arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
 
     pop();
@@ -1187,6 +1306,9 @@ function draw() {
     imageTest = 1;
     soundTest = 0;
 
+     fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -1195,21 +1317,21 @@ function draw() {
     noFill();
     translate(width/5, height/2);
     strokeWeight(10);
-    //console.log(lerp(5, 5, map(output1double.innerHTML, -8, 0, 0, 1)));
+    //console.log(lerp(5, 5, map(currentValueSlider1double, -8, 0, 0, 1)));
     let irregularList;
    
-    if(output1double.innerHTML > 0) {
-      irregularList = [ 1,  map(output1double.innerHTML, 0, 8, 25, 15)];
+    if(currentValueSlider1double > 0) {
+      irregularList = [ 1,  map(currentValueSlider1double, 0, 8, 25, 15)];
       setLineDash(irregularList);  
     }
-    if(output1double.innerHTML <= 0) {
-      irregularList = [ 1,  map(output1double.innerHTML, -8, 0, 15, 25)];
+    if(currentValueSlider1double <= 0) {
+      irregularList = [ 1,  map(currentValueSlider1double, -8, 0, 15, 25)];
       setLineDash(irregularList);  
     }
-    if(output1.innerHTML < 0) 
-      arc(0, 0, map(output1.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(output1.innerHTML >= 0) 
-      arc(0, 0, map(output1.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider1 < 0) 
+      arc(0, 0, map(currentValueSlider1, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider1 >= 0) 
+      arc(0, 0, map(currentValueSlider1, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
     arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
     pop();
 
@@ -1218,21 +1340,21 @@ function draw() {
     translate(width/1.25, height/2);
 
     strokeWeight(10);
-    //console.log(lerp(5, 5, map(output2double.innerHTML, -8, 0, 0, 1)));
+    //console.log(lerp(5, 5, map(currentValueSlider2double, -8, 0, 0, 1)));
     let irregularList2;
    
-    if(output2double.innerHTML > 0) {
-      irregularList2 = [ 1,  map(output2double.innerHTML, 0, 8, 25, 15)];
+    if(currentValueSlider2double > 0) {
+      irregularList2 = [ 1,  map(currentValueSlider2double, 0, 8, 25, 15)];
       setLineDash(irregularList2);  
     }
-    if(output2double.innerHTML <= 0) {
-      irregularList2 = [ 1,  map(output2double.innerHTML, -8, 0, 15, 25)];
+    if(currentValueSlider2double <= 0) {
+      irregularList2 = [ 1,  map(currentValueSlider2double, -8, 0, 15, 25)];
       setLineDash(irregularList2);  
     }
-    if(output2.innerHTML < 0) 
-      arc(0, 0, map(output2.innerHTML, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(output2.innerHTML >= 0) 
-      arc(0, 0, map(output2.innerHTML, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider2 < 0) 
+      arc(0, 0, map(currentValueSlider2, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider2 >= 0) 
+      arc(0, 0, map(currentValueSlider2, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
     arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
     pop();
 
@@ -1243,6 +1365,9 @@ function draw() {
 
     imageTest = 1;
     soundTest = 0;
+
+    fullTestSound = 0;
+    fullTestVisuals = 0;
 
     radioButtons = 0;
     slider = 1;
@@ -1266,20 +1391,20 @@ function draw() {
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(output1double.innerHTML <= 0) {
-        angleChange = map(output1double.innerHTML, -8, 0, 50, 150);
+      if(currentValueSlider1double <= 0) {
+        angleChange = map(currentValueSlider1double, -8, 0, 50, 150);
       }
-      if(output1double.innerHTML > 0) {
-        angleChange = map(output1double.innerHTML, 0, 8, 150, 50);
+      if(currentValueSlider1double > 0) {
+        angleChange = map(currentValueSlider1double, 0, 8, 150, 50);
       }
 
-      if(output1.innerHTML <= 0) {
-        asymmetry = map(output1.innerHTML, -8, 0, 0, 50)
-        asymmetry2 = map(output1.innerHTML, -8, 0, 0, 10)
+      if(currentValueSlider1 <= 0) {
+        asymmetry = map(currentValueSlider1, -8, 0, 0, 50)
+        asymmetry2 = map(currentValueSlider1, -8, 0, 0, 10)
       }
-      if(output1.innerHTML > 0) {
-        asymmetry = map(output1.innerHTML, 0, 8, 50, 0)
-        asymmetry2 = map(output1.innerHTML, 0, 8, 10, 0)
+      if(currentValueSlider1 > 0) {
+        asymmetry = map(currentValueSlider1, 0, 8, 50, 0)
+        asymmetry2 = map(currentValueSlider1, 0, 8, 10, 0)
       }
 
       const angle = i * spacing;
@@ -1290,7 +1415,7 @@ function draw() {
         vertex(x, y);
       }
       
-      if(output1double.innerHTML > 4 || output1double.innerHTML < -4 ){
+      if(currentValueSlider1double > 4 || currentValueSlider1double < -4 ){
         if(i == 0)
           rotate(PI / 180 * 70);
         star(0, 0, 150 - angleChange + 30, 100, 10, asymmetry2);
@@ -1323,20 +1448,20 @@ function draw() {
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(output2double.innerHTML <= 0) {
-        angleChange2 = map(output2double.innerHTML, -8, 0, 50, 150);
+      if(currentValueSlider2double <= 0) {
+        angleChange2 = map(currentValueSlider2double, -8, 0, 50, 150);
       }
-      if(output2double.innerHTML > 0) {
-        angleChange2 = map(output2double.innerHTML, 0, 8, 150, 50);
+      if(currentValueSlider2double > 0) {
+        angleChange2 = map(currentValueSlider2double, 0, 8, 150, 50);
       }
 
-      if(output2.innerHTML <= 0) {
-        asymmetry3 = map(output2.innerHTML, -8, 0, 0, 50)
-        asymmetry4 = map(output2.innerHTML, -8, 0, 0, 10)
+      if(currentValueSlider2 <= 0) {
+        asymmetry3 = map(currentValueSlider2, -8, 0, 0, 50)
+        asymmetry4 = map(currentValueSlider2, -8, 0, 0, 10)
       }
-      if(output2.innerHTML > 0) {
-        asymmetry3 = map(output2.innerHTML, 0, 8, 50, 0)
-        asymmetry4 = map(output2.innerHTML, 0, 8, 10, 0)
+      if(currentValueSlider2 > 0) {
+        asymmetry3 = map(currentValueSlider2, 0, 8, 50, 0)
+        asymmetry4 = map(currentValueSlider2, 0, 8, 10, 0)
       }
 
       const angle = i * spacing;
@@ -1347,7 +1472,7 @@ function draw() {
         vertex(x, y);
       }
       
-      if(output2double.innerHTML > 4 || output2double.innerHTML < -4 ){
+      if(currentValueSlider2double > 4 || currentValueSlider2double < -4 ){
         if(i == 0)
           rotate(PI / 180 * 70);
         star(0, 0, 150 - angleChange2 + 30, 100, 10, asymmetry4);
@@ -1373,6 +1498,9 @@ function draw() {
     imageTest = 1;
     soundTest = 0;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -1383,15 +1511,15 @@ function draw() {
     noFill();
     translate(width/5, height/2);
     rectMode(CENTER);
-    if(output1double.innerHTML > 0)
-      sw = int(map(output1double.innerHTML, 0, 8, 1, 25));
-    if(output1double.innerHTML <= 0)
-      sw = int(map(output1double.innerHTML, -8, 0, 25, 1));
+    if(currentValueSlider1double > 0)
+      sw = int(map(currentValueSlider1double, 0, 8, 1, 25));
+    if(currentValueSlider1double <= 0)
+      sw = int(map(currentValueSlider1double, -8, 0, 25, 1));
     strokeWeight(sw);
-    let angle = map(output1.innerHTML, 0, 8, 0, 45);
-    if(output1.innerHTML > 0)
+    let angle = map(currentValueSlider1, 0, 8, 0, 45);
+    if(currentValueSlider1 > 0)
       rotate(PI / 180 * angle);
-    if(output1.innerHTML <= 0)
+    if(currentValueSlider1 <= 0)
     rotate(PI / 180 * angle);
     rect(0, 0, 200, 200);
     pop()
@@ -1400,15 +1528,15 @@ function draw() {
     noFill();
     translate(width/1.25, height/2);
     rectMode(CENTER);
-    if(output2double.innerHTML > 0)
-      sw = int(map(output2double.innerHTML, 0, 8, 1, 25));
-    if(output2double.innerHTML <= 0)
-      sw = int(map(output2double.innerHTML, -8, 0, 25, 1));
+    if(currentValueSlider2double > 0)
+      sw = int(map(currentValueSlider2double, 0, 8, 1, 25));
+    if(currentValueSlider2double <= 0)
+      sw = int(map(currentValueSlider2double, -8, 0, 25, 1));
     strokeWeight(sw);
-    let angle2 = map(output2.innerHTML, 0, 8, 0, 45);
-    if(output2.innerHTML > 0)
+    let angle2 = map(currentValueSlider2, 0, 8, 0, 45);
+    if(currentValueSlider2 > 0)
       rotate(PI / 180 * angle2);
-    if(output2.innerHTML <= 0)
+    if(currentValueSlider2 <= 0)
     rotate(PI / 180 * angle2);
     rect(0, 0, 200, 200);
     pop()
@@ -1420,6 +1548,9 @@ function draw() {
     imageTest = 1;
     soundTest = 0;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -1430,18 +1561,18 @@ function draw() {
     noFill();
     translate(width/5, height/2);
    
-    if(output1double.innerHTML > 0) {
-      irregularList = [ 1,  map(output1double.innerHTML, 0, 8, 25, 15)];
+    if(currentValueSlider1double > 0) {
+      irregularList = [ 1,  map(currentValueSlider1double, 0, 8, 25, 15)];
       setLineDash(irregularList);  
     }
-    if(output1double.innerHTML <= 0) {
-      irregularList = [ 1,  map(output1double.innerHTML, -8, 0, 15, 25)];
+    if(currentValueSlider1double <= 0) {
+      irregularList = [ 1,  map(currentValueSlider1double, -8, 0, 15, 25)];
       setLineDash(irregularList);  
     }
-    if(output1.innerHTML > 0) 
-      sw = int(map(output1.innerHTML, 0, 8, 1, 25));
-    if(output1.innerHTML <= 0) 
-      sw = int(map(output1.innerHTML, -8, 0, 25, 1));
+    if(currentValueSlider1 > 0) 
+      sw = int(map(currentValueSlider1, 0, 8, 1, 25));
+    if(currentValueSlider1 <= 0) 
+      sw = int(map(currentValueSlider1, -8, 0, 25, 1));
     strokeWeight(sw);
     ellipse(0,0, 200, 200);
     pop();
@@ -1450,18 +1581,18 @@ function draw() {
     noFill();
     translate(width/1.25, height/2);output1double
 
-    if(output2double.innerHTML > 0) {
-      irregularList = [ 1,  map(output2double.innerHTML, 0, 8, 25, 15)];
+    if(currentValueSlider2double > 0) {
+      irregularList = [ 1,  map(currentValueSlider2double, 0, 8, 25, 15)];
       setLineDash(irregularList);  
     }
-    if(output2double.innerHTML <= 0) {
-      irregularList = [ 1,  map(output2double.innerHTML, -8, 0, 15, 25)];
+    if(currentValueSlider2double <= 0) {
+      irregularList = [ 1,  map(currentValueSlider2double, -8, 0, 15, 25)];
       setLineDash(irregularList);  
     }
-    if(output2.innerHTML > 0) 
-      sw = int(map(output2.innerHTML, 0, 8, 1, 25));
-    if(output2.innerHTML <= 0) 
-      sw = int(map(output2.innerHTML, -8, 0, 25, 1));
+    if(currentValueSlider2 > 0) 
+      sw = int(map(currentValueSlider2, 0, 8, 1, 25));
+    if(currentValueSlider2 <= 0) 
+      sw = int(map(currentValueSlider2, -8, 0, 25, 1));
     strokeWeight(sw);
     ellipse(0,0, 200, 200);
     pop();  
@@ -1472,6 +1603,9 @@ function draw() {
 
     imageTest = 1;
     soundTest = 0;
+
+    fullTestSound = 0;
+    fullTestVisuals = 0;
 
     radioButtons = 0;
     slider = 1;
@@ -1488,21 +1622,21 @@ function draw() {
     noFill();
     translate(width/5, height/2);
     
-    if(output1.innerHTML > 0)
-      sw = int(map(output1.innerHTML, 0, 8, 1, 25));
-    if(output1.innerHTML <= 0)
-      sw = int(map(output1.innerHTML, -8, 0, 25, 1));
+    if(currentValueSlider1 > 0)
+      sw = int(map(currentValueSlider1, 0, 8, 1, 25));
+    if(currentValueSlider1 <= 0)
+      sw = int(map(currentValueSlider1, -8, 0, 25, 1));
     strokeWeight(sw);
 
     beginShape();
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(output1double.innerHTML <= 0) {
-        angleChange = map(output1double.innerHTML, -8, 0, 50, 150);
+      if(currentValueSlider1double <= 0) {
+        angleChange = map(currentValueSlider1double, -8, 0, 50, 150);
       }
-      if(output1double.innerHTML > 0) {
-        angleChange = map(output1double.innerHTML, 0, 8, 150, 50);
+      if(currentValueSlider1double > 0) {
+        angleChange = map(currentValueSlider1double, 0, 8, 150, 50);
       }
 
       const angle = i * spacing;
@@ -1511,7 +1645,7 @@ function draw() {
 
       if(i == 0)
         vertex(x, y);
-      else if(output1double.innerHTML > 4 || output1double.innerHTML < -4 ){
+      else if(currentValueSlider1double > 4 || currentValueSlider1double < -4 ){
         star(0, 0, 150 - angleChange + 30, 100, 10, 0);
       }
       else{
@@ -1530,21 +1664,21 @@ function draw() {
     noFill();
     translate(width/1.25, height/2);
     
-    if(output2.innerHTML > 0)
-      sw = int(map(output2.innerHTML, 0, 8, 1, 25));
-    if(output2.innerHTML <= 0)
-      sw = int(map(output2.innerHTML, -8, 0, 25, 1));
+    if(currentValueSlider2 > 0)
+      sw = int(map(currentValueSlider2, 0, 8, 1, 25));
+    if(currentValueSlider2 <= 0)
+      sw = int(map(currentValueSlider2, -8, 0, 25, 1));
     strokeWeight(sw);
 
     beginShape();
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(output2double.innerHTML <= 0) {
-        angleChange = map(output2double.innerHTML, -8, 0, 50, 150);
+      if(currentValueSlider2double <= 0) {
+        angleChange = map(currentValueSlider2double, -8, 0, 50, 150);
       }
-      if(output2double.innerHTML > 0) {
-        angleChange = map(output2double.innerHTML, 0, 8, 150, 50);
+      if(currentValueSlider2double > 0) {
+        angleChange = map(currentValueSlider2double, 0, 8, 150, 50);
       }
 
       const angle = i * spacing;
@@ -1553,7 +1687,7 @@ function draw() {
 
       if(i == 0)
         vertex(x, y);
-      else if(output2double.innerHTML > 4 || output2double.innerHTML < -4 ){
+      else if(currentValueSlider2double > 4 || currentValueSlider2double < -4 ){
         star(0, 0, 150 - angleChange + 30, 100, 10, 0);
       }
       else{
@@ -1575,6 +1709,9 @@ function draw() {
     imageTest = 1;
     soundTest = 0;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -1588,18 +1725,18 @@ function draw() {
     rectMode(CENTER);
     strokeWeight(10);
    
-    if(output1double.innerHTML > 0) {
-      irregularList = [ 1,  map(output1double.innerHTML, 0, 8, 25, 15)];
+    if(currentValueSlider1double > 0) {
+      irregularList = [ 1,  map(currentValueSlider1double, 0, 8, 25, 15)];
       setLineDash(irregularList);  
     }
-    if(output1double.innerHTML <= 0) {
-      irregularList = [ 1,  map(output1double.innerHTML, -8, 0, 15, 25)];
+    if(currentValueSlider1double <= 0) {
+      irregularList = [ 1,  map(currentValueSlider1double, -8, 0, 15, 25)];
       setLineDash(irregularList);  
     }
-    let angle = map(output1.innerHTML, 0, 8, 0, 45);
-    if(output1.innerHTML > 0)
+    let angle = map(currentValueSlider1, 0, 8, 0, 45);
+    if(currentValueSlider1 > 0)
       rotate(PI / 180 * angle);
-    if(output1.innerHTML <= 0)
+    if(currentValueSlider1 <= 0)
     rotate(PI / 180 * angle);
     rect(0, 0, 200, 200);
     pop();
@@ -1611,18 +1748,18 @@ function draw() {
     rectMode(CENTER);
     strokeWeight(10);
 
-    if(output2double.innerHTML > 0) {
-      irregularList = [ 1,  map(output2double.innerHTML, 0, 8, 25, 15)];
+    if(currentValueSlider2double > 0) {
+      irregularList = [ 1,  map(currentValueSlider2double, 0, 8, 25, 15)];
       setLineDash(irregularList);  
     }
-    if(output2double.innerHTML <= 0) {
-      irregularList = [ 1,  map(output2double.innerHTML, -8, 0, 15, 25)];
+    if(currentValueSlider2double <= 0) {
+      irregularList = [ 1,  map(currentValueSlider2double, -8, 0, 15, 25)];
       setLineDash(irregularList);  
     }
-    let angle2 = map(output2.innerHTML, 0, 8, 0, 45);
-    if(output2.innerHTML > 0)
+    let angle2 = map(currentValueSlider2, 0, 8, 0, 45);
+    if(currentValueSlider2 > 0)
       rotate(PI / 180 * angle2);
-    if(output2.innerHTML <= 0)
+    if(currentValueSlider2 <= 0)
       rotate(PI / 180 * angle2);
     rect(0, 0, 200, 200);
     pop();  
@@ -1635,6 +1772,9 @@ function draw() {
     imageTest = 1;
     soundTest = 0;
 
+    fullTestSound = 0;
+    fullTestVisuals = 0;
+
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
@@ -1644,15 +1784,15 @@ function draw() {
     translate(width/5, height/2);
     strokeWeight(10);
     rectMode(CENTER);
-    let angle = map(output1double.innerHTML, 0, 8, 0, 45);
-    if(output1double.innerHTML > 0)
+    let angle = map(currentValueSlider1double, 0, 8, 0, 45);
+    if(currentValueSlider1double > 0)
       rotate(PI / 180 * angle);
-    if(output1double.innerHTML <= 0)
+    if(currentValueSlider1double <= 0)
       rotate(PI / 180 * angle);
-    if(output1.innerHTML < 0) 
-      square(0, 0, 200, map(output1.innerHTML, -8, 0, 0, 100));
-    if(output1.innerHTML >= 0) 
-      square(0, 0, 200, map(output1.innerHTML, 0, 8, 100, 0));
+    if(currentValueSlider1 < 0) 
+      square(0, 0, 200, map(currentValueSlider1, -8, 0, 0, 100));
+    if(currentValueSlider1 >= 0) 
+      square(0, 0, 200, map(currentValueSlider1, 0, 8, 100, 0));
     pop();
 
     push();
@@ -1661,15 +1801,15 @@ function draw() {
 
     strokeWeight(10);
     rectMode(CENTER);
-    let angle2 = map(output2double.innerHTML, 0, 8, 0, 45);
-    if(output2double.innerHTML > 0)
+    let angle2 = map(currentValueSlider2double, 0, 8, 0, 45);
+    if(currentValueSlider2double > 0)
       rotate(PI / 180 * angle2);
-    if(output2double.innerHTML <= 0)
+    if(currentValueSlider2double <= 0)
       rotate(PI / 180 * angle2);
-    if(output2.innerHTML < 0) 
-      square(0, 0, 200, map(output2.innerHTML, -8, 0, 0, 100));
-    if(output2.innerHTML >= 0) 
-      square(0, 0, 200, map(output2.innerHTML, 0, 8, 100, 0));
+    if(currentValueSlider2 < 0) 
+      square(0, 0, 200, map(currentValueSlider2, -8, 0, 0, 100));
+    if(currentValueSlider2 >= 0) 
+      square(0, 0, 200, map(currentValueSlider2, 0, 8, 100, 0));
     pop();
   }
   
@@ -1678,6 +1818,9 @@ function draw() {
 
     imageTest = 1;
     soundTest = 0;
+
+    fullTestSound = 0;
+    fullTestVisuals = 0;
 
     radioButtons = 0;
     slider = 1;
@@ -1696,12 +1839,12 @@ function draw() {
 
     strokeWeight(10);
        
-    if(output1.innerHTML > 0) {
-      irregularList = [ 1,  map(output1.innerHTML, 0, 8, 5, 25)];
+    if(currentValueSlider1 > 0) {
+      irregularList = [ 1,  map(currentValueSlider1, 0, 8, 5, 25)];
       setLineDash(irregularList);  
     }
-    if(output1.innerHTML <= 0) {
-      irregularList = [ 1,  map(output1.innerHTML, -8, 0, 25, 5)];
+    if(currentValueSlider1 <= 0) {
+      irregularList = [ 1,  map(currentValueSlider1, -8, 0, 25, 5)];
       setLineDash(irregularList);  
     }
 
@@ -1709,11 +1852,11 @@ function draw() {
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(output1double.innerHTML <= 0) {
-        angleChange = map(output1double.innerHTML, -8, 0, 50, 150);
+      if(currentValueSlider1double <= 0) {
+        angleChange = map(currentValueSlider1double, -8, 0, 50, 150);
       }
-      if(output1double.innerHTML > 0) {
-        angleChange = map(output1double.innerHTML, 0, 8, 150, 50);
+      if(currentValueSlider1double > 0) {
+        angleChange = map(currentValueSlider1double, 0, 8, 150, 50);
       }
 
       const angle = i * spacing;
@@ -1722,7 +1865,7 @@ function draw() {
 
       if(i == 0)
         vertex(x, y);
-      else if(output1double.innerHTML > 4 || output1double.innerHTML < -4 ){
+      else if(currentValueSlider1double > 4 || currentValueSlider1double < -4 ){
         star(0, 0, 150 - angleChange + 30, 100, 10, 0);
       }
       else{
@@ -1743,12 +1886,12 @@ function draw() {
 
     strokeWeight(10);
     
-     if(output2.innerHTML > 0) {
-      irregularList = [ 1,  map(output2.innerHTML, 0, 8, 25, 15)];
+     if(currentValueSlider2 > 0) {
+      irregularList = [ 1,  map(currentValueSlider2, 0, 8, 25, 15)];
       setLineDash(irregularList);  
     }
-    if(output2.innerHTML <= 0) {
-      irregularList = [ 1,  map(output2.innerHTML, -8, 0, 15, 25)];
+    if(currentValueSlider2 <= 0) {
+      irregularList = [ 1,  map(currentValueSlider2, -8, 0, 15, 25)];
       setLineDash(irregularList);  
     }
 
@@ -1756,11 +1899,11 @@ function draw() {
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(output2double.innerHTML <= 0) {
-        angleChange = map(output2double.innerHTML, -8, 0, 50, 150);
+      if(currentValueSlider2double <= 0) {
+        angleChange = map(currentValueSlider2double, -8, 0, 50, 150);
       }
-      if(output2double.innerHTML > 0) {
-        angleChange = map(output2double.innerHTML, 0, 8, 150, 50);
+      if(currentValueSlider2double > 0) {
+        angleChange = map(currentValueSlider2double, 0, 8, 150, 50);
       }
 
       const angle = i * spacing;
@@ -1769,7 +1912,7 @@ function draw() {
 
       if(i == 0)
         vertex(x, y);
-      else if(output2double.innerHTML > 4 || output2double.innerHTML < -4 ){
+      else if(currentValueSlider2double > 4 || currentValueSlider2double < -4 ){
         star(0, 0, 150 - angleChange + 30, 100, 10, 0);
       }
       else{
@@ -1783,6 +1926,185 @@ function draw() {
     endShape();
 
     pop();
+  }
+
+  // TESTE 21 | ALL SOUND
+  if(findTest("test21Bol").active) {
+
+    imageTest = 0;
+    soundTest = 1;
+
+    fullTestSound = 1;
+    fullTestVisuals = 0;
+
+    radioButtons = 0;
+    slider = 0;
+    sliderDouble = 0;
+
+     // keeping these levels always up to the maximum (0.0 and 1.0)
+     let attackLevel = 1.0;
+     let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
+     let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
+    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
+    let susPercent = 0.5;
+ 
+    let attackTime = 1.0; // half value from the total 2.0 of the attack tests
+    let decayTime = 0.5; // half value from the total 1.0 of the decay tests
+    let releaseTime = 1.0; // half value from the total 2.0 of the release tests
+    
+    if(playingLeft){
+      if(radiosLeft_value != null){
+        if(currentValueSlider1 > 0)
+          susPercent = map(currentValueSlider1, 0, 8, 0.0, 1.0);
+        else
+          susPercent = map(currentValueSlider1, -8, 0, 1.0, 0.0);
+        
+        if(currentValueSlider1double > 0)
+          attackTime = map(currentValueSlider1double, 0, 8, 0.0, 2.0);
+        else
+          attackTime = map(currentValueSlider1double, -8, 0, 2.0, 0.0);
+
+        if(currentValueSlider5 > 0)
+          releaseTime = map(currentValueSlider5, 0, 8, 0.0, 2.0);
+        else
+          releaseTime = map(currentValueSlider5, -8, 0, 2.0, 0.0);
+
+        if(currentValueSlider7 > 0)
+          decayTime = map(currentValueSlider7, 0, 8, 0.0, 1.0);
+        else
+          decayTime = map(currentValueSlider7, -8, 0, 1.0, 0.0);
+
+        // WAVEFORM
+        if(radiosLeft_value == "1.1")
+          osc.setType('sine');
+        else if(radiosLeft_value == "1.2")
+          osc.setType('triangle');
+        else if(radiosLeft_value == "1.3")
+          osc.setType('square');
+        else if(radiosLeft_value == "1.4")
+          osc.setType('sawtooth') ;
+
+        //console.log("susPerc:"+ susPercent + " attack:" + attackTime + " release:" + releaseTime + " decay:" + decayTime);
+        
+        osc.amp(env);
+
+        if (seconds == 4 || seconds > 4){
+          osc.freq(midiToFreq(int(getNote())));
+          //here is the other way around to keep the sustainTime
+          //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+          env.setRange(attackLevel, releaseLevel);
+          env.play();
+          seconds = 0;
+        }
+      }
+    }
+    if(playingRight) {
+      if(radiosRight_value != null ){
+
+        if(currentValueSlider2 > 0)
+          susPercent = map(currentValueSlider2, 0, 8, 0.0, 1.0);
+        else
+          susPercent = map(currentValueSlider2, -8, 0, 1.0, 0.0);
+        
+        if(currentValueSlider2double > 0)
+          attackTime = map(currentValueSlider2double, 0, 8, 0.0, 2.0);
+        else
+          attackTime = map(currentValueSlider2double, -8, 0, 2.0, 0.0);
+
+        if(currentValueSlider6 > 0)
+          releaseTime = map(currentValueSlider6, 0, 8, 0.0, 2.0);
+        else
+          releaseTime = map(currentValueSlider6, -8, 0, 2.0, 0.0);
+
+        if(currentValueSlider8 > 0)
+          decayTime = map(currentValueSlider8, 0, 8, 0.0, 1.0);
+        else
+          decayTime = map(currentValueSlider8, -8, 0, 1.0, 0.0);
+
+        // WAVEFORM
+        if(radiosRight_value == "2.1")
+          osc.setType('sine');
+        else if(radiosRight_value == "2.2")
+          osc.setType('triangle');
+        else if(radiosRight_value == "2.3")
+          osc.setType('square');
+        else if(radiosRight_value == "2.4")
+          osc.setType('sawtooth') ;
+
+        console.log("susPerc:"+ susPercent + " attack:" + attackTime + " release:" + releaseTime + " decay:" + decayTime);
+
+        osc.amp(env);
+
+         if (seconds == 4 || seconds > 4){
+          osc.freq(midiToFreq(int(getNote())));
+          //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+          env.setRange(attackLevel, releaseLevel);
+          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+          env.play();
+          seconds = 0;
+        }
+      }
+    }
+
+  }
+
+   // TESTE 22 | ALL VISUALS
+   if(findTest("test22Bol").active) {
+    
+    imageTest = 1;
+    soundTest = 0;
+
+    fullTestSound = 0;
+    fullTestVisuals = 1;
+
+    radioButtons = 0;
+    slider = 0;
+    sliderDouble = 0;
+
+    push();
+    noFill();
+    translate(width/5, height/2);
+
+    if(currentValueSlider5 > 0) {
+      irregularList = [ 1,  map(currentValueSlider5, 0, 8, 25, 15)];
+      setLineDash(irregularList);  
+    }
+    if(currentValueSlider5 <= 0) {
+      irregularList = [ 1,  map(currentValueSlider5, -8, 0, 15, 25)];
+      setLineDash(irregularList);  
+    }
+
+    strokeWeight(10);
+    rectMode(CENTER);
+    let angle = map(currentValueSlider1double, 0, 8, 0, 45);
+    if(currentValueSlider1double > 0)
+      rotate(PI / 180 * angle);
+    if(currentValueSlider1double <= 0)
+      rotate(PI / 180 * angle);
+    if(currentValueSlider1 < 0) 
+      square(0, 0, 200, map(currentValueSlider1, -8, 0, 0, 100));
+    if(currentValueSlider1 >= 0) 
+      square(0, 0, 200, map(currentValueSlider1, 0, 8, 100, 0));
+    pop();
+
+    push();
+    noFill();
+    translate(width/1.25, height/2);
+
+    strokeWeight(10);
+    rectMode(CENTER);
+    let angle2 = map(currentValueSlider2double, 0, 8, 0, 45);
+    if(currentValueSlider2double > 0)
+      rotate(PI / 180 * angle2);
+    if(currentValueSlider2double <= 0)
+      rotate(PI / 180 * angle2);
+    if(currentValueSlider2 < 0) 
+      square(0, 0, 200, map(currentValueSlider2, -8, 0, 0, 100));
+    if(currentValueSlider2 >= 0) 
+      square(0, 0, 200, map(currentValueSlider2, 0, 8, 100, 0));
+    pop();
+    
   }
   
 }
@@ -1802,16 +2124,22 @@ function startOscillator(){
 }
 
 function setSliderValue(val, slider) {
-  let range = "myRange" + slider;
-  document.getElementById(range).value = val;
   if(slider == "1")
-    output1.innerHTML = val;
+    currentValueSlider1 = val;
   else if(slider == "1double")
-    output1double.innerHTML = val;
+    currentValueSlider1double = val;
   else if(slider == "2")
-    output2.innerHTML = val;
+    currentValueSlider2 = val;
   else if(slider == "2double")
-    output2double.innerHTML = val;
+    currentValueSlider2double = val;
+  else if(slider == "5")
+    currentValueSlider5 = val;
+  else if(slider == "6")
+    currentValueSlider6 = val;
+  else if(slider == "7")
+    currentValueSlider7 = val;
+  else if(slider == "8")
+    currentValueSlider8 = val;
 }
 
 function getNote(){
@@ -1918,18 +2246,18 @@ function randomIntFromInterval(min, max) {
 }
 
 function checkGrid(cellNr) {
-  clearInputs(1,0);
+  clearGrid(1,0);
   lastCheckedGrid1Cell = cellNr;
   document.getElementById(cellNr).value = "X";
 }
 
 function checkGrid2(cellNr) {
-  clearInputs(0,1);
+  clearGrid(0,1);
   lastCheckedGrid2Cell = cellNr;
   document.getElementById("2_"+cellNr).value = "X";
 }
 
-function clearInputs(test1, test2){
+function clearGrid(test1, test2){
   if(test1){
     for(let i = 1; i < 26; i++){
       document.getElementById(i.toString()).value = null;
@@ -1945,18 +2273,25 @@ function clearInputs(test1, test2){
 function Test(name){
   this.active = 0;
   this.name = name;
-  this.scroll11 = null;
-  this.scroll12 = null;
+
+  this.slider1 = null;
+  this.slider1double = null;
   this.tension = null;
   this.grid = null;
-  this.scroll21 = null;
-  this.scroll22 = null;
+  
+  this.slider2 = null;
+  this.slider2double = null;
   this.tension2 = null;
   this.grid2 = null;
+
+  this.slider5 = null;
+  this.slider6 = null;
+  this.slider7 = null;
+  this.slider8 = null;
 }
 
 function findTest(name){
-  for(let i = 0; i < 20; i++){
+  for(let i = 0; i < 22; i++){
     if(tests[i].name == name)
       return tests[i];
   }
@@ -1964,24 +2299,32 @@ function findTest(name){
 
 function saveTestChoices(testName){
   if(radioButtons){
-    findTest(testName).scroll1double = radiosLeft_value;
-    findTest(testName).scroll2double = radiosRight_value;
+    findTest(testName).slider1double = radiosLeft_value;
+    findTest(testName).slider2double = radiosRight_value;
+  }
+  else if(fullTestSound || fullTestVisuals){
+    findTest(testName).slider1double = currentValueSlider1double;
+    findTest(testName).slider2double = currentValueSlider2double;
+    findTest(testName).slider5 = currentValueSlider5;
+    findTest(testName).slider6 = currentValueSlider6;
+    findTest(testName).slider7 = currentValueSlider7;
+    findTest(testName).slider8 = currentValueSlider8;
   }
   else{
-    findTest(testName).scroll1double = output1double.innerHTML;
-    findTest(testName).scroll2double = output2double.innerHTML;
+    findTest(testName).slider1double = currentValueSlider1double;
+    findTest(testName).slider2double = currentValueSlider2double;
   }
-  findTest(testName).scroll1 = output1.innerHTML;
+  findTest(testName).slider1 = currentValueSlider1;
   findTest(testName).tension = outputSliderTensionLeft.innerHTML;
   findTest(testName).grid = lastCheckedGrid1Cell;
   
-  findTest(testName).scroll2 = output2.innerHTML;
+  findTest(testName).slider2 = currentValueSlider2;
   findTest(testName).tension2 = outputSliderTensionRight.innerHTML;
   findTest(testName).grid2 = lastCheckedGrid2Cell;
 }
 
 //TO DO save to document
-function printTests(){
+function sendTestResults(){
   var currentdate = new Date(); 
   var datetime = currentdate.getDate() + "/"
                 + (currentdate.getMonth()+1)  + "/" 
@@ -1991,31 +2334,30 @@ function printTests(){
                 + currentdate.getSeconds();
   let testResults = "<p><b>" + datetime +"</b></p>" + "\n";
   for(let i = 0; i < 20; i++){
+    console.log("here1")
     let j = i+1;
-    testResults += "TEST" + j + "|" + tests[i].scroll1double + "_" + tests[i].scroll1 + "_" +  tests[i].tension + "_" + tests[i].grid + "|" + tests[i].scroll2double + "_" + tests[i].scroll2 + "_" +  tests[i].tension2 + "_" + tests[i].grid2+ "\n<br>";
-    /*testResults += "<b>TEST " + j + "</b> | <b>LEFT: scroll:</b> " + tests[i].scroll +
-     " <b>tension:</b> " + tests[i].tension + " <b>grid:</b> " + tests[i].grid + 
-     "</b> | <b>RIGHT: scroll:</b> " + tests[i].scroll2 +
-     " <b>tension:</b> " + tests[i].tension2 + " <b>grid:</b> " + tests[i].grid2 + "\n<br>";*/
+    testResults += "TEST" + j + "|" + tests[i].slider1 + "_" + tests[i].slider1double + "_" +  tests[i].tension + "_" + tests[i].grid + "|" + tests[i].slider2 + "_" + tests[i].slider2double + "_" +  tests[i].tension2 + "_" + tests[i].grid2+ "\n<br>";
+  }
+  for(let i = 20; i < 22; i++){
+    console.log("here2")
+    let j = i+1;
+    testResults += "TEST" + j + "|" + tests[i].slider1 + "_" + tests[i].slider1double + "_" + tests[i].slider5 + "_" + tests[i].slider7 + "_" +   tests[i].tension + "_" + tests[i].grid + "|" + tests[i].slider2 + "_" + tests[i].slider2double +  "_" + tests[i].slider6 + "_" + tests[i].slider8 + "_" +  tests[i].tension2 + "_" + tests[i].grid2+ "\n<br>";
   }
   console.log(testResults);
-  //sendEmail(testResults, datetime);
-  //window.location="mailto:andreianmatos@tecnico.ulisboa.pt?subject=Results"+datetime+"&body="+testResults;
-  window.localStorage.setItem('testResults', testResults);
-  //console.log(document.getElementById("results").innerHTML);
-  //document.getElementById("results").innerHTML = testResults;
+  
+  //window.localStorage.setItem('testResults', testResults);
+  
   js_send(datetime, testResults);
-}
 
-// EMAIL TOO LONG??? CHECK
+  //window.location.href="results.html";
+}
 
 function sendEmail(results, date) { 
   window.location="mailto:andreianmatos@tecnico.ulisboa.pt?subject=Result"+date+"&body="+results;
 }
 function submit(){
-  saveTestChoices(currentTestBol);
-  printTests();
-  window.location.href="results.html";
+  saveTestChoices("test22Bol");
+  sendTestResults(); // also calls to send email
 }
 
 
@@ -2066,9 +2408,7 @@ function submit(){
 
         request.open("POST", "https://postmail.invotes.com/send", true);
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
         request.send(params);
-
 
         return false;
     }
@@ -2083,9 +2423,6 @@ function submit(){
         return form_data.join("&");
     }
 
-function mousePressed() {
-
-}
 
 function playLeft() {
   playingLeft = !playingLeft;
@@ -2113,13 +2450,16 @@ function chooseNextTest(){
 
   // save test choices
   saveTestChoices(currentTestBol);
-  //console.log("SAVED FOR TEST" + currentTestBol + " and slider left is " + output1.innerHTML + " and slider right is " + output2.innerHTML);
+  //console.log("SAVED FOR TEST" + currentTestBol + " and slider left is " + currentValueSlider1 + " and slider right is " + currentValueSlider2);
 
 
   while(!chosen){
     newTestNr = randomIntFromInterval(1,20);
+    if(undoneTests.length == 2 && doneFullTests){
+      newTestNr = undoneTests[0];
+    }
     newTestBol = 'test' + newTestNr + 'Bol';
-    if(undoneTests.length == 1){
+    if(undoneTests.length == 1 && doneFullTests){
       document.getElementById("testNext").style.display = 'none';
       document.getElementById("updateAnswers").style.display = 'block';
       document.getElementById("lastTest").style.display = 'block';
@@ -2131,11 +2471,16 @@ function chooseNextTest(){
       end = 1;
       chosen = 1;
     }
+    else if(undoneTests.length == 1 && !doneFullTests){
+      undoneTests.push('21','22');
+      newTestNr = undoneTests[0];
+      doneFullTests = 1;
+    }
     else if(undoneTests.includes(newTestNr)){
       chosen = 1;
     }
   }
-  //console.log("before delete"+undoneTests);
+ 
   // delete the new current test of the undone tests list
   undoneTests = undoneTests.filter(item => item !== newTestNr);
   //console.log(undoneTests);
@@ -2149,7 +2494,7 @@ function next(newTestBol) {
   if(playingLeft)
     playLeft();
 
-  for(let i=0; i < 20; i++)
+  for(let i=0; i < 22; i++)
     tests[i].active = 0;
   findTest(newTestBol).active = 1;
 
@@ -2157,18 +2502,31 @@ function next(newTestBol) {
 
   //at the end people are reviewing their answers
   if(!end ||(end && chosen)){
-    // clear input (tension + grid)
     if(end && chosen)
       chosen = 0;
-    clearInputs(1,1);
+    // clear inputs grid
+    clearGrid(1,1);
+    //clearTension values
+    outputSliderTensionLeft.innerHTML = 1;
+    outputSliderTensionRight.innerHTML = 1;
+    sliderTensionLeft.value = 1;
+    sliderTensionRight.value = 1;
+    //check random radio button
     var radiosLeft = document.getElementsByName('radioLeft');
     var radiosRight = document.getElementsByName('radioRight');
     radiosLeft[Math.floor(Math.random() * 4)].checked = true;
     radiosRight[Math.floor(Math.random() * 4 )].checked = true;
+    // clear round sliders
+    
+    //sliderCircular1.redrawActiveSliderCircularTestBeginning(randomIntFromInterval(-8,8));
     setSliderValue(randomIntFromInterval(-8,8),"1");
     setSliderValue(randomIntFromInterval(-8,8),"1double");
     setSliderValue(randomIntFromInterval(-8,8),"2");
     setSliderValue(randomIntFromInterval(-8,8),"2double");
+    setSliderValue(randomIntFromInterval(-8,8),"5");
+    setSliderValue(randomIntFromInterval(-8,8),"6");
+    setSliderValue(randomIntFromInterval(-8,8),"7");
+    setSliderValue(randomIntFromInterval(-8,8),"8");
   }
   // move on to next test
   currentTest(newTestBol); 
@@ -2177,7 +2535,12 @@ function next(newTestBol) {
 function currentTest(newTestBol) {
   if(currentTestBol != null) {
     //console.log(currentTestBol);
-    document.getElementById(currentTestBol).style.background = "#fff";
+    if(currentTestBol.match(/\d+/)[0] > 20)
+      document.getElementById(currentTestBol).style.background = "rgb(196,174,173)";
+    else if(currentTestBol.match(/\d+/)[0] < 11)
+      document.getElementById(currentTestBol).style.background = "#f0d696";
+    else  
+      document.getElementById(currentTestBol).style.background = "#9bc2b1";
     document.getElementById(currentTestBol).style.color = "#000";
     //document.getElementById(currentTestBol).disabled = false;
   }
@@ -2187,9 +2550,7 @@ function currentTest(newTestBol) {
 }
 
 function enableTests(){
-  for(let i=1; i < 21; i++){
-    document.getElementById('test'+i+'Bol').style.background = "#fff";
-    document.getElementById('test'+i+'Bol').style.color = "#000";
+  for(let i=1; i < 23; i++){
     document.getElementById('test'+i+'Bol').disabled = false;
   }
 }
@@ -2223,8 +2584,8 @@ class sliderCircular {
   constructor({ DOMselector, sliderCirculars }) {
       this.DOMselector = DOMselector;
       this.container = document.querySelector(this.DOMselector);  // sliderCircular container
-      this.sliderCircularWidth = 400;                                     // sliderCircular width
-      this.sliderCircularHeight = 400;                                    // sliderCircular length
+      this.sliderCircularWidth = 150;                                     // sliderCircular width
+      this.sliderCircularHeight =150;                                    // sliderCircular length
       this.cx = this.sliderCircularWidth / 2;                             // sliderCircular center X coordinate
       this.cy = this.sliderCircularHeight / 2;                            // sliderCircular center Y coordinate
       this.tau = 2 * Math.PI;                                     // Tau constant
@@ -2289,7 +2650,43 @@ class sliderCircular {
      svg.setAttribute('width', this.sliderCircularHeight);
      svgContainer.appendChild(svg);
      this.container.appendChild(svgContainer);
+    }
+    if(this.DOMselector === "#app5"){
+      svgContainer = document.createElement('div');
+     svgContainer.classList.add('sliderCircular__data5');
+      svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+     svg.setAttribute('height', this.sliderCircularWidth);
+     svg.setAttribute('width', this.sliderCircularHeight);
+     svgContainer.appendChild(svg);
+     this.container.appendChild(svgContainer);
    }
+    if(this.DOMselector === "#app6"){
+      svgContainer = document.createElement('div');
+    svgContainer.classList.add('sliderCircular__data6');
+      svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('height', this.sliderCircularWidth);
+    svg.setAttribute('width', this.sliderCircularHeight);
+    svgContainer.appendChild(svg);
+    this.container.appendChild(svgContainer);
+  }
+  if(this.DOMselector === "#app7"){
+    svgContainer = document.createElement('div');
+   svgContainer.classList.add('sliderCircular__data7');
+    svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+   svg.setAttribute('height', this.sliderCircularWidth);
+   svg.setAttribute('width', this.sliderCircularHeight);
+   svgContainer.appendChild(svg);
+   this.container.appendChild(svgContainer);
+ }
+ if(this.DOMselector === "#app8"){
+  svgContainer = document.createElement('div');
+ svgContainer.classList.add('sliderCircular__data8');
+  svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+ svg.setAttribute('height', this.sliderCircularWidth);
+ svg.setAttribute('width', this.sliderCircularHeight);
+ svgContainer.appendChild(svg);
+ this.container.appendChild(svgContainer);
+}
       
 
       // Draw sliderCirculars
@@ -2463,6 +2860,62 @@ class sliderCircular {
 
   }
 
+
+   /** ATTEMPT : COME BACK
+   * Redraw sliderCircular AT THE BEGINNING OF A TEST WITH RANDOM VALUE
+   * 
+   * @param {element} activesliderCircular
+   * @param {obj} rmc
+   *
+    redrawActiveSliderCircularTestBeginning(newRandomValue) {
+
+      let container;
+
+      if(this.DOMselector === "#app"){
+        container = document.querySelector('.sliderCircular__data1');
+      }
+      if(this.DOMselector === "#app2"){
+        container = document.querySelector('.sliderCircular__data2');
+      }
+      if(this.DOMselector === "#app3"){
+        container = document.querySelector('.sliderCircular__data3');
+      }
+      if(this.DOMselector === "#app4"){
+        container = document.querySelector('.sliderCircular__data4');
+      }
+      if(this.DOMselector === "#app5"){
+        container = document.querySelector('.sliderCircular__data5');
+      }
+      if(this.DOMselector === "#app6"){
+        container = document.querySelector('.sliderCircular__data6');
+      }
+      if(this.DOMselector === "#app7"){
+        container = document.querySelector('.sliderCircular__data7');
+      }
+      if(this.DOMselector === "#app8"){
+        container = document.querySelector('.sliderCircular__data8');
+      }
+      
+      let sliderCircularGroups = Array.from(container.querySelectorAll('g'));
+
+      const activePath = sliderCircularGroups[0].querySelector('.sliderCircularSinglePathActive');
+      const radius = +sliderCircularGroups[0].getAttribute('rad');
+       
+      const currentAngle = Math.floor( (newRandomValue / (sliderCircular.max - sliderCircular.min) ) * 360 )-180;
+ 
+      // Redraw handle
+      const handle = sliderCircularGroups[0].querySelector('.sliderCircularHandle');
+      const handleCenter = this.calculateHandleCenter(currentAngle, radius);
+      handle.setAttribute('cx', handleCenter.x);
+      handle.setAttribute('cy', handleCenter.y);
+
+      // Update legend
+      //this.updateLegendUI(currentAngle);
+
+      this.updateSliderValues(currentAngle);
+  
+    } */
+
   /**
    * MY FUNCTION - ANDREIA
    * 
@@ -2496,6 +2949,30 @@ class sliderCircular {
     else if(this.DOMselector === "#app4"){
       if(targetsliderCircular == 0 && typeof currentValue === 'number')
         currentValueSlider2double = currentValue;
+    }
+
+    // corresponds to the 3rd slider of the Left    
+    else if(this.DOMselector === "#app5"){
+      if(targetsliderCircular == 0 && typeof currentValue === 'number')
+        currentValueSlider5 = currentValue;
+    }
+
+    // corresponds to the ? slider of the Right    
+     else if(this.DOMselector === "#app6"){
+      if(targetsliderCircular == 0 && typeof currentValue === 'number')
+        currentValueSlider6 = currentValue;
+    }
+
+    // corresponds to the 4rd slider of the Left    
+    else if(this.DOMselector === "#app7"){
+      if(targetsliderCircular == 0 && typeof currentValue === 'number')
+        currentValueSlider7 = currentValue;
+    }
+
+    // corresponds to the ? slider of the Right    
+    else if(this.DOMselector === "#app8"){
+      if(targetsliderCircular == 0 && typeof currentValue === 'number')
+        currentValueSlider8 = currentValue;
     }
 }
 
@@ -2654,6 +3131,14 @@ class sliderCircular {
         containerRect = document.querySelector('.sliderCircular__data3').getBoundingClientRect();
       if(this.DOMselector === "#app4")
         containerRect = document.querySelector('.sliderCircular__data4').getBoundingClientRect();
+      if(this.DOMselector === "#app5")
+        containerRect = document.querySelector('.sliderCircular__data5').getBoundingClientRect();
+      if(this.DOMselector === "#app6")
+      containerRect = document.querySelector('.sliderCircular__data6').getBoundingClientRect();
+      if(this.DOMselector === "#app7")
+        containerRect = document.querySelector('.sliderCircular__data7').getBoundingClientRect();
+      if(this.DOMselector === "#app8")
+        containerRect = document.querySelector('.sliderCircular__data8').getBoundingClientRect();
           
       let x, 
           y, 
@@ -2720,13 +3205,10 @@ class sliderCircular {
   findClosestsliderCircular(rmc) {
       let container;
       const mouseDistanceFromCenter = Math.hypot(rmc.x - this.cx, rmc.y - this.cy);
-      console.log("container of closesst slider circular");
       if(this.DOMselector === "#app"){
-        console.log(document.querySelector('.sliderCircular__data1'));
         container = document.querySelector('.sliderCircular__data1');
       }
       if(this.DOMselector === "#app2"){
-        console.log(document.querySelector('.sliderCircular__data2'));
         container = document.querySelector('.sliderCircular__data2');
       }
       if(this.DOMselector === "#app3"){
@@ -2734,6 +3216,18 @@ class sliderCircular {
       }
       if(this.DOMselector === "#app4"){
         container = document.querySelector('.sliderCircular__data4');
+      }
+      if(this.DOMselector === "#app5"){
+        container = document.querySelector('.sliderCircular__data5');
+      }
+      if(this.DOMselector === "#app6"){
+        container = document.querySelector('.sliderCircular__data6');
+      }
+      if(this.DOMselector === "#app7"){
+        container = document.querySelector('.sliderCircular__data7');
+      }
+      if(this.DOMselector === "#app8"){
+        container = document.querySelector('.sliderCircular__data8');
       }
       
       let sliderCircularGroups = Array.from(container.querySelectorAll('g'));

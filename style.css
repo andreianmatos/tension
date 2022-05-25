@@ -139,7 +139,7 @@ body, html {
   .custombutton2  {
     position: relative;
     margin: 1% auto 0;
-    padding: 1% 1.3vw;
+    padding: 1% 1.0vw;
     appearance: none;
     transition: all 0.15s ease-in-out;
     font-family: inherit;
@@ -164,6 +164,32 @@ body, html {
     pointer-events: none;
     color: darkgray;
  }
+
+
+ 
+ .custombutton3  {
+  position: relative;
+  margin: 2% auto 0;
+  padding: 6% 1.4vw;
+  appearance: none;
+  transition: all 0.15s ease-in-out;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 600;
+  background: #fff;
+  border: 1% solid #000;
+  color: rgb(17, 17, 17);
+  border-radius: 5%;
+  outline: 0;
+  cursor: pointer;
+}
+.custombutton3:hover {
+  background: #000;
+  color: #fff;
+}
+.custombutton3:hover:active {
+  transform: scale(0.9);
+}
 
  #alignCenter{
   display: flex;
@@ -197,7 +223,7 @@ body, html {
   }
   
 #lastTest{
-  margin-left: -28%; 
+  margin-left: -26%; 
   display: none;
  }
  #lastTest2{
@@ -683,8 +709,8 @@ label {
 }
 #app3 {
   position: absolute;
-  margin-left: 21.5%;
-  top: 52.5%;
+  margin-left: 30.5%;
+  top: 69.5%;
   z-index: 97 !important; 
 }
 
@@ -696,10 +722,41 @@ label {
 }
 #app4 {
   position: absolute;
-  margin-left: 71.5%;
+  margin-left: 80%;
+  top: 69.5%;
+  z-index: 97 !important; 
+}
+
+#app5 {
+  display: none;
+  position: absolute;
+  margin-left: 53.5%;
   top: 52.5%;
   z-index: 97 !important; 
 }
+#app6 {
+  display: none;
+  position: absolute;
+  margin-left: 71.5%;
+  top: 69.5%;
+  z-index: 97 !important; 
+}
+#app7 {
+  display: none;
+  position: absolute;
+  margin-left: 53.5%;
+  top: 52.5%;
+  z-index: 97 !important; 
+}
+#app8 {
+  display: none;
+  position: absolute;
+  margin-left: 71.5%;
+  top: 69.5%;
+  z-index: 97 !important; 
+}
+
+
 
 h1 {
   margin-bottom: 2rem;
