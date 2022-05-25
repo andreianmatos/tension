@@ -10,8 +10,8 @@
         <script src="https://smtpjs.com/v3/smtp.js"></script>
     </head>
    
-    <!--<body onload="sendEmail();">  -->
-    <body>
+    <body onload="sendEmail();">  
+     <!--<body>-->
         
         <div class="about">
 
@@ -43,7 +43,7 @@
             window.location="mailto:andreianmatos@tecnico.ulisboa.pt?subject=Results "+datetime+"&body="+window.localStorage.getItem('testResults');
         }
 
-        Email.send({
+        /*Email.send({
             Host : "smtp.elasticemail.com",
             Username : "andreianmatos@tecnico.ulisboa.pt",
             Password : "A12F92057CC5B50ACB31A6581A7BAB40ABC1",
@@ -53,6 +53,6 @@
             Body : window.localStorage.getItem('testResults')
         }).then(
             message => alert(message)
-        );
+        );*/
     </script>
 </html>
