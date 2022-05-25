@@ -26,7 +26,12 @@
                                                 
     </body>
     <script>
-        var datetime;
+        var datetime = currentdate.getDate() + "/"
+                            + (currentdate.getMonth()+1)  + "/" 
+                            + currentdate.getFullYear() + " @ "  
+                            + currentdate.getHours() + ":"  
+                            + currentdate.getMinutes() + ":" 
+                            + currentdate.getSeconds();;
         function getTestResults() {
             document.getElementById("results").innerHTML = window.localStorage.getItem('testResults');
             sendEmail();
@@ -34,12 +39,7 @@
 
         function sendEmail() { 
             var currentdate = new Date(); 
-            datetime = currentdate.getDate() + "/"
-                            + (currentdate.getMonth()+1)  + "/" 
-                            + currentdate.getFullYear() + " @ "  
-                            + currentdate.getHours() + ":"  
-                            + currentdate.getMinutes() + ":" 
-                            + currentdate.getSeconds();
+            
             window.location="mailto:andreianmatos@tecnico.ulisboa.pt?subject=Results "+datetime+"&body="+window.localStorage.getItem('testResults');
         }
 
