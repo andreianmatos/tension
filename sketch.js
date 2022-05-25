@@ -2345,11 +2345,12 @@ function sendTestResults(){
   }
   console.log(testResults);
   
-  //window.localStorage.setItem('testResults', testResults);
+  window.localStorage.setItem('testResults', testResults);
   
-  js_send(datetime, testResults);
+  //DOWN ?
+  //js_send(datetime, testResults);
 
-  //window.location.href="results.html";
+  window.location.href="results.html";
 }
 
 function sendEmail(results, date) { 

@@ -7,11 +7,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Styles -->
         <link rel="stylesheet" href="style.css">
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
     </head>
    
-    <body> 
+    <!--<body onload="sendEmail();">  -->
+    <body>
         
-        <div class="about" >
+        <div class="about">
 
             <p class="title"><b>Thank you for participating in this study!</b></p> 
                         
@@ -24,20 +26,33 @@
                                                 
     </body>
     <script>
+        var datetime;
         function getTestResults() {
             document.getElementById("results").innerHTML = window.localStorage.getItem('testResults');
-            //sendEmail();
+            sendEmail();
         }
 
         function sendEmail() { 
             var currentdate = new Date(); 
-            var datetime = currentdate.getDate() + "/"
+            datetime = currentdate.getDate() + "/"
                             + (currentdate.getMonth()+1)  + "/" 
                             + currentdate.getFullYear() + " @ "  
                             + currentdate.getHours() + ":"  
                             + currentdate.getMinutes() + ":" 
                             + currentdate.getSeconds();
-            window.location="mailto:andreianmatos@tecnico.ulisboa.pt?subject=Results "+datetime+"&body="+document.getElementById("results").innerHTML;
+            window.location="mailto:andreianmatos@tecnico.ulisboa.pt?subject=Results "+datetime+"&body="+window.localStorage.getItem('testResults');
         }
+
+        Email.send({
+            Host : "smtp.elasticemail.com",
+            Username : "andreianmatos@tecnico.ulisboa.pt",
+            Password : "A12F92057CC5B50ACB31A6581A7BAB40ABC1",
+            To : 'andreianmatos@tecnico.ulisboa.pt',
+            From : "andreianmatos@tecnico.ulisboa.pt",
+            Subject : "RESULTS | " + datetime,
+            Body : window.localStorage.getItem('testResults')
+        }).then(
+            message => alert(message)
+        );
     </script>
 </html>
