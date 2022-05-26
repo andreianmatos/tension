@@ -27,9 +27,9 @@ let end = 0;
 
 let sliderCircular1;
 
-var output1, output1double, output2, output2double, output5, output6, output7, output8;
+var output1, output1double, output2, output2double, output5, output6, output7, output8, output9, output10;
 var currentValueSlider1, currentValueSlider1double, currentValueSlider2, currentValueSlider2double,
-currentValueSlider5, currentValueSlider6,currentValueSlider7, currentValueSlider8;
+currentValueSlider5, currentValueSlider6,currentValueSlider7, currentValueSlider8, currentValueSlider9, currentValueSlider10;
 var sliderTensionLeft, sliderTensionRight, outputsliderTensionLeft, outputsliderTensionRight;
 
 var initialSlider1 = randomIntFromInterval(-8,8), 
@@ -37,10 +37,12 @@ initialSlider1double = randomIntFromInterval(-8,8),
 initialSlider2 = randomIntFromInterval(-8,8), 
 initialSlider2double = randomIntFromInterval(-8,8);
 
-initialSlider5 = randomIntFromInterval(-8,8);
-initialSlider6 = randomIntFromInterval(-8,8);
-initialSlider7 = randomIntFromInterval(-8,8);
-initialSlider8 = randomIntFromInterval(-8,8);
+initialSlider5 = randomIntFromInterval(-8,8),
+initialSlider6 = randomIntFromInterval(-8,8),
+initialSlider7 = randomIntFromInterval(-8,8),
+initialSlider8 = randomIntFromInterval(-8,8),
+initialSlider9 = randomIntFromInterval(-8,8),
+initialSlider10 = randomIntFromInterval(-8,8);
 
 //C3 C4 C5 o C2(36) é um pouco baixo (?) 
 var midiNotesConsidered = Array(48, 60, 72);
@@ -171,6 +173,38 @@ var seconds; // between notes
   ]
 };
 
+//LEFT: SLIDER 5 sliderCircular app options
+const opts9 = {
+  DOMselector: '#app9',
+  sliderCirculars: [
+      {
+          radius: 40,
+          min: -8,
+          max: 8,
+          step: 1,
+          initialValue: initialSlider9,
+          color: '',
+          displayName: 'Slider 8'
+      }
+  ]
+};
+
+const opts10 = {
+  DOMselector: '#app10',
+  sliderCirculars: [
+      {
+          radius: 40,
+          min: -8,
+          max: 8,
+          step: 1,
+          initialValue: initialSlider10,
+          color: '',
+          displayName: 'Slider 8'
+      }
+  ]
+};
+
+
 function setup() {
 
   var canvas = createCanvas(0.85*windowWidth, 0.7*windowHeight);
@@ -199,6 +233,10 @@ function setup() {
   sliderCircular7.draw();
   sliderCircular8 = new sliderCircular(opts8);
   sliderCircular8.draw();
+  sliderCircular9 = new sliderCircular(opts9);
+  sliderCircular9.draw();
+  sliderCircular10 = new sliderCircular(opts10);
+  sliderCircular10.draw();
 
   //tension sliders for left and right
  
@@ -232,6 +270,8 @@ function setup() {
   setSliderValue(initialSlider6,"6");
   setSliderValue(initialSlider7,"7");
   setSliderValue(initialSlider8,"8");
+  setSliderValue(initialSlider9,"9");
+  setSliderValue(initialSlider10,"10");
 
   for(let i=1; i < 23; i++)
     tests.push(new Test('test' + i + 'Bol'));
@@ -335,13 +375,15 @@ function draw() {
     document.getElementById("app6").style.display = 'none';
     document.getElementById("app7").style.display = 'none';
     document.getElementById("app8").style.display = 'none';
+    document.getElementById("app9").style.display = 'none';
+    document.getElementById("app10").style.display = 'none';
 
     document.getElementById("app").style.top = '65.5%';
     document.getElementById("app2").style.top = '65.5%';
     document.getElementById("app").style.marginLeft = '20%';
     document.getElementById("app2").style.marginLeft = '70%';
   }
-  else if(fullTestSound || fullTestVisuals){
+  else if(fullTestSound){
     document.getElementById("radiosRight").style.display = 'block';
     document.getElementById("radiosLeft").style.display = 'block';
     //left
@@ -355,6 +397,9 @@ function draw() {
     document.getElementById("app4").style.display = 'block';
     document.getElementById("app6").style.display = 'block';
     document.getElementById("app8").style.display = 'block';
+
+    document.getElementById("app9").style.display = 'none';
+    document.getElementById("app10").style.display = 'none';
 
     document.getElementById("app").style.top = '65.5%';
     document.getElementById("app2").style.top = '65.5%';
@@ -375,6 +420,47 @@ function draw() {
     document.getElementById("app8").style.marginLeft = '85.5%';
    
   }
+  else if(fullTestVisuals){
+    document.getElementById("radiosRight").style.display = 'none';
+    document.getElementById("radiosLeft").style.display = 'none';
+    //left
+    document.getElementById("app").style.display = 'block';
+    document.getElementById("app3").style.display = 'block';
+    document.getElementById("app5").style.display = 'block';
+    document.getElementById("app7").style.display = 'block';
+    document.getElementById("app9").style.display = 'block';
+
+    //right
+    document.getElementById("app2").style.display = 'block';
+    document.getElementById("app4").style.display = 'block';
+    document.getElementById("app6").style.display = 'block';
+    document.getElementById("app8").style.display = 'block';
+    document.getElementById("app10").style.display = 'block';
+
+    document.getElementById("app").style.top = '74.5%';
+    document.getElementById("app2").style.top = '74.5%';
+    document.getElementById("app3").style.top = '64.5%';
+    document.getElementById("app4").style.top = '64.5%';
+    document.getElementById("app5").style.top = '64.5%';
+    document.getElementById("app6").style.top = '64.5%';
+    document.getElementById("app7").style.top = '64.5%';
+    document.getElementById("app8").style.top = '64.5%';    
+    document.getElementById("app9").style.top = '74.5%';
+    document.getElementById("app10").style.top = '74.5%';
+
+    document.getElementById("app").style.marginLeft = '13.5%';
+    document.getElementById("app3").style.marginLeft = '6.5%';
+    document.getElementById("app5").style.marginLeft = '20.5%';
+    document.getElementById("app7").style.marginLeft = '34.5%';
+    document.getElementById("app9").style.marginLeft = '27.5%';
+    
+    document.getElementById("app2").style.marginLeft = '63.0%';
+    document.getElementById("app4").style.marginLeft = '56.0%';
+    document.getElementById("app6").style.marginLeft = '70.0%';
+    document.getElementById("app8").style.marginLeft = '84.0%';
+    document.getElementById("app10").style.marginLeft = '77.0%';
+   
+  }
   if(!radioButtons && !fullTestSound && !fullTestVisuals){
 
     document.getElementById("radiosRight").style.display = 'none';
@@ -387,7 +473,9 @@ function draw() {
     document.getElementById("app5").style.display = 'none';
     document.getElementById("app6").style.display = 'none';
     document.getElementById("app7").style.display = 'none';
-    document.getElementById("app8").style.display = 'none';
+    document.getElementById("app8").style.display = 'none';    
+    document.getElementById("app9").style.display = 'none';
+    document.getElementById("app10").style.display = 'none';
 
     document.getElementById("app").style.top = '69.5%';
     document.getElementById("app2").style.top = '69.5%';
@@ -1321,18 +1409,20 @@ function draw() {
     let irregularList;
    
     if(currentValueSlider1double > 0) {
-      irregularList = [ 1,  map(currentValueSlider1double, 0, 8, 25, 15)];
+      irregularList = [map(currentValueSlider1double, 0, 8, 5, 5), map(currentValueSlider1double, 0, 8, 5, 20), map(currentValueSlider1double, 0, 8, 5, 30), map(currentValueSlider1double, 0, 8, 5, 40)];
       setLineDash(irregularList);  
     }
     if(currentValueSlider1double <= 0) {
-      irregularList = [ 1,  map(currentValueSlider1double, -8, 0, 15, 25)];
+      irregularList = [map(currentValueSlider1double, -8, 0, 5, 5), map(currentValueSlider1double, -8, 0, 20, 5), map(currentValueSlider1double, -8, 0, 30, 5), map(currentValueSlider1double, -8, 0, 40, 5)];
       setLineDash(irregularList);  
     }
+    beginShape();
     if(currentValueSlider1 < 0) 
       arc(0, 0, map(currentValueSlider1, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
     if(currentValueSlider1 >= 0) 
       arc(0, 0, map(currentValueSlider1, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
     arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+    endShape(CLOSE);
     pop();
 
     push();
@@ -1344,11 +1434,11 @@ function draw() {
     let irregularList2;
    
     if(currentValueSlider2double > 0) {
-      irregularList2 = [ 1,  map(currentValueSlider2double, 0, 8, 25, 15)];
+      irregularList2 = [map(currentValueSlider2double, 0, 8, 5, 5), map(currentValueSlider2double, 0, 8, 5, 20), map(currentValueSlider2double, 0, 8, 5, 30), map(currentValueSlider2double, 0, 8, 5, 40)];
       setLineDash(irregularList2);  
     }
     if(currentValueSlider2double <= 0) {
-      irregularList2 = [ 1,  map(currentValueSlider2double, -8, 0, 15, 25)];
+      irregularList2 = [map(currentValueSlider2double, -8, 0, 5, 5), map(currentValueSlider2double, -8, 0, 20, 5), map(currentValueSlider2double, -8, 0, 30, 5), map(currentValueSlider2double, -8, 0, 40, 5)];
       setLineDash(irregularList2);  
     }
     if(currentValueSlider2 < 0) 
@@ -1562,11 +1652,11 @@ function draw() {
     translate(width/5, height/2);
    
     if(currentValueSlider1double > 0) {
-      irregularList = [ 1,  map(currentValueSlider1double, 0, 8, 25, 15)];
+      irregularList = [map(currentValueSlider1double, 0, 8, 5, 5), map(currentValueSlider1double, 0, 8, 5, 20), map(currentValueSlider1double, 0, 8, 5, 30), map(currentValueSlider1double, 0, 8, 5, 40)];
       setLineDash(irregularList);  
     }
     if(currentValueSlider1double <= 0) {
-      irregularList = [ 1,  map(currentValueSlider1double, -8, 0, 15, 25)];
+      irregularList = [map(currentValueSlider1double, -8, 0, 5, 5), map(currentValueSlider1double, -8, 0, 20, 5), map(currentValueSlider1double, -8, 0, 30, 5), map(currentValueSlider1double, -8, 0, 40, 5)];
       setLineDash(irregularList);  
     }
     if(currentValueSlider1 > 0) 
@@ -1582,12 +1672,12 @@ function draw() {
     translate(width/1.25, height/2);output1double
 
     if(currentValueSlider2double > 0) {
-      irregularList = [ 1,  map(currentValueSlider2double, 0, 8, 25, 15)];
-      setLineDash(irregularList);  
+      irregularList2 = [map(currentValueSlider2double, 0, 8, 5, 5), map(currentValueSlider2double, 0, 8, 5, 20), map(currentValueSlider2double, 0, 8, 5, 30), map(currentValueSlider2double, 0, 8, 5, 40)];
+      setLineDash(irregularList2);  
     }
     if(currentValueSlider2double <= 0) {
-      irregularList = [ 1,  map(currentValueSlider2double, -8, 0, 15, 25)];
-      setLineDash(irregularList);  
+      irregularList2 = [map(currentValueSlider2double, -8, 0, 5, 5), map(currentValueSlider2double, -8, 0, 20, 5), map(currentValueSlider2double, -8, 0, 30, 5), map(currentValueSlider2double, -8, 0, 40, 5)];
+      setLineDash(irregularList2);  
     }
     if(currentValueSlider2 > 0) 
       sw = int(map(currentValueSlider2, 0, 8, 1, 25));
@@ -1726,11 +1816,11 @@ function draw() {
     strokeWeight(10);
    
     if(currentValueSlider1double > 0) {
-      irregularList = [ 1,  map(currentValueSlider1double, 0, 8, 25, 15)];
+      irregularList = [map(currentValueSlider1double, 0, 8, 5, 5), map(currentValueSlider1double, 0, 8, 5, 20), map(currentValueSlider1double, 0, 8, 5, 30), map(currentValueSlider1double, 0, 8, 5, 40)];
       setLineDash(irregularList);  
     }
     if(currentValueSlider1double <= 0) {
-      irregularList = [ 1,  map(currentValueSlider1double, -8, 0, 15, 25)];
+      irregularList = [map(currentValueSlider1double, -8, 0, 5, 5), map(currentValueSlider1double, -8, 0, 20, 5), map(currentValueSlider1double, -8, 0, 30, 5), map(currentValueSlider1double, -8, 0, 40, 5)];
       setLineDash(irregularList);  
     }
     let angle = map(currentValueSlider1, 0, 8, 0, 45);
@@ -1749,12 +1839,12 @@ function draw() {
     strokeWeight(10);
 
     if(currentValueSlider2double > 0) {
-      irregularList = [ 1,  map(currentValueSlider2double, 0, 8, 25, 15)];
-      setLineDash(irregularList);  
+      irregularList2 = [map(currentValueSlider2double, 0, 8, 5, 5), map(currentValueSlider2double, 0, 8, 5, 20), map(currentValueSlider2double, 0, 8, 5, 30), map(currentValueSlider2double, 0, 8, 5, 40)];
+      setLineDash(irregularList2);  
     }
     if(currentValueSlider2double <= 0) {
-      irregularList = [ 1,  map(currentValueSlider2double, -8, 0, 15, 25)];
-      setLineDash(irregularList);  
+      irregularList2 = [map(currentValueSlider2double, -8, 0, 5, 5), map(currentValueSlider2double, -8, 0, 20, 5), map(currentValueSlider2double, -8, 0, 30, 5), map(currentValueSlider2double, -8, 0, 40, 5)];
+      setLineDash(irregularList2);  
     }
     let angle2 = map(currentValueSlider2, 0, 8, 0, 45);
     if(currentValueSlider2 > 0)
@@ -2066,44 +2156,99 @@ function draw() {
     noFill();
     translate(width/5, height/2);
 
+    //IRREGULARITY
     if(currentValueSlider5 > 0) {
-      irregularList = [ 1,  map(currentValueSlider5, 0, 8, 25, 15)];
+      irregularList = [map(currentValueSlider5, 0, 8, 5, 5), map(currentValueSlider5, 0, 8, 5, 20), map(currentValueSlider5, 0, 8, 5, 50), map(currentValueSlider5, 0, 8, 5, 70), map(currentValueSlider5, 0, 8, 50, 90)];
       setLineDash(irregularList);  
     }
     if(currentValueSlider5 <= 0) {
-      irregularList = [ 1,  map(currentValueSlider5, -8, 0, 15, 25)];
+      irregularList = [map(currentValueSlider5, -8, 0, 5, 5), map(currentValueSlider5, -8, 0, 20, 5), map(currentValueSlider5, -8, 0, 30, 5), map(currentValueSlider5, -8, 0, 40, 5)];
       setLineDash(irregularList);  
     }
 
-    strokeWeight(10);
+    // THICKNESS
+    if(currentValueSlider7 > 0)
+      sw = int(map(currentValueSlider7, 0, 8, 1, 25));
+    if(currentValueSlider7 <= 0)
+      sw = int(map(currentValueSlider7, -8, 0, 25, 1));
+    strokeWeight(sw);
+    
+    // ORIENTATION
     rectMode(CENTER);
     let angle = map(currentValueSlider1double, 0, 8, 0, 45);
     if(currentValueSlider1double > 0)
       rotate(PI / 180 * angle);
     if(currentValueSlider1double <= 0)
       rotate(PI / 180 * angle);
-    if(currentValueSlider1 < 0) 
-      square(0, 0, 200, map(currentValueSlider1, -8, 0, 0, 100));
-    if(currentValueSlider1 >= 0) 
-      square(0, 0, 200, map(currentValueSlider1, 0, 8, 100, 0));
+
+    // ANGULARITY + SYMMETRY
+    if(currentValueSlider1 < 0) {
+      if(currentValueSlider9 < 0) {
+        square(0, 0, 200, map(currentValueSlider1, -8, 0, 0, 100), map(currentValueSlider1, -8, 0, 0, 100) * map(currentValueSlider9, -8, 0, 0, 1), map(currentValueSlider1, -8, 0, 0, 100)* map(currentValueSlider9, -8, 0, 0, 1), map(currentValueSlider1, -8, 0, 0, 100));
+      }
+      if(currentValueSlider9 >= 0) {
+        square(0, 0, 200, map(currentValueSlider1, -8, 0, 0, 100), map(currentValueSlider1, -8, 0, 0, 100) * map(currentValueSlider9, 0, 8, 1, 0), map(currentValueSlider1, -8, 0, 0, 100)* map(currentValueSlider9, 0, 8, 1, 0), map(currentValueSlider1, -8, 0, 0, 100));
+      }
+    }
+    if(currentValueSlider1 >= 0) {
+      if(currentValueSlider9 < 0) {
+        square(0, 0, 200, map(currentValueSlider1, 0, 8, 100, 0), map(currentValueSlider1, 0, 8, 100, 0) * map(currentValueSlider9, -8, 0, 0, 1), map(currentValueSlider1, 0, 8, 100, 0) * map(currentValueSlider9, -8, 0, 0, 1), map(currentValueSlider1, 0, 8, 100, 0));
+      }
+      if(currentValueSlider9 >= 0) {
+        square(0, 0, 200, map(currentValueSlider1, 0, 8, 100, 0), map(currentValueSlider1, 0, 8, 100, 0) * map(currentValueSlider9, 0, 8, 1, 0), map(currentValueSlider1, 0, 8, 100, 0) * map(currentValueSlider9, 0, 8, 1, 0), map(currentValueSlider1, 0, 8, 100, 0));
+      }
+    }
+
     pop();
 
     push();
     noFill();
     translate(width/1.25, height/2);
 
-    strokeWeight(10);
-    rectMode(CENTER);
-    let angle2 = map(currentValueSlider2double, 0, 8, 0, 45);
-    if(currentValueSlider2double > 0)
-      rotate(PI / 180 * angle2);
-    if(currentValueSlider2double <= 0)
-      rotate(PI / 180 * angle2);
-    if(currentValueSlider2 < 0) 
-      square(0, 0, 200, map(currentValueSlider2, -8, 0, 0, 100));
-    if(currentValueSlider2 >= 0) 
-      square(0, 0, 200, map(currentValueSlider2, 0, 8, 100, 0));
-    pop();
+   //IRREGULARITY
+   if(currentValueSlider6 > 0) {
+    irregularList = [map(currentValueSlider6, 0, 8, 5, 5), map(currentValueSlider6, 0, 8, 5, 20), map(currentValueSlider6, 0, 8, 5, 50), map(currentValueSlider6, 0, 8, 5, 70), map(currentValueSlider6, 0, 8, 50, 90)];
+    setLineDash(irregularList);  
+  }
+  if(currentValueSlider6 <= 0) {
+    irregularList = [map(currentValueSlider6, -8, 0, 5, 5), map(currentValueSlider6, -8, 0, 20, 5), map(currentValueSlider6, -8, 0, 30, 5), map(currentValueSlider6, -8, 0, 40, 5)];
+    setLineDash(irregularList);  
+  }
+
+  // THICKNESS
+  if(currentValueSlider8 > 0)
+    sw = int(map(currentValueSlider8, 0, 8, 1, 25));
+  if(currentValueSlider8 <= 0)
+    sw = int(map(currentValueSlider8, -8, 0, 25, 1));
+  strokeWeight(sw);
+  
+  // ORIENTATION
+  rectMode(CENTER);
+  let angle2 = map(currentValueSlider2double, 0, 8, 0, 45);
+  if(currentValueSlider2double > 0)
+    rotate(PI / 180 * angle2);
+  if(currentValueSlider2double <= 0)
+    rotate(PI / 180 * angle2);
+
+  // ANGULARITY + SYMMETRY
+  if(currentValueSlider2 < 0) {
+    if(currentValueSlider10 < 0) {
+      square(0, 0, 200, map(currentValueSlider2, -8, 0, 0, 100), map(currentValueSlider2, -8, 0, 0, 100) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider2, -8, 0, 0, 100)* map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider2, -8, 0, 0, 100));
+    }
+    if(currentValueSlider10 >= 0) {
+      square(0, 0, 200, map(currentValueSlider2, -8, 0, 0, 100), map(currentValueSlider2, -8, 0, 0, 100) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider2, -8, 0, 0, 100)* map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider2, -8, 0, 0, 100));
+    }
+  }
+  if(currentValueSlider2 >= 0) {
+    if(currentValueSlider10 < 0) {
+      square(0, 0, 200, map(currentValueSlider2, 0, 8, 100, 0), map(currentValueSlider2, 0, 8, 100, 0) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider2, 0, 8, 100, 0) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider2, 0, 8, 100, 0));
+    }
+    if(currentValueSlider10 >= 0) {
+      square(0, 0, 200, map(currentValueSlider2, 0, 8, 100, 0), map(currentValueSlider2, 0, 8, 100, 0) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider2, 0, 8, 100, 0) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider2, 0, 8, 100, 0));
+    }
+  }
+
+  pop();
     
   }
   
@@ -2140,10 +2285,19 @@ function setSliderValue(val, slider) {
     currentValueSlider7 = val;
   else if(slider == "8")
     currentValueSlider8 = val;
+  else if(slider == "9")
+    currentValueSlider9 = val;
+  else if(slider == "10")
+    currentValueSlider10 = val;
 }
 
 function getNote(){
-  return midiNotesConsidered[Math.floor(Math.random() * midiNotesConsidered.length)];
+  var note =  midiNotesConsidered[0];
+  midiNotesConsidered.shift();
+  //return midiNotesConsidered[Math.floor(Math.random() * midiNotesConsidered.length)];
+  if(midiNotesConsidered.length==1)
+    midiNotesConsidered.push(48, 60, 72)
+  return note;
 }
 
 function incrementSeconds() {
@@ -2302,13 +2456,25 @@ function saveTestChoices(testName){
     findTest(testName).slider1double = radiosLeft_value;
     findTest(testName).slider2double = radiosRight_value;
   }
-  else if(fullTestSound || fullTestVisuals){
+  else if(fullTestSound){
+    findTest(testName).slider1double = radiosLeft_value;
+    findTest(testName).slider2double = radiosRight_value;
     findTest(testName).slider1double = currentValueSlider1double;
     findTest(testName).slider2double = currentValueSlider2double;
     findTest(testName).slider5 = currentValueSlider5;
     findTest(testName).slider6 = currentValueSlider6;
     findTest(testName).slider7 = currentValueSlider7;
     findTest(testName).slider8 = currentValueSlider8;
+  }
+  else if(fullTestVisuals){
+    findTest(testName).slider1double = currentValueSlider1double;
+    findTest(testName).slider2double = currentValueSlider2double;
+    findTest(testName).slider5 = currentValueSlider5;
+    findTest(testName).slider6 = currentValueSlider6;
+    findTest(testName).slider7 = currentValueSlider7;
+    findTest(testName).slider8 = currentValueSlider8;
+    findTest(testName).slider9 = currentValueSlider9;
+    findTest(testName).slider10 = currentValueSlider10;
   }
   else{
     findTest(testName).slider1double = currentValueSlider1double;
@@ -2519,7 +2685,8 @@ function next(newTestBol) {
     radiosRight[Math.floor(Math.random() * 4 )].checked = true;
     // clear round sliders
     
-    //sliderCircular1.redrawActiveSliderCircularTestBeginning(randomIntFromInterval(-8,8));
+    /* IS GIVING PROBLEMS DRAWING THE SLIDER
+    sliderCircular1.redrawActiveSliderCircularTestBeginning(randomIntFromInterval(-8,8));
     setSliderValue(randomIntFromInterval(-8,8),"1");
     setSliderValue(randomIntFromInterval(-8,8),"1double");
     setSliderValue(randomIntFromInterval(-8,8),"2");
@@ -2527,7 +2694,17 @@ function next(newTestBol) {
     setSliderValue(randomIntFromInterval(-8,8),"5");
     setSliderValue(randomIntFromInterval(-8,8),"6");
     setSliderValue(randomIntFromInterval(-8,8),"7");
-    setSliderValue(randomIntFromInterval(-8,8),"8");
+    setSliderValue(randomIntFromInterval(-8,8),"8");*/
+    setSliderValue(initialSlider1,"1");
+    setSliderValue(initialSlider1double,"1double");
+    setSliderValue(initialSlider2,"2");
+    setSliderValue(initialSlider2double,"2double");
+    setSliderValue(initialSlider5,"5");
+    setSliderValue(initialSlider6,"6");
+    setSliderValue(initialSlider7,"7");
+    setSliderValue(initialSlider8,"8");
+    setSliderValue(initialSlider9,"9");
+    setSliderValue(initialSlider10,"10");
   }
   // move on to next test
   currentTest(newTestBol); 
@@ -2682,6 +2859,24 @@ class sliderCircular {
  if(this.DOMselector === "#app8"){
   svgContainer = document.createElement('div');
  svgContainer.classList.add('sliderCircular__data8');
+  svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+ svg.setAttribute('height', this.sliderCircularWidth);
+ svg.setAttribute('width', this.sliderCircularHeight);
+ svgContainer.appendChild(svg);
+ this.container.appendChild(svgContainer);
+}
+if(this.DOMselector === "#app9"){
+  svgContainer = document.createElement('div');
+ svgContainer.classList.add('sliderCircular__data9');
+  svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+ svg.setAttribute('height', this.sliderCircularWidth);
+ svg.setAttribute('width', this.sliderCircularHeight);
+ svgContainer.appendChild(svg);
+ this.container.appendChild(svgContainer);
+}
+if(this.DOMselector === "#app10"){
+  svgContainer = document.createElement('div');
+ svgContainer.classList.add('sliderCircular__data10');
   svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
  svg.setAttribute('height', this.sliderCircularWidth);
  svg.setAttribute('width', this.sliderCircularHeight);
@@ -2975,6 +3170,16 @@ class sliderCircular {
       if(targetsliderCircular == 0 && typeof currentValue === 'number')
         currentValueSlider8 = currentValue;
     }
+     // corresponds to the ? slider of the Right    
+     else if(this.DOMselector === "#app9"){
+      if(targetsliderCircular == 0 && typeof currentValue === 'number')
+        currentValueSlider9 = currentValue;
+    }
+    // corresponds to the ? slider of the Right    
+    else if(this.DOMselector === "#app10"){
+      if(targetsliderCircular == 0 && typeof currentValue === 'number')
+        currentValueSlider10 = currentValue;
+    }
 }
 
   /**
@@ -3140,6 +3345,10 @@ class sliderCircular {
         containerRect = document.querySelector('.sliderCircular__data7').getBoundingClientRect();
       if(this.DOMselector === "#app8")
         containerRect = document.querySelector('.sliderCircular__data8').getBoundingClientRect();
+      if(this.DOMselector === "#app9")
+        containerRect = document.querySelector('.sliderCircular__data9').getBoundingClientRect();
+      if(this.DOMselector === "#app10")
+        containerRect = document.querySelector('.sliderCircular__data10').getBoundingClientRect();
           
       let x, 
           y, 
@@ -3229,6 +3438,12 @@ class sliderCircular {
       }
       if(this.DOMselector === "#app8"){
         container = document.querySelector('.sliderCircular__data8');
+      }
+      if(this.DOMselector === "#app9"){
+        container = document.querySelector('.sliderCircular__data9');
+      }
+      if(this.DOMselector === "#app10"){
+        container = document.querySelector('.sliderCircular__data10');
       }
       
       let sliderCircularGroups = Array.from(container.querySelectorAll('g'));
