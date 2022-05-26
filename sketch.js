@@ -1944,11 +1944,13 @@ function draw() {
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(currentValueSlider1double <= 0) {
-        angleChange = map(currentValueSlider1double, -8, 0, 50, 150);
-      }
       if(currentValueSlider1double > 0) {
-        angleChange = map(currentValueSlider1double, 0, 8, 150, 50);
+        irregularList = [map(currentValueSlider1double, 0, 8, 5, 5), map(currentValueSlider1double, 0, 8, 5, 20), map(currentValueSlider1double, 0, 8, 5, 50), map(currentValueSlider1double, 0, 8, 5, 70), map(currentValueSlider1double, 0, 8, 50, 90)];
+        setLineDash(irregularList);  
+      }
+      if(currentValueSlider1double <= 0) {
+        irregularList = [map(currentValueSlider1double, -8, 0, 5, 5), map(currentValueSlider1double, -8, 0, 20, 5), map(currentValueSlider1double, -8, 0, 30, 5), map(currentValueSlider1double, -8, 0, 40, 5)];
+        setLineDash(irregularList);  
       }
 
       const angle = i * spacing;
