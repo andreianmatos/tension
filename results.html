@@ -62,7 +62,7 @@
             Subject : "RESULTS | " + datetime,
             Body : window.localStorage.getItem('testResults')
         }).then(
-            message => alert(message)
+            message => alert("SENDING RESULTS...: "+message)
         );
     </script>
 </html> 

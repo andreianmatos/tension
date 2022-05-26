@@ -1930,11 +1930,11 @@ function draw() {
     strokeWeight(10);
     
     if(currentValueSlider1 > 0) {
-      irregularList2 = [map(currentValueSlider1, 0, 8, 5, 5), map(currentValueSlider1, 0, 8, 5, 20), map(currentValueSlider1, 0, 8, 5, 30), map(currentValueSlider1, 0, 8, 5, 40)];
+      irregularList2 = [map(currentValueSlider1, 0, 8, 5, 5), map(currentValueSlider1, 0, 8, 5, 20), map(currentValueSlider1, 0, 8, 5, 30), map(currentValueSlider1, 0, 8, 5, 70)];
       setLineDash(irregularList2);  
     }
     if(currentValueSlider1 <= 0) {
-      irregularList2 = [map(currentValueSlider1, -8, 0, 5, 5), map(currentValueSlider1, -8, 0, 20, 5), map(currentValueSlider1, -8, 0, 30, 5), map(currentValueSlider1, -8, 0, 40, 5)];
+      irregularList2 = [map(currentValueSlider1, -8, 0, 5, 5), map(currentValueSlider1, -8, 0, 20, 5), map(currentValueSlider1, -8, 0, 30, 5), map(currentValueSlider1, -8, 0, 70, 5)];
       setLineDash(irregularList2);  
     }
 
