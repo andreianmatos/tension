@@ -1929,14 +1929,16 @@ function draw() {
 
     strokeWeight(10);
        
+    //IRREGULARITY
     if(currentValueSlider1 > 0) {
-      irregularList = [ 1,  map(currentValueSlider1, 0, 8, 5, 25)];
+      irregularList = [map(currentValueSlider1, 0, 8, 5, 5), map(currentValueSlider1, 0, 8, 5, 20), map(currentValueSlider1, 0, 8, 5, 50), map(currentValueSlider1, 0, 8, 5, 70), map(currentValueSlider1, 0, 8, 50, 90)];
       setLineDash(irregularList);  
     }
     if(currentValueSlider1 <= 0) {
-      irregularList = [ 1,  map(currentValueSlider1, -8, 0, 25, 5)];
+      irregularList = [map(currentValueSlider1, -8, 0, 5, 5), map(currentValueSlider1, -8, 0, 20, 5), map(currentValueSlider1, -8, 0, 30, 5), map(currentValueSlider1, -8, 0, 40, 5)];
       setLineDash(irregularList);  
     }
+
 
     beginShape();
 
@@ -1976,13 +1978,13 @@ function draw() {
 
     strokeWeight(10);
     
-     if(currentValueSlider2 > 0) {
-      irregularList = [ 1,  map(currentValueSlider2, 0, 8, 25, 15)];
-      setLineDash(irregularList);  
+    if(currentValueSlider2 > 0) {
+      irregularList2 = [map(currentValueSlider2, 0, 8, 5, 5), map(currentValueSlider2, 0, 8, 5, 20), map(currentValueSlider2, 0, 8, 5, 30), map(currentValueSlider2, 0, 8, 5, 40)];
+      setLineDash(irregularList2);  
     }
     if(currentValueSlider2 <= 0) {
-      irregularList = [ 1,  map(currentValueSlider2, -8, 0, 15, 25)];
-      setLineDash(irregularList);  
+      irregularList2 = [map(currentValueSlider2, -8, 0, 5, 5), map(currentValueSlider2, -8, 0, 20, 5), map(currentValueSlider2, -8, 0, 30, 5), map(currentValueSlider2, -8, 0, 40, 5)];
+      setLineDash(irregularList2);  
     }
 
     beginShape();
