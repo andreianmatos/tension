@@ -2515,7 +2515,7 @@ function sendTestResults(){
   window.localStorage.setItem('testResults', testResults);
   
   //DOWN ?
-  //js_send(datetime, testResults);
+  js_send(datetime, testResults);
 
   window.location.href="results.html";
 }
