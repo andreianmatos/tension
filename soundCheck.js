@@ -49,11 +49,11 @@ function draw() {
 
   // C - G - D - A - E (before) C2 C3 C4 (now)
   if (frameCount % 100 == 0){
-    osc.freq(midiToFreq(int(random(36, 48, 60))));
+    osc.freq(midiToFreq(int(random(48, 60))));
     env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
     env.setRange(attackLevel, releaseLevel);
     env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-    env.play();
+    env.play(0, 0, 1);
   }
 }
 

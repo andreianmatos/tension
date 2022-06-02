@@ -522,23 +522,23 @@ function draw() {
 
 
     // keeping these levels always up to the maximum (0.0 and 1.0)
-    let attackLevel = 1.0;
-    let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
+    let attackLevel = 1.0; // to make the note end all the way up (1)
+    let releaseLevel = 0.0; // to make the note end all the way to silence (0)
     let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
-  // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
-  //let susPercent = 0.5;
+    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
+    //let susPercent = 0.5;
 
-    let attackTime = 1.0;
+    let attackTime = 1.5;
     let decayTime = 0.5;
-    let releaseTime = 1.0;
+    let releaseTime = 1.5;
 
     if(playingLeft){
 
       if(radiosLeft_value != null){ 
         if(currentValueSlider1 > 0)
-          attackTime = map(currentValueSlider1, 0, 8, 0, 2.0);
+          attackTime = map(currentValueSlider1, 0, 8, 0, 3.0);
         else
-          attackTime = map(currentValueSlider1, -8, 0, 2.0, 0);
+          attackTime = map(currentValueSlider1, -8, 0, 3.0, 0);
 
         // WAVEFORM
         if(radiosLeft_value == "1.1")
@@ -552,13 +552,13 @@ function draw() {
 
         osc.amp(env);
 
-        if (seconds == 4 || seconds > 4){
+        if (seconds == 8 || seconds > 8){
           osc.freq(midiToFreq(int(getNote())));
           env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
           env.setRange(attackLevel, releaseLevel);
           //unecessary
           //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play();
+          env.play(0,0,1);
           seconds=0;
         }
       }
@@ -567,9 +567,9 @@ function draw() {
 
       if(radiosRight_value != null ){
         if(currentValueSlider2 > 0)
-          attackTime = map(currentValueSlider2, 0, 8, 0, 2.0);
+          attackTime = map(currentValueSlider2, 0, 8, 0, 3.0);
         else
-          attackTime = map(currentValueSlider2, -8, 0, 2.0, 0);
+          attackTime = map(currentValueSlider2, -8, 0, 3.0, 0);
         // WAVEFORM
         if(radiosRight_value == "2.1")
           osc.setType('sine');
@@ -582,13 +582,13 @@ function draw() {
 
         osc.amp(env);
 
-        if (seconds == 4 || seconds > 4){
+if (seconds == 8 || seconds > 8){
           osc.freq(midiToFreq(int(getNote())));
           env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setRange(attackLevel, releaseLevel);
           //unecessary
           //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play();
+          env.play(0,0,1);
           seconds=0;
         }
       }
@@ -615,16 +615,16 @@ function draw() {
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
     //let susPercent = 0.5;
  
-     let attackTime = 1.0; // half value from the total 2.0 of the attack tests
+     let attackTime = 1.5; // half value from the total 3.0 of the attack tests
      let decayTime = 0.5; // half value from the total 1.0 of the decay tests
-     let releaseTime = 1.0; // half value from the total 2.0 of the release tests
+     let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
     if(playingLeft){
       if(radiosLeft_value != null){
         if(currentValueSlider1 > 0)
-          releaseTime = map(currentValueSlider1, 0, 8, 0, 2.0);
+          releaseTime = map(currentValueSlider1, 0, 8, 0, 3.0);
         else
-          releaseTime = map(currentValueSlider1, -8, 0, 2.0, 0);
+          releaseTime = map(currentValueSlider1, -8, 0, 3.0, 0);
         // WAVEFORM
         if(radiosLeft_value == "1.1")
           osc.setType('sine');
@@ -638,13 +638,13 @@ function draw() {
         osc.amp(env);
 
         
-        if (seconds == 4 || seconds > 4){
+if (seconds == 8 || seconds > 8){
           osc.freq(midiToFreq(int(getNote())));
           env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
           env.setRange(attackLevel, releaseLevel);
           //unecessary
           //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play();
+          env.play(0,0,1);
           seconds = 0;
         }
       }
@@ -652,9 +652,9 @@ function draw() {
     if(playingRight) {
       if(radiosRight_value != null ){
         if(currentValueSlider2 > 0)
-          releaseTime = map(currentValueSlider2, 0, 8, 0, 2.0);
+          releaseTime = map(currentValueSlider2, 0, 8, 0, 3.0);
         else
-          releaseTime = map(currentValueSlider2, -8, 0, 2.0, 0);
+          releaseTime = map(currentValueSlider2, -8, 0, 3.0, 0);
         // WAVEFORM
         if(radiosRight_value == "2.1")
           osc.setType('sine');
@@ -667,13 +667,13 @@ function draw() {
 
         osc.amp(env);
 
-        if (seconds == 4 || seconds > 4){
+if (seconds == 8 || seconds > 8){
           osc.freq(midiToFreq(int(getNote())));
           env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
           env.setRange(attackLevel, releaseLevel);
          //unecessary 
           //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play();
+          env.play(0,0,1);
           seconds = 0;
         }
       }
@@ -694,15 +694,16 @@ function draw() {
     sliderDouble = 0;
 
      // keeping these levels always up to the maximum (0.0 and 1.0)
-     let attackLevel = 1.0;
-     let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
+     let attackLevel = 1.0; // to make the note end all the way up (1)
+     let releaseLevel = 0.0; // to make the note end all the way to silence (0)
      let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
     //let susPercent = 0.5;
  
-    let attackTime = 1.0;
+    // these are half of the range in which they can be manipulated
+    let attackTime = 1.5;
     let decayTime = 0.5;
-    let releaseTime = 1.0;
+    let releaseTime = 1.5;
 
     if(playingLeft){
       if(radiosLeft_value != null){
@@ -724,13 +725,13 @@ function draw() {
         osc.amp(env);
         
         //C2 C3 C4 
-        if (seconds == 4 || seconds > 4){
+if (seconds == 8 || seconds > 8){
           osc.freq(midiToFreq(int(getNote())));
           env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
           env.setRange(attackLevel, releaseLevel);
           //unecessary
           //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play();
+          env.play(0,0,1);
           seconds = 0;
         }
 
@@ -757,13 +758,13 @@ function draw() {
         osc.amp(env);
         
         //C2 C3 C4 
-        if (seconds == 4 || seconds > 4){
+if (seconds == 8 || seconds > 8){
           osc.freq(midiToFreq(int(getNote())));
           env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setRange(attackLevel, releaseLevel);
           //unecessary
           //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play();
+          env.play(0,0,1);
           seconds = 0;
         }
 
@@ -791,16 +792,16 @@ function draw() {
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
     let susPercent = 0.5;
  
-    let attackTime = 1.0; // half value from the total 2.0 of the attack tests
+    let attackTime = 1.5; // half value from the total 3.0 of the attack tests
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
-    let releaseTime = 1.0; // half value from the total 2.0 of the release tests
+    let releaseTime = 1.5; // half value from the total 3.0 of the release tests
     
     if(playingLeft){
       if(radiosLeft_value != null){
         if(currentValueSlider1 > 0)
-          susPercent = map(currentValueSlider1, 0, 8, 0.0, 1.0);
+          susPercent = map(currentValueSlider1, 0, 8, 0.1, 1.0);
         else
-          susPercent = map(currentValueSlider1, -8, 0, 1.0, 0.0);
+          susPercent = map(currentValueSlider1, -8, 0, 1.0, 0.1);
 
         // WAVEFORM
         if(radiosLeft_value == "1.1")
@@ -814,13 +815,13 @@ function draw() {
         
         osc.amp(env);
 
-        if (seconds == 4 || seconds > 4){
+if (seconds == 8 || seconds > 8){
           osc.freq(midiToFreq(int(getNote())));
           //here is the other way around to keep the sustainTime
           //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.setRange(attackLevel, releaseLevel);
-          env.play();
+          env.play(0,0,1);
           seconds = 0;
         }
       }
@@ -828,9 +829,9 @@ function draw() {
     if(playingRight) {
       if(radiosRight_value != null ){
         if(currentValueSlider2 > 0)
-          susPercent = map(currentValueSlider2, 0, 8, 0.0, 1.0);
+          susPercent = map(currentValueSlider2, 0, 8, 0.1, 1.0);
         else
-          susPercent = map(currentValueSlider2, -8, 0, 1.0, 0.0);
+          susPercent = map(currentValueSlider2, -8, 0, 1.0, 0.1);
         // WAVEFORM
         if(radiosRight_value == "2.1")
           osc.setType('sine');
@@ -843,12 +844,12 @@ function draw() {
 
         osc.amp(env);
 
-         if (seconds == 4 || seconds > 4){
+ if (seconds == 8 || seconds > 8){
           osc.freq(midiToFreq(int(getNote())));
           //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setRange(attackLevel, releaseLevel);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play();
+          env.play(0,0,1);
           seconds = 0;
         }
       }
@@ -875,55 +876,55 @@ function draw() {
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
     //let susPercent = 0.5;
  
-    let attackTime = 1.0; // half value from the total 2.0 of the attack tests
+    let attackTime = 1.5; // half value from the total 3.0 of the attack tests
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
-    let releaseTime = 1.0; // half value from the total 2.0 of the release tests
+    let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
     if(playingLeft){
       if(currentValueSlider1 > 0)
-        attackTime = map(currentValueSlider1, 0, 8, 0.0, 2.0);
+        attackTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
-        attackTime = map(currentValueSlider1, -8, 0, 2.0, 0.0);
+        attackTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider1double > 0)
-        releaseTime = map(currentValueSlider1double, 0, 8, 0.0, 2.0);
+        releaseTime = map(currentValueSlider1double, 0, 8, 0.0, 3.0);
       else
-        releaseTime = map(currentValueSlider1double, -8, 0, 2.0, 0.0);
+        releaseTime = map(currentValueSlider1double, -8, 0, 3.0, 0.0);
       
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 4 || seconds > 4){
+      if (seconds == 8 || seconds > 8){
         osc.freq(midiToFreq(int(getNote())));
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setRange(attackLevel, releaseLevel);
         //unecessary
         //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
+        env.play(0,0,1);
         seconds = 0;
       }
     }
     if(playingRight) {
       if(currentValueSlider2 > 0)
-        attackTime = map(currentValueSlider2, 0, 8, 0, 2.0);
+        attackTime = map(currentValueSlider2, 0, 8, 0, 3.0);
       else
-        attackTime = map(currentValueSlider2, -8, 0, 2.0, 0);
+        attackTime = map(currentValueSlider2, -8, 0, 3.0, 0);
 
       if(currentValueSlider2double > 0)
-        releaseTime = map(currentValueSlider2double, 0, 8, 0, 2.0);
+        releaseTime = map(currentValueSlider2double, 0, 8, 0, 3.0);
       else
-        releaseTime = map(currentValueSlider2double, -8, 0, 2.0, 0);
+        releaseTime = map(currentValueSlider2double, -8, 0, 3.0, 0);
 
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 4 || seconds > 4){
+      if (seconds == 8 || seconds > 8){
         osc.freq(midiToFreq(int(getNote())));
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setRange(attackLevel, releaseLevel);
         //unecessary
         //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
+        env.play(0,0,1);
         seconds = 0;
       }
     }
@@ -949,55 +950,55 @@ function draw() {
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
     //let susPercent = 0.5;
  
-    let attackTime = 1.0; // half value from the total 2.0 of the attack tests
+    let attackTime = 1.5; // half value from the total 3.0 of the attack tests
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
-    let releaseTime = 1.0; // half value from the total 2.0 of the release tests
+    let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
     if(playingLeft){
       if(currentValueSlider1 > 0)
-        attackTime = map(currentValueSlider1, 0, 8, 0.0, 2.0);
+        attackTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
-        attackTime = map(currentValueSlider1, -8, 0, 2.0, 0.0);
+        attackTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider1double > 0)
-        decayTime = map(currentValueSlider1double, 0, 8, 0.0, 2.0);
+        decayTime = map(currentValueSlider1double, 0, 8, 0.0, 1.0);
       else
-        decayTime = map(currentValueSlider1double, -8, 0, 2.0, 0.0);
+        decayTime = map(currentValueSlider1double, -8, 0, 1.0, 0.0);
 
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 4 || seconds > 4){
+      if (seconds == 8 || seconds > 8){
         osc.freq(midiToFreq(int(getNote())));
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setRange(attackLevel, releaseLevel);
         //unecessary
         //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
+        env.play(0,0,1);
         seconds = 0;
       }
     }
     if(playingRight) {
       if(currentValueSlider2 > 0)
-        attackTime = map(currentValueSlider2, 0, 8, 0.0, 2.0);
+        attackTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
       else
-        attackTime = map(currentValueSlider2, -8, 0, 2.0, 0.0);
+        attackTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider2double > 0)
-        decayTime = map(currentValueSlider2double, 0, 8, 0.0, 2.0);
+        decayTime = map(currentValueSlider2double, 0, 8, 0.0, 1.0);
       else
-        decayTime = map(currentValueSlider2double, -8, 0, 2.0, 0.0);
+        decayTime = map(currentValueSlider2double, -8, 0, 1.0, 0.0);
 
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 4 || seconds > 4){
+      if (seconds == 8 || seconds > 8){
         osc.freq(midiToFreq(int(getNote())));
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setRange(attackLevel, releaseLevel);
         //unecessary
         //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
+        env.play(0,0,1);
         seconds = 0;
       }
     }
@@ -1023,53 +1024,53 @@ function draw() {
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
     let susPercent = 0.5;
 
-    let attackTime = 1.0; // half value from the total 2.0 of the attack tests
+    let attackTime = 1.5; // half value from the total 3.0 of the attack tests
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
-    let releaseTime = 1.0; // half value from the total 2.0 of the release tests
+    let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
     if(playingLeft){
       if(currentValueSlider1 > 0)
-        attackTime = map(currentValueSlider1, 0, 8, 0.0, 2.0);
+        attackTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
-        attackTime = map(currentValueSlider1, -8, 0, 2.0, 0.0);
+        attackTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider1double > 0)
-        susPercent = map(currentValueSlider1double, 0, 8, 0.0, 1.0);
+        susPercent = map(currentValueSlider1double, 0, 8, 0.1, 1.0);
       else
-        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.0);
+        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.1);
       
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 4 || seconds > 4){
+      if (seconds == 8 || seconds > 8){
         osc.freq(midiToFreq(int(getNote())));
         //here is the other way around to keep the sustainTime
         //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.setRange(attackLevel, releaseLevel);
-        env.play();
+        env.play(0,0,1);
         seconds = 0;
       }
     }
     if(playingRight) {
       if(currentValueSlider2 > 0)
-        attackTime = map(currentValueSlider2, 0, 8, 0.0, 2.0);
+        attackTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
       else
-        attackTime = map(currentValueSlider2, -8, 0, 2.0, 0.0);
+        attackTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider2double > 0)
-        susPercent = map(currentValueSlider1double, 0, 8, 0.0, 1.0);
+        susPercent = map(currentValueSlider1double, 0, 8, 0.1, 1.0);
       else
-        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.0);
+        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.1);
       
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 4 || seconds > 4){
+      if (seconds == 8 || seconds > 8){
         osc.freq(midiToFreq(int(getNote())));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
+        env.play(0,0,1);
         seconds = 0;
       }
     }
@@ -1095,18 +1096,18 @@ function draw() {
    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
    //let susPercent = 0.5;
 
-   let attackTime = 1.0; // half value from the total 2.0 of the attack tests
+   let attackTime = 1.5; // half value from the total 3.0 of the attack tests
    let decayTime = 0.5; // half value from the total 1.0 of the decay tests
-   let releaseTime = 1.0; // half value from the total 2.0 of the release tests
+   let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
     //let dryWet;
     let reverbTime, decayRate = 2;
 
     if(playingLeft){
       if(currentValueSlider1 > 0)
-        releaseTime = map(currentValueSlider1, 0, 8, 0.0, 2.0);
+        releaseTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
-        releaseTime = map(currentValueSlider1, -8, 0, 2.0, 0.0);
+        releaseTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider1double > 0)
         decayTime = map(currentValueSlider1double, 0, 8, 0.0, 1.0);
@@ -1116,21 +1117,21 @@ function draw() {
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 4 || seconds > 4){
+      if (seconds == 8 || seconds > 8){
         osc.freq(midiToFreq(int(getNote())));
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setRange(attackLevel, releaseLevel);
         //unecessary
         //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
+        env.play(0,0,1);
         seconds = 0;
       }
     }
     if(playingRight) {
       if(currentValueSlider2 > 0)
-        releaseTime = map(currentValueSlider2, 0, 8, 0.0, 2.0);
+        releaseTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
       else
-        releaseTime = map(currentValueSlider2, -8, 0, 2.0, 0.0);
+        releaseTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider2double > 0)
         decayTime = map(currentValueSlider2double, 0, 8, 0.0, 1.0);
@@ -1142,11 +1143,11 @@ function draw() {
       osc.amp(env);
 
       // C2 C3 C4
-      if (seconds == 4 || seconds > 4){
+      if (seconds == 8 || seconds > 8){
         osc.freq(midiToFreq(int(getNote())));
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setRange(attackLevel, releaseLevel);
-        env.play();
+        env.play(0,0,1);
         seconds = 0;
       }
     }
@@ -1172,52 +1173,52 @@ function draw() {
    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
    let susPercent = 0.5;
 
-   let attackTime = 1.0; // half value from the total 2.0 of the attack tests
+   let attackTime = 1.5; // half value from the total 3.0 of the attack tests
    let decayTime = 0.5; // half value from the total 1.0 of the decay tests
-   let releaseTime = 1.0; // half value from the total 2.0 of the release tests
+   let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
     if(playingLeft){
       if(currentValueSlider1 > 0)
-        releaseTime = map(currentValueSlider1, 0, 8, 0.0, 2.0);
+        releaseTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
-        releaseTime = map(currentValueSlider1, -8, 0, 2.0, 0.0);
+        releaseTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider1double > 0)
-        susPercent = map(currentValueSlider1double, 0, 8, 0.0, 1.0);
+        susPercent = map(currentValueSlider1double, 0, 8, 0.1, 1.0);
       else
-        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.0);
+        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.1);
         
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 4 || seconds > 4){
+      if (seconds == 8 || seconds > 8){
         osc.freq(midiToFreq(int(getNote())));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
+        env.play(0,0,1);
         seconds = 0;
       }
     }
     if(playingRight) {
       if(currentValueSlider2 > 0)
-        releaseTime = map(currentValueSlider2, 0, 8, 0.0, 2.0);
+        releaseTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
       else
-        releaseTime = map(currentValueSlider2, -8, 0, 2.0, 0.0);
+        releaseTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider2double > 0)
-        susPercent = map(currentValueSlider2double, 0, 8, 0.0, 1.0);
+        susPercent = map(currentValueSlider2double, 0, 8, 0.1, 1.0);
       else
-        susPercent = map(currentValueSlider2double, -8, 0, 1.0, 0.0);
+        susPercent = map(currentValueSlider2double, -8, 0, 1.0, 0.1);
 
       osc.setType('sine');
       osc.amp(env);
       
-      if (seconds == 4 || seconds > 4){
+      if (seconds == 8 || seconds > 8){
         osc.freq(midiToFreq(int(getNote())));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
+        env.play(0,0,1);
         seconds = 0;
       }
     }
@@ -1243,9 +1244,9 @@ function draw() {
    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
    let susPercent = 0.5;
 
-   let attackTime = 1.0; // half value from the total 2.0 of the attack tests
+   let attackTime = 1.5; // half value from the total 3.0 of the attack tests
    let decayTime = 0.5; // half value from the total 1.0 of the decay tests
-   let releaseTime = 1.0; // half value from the total 2.0 of the release tests
+   let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
 
     if(playingLeft){
@@ -1255,18 +1256,18 @@ function draw() {
         decayTime = map(currentValueSlider1, -8, 0, 1.0, 0);
 
       if(currentValueSlider1double > 0)
-        susPercent = map(currentValueSlider1double, 0, 8, 0.0, 1.0);
+        susPercent = map(currentValueSlider1double, 0, 8, 0.1, 1.0);
       else
-        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.0);
+        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.1);
       
       osc.setType('sine');
       osc.amp(env);
       
-      if (seconds == 4 || seconds > 4){
-        osc.freq(midiToFreq(int(random(36, 48, 60))));
+      if (seconds == 8 || seconds > 8){
+        osc.freq(midiToFreq(int(getNote())));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
+        env.play(0,0,1);
         seconds = 0;
       }
     }
@@ -1277,18 +1278,18 @@ function draw() {
         decayTime = map(currentValueSlider2, -8, 0, 1, 0);
 
       if(currentValueSlider2double > 0)
-        susPercent = map(currentValueSlider2double, 0, 8, 0.0, 1);
+        susPercent = map(currentValueSlider2double, 0, 8, 0.1, 1);
       else
-        susPercent = map(currentValueSlider2double, -8, 0, 1, 0.0);
+        susPercent = map(currentValueSlider2double, -8, 0, 1, 0.1);
         
       osc.setType('sine');
       osc.amp(env);
       
-      if (seconds == 4 || seconds > 4){
-        osc.freq(midiToFreq(int(random(36, 48, 60))));
+      if (seconds == 8 || seconds > 8){
+        osc.freq(midiToFreq(int(getNote())));
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play();
+        env.play(0,0,1);
         seconds = 0;
       }
     }
@@ -2038,26 +2039,26 @@ function draw() {
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
     let susPercent = 0.5;
  
-    let attackTime = 1.0; // half value from the total 2.0 of the attack tests
+    let attackTime = 1.5; // half value from the total 3.0 of the attack tests
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
-    let releaseTime = 1.0; // half value from the total 2.0 of the release tests
+    let releaseTime = 1.5; // half value from the total 3.0 of the release tests
     
     if(playingLeft){
       if(radiosLeft_value != null){
         if(currentValueSlider1 > 0)
-          susPercent = map(currentValueSlider1, 0, 8, 0.0, 1.0);
+          susPercent = map(currentValueSlider1, 0, 8, 0.1, 1.0);
         else
-          susPercent = map(currentValueSlider1, -8, 0, 1.0, 0.0);
+          susPercent = map(currentValueSlider1, -8, 0, 1.0, 0.1);
         
         if(currentValueSlider1double > 0)
-          attackTime = map(currentValueSlider1double, 0, 8, 0.0, 2.0);
+          attackTime = map(currentValueSlider1double, 0, 8, 0.0, 3.0);
         else
-          attackTime = map(currentValueSlider1double, -8, 0, 2.0, 0.0);
+          attackTime = map(currentValueSlider1double, -8, 0, 3.0, 0.0);
 
         if(currentValueSlider5 > 0)
-          releaseTime = map(currentValueSlider5, 0, 8, 0.0, 2.0);
+          releaseTime = map(currentValueSlider5, 0, 8, 0.0, 3.0);
         else
-          releaseTime = map(currentValueSlider5, -8, 0, 2.0, 0.0);
+          releaseTime = map(currentValueSlider5, -8, 0, 3.0, 0.0);
 
         if(currentValueSlider7 > 0)
           decayTime = map(currentValueSlider7, 0, 8, 0.0, 1.0);
@@ -2078,13 +2079,13 @@ function draw() {
         
         osc.amp(env);
 
-        if (seconds == 4 || seconds > 4){
+if (seconds == 8 || seconds > 8){
           osc.freq(midiToFreq(int(getNote())));
           //here is the other way around to keep the sustainTime
           //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
           env.setRange(attackLevel, releaseLevel);
-          env.play();
+          env.play(0,0,1);
           seconds = 0;
         }
       }
@@ -2093,19 +2094,19 @@ function draw() {
       if(radiosRight_value != null ){
 
         if(currentValueSlider2 > 0)
-          susPercent = map(currentValueSlider2, 0, 8, 0.0, 1.0);
+          susPercent = map(currentValueSlider2, 0, 8, 0.1, 1.0);
         else
-          susPercent = map(currentValueSlider2, -8, 0, 1.0, 0.0);
+          susPercent = map(currentValueSlider2, -8, 0, 1.0, 0.1);
         
         if(currentValueSlider2double > 0)
-          attackTime = map(currentValueSlider2double, 0, 8, 0.0, 2.0);
+          attackTime = map(currentValueSlider2double, 0, 8, 0.0, 3.0);
         else
-          attackTime = map(currentValueSlider2double, -8, 0, 2.0, 0.0);
+          attackTime = map(currentValueSlider2double, -8, 0, 3.0, 0.0);
 
         if(currentValueSlider6 > 0)
-          releaseTime = map(currentValueSlider6, 0, 8, 0.0, 2.0);
+          releaseTime = map(currentValueSlider6, 0, 8, 0.0, 3.0);
         else
-          releaseTime = map(currentValueSlider6, -8, 0, 2.0, 0.0);
+          releaseTime = map(currentValueSlider6, -8, 0, 3.0, 0.0);
 
         if(currentValueSlider8 > 0)
           decayTime = map(currentValueSlider8, 0, 8, 0.0, 1.0);
@@ -2126,12 +2127,12 @@ function draw() {
 
         osc.amp(env);
 
-         if (seconds == 4 || seconds > 4){
+ if (seconds == 8 || seconds > 8){
           osc.freq(midiToFreq(int(getNote())));
           //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setRange(attackLevel, releaseLevel);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play();
+          env.play(0,0,1);
           seconds = 0;
         }
       }
@@ -2311,7 +2312,7 @@ function setSeconds(){
 
 function star(x, y, radius1, radius2, npoints, symmetry) {
   let angle = TWO_PI / npoints;
-  let halfAngle = angle / 2.0;
+  let halfAngle = angle / 3.0;
   beginShape();
   for (let a = 0; a < TWO_PI; a += angle) {
     if(symmetry != 0)
