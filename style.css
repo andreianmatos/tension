@@ -465,10 +465,10 @@ label {
   justify-content: center; 
 }
 
+
 #affectGrid {
   position: absolute;
   top: 130%;
-  left: 11%;
   padding: 5%;
 }
 
@@ -557,7 +557,6 @@ label {
 #textQ2 {
   position: absolute;
   text-align: center;
-  float: center;
   top: 90%;
 }
 
@@ -580,6 +579,7 @@ label {
 
 #textQ4 {
   position: absolute;
+  text-align: center;
   top: 125%;
 }
 
