@@ -470,6 +470,7 @@ label {
   position: absolute;
   top: 130%;
   padding: 5%;
+  left:11%;
 }
 
 .gridCell {
@@ -484,10 +485,8 @@ label {
 
 #leftQuestionnaire{
   font-size: 11px;
-  display:flex;
   justify-content: center;
   align-items: center;
-  width:50vw;
 }
 
 #textGridRight{
@@ -558,6 +557,7 @@ label {
   position: absolute;
   text-align: center;
   top: 90%;
+  left:13%;
 }
 
 #tensionNumber{
@@ -569,6 +569,9 @@ label {
   position: absolute;
   text-align: center;
   top: 100%;
+  left:8.5%;
+  justify-content: center;
+  align-items: center;
 }
 
 #tensionValueLeft{
@@ -581,6 +584,7 @@ label {
   position: absolute;
   text-align: center;
   top: 125%;
+  left:3%;
 }
 
 #resultsText{
