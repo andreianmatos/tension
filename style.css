@@ -558,6 +558,7 @@ label {
   text-align: center;
   top: 90%;
   left:13.3%;
+  float: center;
 }
 
 #tensionNumber{
