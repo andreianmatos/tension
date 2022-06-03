@@ -29,6 +29,9 @@
     </body>
     <script>
         var datetime;
+
+        var emailSent = 0;
+
         function getTestResults() {
             document.getElementById("results").innerHTML = window.localStorage.getItem('testResults');
             sendEmail();
@@ -104,6 +107,8 @@
             request.open("POST", "https://postmail.invotes.com/send", true);
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             request.send(params);
+
+            emailSent = 1;
 
             return false;
         }

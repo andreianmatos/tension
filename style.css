@@ -234,6 +234,10 @@ body, html {
   background: darkred;
 }
 
+#tensionLeft{
+  left:5%;
+}
+
 /* slider for canvas */
 
 #textSlider1 {
@@ -480,7 +484,7 @@ label {
 
 #leftQuestionnaire{
   font-size: 11px;
-  text-align: left;
+  text-align: center;
 }
 
 #textGridRight{
@@ -559,7 +563,7 @@ label {
 
 #textQ3 {
   position: absolute;
-  margin-left: 10.5%;    
+  margin-left: 8.5%;    
   top: 100%;
 }
 
