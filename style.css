@@ -555,7 +555,6 @@ label {
 
 #textQ2 {
   position: absolute;
-  text-align: center;
   top: 90%;
   left:13.3%;
   float: center;
@@ -583,7 +582,7 @@ label {
 
 #textQ4 {
   position: absolute;
-  text-align: center;
+  float: center;
   top: 125%;
   left:4%;
 }
