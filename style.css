@@ -599,6 +599,8 @@ label {
 
 #rightQuestionnaire{
   font-size: 11px;
+  justify-content: center;
+  align-items: center;
 }
 
 #tensionNumber2{
@@ -609,6 +611,8 @@ label {
   position: absolute;
   margin-left: 63%;    
   top: 90%;
+  justify-content: center;
+  align-items: center;
 }
 
 #textQ6 {
@@ -616,6 +620,8 @@ label {
   margin-left: 61%;    
   top: 100%;
   z-index: 98 !important;
+  justify-content: center;
+  align-items: center;
 }
 
 #tensionValueRight{
@@ -627,6 +633,8 @@ label {
   position: absolute;
   margin-left: 54%;    
   top: 125%;
+  justify-content: center;
+  align-items: center;
 }
 
 #textNext {
