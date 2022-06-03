@@ -474,8 +474,8 @@ label {
 }
 
 .gridCell {
-  width:2.6vw;
-  height:2.6vw;
+  width:2.5vw;
+  height:2.5vw;
   border: 0.2vw solid gray;
   color: black;
   background-color: whitesmoke;
@@ -558,6 +558,8 @@ label {
   text-align: center;
   top: 90%;
   left:12.5%;
+  justify-content: center;
+  align-items: center;
 }
 
 #tensionNumber{
@@ -584,7 +586,9 @@ label {
   position: absolute;
   text-align: center;
   top: 125%;
-  left:2.5%;
+  left:3%;
+  justify-content: center;
+  align-items: center;
 }
 
 #resultsText{
