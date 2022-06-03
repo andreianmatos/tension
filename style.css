@@ -484,7 +484,10 @@ label {
 
 #leftQuestionnaire{
   font-size: 11px;
-  text-align: center;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width:50vw;
 }
 
 #textGridRight{
@@ -553,17 +556,19 @@ label {
 
 #textQ2 {
   position: absolute;
-  margin-left: 13%;    
+  text-align: center;
+  float: center;
   top: 90%;
 }
 
 #tensionNumber{
+  position: absolute;
   text-align: center;
 }
 
 #textQ3 {
   position: absolute;
-  margin-left: 8.5%;    
+  text-align: center;
   top: 100%;
 }
 
@@ -575,7 +580,6 @@ label {
 
 #textQ4 {
   position: absolute;
-  margin-left: 3%;    
   top: 125%;
 }
 
