@@ -474,9 +474,9 @@ label {
 }
 
 .gridCell {
-  width:40px;
-  height:40px;
-  border: 3px solid gray;
+  width:2.6vw;
+  height:2.6vw;
+  border: 0.2vw solid gray;
   color: black;
   background-color: whitesmoke;
   text-align: center;
@@ -557,7 +557,7 @@ label {
   position: absolute;
   text-align: center;
   top: 90%;
-  left:13%;
+  left:12.5%;
 }
 
 #tensionNumber{
@@ -584,7 +584,7 @@ label {
   position: absolute;
   text-align: center;
   top: 125%;
-  left:3%;
+  left:2.5%;
 }
 
 #resultsText{
@@ -635,7 +635,7 @@ label {
 #affectGrid2 {
   position: absolute;
   top: 130%;
-  left: 62%;
+  left: 62.5%;
   padding: 5%;
 }
 #textGridRight2{
