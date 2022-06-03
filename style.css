@@ -558,8 +558,6 @@ label {
   text-align: center;
   top: 90%;
   left:13.3%;
-  justify-content: center;
-  align-items: center;
 }
 
 #tensionNumber{
@@ -587,8 +585,6 @@ label {
   text-align: center;
   top: 125%;
   left:4%;
-  justify-content: center;
-  align-items: center;
 }
 
 #resultsText{
