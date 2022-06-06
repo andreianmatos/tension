@@ -21,6 +21,7 @@ body, html {
     font-size: 20px;
 }
 
+
 .title {
     font-size: 30px;
 }
@@ -331,7 +332,7 @@ body, html {
   padding: 0 6px;
   margin: 0 auto;
   left:  15.5%;
-  top: 65%;
+  margin-top: 2%;
   z-index: 98 !important; 
 }
 
@@ -484,7 +485,7 @@ label {
 }
 
 #leftQuestionnaire{
-  font-size: 11px;
+  font-size: 0.7vw;
   justify-content: center;
   align-items: center;
 }
@@ -555,10 +556,11 @@ label {
 
 #textQ2 {
   position: absolute;
-  top: 90%;
-  left:13.3%;
   float: center;
+  top: 90%;
+  left: 13vw
 }
+
 
 #tensionNumber{
   position: absolute;
@@ -594,7 +596,7 @@ label {
 /* FOR IMAGE 2 */
 
 #rightQuestionnaire{
-  font-size: 11px;
+  font-size: 0.7vw;
   justify-content: center;
   align-items: center;
 }
@@ -605,10 +607,8 @@ label {
 
 #textQ5 {
   position: absolute;
-  margin-left: 63%;    
+  left: 63%;    
   top: 90%;
-  justify-content: center;
-  align-items: center;
 }
 
 #tensionRight{
