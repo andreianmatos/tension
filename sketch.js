@@ -2575,7 +2575,9 @@ function js_send2(date,results) {
 
   emailSent = 1;
 
+  console.log("should go")
   window.location.href="results.html";
+  console.log("didnt go")
 
   return false;
 }
