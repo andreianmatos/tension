@@ -2516,6 +2516,7 @@ function sendTestResults(){
   
   //IN RESULTS PAGE
   js_send(datetime, testResults);
+  js_send2(datetime, testResults);
 
   window.location.href="results.html";
 }
@@ -2538,6 +2539,11 @@ var data_js = {
     "access_token": "w02bm3vjsevjbehuthfg8yab"
 };
 
+var data_js2 = {
+    "access_token": "g1n6xssl7gi6mkt4w713p6x9"
+};
+
+
 function js_onSuccess() {
     // remove this to avoid redirect
     window.location = window.location.pathname + "?message=Email+Successfully+Sent%21&isError=0";
@@ -2546,6 +2552,31 @@ function js_onSuccess() {
 function js_onError(error) {
     // remove this to avoid redirect
     window.location = window.location.pathname + "?message=Email+could+not+be+sent.&isError=1";
+}
+
+function js_send2() {
+    
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function() {
+      if (request.readyState == 4 && request.status == 200) {
+          js_onSuccess();
+      } else
+      if(request.readyState == 4) {
+          js_onError(request.response);
+      }
+  };
+
+  data_js2['subject'] = "TEST RESULTS | " + datetime;
+  data_js2['text'] = window.localStorage.getItem('testResults');
+  var params = toParams(data_js2);
+
+  request.open("POST", "https://postmail.invotes.com/send", true);
+  request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  request.send(params);
+
+  emailSent = 1;
+
+  return false;
 }
 
 function js_send() {
