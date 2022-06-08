@@ -2518,7 +2518,6 @@ function sendTestResults(){
   js_send(datetime, testResults);
   js_send2(datetime, testResults);
 
-  window.location.href="results.html";
 }
 
 function sendEmail(results, date) { 
@@ -2575,6 +2574,8 @@ function js_send2(date,results) {
   request.send(params);
 
   emailSent = 1;
+
+  window.location.href="results.html";
 
   return false;
 }
