@@ -77,11 +77,19 @@
 
 
         function js_onSuccess() {
-            // remove this to avoid redirect
+            // nothing happens, email has been sent
         }
 
         function js_onError(error) {
-            // remove this to avoid redirect
+            js_send2();
+        }
+
+        function js_onError2(error) {
+            js_send3();
+        }
+
+        function js_onError3(error) {
+            // nothing happens
         }
 
         function js_send3() {
@@ -92,7 +100,7 @@
                     js_onSuccess();
                 } else
                 if(request.readyState == 4) {
-                    js_onError(request.response);
+                    js_onError3(request.response);
                 }
             };
 
@@ -118,7 +126,7 @@
                     js_onSuccess();
                 } else
                 if(request.readyState == 4) {
-                    js_onError(request.response);
+                    js_onError2(request.response);
                 }
             };
 
@@ -185,8 +193,6 @@
 
         if(hasSent == 0){
             js_send();
-            js_send2();
-            js_send3();
             hasSent = 1;
         }
        
