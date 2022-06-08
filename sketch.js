@@ -2460,32 +2460,32 @@ function saveTestChoices(testName){
   else if(fullTestSound){
     findTest(testName).slider1double = radiosLeft_value;
     findTest(testName).slider2double = radiosRight_value;
-    findTest(testName).slider1double = currentValueSlider1double;
-    findTest(testName).slider2double = currentValueSlider2double;
-    findTest(testName).slider5 = currentValueSlider5;
-    findTest(testName).slider6 = currentValueSlider6;
-    findTest(testName).slider7 = currentValueSlider7;
-    findTest(testName).slider8 = currentValueSlider8;
+    findTest(testName).slider1double = map(currentValueSlider1double, -8, 8, 0, 10); 
+    findTest(testName).slider2double = map(currentValueSlider2double, -8, 8, 0, 10);
+    findTest(testName).slider5 = map(currentValueSlider5, -8, 8, 0, 10);
+    findTest(testName).slider6 = map(currentValueSlider6, -8, 8, 0, 10);
+    findTest(testName).slider7 = map(currentValueSlider7, -8, 8, 0, 10);
+    findTest(testName).slider8 = map(currentValueSlider8, -8, 8, 0, 10);
   }
   else if(fullTestVisuals){
-    findTest(testName).slider1double = currentValueSlider1double;
-    findTest(testName).slider2double = currentValueSlider2double;
-    findTest(testName).slider5 = currentValueSlider5;
-    findTest(testName).slider6 = currentValueSlider6;
-    findTest(testName).slider7 = currentValueSlider7;
-    findTest(testName).slider8 = currentValueSlider8;
-    findTest(testName).slider9 = currentValueSlider9;
-    findTest(testName).slider10 = currentValueSlider10;
+    findTest(testName).slider1double = map(currentValueSlider1double, -8, 8, 0, 10);
+    findTest(testName).slider2double = map(currentValueSlider2double, -8, 8, 0, 10);
+    findTest(testName).slider5 = map(currentValueSlider5, -8, 8, 0, 10);
+    findTest(testName).slider6 = map(currentValueSlider6, -8, 8, 0, 10);
+    findTest(testName).slider7 = map(currentValueSlider7, -8, 8, 0, 10);
+    findTest(testName).slider8 = map(currentValueSlider8, -8, 8, 0, 10);
+    findTest(testName).slider9 = map(currentValueSlider9, -8, 8, 0, 10);
+    findTest(testName).slider10 = map(currentValueSlider10, -8, 8, 0, 10);
   }
   else{
-    findTest(testName).slider1double = currentValueSlider1double;
-    findTest(testName).slider2double = currentValueSlider2double;
+    findTest(testName).slider1double = map(currentValueSlider1double, -8, 8, 0, 10);
+    findTest(testName).slider2double = map(currentValueSlider2double, -8, 8, 0, 10);
   }
-  findTest(testName).slider1 = currentValueSlider1;
+  findTest(testName).slider1 = map(currentValueSlider1, -8, 8, 0, 10);
   findTest(testName).tension = outputSliderTensionLeft.innerHTML;
   findTest(testName).grid = lastCheckedGrid1Cell;
   
-  findTest(testName).slider2 = currentValueSlider2;
+  findTest(testName).slider2 = map(currentValueSlider2, -8, 8, 0, 10);
   findTest(testName).tension2 = outputSliderTensionRight.innerHTML;
   findTest(testName).grid2 = lastCheckedGrid2Cell;
 }
@@ -2554,7 +2554,7 @@ function js_onError(error) {
     window.location = window.location.pathname + "?message=Email+could+not+be+sent.&isError=1";
 }
 
-function js_send2(datetime,testResults) {
+function js_send2(date,results) {
     
   var request = new XMLHttpRequest();
   request.onreadystatechange = function() {
@@ -2566,8 +2566,8 @@ function js_send2(datetime,testResults) {
       }
   };
 
-  data_js2['subject'] = "TEST RESULTS | " + datetime;
-  data_js2['text'] = testResults;
+  data_js2['subject'] = "TEST RESULTS | " + date;
+  data_js2['text'] = results;
   var params = toParams(data_js2);
 
   request.open("POST", "https://postmail.invotes.com/send", true);
@@ -2579,7 +2579,7 @@ function js_send2(datetime,testResults) {
   return false;
 }
 
-function js_send(datetime,testResults) {
+function js_send(date,results) {
     
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -2591,8 +2591,8 @@ function js_send(datetime,testResults) {
         }
     };
 
-    data_js['subject'] = "TEST RESULTS | " + datetime;
-    data_js['text'] = testResults;
+    data_js['subject'] = "TEST RESULTS | " + date;
+    data_js['text'] = results;
     var params = toParams(data_js);
 
     request.open("POST", "https://postmail.invotes.com/send", true);
