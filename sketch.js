@@ -2460,32 +2460,32 @@ function saveTestChoices(testName){
   else if(fullTestSound){
     findTest(testName).slider1double = radiosLeft_value;
     findTest(testName).slider2double = radiosRight_value;
-    findTest(testName).slider1double = map(currentValueSlider1double, -8, 8, 0, 10); 
-    findTest(testName).slider2double = map(currentValueSlider2double, -8, 8, 0, 10);
-    findTest(testName).slider5 = map(currentValueSlider5, -8, 8, 0, 10);
-    findTest(testName).slider6 = map(currentValueSlider6, -8, 8, 0, 10);
-    findTest(testName).slider7 = map(currentValueSlider7, -8, 8, 0, 10);
-    findTest(testName).slider8 = map(currentValueSlider8, -8, 8, 0, 10);
+    findTest(testName).slider1double = Math.abs(map(currentValueSlider1double, -8, 8, -10, 10)); 
+    findTest(testName).slider2double = Math.abs(map(currentValueSlider2double, -8, 8, -10, 10));
+    findTest(testName).slider5 = Math.abs(map(currentValueSlider5, -8, 8, -10, 10));
+    findTest(testName).slider6 = Math.abs(map(currentValueSlider6, -8, 8, -10, 10));
+    findTest(testName).slider7 = Math.abs(map(currentValueSlider7, -8, 8, -10, 10));
+    findTest(testName).slider8 = Math.abs(map(currentValueSlider8, -8, 8, -10, 10));
   }
   else if(fullTestVisuals){
-    findTest(testName).slider1double = map(currentValueSlider1double, -8, 8, 0, 10);
-    findTest(testName).slider2double = map(currentValueSlider2double, -8, 8, 0, 10);
-    findTest(testName).slider5 = map(currentValueSlider5, -8, 8, 0, 10);
-    findTest(testName).slider6 = map(currentValueSlider6, -8, 8, 0, 10);
-    findTest(testName).slider7 = map(currentValueSlider7, -8, 8, 0, 10);
-    findTest(testName).slider8 = map(currentValueSlider8, -8, 8, 0, 10);
-    findTest(testName).slider9 = map(currentValueSlider9, -8, 8, 0, 10);
-    findTest(testName).slider10 = map(currentValueSlider10, -8, 8, 0, 10);
+    findTest(testName).slider1double = Math.abs(map(currentValueSlider1double, -8, 8, -10, 10));
+    findTest(testName).slider2double = Math.abs(map(currentValueSlider2double, -8, 8, -10, 10));
+    findTest(testName).slider5 = Math.abs(map(currentValueSlider5, -8, 8, -10, 10));
+    findTest(testName).slider6 = Math.abs(map(currentValueSlider6, -8, 8, -10, 10));
+    findTest(testName).slider7 = Math.abs(map(currentValueSlider7, -8, 8, -10, 10));
+    findTest(testName).slider8 = Math.abs(map(currentValueSlider8, -8, 8, -10, 10));
+    findTest(testName).slider9 = Math.abs(map(currentValueSlider9, -8, 8, -10, 10));
+    findTest(testName).slider10 = Math.abs(map(currentValueSlider10, -8, 8, -10, 10));
   }
   else{
-    findTest(testName).slider1double = map(currentValueSlider1double, -8, 8, 0, 10);
-    findTest(testName).slider2double = map(currentValueSlider2double, -8, 8, 0, 10);
+    findTest(testName).slider1double = Math.abs(map(currentValueSlider1double, -8, 8, -10, 10));
+    findTest(testName).slider2double = Math.abs(map(currentValueSlider2double, -8, 8, -10, 10));
   }
-  findTest(testName).slider1 = map(currentValueSlider1, -8, 8, 0, 10);
+  findTest(testName).slider1 = Math.abs(map(currentValueSlider1, -8, 8, -10, 10));
   findTest(testName).tension = outputSliderTensionLeft.innerHTML;
   findTest(testName).grid = lastCheckedGrid1Cell;
   
-  findTest(testName).slider2 = map(currentValueSlider2, -8, 8, 0, 10);
+  findTest(testName).slider2 = Math.abs(map(currentValueSlider2, -8, 8, -10, 10));
   findTest(testName).tension2 = outputSliderTensionRight.innerHTML;
   findTest(testName).grid2 = lastCheckedGrid2Cell;
 }
