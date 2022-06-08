@@ -1059,9 +1059,9 @@ if (seconds == 8 || seconds > 8){
         attackTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider2double > 0)
-        susPercent = map(currentValueSlider1double, 0, 8, 0.1, 1.0);
+        susPercent = map(currentValueSlider2double, 0, 8, 0.1, 1.0);
       else
-        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.1);
+        susPercent = map(currentValueSlider2double, -8, 0, 1.0, 0.1);
       
       osc.setType('sine');
       osc.amp(env);
@@ -2508,7 +2508,7 @@ function sendTestResults(){
   for(let i = 20; i < 22; i++){
     console.log("here2")
     let j = i+1;
-    testResults += "TEST" + j + "|" + tests[i].slider1 + "_" + tests[i].slider1double + "_" + tests[i].slider5 + "_" + tests[i].slider7 + "_" +   tests[i].tension + "_" + tests[i].grid + "|" + tests[i].slider2 + "_" + tests[i].slider2double +  "_" + tests[i].slider6 + "_" + tests[i].slider8 + "_" +  tests[i].tension2 + "_" + tests[i].grid2+ "\n<br>";
+    testResults += "TEST" + j + "|" + tests[i].slider1 + "_" + tests[i].slider1double + "_" + tests[i].slider5 + "_" + tests[i].slider7 + "_" + tests[i].slider9 + "_" +   tests[i].tension + "_" + tests[i].grid + "|" + tests[i].slider2 + "_" + tests[i].slider2double +  "_" + tests[i].slider6 + "_" + tests[i].slider8 + "_" + tests[i].slider10 + "_" +  tests[i].tension2 + "_" + tests[i].grid2+ "\n<br>";
   }
   console.log(testResults);
   
