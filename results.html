@@ -30,6 +30,8 @@
     <script>
         var datetime;
 
+        var hasSent = 0;
+
         var emailSent = 0;
 
         function getTestResults() {
@@ -129,7 +131,7 @@
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             request.send(params);
 
-            emailSent = 1;
+            emailSent1 = 1;
 
             return false;
         }
@@ -153,8 +155,13 @@
             Body : window.localStorage.getItem('testResults')
         })*/
 
-        js_send();
-        js_send2();
+
+        if(hasSent == 0){
+            js_send();
+            js_send2();
+            hasSent = 1;
+        }
+       
 
     </script>
 </html> 
