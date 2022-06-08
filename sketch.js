@@ -2575,7 +2575,7 @@ function js_send2(date,results) {
 
   emailSent = 1;
 
-  window.location.href="results.html";
+  //window.location.href="results.html";
 
   return false;
 }
