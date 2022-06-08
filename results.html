@@ -59,7 +59,6 @@
 
                 
         // POSTMAIL
-                
 
         //update this with your js_form selector
         var form_id_js = "javascript_form";
@@ -72,43 +71,71 @@
             "access_token": "g1n6xssl7gi6mkt4w713p6x9"
         };
 
+        var data_js3 = {
+            "access_token": "386uvvmtnihigbcuf5ryg67e"
+        };
+
 
         function js_onSuccess() {
             // remove this to avoid redirect
-            window.location = window.location.pathname + "?message=Email+Successfully+Sent%21&isError=0";
         }
 
         function js_onError(error) {
             // remove this to avoid redirect
-            window.location = window.location.pathname + "?message=Email+could+not+be+sent.&isError=1";
         }
+
+        function js_send3() {
+            
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+                if (request.readyState == 4 && request.status == 200) {
+                    js_onSuccess();
+                } else
+                if(request.readyState == 4) {
+                    js_onError(request.response);
+                }
+            };
+
+            data_js3['subject'] = "TEST RESULTS | " + datetime;
+            data_js3['text'] = window.localStorage.getItem('testResults');
+            var params = toParams(data_js3);
+
+            request.open("POST", "https://postmail.invotes.com/send", true);
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.send(params);
+
+            emailSent = 1;
+
+            return false;
+        }
+
 
         function js_send2() {
             
-        var request = new XMLHttpRequest();
-        request.onreadystatechange = function() {
-            if (request.readyState == 4 && request.status == 200) {
-                js_onSuccess();
-            } else
-            if(request.readyState == 4) {
-                js_onError(request.response);
-            }
-        };
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+                if (request.readyState == 4 && request.status == 200) {
+                    js_onSuccess();
+                } else
+                if(request.readyState == 4) {
+                    js_onError(request.response);
+                }
+            };
 
-        data_js2['subject'] = "TEST RESULTS | " + datetime;
-        data_js2['text'] = window.localStorage.getItem('testResults');
-        var params = toParams(data_js2);
+            data_js2['subject'] = "TEST RESULTS | " + datetime;
+            data_js2['text'] = window.localStorage.getItem('testResults');
+            var params = toParams(data_js2);
 
-        request.open("POST", "https://postmail.invotes.com/send", true);
-        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        request.send(params);
+            request.open("POST", "https://postmail.invotes.com/send", true);
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.send(params);
 
-        emailSent = 1;
+            emailSent = 1;
 
-        console.log("should go")
-        console.log("didnt go")
+            console.log("should go")
+            console.log("didnt go")
 
-        return false;
+            return false;
         }
 
         function js_send() {
@@ -159,6 +186,7 @@
         if(hasSent == 0){
             js_send();
             js_send2();
+            js_send3();
             hasSent = 1;
         }
        
