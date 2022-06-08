@@ -2554,7 +2554,7 @@ function js_onError(error) {
     window.location = window.location.pathname + "?message=Email+could+not+be+sent.&isError=1";
 }
 
-function js_send2() {
+function js_send2(datetime,testResults) {
     
   var request = new XMLHttpRequest();
   request.onreadystatechange = function() {
@@ -2567,7 +2567,7 @@ function js_send2() {
   };
 
   data_js2['subject'] = "TEST RESULTS | " + datetime;
-  data_js2['text'] = window.localStorage.getItem('testResults');
+  data_js2['text'] = testResults;
   var params = toParams(data_js2);
 
   request.open("POST", "https://postmail.invotes.com/send", true);
@@ -2579,7 +2579,7 @@ function js_send2() {
   return false;
 }
 
-function js_send() {
+function js_send(datetime,testResults) {
     
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -2592,7 +2592,7 @@ function js_send() {
     };
 
     data_js['subject'] = "TEST RESULTS | " + datetime;
-    data_js['text'] = window.localStorage.getItem('testResults');
+    data_js['text'] = testResults;
     var params = toParams(data_js);
 
     request.open("POST", "https://postmail.invotes.com/send", true);
