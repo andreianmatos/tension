@@ -24,6 +24,7 @@ function setup() {
 
 function draw() {
 
+
   radiosSound = document.getElementsByName('radiosSoundCheck');
   for(var i = 0; i < radiosSound.length; i++){
     if(radiosSound[i].checked)

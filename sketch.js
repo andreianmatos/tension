@@ -14,7 +14,10 @@ let chosen;
 
 let doneFullTests = 0;
 
-var playingLeft = 0, playingRight = 0, isStarted = 0;
+
+let playLeftButton, playRightButton, loopLeftButton, loopRightButton;
+let hoverLeft = 0, hoverRight = 0;
+var loopingLeft = 0, loopingRight = 0, isStarted = 0;
 var w, osc, env;
 
 let slider = 0, sliderDouble = 0, radioButtons = 0;
@@ -287,6 +290,28 @@ function setup() {
   radiosLeft[Math.floor(Math.random() * 4)].checked = true;
   radiosRight[Math.floor(Math.random() * 4 )].checked = true;
 
+  playLeftButton =  document.getElementById("playL");
+  playRightButton =  document.getElementById("playR");
+
+  loopLeftButton =  document.getElementById("loopL");
+  loopRightButton =  document.getElementById("loopR");
+
+  playLeftButton.onmouseover = function(){
+    hoverLeft = true; 
+    osc.start(0.1);
+    env.triggerAttack(osc); 
+    playLeftButton.innerHTML = '<span style="font-size: 1vw;">Unhover to</span><br>STOP';
+  };
+
+  playLeftButton.onmouseout = function(){
+    hoverLeft = false; 
+    env.triggerRelease(osc); 
+    playLeftButton.innerHTML = '<span style="font-size: 1vw;">Hover to</span><br>PLAY';
+  };
+
+  playRightButton.onmouseover = function(){hoverRight = true; playRightButton.innerHTML = '<span style="font-size: 1vw;">Unhover to</span><br>STOP';};
+  playRightButton.onmouseout = function(){hoverRight = false; playRightButton.innerHTML = '<span style="font-size: 1vw;">Hover to</span><br>PLAY';};
+
   //sound prep
   osc = new p5.Oscillator();
   env = new p5.Envelope();
@@ -306,13 +331,17 @@ function draw() {
 
   if(imageTest){
     document.getElementById("playL").style.display = 'none';
-    document.getElementById("playR").style.display = 'none';  
+    document.getElementById("playR").style.display = 'none'; 
+    document.getElementById("loopL").style.display = 'none';
+    document.getElementById("loopR").style.display = 'none';   
     document.getElementById("textQ2").innerHTML = '<h2>&#8595; First consider the chosen image on the left &#8595;</h2>';  
     document.getElementById("textQ5").innerHTML = '<h2>&#8595; Now consider the chosen image on the right &#8595;</h2>';  
   }
   if(soundTest){
     document.getElementById("playL").style.display = 'block';
     document.getElementById("playR").style.display = 'block';  
+    document.getElementById("loopL").style.display = 'block';
+    document.getElementById("loopR").style.display = 'block';  
     document.getElementById("textQ2").innerHTML = '<h2>&#8595; First consider the chosen sound on the left &#8595;</h2>';  
     document.getElementById("textQ5").innerHTML = '<h2>&#8595; Now consider the chosen sound on the right &#8595;</h2>';  
   }
@@ -500,12 +529,12 @@ function draw() {
       }
   }
 
+
   // in between always stop the oscillator
-  if(isStarted && !playingLeft && !playingRight){
+  if(isStarted && !loopingLeft && !loopingRight && !hoverLeft && !hoverRight){
     osc.stop(0.1);
     isStarted = 0;
   }
-
 
   // TEST 1 | WAVEFORM + ATTACK 
   if(findTest("test1Bol").active) {
@@ -532,7 +561,7 @@ function draw() {
     let decayTime = 0.5;
     let releaseTime = 1.5;
 
-    if(playingLeft){
+    if(loopingLeft || hoverLeft){
 
       if(radiosLeft_value != null){ 
         if(currentValueSlider1 > 0)
@@ -551,19 +580,22 @@ function draw() {
           osc.setType('sawtooth');
 
         osc.amp(env);
+        
+        //osc.freq(midiToFreq(int(60)));
+        
+        osc.freq(midiToFreq(int(60)));
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
+        env.setRange(attackLevel, releaseLevel); 
 
-        if (seconds == 8 || seconds > 8){
-          osc.freq(midiToFreq(int(getNote())));
-          env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
-          env.setRange(attackLevel, releaseLevel);
-          //unecessary
-          //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play(0,0,1);
-          seconds=0;
-        }
+       if(loopingLeft){
+          if (seconds == 8 || seconds > 8){   
+            env.play(0,0,1);
+            seconds=0;
+          }
+        }       
       }
     }
-    if(playingRight) {
+    if(loopingRight || hoverRight) {
 
       if(radiosRight_value != null ){
         if(currentValueSlider2 > 0)
@@ -582,14 +614,15 @@ function draw() {
 
         osc.amp(env);
 
-if (seconds == 8 || seconds > 8){
-          osc.freq(midiToFreq(int(getNote())));
-          env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
-          env.setRange(attackLevel, releaseLevel);
-          //unecessary
-          //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play(0,0,1);
-          seconds=0;
+        osc.freq(midiToFreq(int(60)));
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+        env.setRange(attackLevel, releaseLevel);
+
+        if(loopingRight){
+          if (seconds == 8 || seconds > 8){   
+            env.play(0,0,1);
+            seconds=0;
+          }
         }
       }
     }
@@ -619,7 +652,7 @@ if (seconds == 8 || seconds > 8){
      let decayTime = 0.5; // half value from the total 1.0 of the decay tests
      let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
-    if(playingLeft){
+   if(loopingLeft || hoverLeft){
       if(radiosLeft_value != null){
         if(currentValueSlider1 > 0)
           releaseTime = map(currentValueSlider1, 0, 8, 0, 3.0);
@@ -637,19 +670,19 @@ if (seconds == 8 || seconds > 8){
 
         osc.amp(env);
 
-        
-if (seconds == 8 || seconds > 8){
-          osc.freq(midiToFreq(int(getNote())));
-          env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
-          env.setRange(attackLevel, releaseLevel);
-          //unecessary
-          //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play(0,0,1);
-          seconds = 0;
-        }
+        osc.freq(midiToFreq(int(60)));
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
+        env.setRange(attackLevel, releaseLevel); 
+
+       if(loopingLeft){
+          if (seconds == 8 || seconds > 8){   
+            env.play(0,0,1);
+            seconds=0;
+          }
+        } 
       }
     }
-    if(playingRight) {
+    if(loopingRight || hoverRight) {
       if(radiosRight_value != null ){
         if(currentValueSlider2 > 0)
           releaseTime = map(currentValueSlider2, 0, 8, 0, 3.0);
@@ -667,14 +700,15 @@ if (seconds == 8 || seconds > 8){
 
         osc.amp(env);
 
-if (seconds == 8 || seconds > 8){
-          osc.freq(midiToFreq(int(getNote())));
-          env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
-          env.setRange(attackLevel, releaseLevel);
-         //unecessary 
-          //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play(0,0,1);
-          seconds = 0;
+        osc.freq(midiToFreq(int(60)));
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
+        env.setRange(attackLevel, releaseLevel);
+
+        if(loopingRight){
+          if (seconds == 8 || seconds > 8){   
+            env.play(0,0,1);
+            seconds=0;
+          }
         }
       }
     }
@@ -705,7 +739,7 @@ if (seconds == 8 || seconds > 8){
     let decayTime = 0.5;
     let releaseTime = 1.5;
 
-    if(playingLeft){
+   if(loopingLeft || hoverLeft){
       if(radiosLeft_value != null){
         if(currentValueSlider1 > 0)
           decayTime = map(currentValueSlider1, 0, 8, 0.0, 1.0);
@@ -723,21 +757,21 @@ if (seconds == 8 || seconds > 8){
           osc.setType('sawtooth');
 
         osc.amp(env);
-        
-        //C2 C3 C4 
-if (seconds == 8 || seconds > 8){
-          osc.freq(midiToFreq(int(getNote())));
-          env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
-          env.setRange(attackLevel, releaseLevel);
-          //unecessary
-          //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play(0,0,1);
-          seconds = 0;
-        }
+
+        osc.freq(midiToFreq(int(60)));
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
+        env.setRange(attackLevel, releaseLevel);
+
+        if(loopingLeft){
+          if (seconds == 8 || seconds > 8){   
+            env.play(0,0,1);
+            seconds=0;
+          }
+        } 
 
       }
     }
-    if(playingRight) {
+    if(loopingRight || hoverRight) {
       if(radiosRight_value != null ){
         
         if(currentValueSlider2 > 0)
@@ -756,16 +790,16 @@ if (seconds == 8 || seconds > 8){
           osc.setType('sawtooth');
 
         osc.amp(env);
-        
-        //C2 C3 C4 
-if (seconds == 8 || seconds > 8){
-          osc.freq(midiToFreq(int(getNote())));
-          env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
-          env.setRange(attackLevel, releaseLevel);
-          //unecessary
-          //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play(0,0,1);
-          seconds = 0;
+
+        osc.freq(midiToFreq(int(60)));
+        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+        env.setRange(attackLevel, releaseLevel);
+
+        if(loopingRight){
+          if (seconds == 8 || seconds > 8){   
+            env.play(0,0,1);
+            seconds=0;
+          }
         }
 
       }
@@ -796,7 +830,7 @@ if (seconds == 8 || seconds > 8){
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
     let releaseTime = 1.5; // half value from the total 3.0 of the release tests
     
-    if(playingLeft){
+   if(loopingLeft || hoverLeft){
       if(radiosLeft_value != null){
         if(currentValueSlider1 > 0)
           susPercent = map(currentValueSlider1, 0, 8, 0.1, 1.0);
@@ -815,18 +849,22 @@ if (seconds == 8 || seconds > 8){
         
         osc.amp(env);
 
-if (seconds == 8 || seconds > 8){
-          osc.freq(midiToFreq(int(getNote())));
-          //here is the other way around to keep the sustainTime
-          //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
-          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.setRange(attackLevel, releaseLevel);
-          env.play(0,0,1);
-          seconds = 0;
-        }
+        osc.freq(midiToFreq(int(60)));
+        //here is the other way around to keep the sustainTime
+        //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+        env.setRange(attackLevel, releaseLevel);
+
+        if(loopingLeft){
+          if (seconds == 8 || seconds > 8){   
+            env.play(0,0,1);
+            seconds=0;
+          }
+        } 
+
       }
     }
-    if(playingRight) {
+    if(loopingRight || hoverRight) {
       if(radiosRight_value != null ){
         if(currentValueSlider2 > 0)
           susPercent = map(currentValueSlider2, 0, 8, 0.1, 1.0);
@@ -844,13 +882,16 @@ if (seconds == 8 || seconds > 8){
 
         osc.amp(env);
 
- if (seconds == 8 || seconds > 8){
-          osc.freq(midiToFreq(int(getNote())));
-          //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
-          env.setRange(attackLevel, releaseLevel);
-          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play(0,0,1);
-          seconds = 0;
+        osc.freq(midiToFreq(int(60)));
+        //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+        env.setRange(attackLevel, releaseLevel);
+        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+
+        if(loopingRight){
+          if (seconds == 8 || seconds > 8){   
+            env.play(0,0,1);
+            seconds=0;
+          }
         }
       }
     }
@@ -880,7 +921,7 @@ if (seconds == 8 || seconds > 8){
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
     let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
-    if(playingLeft){
+   if(loopingLeft || hoverLeft){
       if(currentValueSlider1 > 0)
         attackTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
@@ -894,17 +935,19 @@ if (seconds == 8 || seconds > 8){
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 8 || seconds > 8){
-        osc.freq(midiToFreq(int(getNote())));
-        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
-        env.setRange(attackLevel, releaseLevel);
-        //unecessary
-        //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play(0,0,1);
-        seconds = 0;
+      osc.freq(midiToFreq(int(60)));
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      env.setRange(attackLevel, releaseLevel);
+
+      if(loopingLeft){
+        if (seconds == 8 || seconds > 8){   
+          env.play(0,0,1);
+          seconds=0;
+        }
       }
+
     }
-    if(playingRight) {
+    if(loopingRight || hoverRight) {
       if(currentValueSlider2 > 0)
         attackTime = map(currentValueSlider2, 0, 8, 0, 3.0);
       else
@@ -918,15 +961,16 @@ if (seconds == 8 || seconds > 8){
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 8 || seconds > 8){
-        osc.freq(midiToFreq(int(getNote())));
-        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
-        env.setRange(attackLevel, releaseLevel);
-        //unecessary
-        //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play(0,0,1);
-        seconds = 0;
-      }
+      osc.freq(midiToFreq(int(60)));
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      env.setRange(attackLevel, releaseLevel);
+
+      if(loopingRight){
+        if (seconds == 8 || seconds > 8){   
+          env.play(0,0,1);
+          seconds=0;
+        }
+      }     
     }
   }
 
@@ -954,7 +998,7 @@ if (seconds == 8 || seconds > 8){
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
     let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
-    if(playingLeft){
+   if(loopingLeft || hoverLeft){
       if(currentValueSlider1 > 0)
         attackTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
@@ -968,17 +1012,19 @@ if (seconds == 8 || seconds > 8){
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 8 || seconds > 8){
-        osc.freq(midiToFreq(int(getNote())));
-        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
-        env.setRange(attackLevel, releaseLevel);
-        //unecessary
-        //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play(0,0,1);
-        seconds = 0;
+      osc.freq(midiToFreq(int(60)));
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      env.setRange(attackLevel, releaseLevel);
+
+      if(loopingLeft){
+        if (seconds == 8 || seconds > 8){   
+          env.play(0,0,1);
+          seconds=0;
+        }
       }
+
     }
-    if(playingRight) {
+    if(loopingRight || hoverRight) {
       if(currentValueSlider2 > 0)
         attackTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
       else
@@ -992,15 +1038,16 @@ if (seconds == 8 || seconds > 8){
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 8 || seconds > 8){
-        osc.freq(midiToFreq(int(getNote())));
-        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
-        env.setRange(attackLevel, releaseLevel);
-        //unecessary
-        //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play(0,0,1);
-        seconds = 0;
-      }
+      osc.freq(midiToFreq(int(60)));
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      env.setRange(attackLevel, releaseLevel);
+
+      if(loopingRight){
+        if (seconds == 8 || seconds > 8){   
+          env.play(0,0,1);
+          seconds=0;
+        }
+      }     
     }
   }
  
@@ -1028,7 +1075,7 @@ if (seconds == 8 || seconds > 8){
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
     let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
-    if(playingLeft){
+   if(loopingLeft || hoverLeft){
       if(currentValueSlider1 > 0)
         attackTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
@@ -1042,17 +1089,21 @@ if (seconds == 8 || seconds > 8){
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 8 || seconds > 8){
-        osc.freq(midiToFreq(int(getNote())));
-        //here is the other way around to keep the sustainTime
-        //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.setRange(attackLevel, releaseLevel);
-        env.play(0,0,1);
-        seconds = 0;
+      osc.freq(midiToFreq(int(60)));
+      //here is the other way around to keep the sustainTime
+      //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+      env.setRange(attackLevel, releaseLevel);
+
+      if(loopingLeft){
+        if (seconds == 8 || seconds > 8){   
+          env.play(0,0,1);
+          seconds=0;
+        }
       }
+
     }
-    if(playingRight) {
+    if(loopingRight || hoverRight) {
       if(currentValueSlider2 > 0)
         attackTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
       else
@@ -1066,12 +1117,15 @@ if (seconds == 8 || seconds > 8){
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 8 || seconds > 8){
-        osc.freq(midiToFreq(int(getNote())));
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play(0,0,1);
-        seconds = 0;
+      osc.freq(midiToFreq(int(60)));
+      env.setRange(attackLevel, releaseLevel);
+      env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+
+      if(loopingRight){
+        if (seconds == 8 || seconds > 8){   
+          env.play(0,0,1);
+          seconds=0;
+        }
       }
     }
   }
@@ -1103,7 +1157,7 @@ if (seconds == 8 || seconds > 8){
     //let dryWet;
     let reverbTime, decayRate = 2;
 
-    if(playingLeft){
+   if(loopingLeft || hoverLeft){
       if(currentValueSlider1 > 0)
         releaseTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
@@ -1117,17 +1171,19 @@ if (seconds == 8 || seconds > 8){
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 8 || seconds > 8){
-        osc.freq(midiToFreq(int(getNote())));
-        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
-        env.setRange(attackLevel, releaseLevel);
-        //unecessary
-        //env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play(0,0,1);
-        seconds = 0;
+      osc.freq(midiToFreq(int(60)));
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      env.setRange(attackLevel, releaseLevel);
+
+      if(loopingLeft){
+        if (seconds == 8 || seconds > 8){   
+          env.play(0,0,1);
+          seconds=0;
+        }
       }
+
     }
-    if(playingRight) {
+    if(loopingRight || hoverRight) {
       if(currentValueSlider2 > 0)
         releaseTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
       else
@@ -1142,14 +1198,17 @@ if (seconds == 8 || seconds > 8){
       osc.setType('sine');
       osc.amp(env);
 
-      // C2 C3 C4
-      if (seconds == 8 || seconds > 8){
-        osc.freq(midiToFreq(int(getNote())));
-        env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
-        env.setRange(attackLevel, releaseLevel);
-        env.play(0,0,1);
-        seconds = 0;
+      osc.freq(midiToFreq(int(60)));
+      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
+      env.setRange(attackLevel, releaseLevel);
+
+      if(loopingRight){
+        if (seconds == 8 || seconds > 8){   
+          env.play(0,0,1);
+          seconds=0;
+        }
       }
+
     }
   }
 
@@ -1177,7 +1236,7 @@ if (seconds == 8 || seconds > 8){
    let decayTime = 0.5; // half value from the total 1.0 of the decay tests
    let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
-    if(playingLeft){
+   if(loopingLeft || hoverLeft){
       if(currentValueSlider1 > 0)
         releaseTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
@@ -1192,15 +1251,19 @@ if (seconds == 8 || seconds > 8){
       osc.setType('sine');
       osc.amp(env);
 
-      if (seconds == 8 || seconds > 8){
-        osc.freq(midiToFreq(int(getNote())));
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play(0,0,1);
-        seconds = 0;
+      osc.freq(midiToFreq(int(60)));
+      env.setRange(attackLevel, releaseLevel);
+      env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+      
+      if(loopingLeft){
+        if (seconds == 8 || seconds > 8){   
+          env.play(0,0,1);
+          seconds=0;
+        }
       }
+
     }
-    if(playingRight) {
+    if(loopingRight || hoverRight) {
       if(currentValueSlider2 > 0)
         releaseTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
       else
@@ -1213,14 +1276,18 @@ if (seconds == 8 || seconds > 8){
 
       osc.setType('sine');
       osc.amp(env);
-      
-      if (seconds == 8 || seconds > 8){
-        osc.freq(midiToFreq(int(getNote())));
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play(0,0,1);
-        seconds = 0;
+
+      osc.freq(midiToFreq(int(60)));
+      env.setRange(attackLevel, releaseLevel);
+      env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+
+      if(loopingRight){
+        if (seconds == 8 || seconds > 8){   
+          env.play(0,0,1);
+          seconds=0;
+        }
       }
+      
     }
   }
 
@@ -1249,7 +1316,7 @@ if (seconds == 8 || seconds > 8){
    let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
 
-    if(playingLeft){
+   if(loopingLeft || hoverLeft){
       if(currentValueSlider1 > 0)
         decayTime = map(currentValueSlider1, 0, 8, 0, 1.0);
       else
@@ -1262,16 +1329,20 @@ if (seconds == 8 || seconds > 8){
       
       osc.setType('sine');
       osc.amp(env);
-      
-      if (seconds == 8 || seconds > 8){
-        osc.freq(midiToFreq(int(getNote())));
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play(0,0,1);
-        seconds = 0;
+
+      osc.freq(midiToFreq(int(60)));
+      env.setRange(attackLevel, releaseLevel);
+      env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+
+      if(loopingLeft){
+        if (seconds == 8 || seconds > 8){   
+          env.play(0,0,1);
+          seconds=0;
+        }
       }
+     
     }
-    if(playingRight) {
+    if(loopingRight || hoverRight) {
       if(currentValueSlider2 > 0)
         decayTime = map(currentValueSlider2, 0, 8, 0, 1);
       else
@@ -1284,14 +1355,18 @@ if (seconds == 8 || seconds > 8){
         
       osc.setType('sine');
       osc.amp(env);
-      
-      if (seconds == 8 || seconds > 8){
-        osc.freq(midiToFreq(int(getNote())));
-        env.setRange(attackLevel, releaseLevel);
-        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-        env.play(0,0,1);
-        seconds = 0;
+
+      osc.freq(midiToFreq(int(60)));
+      env.setRange(attackLevel, releaseLevel);
+      env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+
+      if(loopingRight){
+        if (seconds == 8 || seconds > 8){   
+          env.play(0,0,1);
+          seconds=0;
+        }
       }
+      
     }
   }
 
@@ -2043,7 +2118,7 @@ if (seconds == 8 || seconds > 8){
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
     let releaseTime = 1.5; // half value from the total 3.0 of the release tests
     
-    if(playingLeft){
+   if(loopingLeft || hoverLeft){
       if(radiosLeft_value != null){
         if(currentValueSlider1 > 0)
           susPercent = map(currentValueSlider1, 0, 8, 0.1, 1.0);
@@ -2080,7 +2155,7 @@ if (seconds == 8 || seconds > 8){
         osc.amp(env);
 
 if (seconds == 8 || seconds > 8){
-          osc.freq(midiToFreq(int(getNote())));
+          osc.freq(midiToFreq(int(60)));
           //here is the other way around to keep the sustainTime
           //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
@@ -2090,7 +2165,7 @@ if (seconds == 8 || seconds > 8){
         }
       }
     }
-    if(playingRight) {
+    if(loopingRight || hoverRight) {
       if(radiosRight_value != null ){
 
         if(currentValueSlider2 > 0)
@@ -2128,7 +2203,7 @@ if (seconds == 8 || seconds > 8){
         osc.amp(env);
 
  if (seconds == 8 || seconds > 8){
-          osc.freq(midiToFreq(int(getNote())));
+          osc.freq(midiToFreq(int(60)));
           //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
           env.setRange(attackLevel, releaseLevel);
           env.setADSR(attackTime, decayTime, susPercent, releaseTime);
@@ -2530,24 +2605,42 @@ function submit(){
 }
 
 
-function playLeft() {
-  playingLeft = !playingLeft;
+function loopLeft() {
+  loopingLeft = !loopingLeft;
+
+  seconds = 8;
   
-  let buttonContent = document.getElementById("playL").innerHTML;
-  if(buttonContent=="PLAY")
-    document.getElementById("playL").innerHTML = "STOP";
-  else 
-    document.getElementById("playL").innerHTML = "PLAY";
+ if(loopingLeft || hoverLeft){
+    document.getElementById("loopL").innerHTML = '<span style="font-size: 1vw;">Click to</span><br>STOP';
+    playLeftButton.disabled = true;
+    playRightButton.disabled = true;
+    loopRightButton.disabled = true;
+  }
+  else {
+    document.getElementById("loopL").innerHTML = '<span style="font-size: 1vw;">Click to</span><br>LOOP';
+    playLeftButton.disabled = false;
+    playRightButton.disabled = false;
+    loopRightButton.disabled = false;
+  }
 }
 
-function playRight() {
-  playingRight = !playingRight;
+function loopRight() {
+  loopingRight = !loopingRight;
+
+  seconds = 8;
   
-  let buttonContent = document.getElementById("playR").innerHTML;
-  if(buttonContent=="PLAY")
-    document.getElementById("playR").innerHTML = "STOP";
-  else 
-    document.getElementById("playR").innerHTML = "PLAY";
+  if(loopingRight || hoverRight){
+    document.getElementById("loopR").innerHTML = '<span style="font-size: 1vw;">Click to</span><br>STOP';
+    playRightButton.disabled = true;
+    playLeftButton.disabled = true;
+    loopLeftButton.disabled = true;
+  }
+  else {
+    document.getElementById("loopR").innerHTML = '<span style="font-size: 1vw;">Click to</span><br>LOOP';
+    playRightButton.disabled = false;
+    playLeftButton.disabled = false;
+    loopLeftButton.disabled = false;
+  }
 }
 
 function chooseNextTest(){
@@ -2595,10 +2688,10 @@ function chooseNextTest(){
 
 function next(newTestBol) {
 
-  if(playingRight)
-    playRight();
-  if(playingLeft)
-    playLeft();
+  if(loopingRight || hoverRight)
+    loopRight();
+ if(loopingLeft || hoverLeft)
+    loopLeft();
 
   for(let i=0; i < 22; i++)
     tests[i].active = 0;
