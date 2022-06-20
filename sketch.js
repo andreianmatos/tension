@@ -27,6 +27,7 @@ let fullTestSound = 0, fullTestVisuals = 0;
 let currentTestBol, doubleTest, imageTest, soundTest;
 let tests = [], undoneTests = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 let end = 0;
+let freq;
 
 let sliderCircular1;
 
@@ -309,8 +310,17 @@ function setup() {
     playLeftButton.innerHTML = '<span style="font-size: 1vw;">Hover to</span><br>PLAY';
   };
 
-  playRightButton.onmouseover = function(){hoverRight = true; playRightButton.innerHTML = '<span style="font-size: 1vw;">Unhover to</span><br>STOP';};
-  playRightButton.onmouseout = function(){hoverRight = false; playRightButton.innerHTML = '<span style="font-size: 1vw;">Hover to</span><br>PLAY';};
+  playRightButton.onmouseover = function(){
+    hoverRight = true; 
+    osc.start(0.1);
+    env.triggerAttack(osc); 
+    playRightButton.innerHTML = '<span style="font-size: 1vw;">Unhover to</span><br>STOP';
+  };
+  playRightButton.onmouseout = function(){
+    hoverRight = false;    
+    env.triggerRelease(osc); 
+    playRightButton.innerHTML = '<span style="font-size: 1vw;">Hover to</span><br>PLAY';
+  };
 
   //sound prep
   osc = new p5.Oscillator();
@@ -602,6 +612,7 @@ function draw() {
           attackTime = map(currentValueSlider2, 0, 8, 0, 3.0);
         else
           attackTime = map(currentValueSlider2, -8, 0, 3.0, 0);
+
         // WAVEFORM
         if(radiosRight_value == "2.1")
           osc.setType('sine');
@@ -653,6 +664,7 @@ function draw() {
      let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
    if(loopingLeft || hoverLeft){
+
       if(radiosLeft_value != null){
         if(currentValueSlider1 > 0)
           releaseTime = map(currentValueSlider1, 0, 8, 0, 3.0);
@@ -683,6 +695,7 @@ function draw() {
       }
     }
     if(loopingRight || hoverRight) {
+
       if(radiosRight_value != null ){
         if(currentValueSlider2 > 0)
           releaseTime = map(currentValueSlider2, 0, 8, 0, 3.0);
@@ -714,7 +727,7 @@ function draw() {
     }
   }
 
-  // TEST 3 | WAVEFORM + DECAY
+  // TEST 3 | WAVEFORM + FREQUENCY
   if(findTest("test3Bol").active) {
 
     imageTest = 0;
@@ -741,10 +754,9 @@ function draw() {
 
    if(loopingLeft || hoverLeft){
       if(radiosLeft_value != null){
-        if(currentValueSlider1 > 0)
-          decayTime = map(currentValueSlider1, 0, 8, 0.0, 1.0);
-        else
-          decayTime = map(currentValueSlider1, -8, 0, 1.0, 0.0);
+        freq = getNote(currentValueSlider1);
+
+        console.log(freq)
 
         // WAVEFORM
         if(radiosLeft_value == "1.1")
@@ -758,7 +770,7 @@ function draw() {
 
         osc.amp(env);
 
-        osc.freq(midiToFreq(int(60)));
+        osc.freq(freq);
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
         env.setRange(attackLevel, releaseLevel);
 
@@ -774,10 +786,7 @@ function draw() {
     if(loopingRight || hoverRight) {
       if(radiosRight_value != null ){
         
-        if(currentValueSlider2 > 0)
-          decayTime = map(currentValueSlider2, 0, 8, 0.0, 1.0);
-        else
-          decayTime = map(currentValueSlider2, -8, 0, 1.0, 0.0);
+        freq = getNote(currentValueSlider2);
 
         // WAVEFORM
         if(radiosRight_value == "2.1")
@@ -791,7 +800,7 @@ function draw() {
 
         osc.amp(env);
 
-        osc.freq(midiToFreq(int(60)));
+        osc.freq(freq);
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setRange(attackLevel, releaseLevel);
 
@@ -806,7 +815,7 @@ function draw() {
     }
   }
 
-  // TEST 4 | WAVEFORM + SUSTAIN
+  // TEST 4 | WAVEFORM + AMPLITUDE
   if(findTest("test4Bol").active) {
 
     imageTest = 0;
@@ -833,9 +842,9 @@ function draw() {
    if(loopingLeft || hoverLeft){
       if(radiosLeft_value != null){
         if(currentValueSlider1 > 0)
-          susPercent = map(currentValueSlider1, 0, 8, 0.1, 1.0);
+          attackLevel = map(currentValueSlider1, 0, 8, 0.1, 1.0);
         else
-          susPercent = map(currentValueSlider1, -8, 0, 1.0, 0.1);
+          attackLevel = map(currentValueSlider1, -8, 0, 1.0, 0.1);
 
         // WAVEFORM
         if(radiosLeft_value == "1.1")
@@ -867,9 +876,9 @@ function draw() {
     if(loopingRight || hoverRight) {
       if(radiosRight_value != null ){
         if(currentValueSlider2 > 0)
-          susPercent = map(currentValueSlider2, 0, 8, 0.1, 1.0);
+          attackLevel = map(currentValueSlider2, 0, 8, 0.1, 1.0);
         else
-          susPercent = map(currentValueSlider2, -8, 0, 1.0, 0.1);
+          attackLevel = map(currentValueSlider2, -8, 0, 1.0, 0.1);
         // WAVEFORM
         if(radiosRight_value == "2.1")
           osc.setType('sine');
@@ -974,7 +983,7 @@ function draw() {
     }
   }
 
-  // TEST 6 | ATTACK + DECAY
+  // TEST 6 | ATTACK + FREQUENCY
   if(findTest("test6Bol").active) {
 
     imageTest = 0;
@@ -1004,15 +1013,12 @@ function draw() {
       else
         attackTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
-      if(currentValueSlider1double > 0)
-        decayTime = map(currentValueSlider1double, 0, 8, 0.0, 1.0);
-      else
-        decayTime = map(currentValueSlider1double, -8, 0, 1.0, 0.0);
+      freq = getNote(currentValueSlider1double);
 
       osc.setType('sine');
       osc.amp(env);
 
-      osc.freq(midiToFreq(int(60)));
+      osc.freq(freq);
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       env.setRange(attackLevel, releaseLevel);
 
@@ -1030,15 +1036,12 @@ function draw() {
       else
         attackTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
-      if(currentValueSlider2double > 0)
-        decayTime = map(currentValueSlider2double, 0, 8, 0.0, 1.0);
-      else
-        decayTime = map(currentValueSlider2double, -8, 0, 1.0, 0.0);
+      freq = getNote(currentValueSlider2double);
 
       osc.setType('sine');
       osc.amp(env);
 
-      osc.freq(midiToFreq(int(60)));
+      osc.freq(freq);
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       env.setRange(attackLevel, releaseLevel);
 
@@ -1051,7 +1054,7 @@ function draw() {
     }
   }
  
-  // TEST 7 |  ATTACK + SUSTAIN
+  // TEST 7 |  ATTACK + AMPLITUDE
   if(findTest("test7Bol").active) {
 
     imageTest = 0;
@@ -1082,9 +1085,9 @@ function draw() {
         attackTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider1double > 0)
-        susPercent = map(currentValueSlider1double, 0, 8, 0.1, 1.0);
+        attackLevel = map(currentValueSlider1double, 0, 8, 0.1, 1.0);
       else
-        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.1);
+        attackLevel = map(currentValueSlider1double, -8, 0, 1.0, 0.1);
       
       osc.setType('sine');
       osc.amp(env);
@@ -1110,9 +1113,9 @@ function draw() {
         attackTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider2double > 0)
-        susPercent = map(currentValueSlider2double, 0, 8, 0.1, 1.0);
+        attackLevel = map(currentValueSlider2double, 0, 8, 0.1, 1.0);
       else
-        susPercent = map(currentValueSlider2double, -8, 0, 1.0, 0.1);
+        attackLevel = map(currentValueSlider2double, -8, 0, 1.0, 0.1);
       
       osc.setType('sine');
       osc.amp(env);
@@ -1130,7 +1133,7 @@ function draw() {
     }
   }
 
-  // TEST 8 | RELEASE + DECAY
+  // TEST 8 | RELEASE + FREQUENCY
   if(findTest("test8Bol").active) {
 
     imageTest = 0;
@@ -1163,15 +1166,12 @@ function draw() {
       else
         releaseTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
-      if(currentValueSlider1double > 0)
-        decayTime = map(currentValueSlider1double, 0, 8, 0.0, 1.0);
-      else
-        decayTime = map(currentValueSlider1double, -8, 0, 1.0, 0.0);
-      
+      freq = getNote(currentValueSlider1double);
+
       osc.setType('sine');
       osc.amp(env);
 
-      osc.freq(midiToFreq(int(60)));
+      osc.freq(freq);
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       env.setRange(attackLevel, releaseLevel);
 
@@ -1189,16 +1189,14 @@ function draw() {
       else
         releaseTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
-      if(currentValueSlider2double > 0)
-        decayTime = map(currentValueSlider2double, 0, 8, 0.0, 1.0);
-      else
-        decayTime = map(currentValueSlider2double, -8, 0, 1.0, 0.0);
+      freq = getNote(currentValueSlider2double);
+
       
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.setType('sine');
       osc.amp(env);
 
-      osc.freq(midiToFreq(int(60)));
+      osc.freq(freq);
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       env.setRange(attackLevel, releaseLevel);
 
@@ -1212,7 +1210,7 @@ function draw() {
     }
   }
 
-  // TEST 9 | RELEASE + SUSTAIN
+  // TEST 9 | RELEASE + AMPLITUDE
   if(findTest("test9Bol").active) {
 
     imageTest = 0;
@@ -1243,9 +1241,9 @@ function draw() {
         releaseTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider1double > 0)
-        susPercent = map(currentValueSlider1double, 0, 8, 0.1, 1.0);
+        attackLevel = map(currentValueSlider1double, 0, 8, 0.1, 1.0);
       else
-        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.1);
+        attackLevel = map(currentValueSlider1double, -8, 0, 1.0, 0.1);
         
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.setType('sine');
@@ -1270,14 +1268,14 @@ function draw() {
         releaseTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider2double > 0)
-        susPercent = map(currentValueSlider2double, 0, 8, 0.1, 1.0);
+        attackLevel = map(currentValueSlider2double, 0, 8, 0.1, 1.0);
       else
-        susPercent = map(currentValueSlider2double, -8, 0, 1.0, 0.1);
+        attackLevel = map(currentValueSlider2double, -8, 0, 1.0, 0.1);
 
       osc.setType('sine');
       osc.amp(env);
 
-      osc.freq(midiToFreq(int(60)));
+      osc.freq(midiToFreq(int(120)));
       env.setRange(attackLevel, releaseLevel);
       env.setADSR(attackTime, decayTime, susPercent, releaseTime);
 
@@ -1291,7 +1289,7 @@ function draw() {
     }
   }
 
-  // TEST 10 | DECAY + SUSTAIN
+  // TEST 10 | FREQUENCY + AMPLITUDE
   if(findTest("test10Bol").active) {
 
     imageTest = 0;
@@ -1317,20 +1315,18 @@ function draw() {
 
 
    if(loopingLeft || hoverLeft){
-      if(currentValueSlider1 > 0)
-        decayTime = map(currentValueSlider1, 0, 8, 0, 1.0);
-      else
-        decayTime = map(currentValueSlider1, -8, 0, 1.0, 0);
-
+      
+      freq = getNote(currentValueSlider1);
+   
       if(currentValueSlider1double > 0)
-        susPercent = map(currentValueSlider1double, 0, 8, 0.1, 1.0);
+        attackLevel = map(currentValueSlider1double, 0, 8, 0.1, 1.0);
       else
-        susPercent = map(currentValueSlider1double, -8, 0, 1.0, 0.1);
+        attackLevel = map(currentValueSlider1double, -8, 0, 1.0, 0.1);
       
       osc.setType('sine');
       osc.amp(env);
 
-      osc.freq(midiToFreq(int(60)));
+      osc.freq(freq);
       env.setRange(attackLevel, releaseLevel);
       env.setADSR(attackTime, decayTime, susPercent, releaseTime);
 
@@ -1343,20 +1339,18 @@ function draw() {
      
     }
     if(loopingRight || hoverRight) {
-      if(currentValueSlider2 > 0)
-        decayTime = map(currentValueSlider2, 0, 8, 0, 1);
-      else
-        decayTime = map(currentValueSlider2, -8, 0, 1, 0);
+      
+      freq = getNote(currentValueSlider2);
 
       if(currentValueSlider2double > 0)
-        susPercent = map(currentValueSlider2double, 0, 8, 0.1, 1);
+        attackLevel = map(currentValueSlider2double, 0, 8, 0.1, 1);
       else
-        susPercent = map(currentValueSlider2double, -8, 0, 1, 0.1);
+        attackLevel = map(currentValueSlider2double, -8, 0, 1, 0.1);
         
       osc.setType('sine');
       osc.amp(env);
 
-      osc.freq(midiToFreq(int(60)));
+      osc.freq(freq);
       env.setRange(attackLevel, releaseLevel);
       env.setADSR(attackTime, decayTime, susPercent, releaseTime);
 
@@ -2367,12 +2361,35 @@ function setSliderValue(val, slider) {
     currentValueSlider10 = val;
 }
 
-function getNote(){
-  var note =  midiNotesConsidered[0];
+function getNote(sliderValue){
+  /*var note =  midiNotesConsidered[0];
   midiNotesConsidered.shift();
   //return midiNotesConsidered[Math.floor(Math.random() * midiNotesConsidered.length)];
   if(midiNotesConsidered.length==1)
     midiNotesConsidered.push(48, 60, 72)
+  return note;*/
+  //C9 - C1 
+  var note;
+
+  if(int(Math.abs(sliderValue)) == 8)
+    note = midiToFreq(120);
+  if(int(Math.abs(sliderValue)) == 7)
+    note =  midiToFreq(108);
+  if(int(Math.abs(sliderValue)) == 6)
+    note = midiToFreq(96);
+  if(int(Math.abs(sliderValue)) == 5)
+    note = midiToFreq(84);
+  if(int(Math.abs(sliderValue)) == 4) //middle C used normally
+    note = midiToFreq(72);
+  if(int(Math.abs(sliderValue)) == 3)
+    note = midiToFreq(60);
+  if(int(Math.abs(sliderValue)) == 2)
+    note = midiToFreq(48);
+  if(int(Math.abs(sliderValue)) == 1)
+    note = midiToFreq(36);
+  if(int(Math.abs(sliderValue)) == 0)
+    note = midiToFreq(24);
+
   return note;
 }
 
@@ -2574,16 +2591,19 @@ function sendTestResults(){
                 + currentdate.getHours() + ":"  
                 + currentdate.getMinutes() + ":" 
                 + currentdate.getSeconds();
-  let testResults = "<p><b>" + datetime +"</b></p>" + "\n";
+  let testResults;
+  //testResults += "<p><b>" + datetime +"</b></p>" + "\n";
   for(let i = 0; i < 20; i++){
     console.log("here1")
     let j = i+1;
-    testResults += "TEST" + j + "|" + tests[i].slider1 + "_" + tests[i].slider1double + "_" +  tests[i].tension + "_" + tests[i].grid + "|" + tests[i].slider2 + "_" + tests[i].slider2double + "_" +  tests[i].tension2 + "_" + tests[i].grid2+ "\n<br>";
+    testResults += "TEST" + j + "," + tests[i].slider1 + "," + tests[i].slider1double + "," +  tests[i].tension + "," + tests[i].grid + ",X," + 
+    tests[i].slider2 + "," + tests[i].slider2double + "," +  tests[i].tension2 + "," + tests[i].grid2+ "\n";
   }
   for(let i = 20; i < 22; i++){
     console.log("here2")
     let j = i+1;
-    testResults += "TEST" + j + "|" + tests[i].slider1 + "_" + tests[i].slider1double + "_" + tests[i].slider5 + "_" + tests[i].slider7 + "_" + tests[i].slider9 + "_" +   tests[i].tension + "_" + tests[i].grid + "|" + tests[i].slider2 + "_" + tests[i].slider2double +  "_" + tests[i].slider6 + "_" + tests[i].slider8 + "_" + tests[i].slider10 + "_" +  tests[i].tension2 + "_" + tests[i].grid2+ "\n<br>";
+    testResults += "TEST" + j + "," + tests[i].slider1 + "," + tests[i].slider1double + "," + tests[i].slider5 + "," + tests[i].slider7 + "," + tests[i].slider9 + "," +   tests[i].tension + "," + tests[i].grid  + ",X," + 
+     tests[i].slider2 + "," + tests[i].slider2double +  "," + tests[i].slider6 + "," + tests[i].slider8 + "," + tests[i].slider10 + "," +  tests[i].tension2 + "," + tests[i].grid2+ "\n";
   }
   console.log(testResults);
   
