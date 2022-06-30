@@ -31,7 +31,7 @@ let freq;
 let sliderCircular1;
 
 var output1, output1double, output2, output2double, output5, output6, output7, output8, output9, output10;
-var currentValueSlider1, currentValueSlider2, currentValueSlider3, currentValueSlider4,
+var currentValueSlider1, currentValueSlider3, currentValueSlider2, currentValueSlider4,
 currentValueSlider5, currentValueSlider6,currentValueSlider7, currentValueSlider8, currentValueSlider9, currentValueSlider10;
 var sliderTensionLeft, sliderTensionRight, outputsliderTensionLeft, outputsliderTensionRight;
 
@@ -48,10 +48,11 @@ newSliderCircular10Value = randomIntFromInterval(-8,8);
 
 //C3 C4 C5 o C2(36) é um pouco baixo (?) 
 var midiNotesConsidered = Array(48, 60, 72);
-var seconds; // between notes
-// before the setinterval: worked: frameCount % 100 == 0
+var seconds; // between notes, before the setinterval: worked: frameCount % 100 == 0
 
- // LEFT: SLIDER 1 sliderCircular app options
+// LEFT SLIDERS IN ORDER: 1, 3, 5, 7, 9
+// RIGHT SLIDERS IN NUMBERS 2, 4, 6, 8, 10
+
  const opts = {
   DOMselector: '#app',
   sliderCirculars: [
@@ -66,7 +67,6 @@ var seconds; // between notes
       }
   ]
 };
- // LEFT: SLIDER 2 sliderCircular app options
  const opts3 = {
   DOMselector: '#app3',
   sliderCirculars: [
@@ -81,8 +81,6 @@ var seconds; // between notes
       }
   ]
 };
-
- // RIGHT: SLIDER 1 sliderCircular app options
  const opts2 = {
   DOMselector: '#app2',
   sliderCirculars: [
@@ -97,7 +95,6 @@ var seconds; // between notes
       }
   ]
 };
- //RIGHT: SLIDER 2 sliderCircular app options
  const opts4 = {
   DOMselector: '#app4',
   sliderCirculars: [
@@ -112,8 +109,6 @@ var seconds; // between notes
       }
   ]
 };
-
- //LEFT: SLIDER 3 sliderCircular app options
  const opts5 = {
   DOMselector: '#app5',
   sliderCirculars: [
@@ -128,7 +123,6 @@ var seconds; // between notes
       },
   ]
 };
- //LEFT: SLIDER 4 sliderCircular app options
  const opts6 = {
   DOMselector: '#app6',
   sliderCirculars: [
@@ -143,7 +137,6 @@ var seconds; // between notes
     }
 ]
 };
- //LEFT: SLIDER 5 sliderCircular app options
  const opts7 = {
   DOMselector: '#app7',
   sliderCirculars: [
@@ -158,8 +151,6 @@ var seconds; // between notes
       }
   ]
 };
-
- //LEFT: SLIDER 5 sliderCircular app options
  const opts8 = {
   DOMselector: '#app8',
   sliderCirculars: [
@@ -174,8 +165,6 @@ var seconds; // between notes
       }
   ]
 };
-
-//LEFT: SLIDER 5 sliderCircular app options
 const opts9 = {
   DOMselector: '#app9',
   sliderCirculars: [
@@ -190,7 +179,6 @@ const opts9 = {
       }
   ]
 };
-
 const opts10 = {
   DOMselector: '#app10',
   sliderCirculars: [
@@ -274,6 +262,7 @@ function setup() {
   setSliderValue(newSliderCircular8Value,"8");
   setSliderValue(newSliderCircular9Value,"9");
   setSliderValue(newSliderCircular10Value,"10");
+
 
   for(let i=1; i < 23; i++)
     tests.push(new Test('test' + i + 'Bol'));
@@ -372,10 +361,10 @@ function draw() {
     output1.innerHTML = this.value;
   }
   slider1double.oninput = function() {
-    currentValueSlider2 = this.value;
+    currentValueSlider3 = this.value;
   } 
   slider2.oninput = function() {
-    currentValueSlider3 = this.value;
+    currentValueSlider2 = this.value;
   }
   slider2double.oninput = function() {
     currentValueSlider4 = this.value;
@@ -608,10 +597,10 @@ function draw() {
     if(hoverRight) {
 
       if(radiosRight_value != null ){
-        if(currentValueSlider3 > 0)
-          attackTime = map(currentValueSlider3, 0, 8, 0, 3.0);
+        if(currentValueSlider2 > 0)
+          attackTime = map(currentValueSlider2, 0, 8, 0, 3.0);
         else
-          attackTime = map(currentValueSlider3, -8, 0, 3.0, 0);
+          attackTime = map(currentValueSlider2, -8, 0, 3.0, 0);
 
         // WAVEFORM
         if(radiosRight_value == "2.1")
@@ -695,10 +684,10 @@ function draw() {
     if(hoverRight) {
 
       if(radiosRight_value != null ){
-        if(currentValueSlider3 > 0)
-          releaseTime = map(currentValueSlider3, 0, 8, 0, 3.0);
+        if(currentValueSlider2 > 0)
+          releaseTime = map(currentValueSlider2, 0, 8, 0, 3.0);
         else
-          releaseTime = map(currentValueSlider3, -8, 0, 3.0, 0);
+          releaseTime = map(currentValueSlider2, -8, 0, 3.0, 0);
         // WAVEFORM
         if(radiosRight_value == "2.1")
           osc.setType('sine');
@@ -780,7 +769,7 @@ function draw() {
     if(hoverRight) {
       if(radiosRight_value != null ){
         
-        freq = getNote(currentValueSlider3);
+        freq = getNote(currentValueSlider2);
 
         // WAVEFORM
         if(radiosRight_value == "2.1")
@@ -865,10 +854,10 @@ function draw() {
     }
     if(hoverRight) {
       if(radiosRight_value != null ){
-        if(currentValueSlider3 > 0)
-          attackLevel = map(currentValueSlider3, 0, 8, 0.1, 1.0);
+        if(currentValueSlider2 > 0)
+          attackLevel = map(currentValueSlider2, 0, 8, 0.1, 1.0);
         else
-          attackLevel = map(currentValueSlider3, -8, 0, 1.0, 0.1);
+          attackLevel = map(currentValueSlider2, -8, 0, 1.0, 0.1);
         // WAVEFORM
         if(radiosRight_value == "2.1")
           osc.setType('sine');
@@ -925,10 +914,10 @@ function draw() {
       else
         attackTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
-      if(currentValueSlider2 > 0)
-        releaseTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
+      if(currentValueSlider3 > 0)
+        releaseTime = map(currentValueSlider3, 0, 8, 0.0, 3.0);
       else
-        releaseTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
+        releaseTime = map(currentValueSlider3, -8, 0, 3.0, 0.0);
       
       osc.setType('sine');
       osc.amp(env);
@@ -944,10 +933,10 @@ function draw() {
 
     }
     if(hoverRight) {
-      if(currentValueSlider3 > 0)
-        attackTime = map(currentValueSlider3, 0, 8, 0, 3.0);
+      if(currentValueSlider2 > 0)
+        attackTime = map(currentValueSlider2, 0, 8, 0, 3.0);
       else
-        attackTime = map(currentValueSlider3, -8, 0, 3.0, 0);
+        attackTime = map(currentValueSlider2, -8, 0, 3.0, 0);
 
       if(currentValueSlider4 > 0)
         releaseTime = map(currentValueSlider4, 0, 8, 0, 3.0);
@@ -999,7 +988,7 @@ function draw() {
       else
         attackTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
-      freq = getNote(currentValueSlider2);
+      freq = getNote(currentValueSlider3);
 
       osc.setType('sine');
       osc.amp(env);
@@ -1016,10 +1005,10 @@ function draw() {
 
     }
     if(hoverRight) {
-      if(currentValueSlider3 > 0)
-        attackTime = map(currentValueSlider3, 0, 8, 0.0, 3.0);
+      if(currentValueSlider2 > 0)
+        attackTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
       else
-        attackTime = map(currentValueSlider3, -8, 0, 3.0, 0.0);
+        attackTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
       freq = getNote(currentValueSlider4);
 
@@ -1068,10 +1057,10 @@ function draw() {
       else
         attackTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
-      if(currentValueSlider2 > 0)
-        attackLevel = map(currentValueSlider2, 0, 8, 0.1, 1.0);
+      if(currentValueSlider3 > 0)
+        attackLevel = map(currentValueSlider3, 0, 8, 0.1, 1.0);
       else
-        attackLevel = map(currentValueSlider2, -8, 0, 1.0, 0.1);
+        attackLevel = map(currentValueSlider3, -8, 0, 1.0, 0.1);
       
       osc.setType('sine');
       osc.amp(env);
@@ -1089,10 +1078,10 @@ function draw() {
 
     }
     if(hoverRight) {
-      if(currentValueSlider3 > 0)
-        attackTime = map(currentValueSlider3, 0, 8, 0.0, 3.0);
+      if(currentValueSlider2 > 0)
+        attackTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
       else
-        attackTime = map(currentValueSlider3, -8, 0, 3.0, 0.0);
+        attackTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider4 > 0)
         attackLevel = map(currentValueSlider4, 0, 8, 0.1, 1.0);
@@ -1147,7 +1136,7 @@ function draw() {
       else
         releaseTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
-      freq = getNote(currentValueSlider2);
+      freq = getNote(currentValueSlider3);
 
       osc.setType('sine');
       osc.amp(env);
@@ -1163,10 +1152,10 @@ function draw() {
 
     }
     if(hoverRight) {
-      if(currentValueSlider3 > 0)
-        releaseTime = map(currentValueSlider3, 0, 8, 0.0, 3.0);
+      if(currentValueSlider2 > 0)
+        releaseTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
       else
-        releaseTime = map(currentValueSlider3, -8, 0, 3.0, 0.0);
+        releaseTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
       freq = getNote(currentValueSlider4);
 
@@ -1217,10 +1206,10 @@ function draw() {
       else
         releaseTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
-      if(currentValueSlider2 > 0)
-        attackLevel = map(currentValueSlider2, 0, 8, 0.1, 1.0);
+      if(currentValueSlider3 > 0)
+        attackLevel = map(currentValueSlider3, 0, 8, 0.1, 1.0);
       else
-        attackLevel = map(currentValueSlider2, -8, 0, 1.0, 0.1);
+        attackLevel = map(currentValueSlider3, -8, 0, 1.0, 0.1);
         
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.setType('sine');
@@ -1238,10 +1227,10 @@ function draw() {
 
     }
     if(hoverRight) {
-      if(currentValueSlider3 > 0)
-        releaseTime = map(currentValueSlider3, 0, 8, 0.0, 3.0);
+      if(currentValueSlider2 > 0)
+        releaseTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
       else
-        releaseTime = map(currentValueSlider3, -8, 0, 3.0, 0.0);
+        releaseTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
       if(currentValueSlider4 > 0)
         attackLevel = map(currentValueSlider4, 0, 8, 0.1, 1.0);
@@ -1292,10 +1281,10 @@ function draw() {
       
       freq = getNote(currentValueSlider1);
    
-      if(currentValueSlider2 > 0)
-        attackLevel = map(currentValueSlider2, 0, 8, 0.1, 1.0);
+      if(currentValueSlider3 > 0)
+        attackLevel = map(currentValueSlider3, 0, 8, 0.1, 1.0);
       else
-        attackLevel = map(currentValueSlider2, -8, 0, 1.0, 0.1);
+        attackLevel = map(currentValueSlider3, -8, 0, 1.0, 0.1);
       
       osc.setType('sine');
       osc.amp(env);
@@ -1313,7 +1302,7 @@ function draw() {
     }
     if(hoverRight) {
       
-      freq = getNote(currentValueSlider3);
+      freq = getNote(currentValueSlider2);
 
       if(currentValueSlider4 > 0)
         attackLevel = map(currentValueSlider4, 0, 8, 0.1, 1);
@@ -1353,10 +1342,10 @@ function draw() {
     push();
     noFill();
     translate(width/5, height/2);
-    if(currentValueSlider2 > 0)
-      sw = int(map(currentValueSlider2, 0, 8, 1, 25));
-    if(currentValueSlider2 <= 0)
-      sw = int(map(currentValueSlider2, -8, 0, 25, 1));
+    if(currentValueSlider3 > 0)
+      sw = int(map(currentValueSlider3, 0, 8, 1, 25));
+    if(currentValueSlider3 <= 0)
+      sw = int(map(currentValueSlider3, -8, 0, 25, 1));
     strokeWeight(sw);
     if(currentValueSlider1 < 0) 
       arc(0, 0, map(currentValueSlider1, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
@@ -1373,10 +1362,10 @@ function draw() {
     if(currentValueSlider4 <= 0)
       sw = int(map(currentValueSlider4, -8, 0, 25, 1));
     strokeWeight(sw);
-    if(currentValueSlider3 < 0) 
-      arc(0, 0, map(currentValueSlider3, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(currentValueSlider3 >= 0) 
-      arc(0, 0, map(currentValueSlider3, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider2 < 0) 
+      arc(0, 0, map(currentValueSlider2, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider2 >= 0) 
+      arc(0, 0, map(currentValueSlider2, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
     arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
     pop()
   }
@@ -1398,10 +1387,10 @@ function draw() {
     noFill();
     translate(width/5, height/2);
     strokeWeight(10);
-    let angle = map(currentValueSlider2, 0, 8, 0, 180);
-    if(currentValueSlider2 > 0)
+    let angle = map(currentValueSlider3, 0, 8, 0, 180);
+    if(currentValueSlider3 > 0)
       rotate(PI / 180 * angle);
-    if(currentValueSlider2 <= 0)
+    if(currentValueSlider3 <= 0)
     rotate(PI / 180 * angle);
     if(currentValueSlider1 < 0) 
       arc(0, 0, map(currentValueSlider1, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
@@ -1420,10 +1409,10 @@ function draw() {
       rotate(PI / 180 * angle2);
     if(currentValueSlider4 <= 0)
       rotate(PI / 180 * angle2);
-    if(currentValueSlider3 < 0) 
-      arc(0, 0, map(currentValueSlider3, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(currentValueSlider3 >= 0) 
-      arc(0, 0, map(currentValueSlider3, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider2 < 0) 
+      arc(0, 0, map(currentValueSlider2, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider2 >= 0) 
+      arc(0, 0, map(currentValueSlider2, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
     arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
 
     pop();
@@ -1446,16 +1435,16 @@ function draw() {
     noFill();
     translate(width/5, height/2);
     strokeWeight(10);
-    //console.log(lerp(5, 5, map(currentValueSlider2, -8, 0, 0, 1)));
+    //console.log(lerp(5, 5, map(currentValueSlider3, -8, 0, 0, 1)));
     let irregularList;
    
-    if(currentValueSlider2 > 0) {
-      //irregularList = [map(currentValueSlider2, 0, 8, 5, 5), map(currentValueSlider2, 0, 8, 5, 20), map(currentValueSlider2, 0, 8, 5, 30), map(currentValueSlider2, 0, 8, 5, 40)];
-      irregularList = [1, map(currentValueSlider2, 0, 8, 5, 25),1];
+    if(currentValueSlider3 > 0) {
+      //irregularList = [map(currentValueSlider3, 0, 8, 5, 5), map(currentValueSlider3, 0, 8, 5, 20), map(currentValueSlider3, 0, 8, 5, 30), map(currentValueSlider3, 0, 8, 5, 40)];
+      irregularList = [1, map(currentValueSlider3, 0, 8, 5, 25),1];
       setLineDash(irregularList);  
     }
-    if(currentValueSlider2 <= 0) {
-      irregularList = [1, map(currentValueSlider2, -8, 0, 25, 5),1];
+    if(currentValueSlider3 <= 0) {
+      irregularList = [1, map(currentValueSlider3, -8, 0, 25, 5),1];
       setLineDash(irregularList);  
     }
     beginShape();
@@ -1520,10 +1509,10 @@ function draw() {
       setLineDash(irregularList2);  
     }
   
-    /*if(currentValueSlider3 < 0) 
-      arc(0, 0, map(currentValueSlider3, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(currentValueSlider3 >= 0) 
-      arc(0, 0, map(currentValueSlider3, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    /*if(currentValueSlider2 < 0) 
+      arc(0, 0, map(currentValueSlider2, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider2 >= 0) 
+      arc(0, 0, map(currentValueSlider2, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
     arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);*/
     angleMode(DEGREES);
     noFill();
@@ -1533,10 +1522,10 @@ function draw() {
       if(a > 180)
         x = 100 * sin(a);
         else{
-          if(currentValueSlider3 < 0) 
-            x =  map(currentValueSlider3, -8, 0, 100, 150) * sin(a);
+          if(currentValueSlider2 < 0) 
+            x =  map(currentValueSlider2, -8, 0, 100, 150) * sin(a);
           else
-            x = map(currentValueSlider3, 0, 8, 150, 100) * sin(a);
+            x = map(currentValueSlider2, 0, 8, 150, 100) * sin(a);
         }
       let y = 100 * cos(a);
       vertex(x,y);
@@ -1577,11 +1566,11 @@ function draw() {
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(currentValueSlider2 <= 0) {
-        angleChange = map(currentValueSlider2, -8, 0, 50, 150);
+      if(currentValueSlider3 <= 0) {
+        angleChange = map(currentValueSlider3, -8, 0, 50, 150);
       }
-      if(currentValueSlider2 > 0) {
-        angleChange = map(currentValueSlider2, 0, 8, 150, 50);
+      if(currentValueSlider3 > 0) {
+        angleChange = map(currentValueSlider3, 0, 8, 150, 50);
       }
 
       if(currentValueSlider1 <= 0) {
@@ -1601,7 +1590,7 @@ function draw() {
         vertex(x, y);
       }
       
-      if(currentValueSlider2 > 4 || currentValueSlider2 < -4 ){
+      if(currentValueSlider3 > 4 || currentValueSlider3 < -4 ){
         if(i == 0)
           rotate(PI / 180 * 70);
         star(0, 0, 150 - angleChange + 30, 100, 10, asymmetry2);
@@ -1641,13 +1630,13 @@ function draw() {
         angleChange2 = map(currentValueSlider4, 0, 8, 150, 50);
       }
 
-      if(currentValueSlider3 <= 0) {
-        asymmetry3 = map(currentValueSlider3, -8, 0, 0, 50)
-        asymmetry4 = map(currentValueSlider3, -8, 0, 0, 10)
+      if(currentValueSlider2 <= 0) {
+        asymmetry3 = map(currentValueSlider2, -8, 0, 0, 50)
+        asymmetry4 = map(currentValueSlider2, -8, 0, 0, 10)
       }
-      if(currentValueSlider3 > 0) {
-        asymmetry3 = map(currentValueSlider3, 0, 8, 50, 0)
-        asymmetry4 = map(currentValueSlider3, 0, 8, 10, 0)
+      if(currentValueSlider2 > 0) {
+        asymmetry3 = map(currentValueSlider2, 0, 8, 50, 0)
+        asymmetry4 = map(currentValueSlider2, 0, 8, 10, 0)
       }
 
       const angle = i * spacing;
@@ -1697,10 +1686,10 @@ function draw() {
     noFill();
     translate(width/5, height/2);
     rectMode(CENTER);
-    if(currentValueSlider2 > 0)
-      sw = int(map(currentValueSlider2, 0, 8, 1, 25));
-    if(currentValueSlider2 <= 0)
-      sw = int(map(currentValueSlider2, -8, 0, 25, 1));
+    if(currentValueSlider3 > 0)
+      sw = int(map(currentValueSlider3, 0, 8, 1, 25));
+    if(currentValueSlider3 <= 0)
+      sw = int(map(currentValueSlider3, -8, 0, 25, 1));
     strokeWeight(sw);
     let angle = map(currentValueSlider1, 0, 8, 0, 45);
     if(currentValueSlider1 > 0)
@@ -1719,10 +1708,10 @@ function draw() {
     if(currentValueSlider4 <= 0)
       sw = int(map(currentValueSlider4, -8, 0, 25, 1));
     strokeWeight(sw);
-    let angle2 = map(currentValueSlider3, 0, 8, 0, 45);
-    if(currentValueSlider3 > 0)
+    let angle2 = map(currentValueSlider2, 0, 8, 0, 45);
+    if(currentValueSlider2 > 0)
       rotate(PI / 180 * angle2);
-    if(currentValueSlider3 <= 0)
+    if(currentValueSlider2 <= 0)
     rotate(PI / 180 * angle2);
     rect(0, 0, 200, 200);
     pop()
@@ -1747,12 +1736,12 @@ function draw() {
     noFill();
     translate(width/5, height/2);
    
-    if(currentValueSlider2 > 0) {
-      irregularList = [map(currentValueSlider2, 0, 8, 5, 5), map(currentValueSlider2, 0, 8, 5, 20), map(currentValueSlider2, 0, 8, 5, 30), map(currentValueSlider2, 0, 8, 5, 40)];
+    if(currentValueSlider3 > 0) {
+      irregularList = [map(currentValueSlider3, 0, 8, 5, 5), map(currentValueSlider3, 0, 8, 5, 20), map(currentValueSlider3, 0, 8, 5, 30), map(currentValueSlider3, 0, 8, 5, 40)];
       setLineDash(irregularList);  
     }
-    if(currentValueSlider2 <= 0) {
-      irregularList = [map(currentValueSlider2, -8, 0, 5, 5), map(currentValueSlider2, -8, 0, 20, 5), map(currentValueSlider2, -8, 0, 30, 5), map(currentValueSlider2, -8, 0, 40, 5)];
+    if(currentValueSlider3 <= 0) {
+      irregularList = [map(currentValueSlider3, -8, 0, 5, 5), map(currentValueSlider3, -8, 0, 20, 5), map(currentValueSlider3, -8, 0, 30, 5), map(currentValueSlider3, -8, 0, 40, 5)];
       setLineDash(irregularList);  
     }
     if(currentValueSlider1 > 0) 
@@ -1775,10 +1764,10 @@ function draw() {
       irregularList2 = [map(currentValueSlider4, -8, 0, 5, 5), map(currentValueSlider4, -8, 0, 20, 5), map(currentValueSlider4, -8, 0, 30, 5), map(currentValueSlider4, -8, 0, 40, 5)];
       setLineDash(irregularList2);  
     }
-    if(currentValueSlider3 > 0) 
-      sw = int(map(currentValueSlider3, 0, 8, 1, 25));
-    if(currentValueSlider3 <= 0) 
-      sw = int(map(currentValueSlider3, -8, 0, 25, 1));
+    if(currentValueSlider2 > 0) 
+      sw = int(map(currentValueSlider2, 0, 8, 1, 25));
+    if(currentValueSlider2 <= 0) 
+      sw = int(map(currentValueSlider2, -8, 0, 25, 1));
     strokeWeight(sw);
     ellipse(0,0, 200, 200);
     pop();  
@@ -1818,11 +1807,11 @@ function draw() {
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(currentValueSlider2 <= 0) {
-        angleChange = map(currentValueSlider2, -8, 0, 50, 150);
+      if(currentValueSlider3 <= 0) {
+        angleChange = map(currentValueSlider3, -8, 0, 50, 150);
       }
-      if(currentValueSlider2 > 0) {
-        angleChange = map(currentValueSlider2, 0, 8, 150, 50);
+      if(currentValueSlider3 > 0) {
+        angleChange = map(currentValueSlider3, 0, 8, 150, 50);
       }
 
       const angle = i * spacing;
@@ -1831,7 +1820,7 @@ function draw() {
 
       if(i == 0)
         vertex(x, y);
-      else if(currentValueSlider2 > 4 || currentValueSlider2 < -4 ){
+      else if(currentValueSlider3 > 4 || currentValueSlider3 < -4 ){
         star(0, 0, 150 - angleChange + 30, 100, 10, 0);
       }
       else{
@@ -1850,10 +1839,10 @@ function draw() {
     noFill();
     translate(width/1.25, height/2);
     
-    if(currentValueSlider3 > 0)
-      sw = int(map(currentValueSlider3, 0, 8, 1, 25));
-    if(currentValueSlider3 <= 0)
-      sw = int(map(currentValueSlider3, -8, 0, 25, 1));
+    if(currentValueSlider2 > 0)
+      sw = int(map(currentValueSlider2, 0, 8, 1, 25));
+    if(currentValueSlider2 <= 0)
+      sw = int(map(currentValueSlider2, -8, 0, 25, 1));
     strokeWeight(sw);
 
     beginShape();
@@ -1911,12 +1900,12 @@ function draw() {
     rectMode(CENTER);
     strokeWeight(10);
    
-    if(currentValueSlider2 > 0) {
-      irregularList = [map(currentValueSlider2, 0, 8, 5, 5), map(currentValueSlider2, 0, 8, 5, 20), map(currentValueSlider2, 0, 8, 5, 30), map(currentValueSlider2, 0, 8, 5, 40)];
+    if(currentValueSlider3 > 0) {
+      irregularList = [map(currentValueSlider3, 0, 8, 5, 5), map(currentValueSlider3, 0, 8, 5, 20), map(currentValueSlider3, 0, 8, 5, 30), map(currentValueSlider3, 0, 8, 5, 40)];
       setLineDash(irregularList);  
     }
-    if(currentValueSlider2 <= 0) {
-      irregularList = [map(currentValueSlider2, -8, 0, 5, 5), map(currentValueSlider2, -8, 0, 20, 5), map(currentValueSlider2, -8, 0, 30, 5), map(currentValueSlider2, -8, 0, 40, 5)];
+    if(currentValueSlider3 <= 0) {
+      irregularList = [map(currentValueSlider3, -8, 0, 5, 5), map(currentValueSlider3, -8, 0, 20, 5), map(currentValueSlider3, -8, 0, 30, 5), map(currentValueSlider3, -8, 0, 40, 5)];
       setLineDash(irregularList);  
     }
     let angle = map(currentValueSlider1, 0, 8, 0, 45);
@@ -1942,10 +1931,10 @@ function draw() {
       irregularList2 = [map(currentValueSlider4, -8, 0, 5, 5), map(currentValueSlider4, -8, 0, 20, 5), map(currentValueSlider4, -8, 0, 30, 5), map(currentValueSlider4, -8, 0, 40, 5)];
       setLineDash(irregularList2);  
     }
-    let angle2 = map(currentValueSlider3, 0, 8, 0, 45);
-    if(currentValueSlider3 > 0)
+    let angle2 = map(currentValueSlider2, 0, 8, 0, 45);
+    if(currentValueSlider2 > 0)
       rotate(PI / 180 * angle2);
-    if(currentValueSlider3 <= 0)
+    if(currentValueSlider2 <= 0)
       rotate(PI / 180 * angle2);
     rect(0, 0, 200, 200);
     pop();  
@@ -1970,10 +1959,10 @@ function draw() {
     translate(width/5, height/2);
     strokeWeight(10);
     rectMode(CENTER);
-    let angle = map(currentValueSlider2, 0, 8, 0, 45);
-    if(currentValueSlider2 > 0)
+    let angle = map(currentValueSlider3, 0, 8, 0, 45);
+    if(currentValueSlider3 > 0)
       rotate(PI / 180 * angle);
-    if(currentValueSlider2 <= 0)
+    if(currentValueSlider3 <= 0)
       rotate(PI / 180 * angle);
     if(currentValueSlider1 < 0) 
       square(0, 0, 200, map(currentValueSlider1, -8, 0, 0, 100));
@@ -1992,10 +1981,10 @@ function draw() {
       rotate(PI / 180 * angle2);
     if(currentValueSlider4 <= 0)
       rotate(PI / 180 * angle2);
-    if(currentValueSlider3 < 0) 
-      square(0, 0, 200, map(currentValueSlider3, -8, 0, 0, 100));
-    if(currentValueSlider3 >= 0) 
-      square(0, 0, 200, map(currentValueSlider3, 0, 8, 100, 0));
+    if(currentValueSlider2 < 0) 
+      square(0, 0, 200, map(currentValueSlider2, -8, 0, 0, 100));
+    if(currentValueSlider2 >= 0) 
+      square(0, 0, 200, map(currentValueSlider2, 0, 8, 100, 0));
     pop();
   }
   
@@ -2038,11 +2027,11 @@ function draw() {
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(currentValueSlider2 <= 0) {
-        angleChange = map(currentValueSlider2, -8, 0, 50, 150);
+      if(currentValueSlider3 <= 0) {
+        angleChange = map(currentValueSlider3, -8, 0, 50, 150);
       }
-      if(currentValueSlider2 > 0) {
-        angleChange = map(currentValueSlider2, 0, 8, 150, 50);
+      if(currentValueSlider3 > 0) {
+        angleChange = map(currentValueSlider3, 0, 8, 150, 50);
       }
 
       const angle = i * spacing;
@@ -2051,7 +2040,7 @@ function draw() {
 
       if(i == 0)
         vertex(x, y);
-      else if(currentValueSlider2 > 4 || currentValueSlider2 < -4 ){
+      else if(currentValueSlider3 > 4 || currentValueSlider3 < -4 ){
         star(0, 0, 150 - angleChange + 30, 100, 10, 0);
       }
       else{
@@ -2072,12 +2061,12 @@ function draw() {
 
     strokeWeight(10);
     
-    if(currentValueSlider3 > 0) {
-      irregularList2 = [map(currentValueSlider3, 0, 8, 5, 5), map(currentValueSlider3, 0, 8, 5, 20), map(currentValueSlider3, 0, 8, 5, 30), map(currentValueSlider3, 0, 8, 5, 40)];
+    if(currentValueSlider2 > 0) {
+      irregularList2 = [map(currentValueSlider2, 0, 8, 5, 5), map(currentValueSlider2, 0, 8, 5, 20), map(currentValueSlider2, 0, 8, 5, 30), map(currentValueSlider2, 0, 8, 5, 40)];
       setLineDash(irregularList2);  
     }
-    if(currentValueSlider3 <= 0) {
-      irregularList2 = [map(currentValueSlider3, -8, 0, 5, 5), map(currentValueSlider3, -8, 0, 20, 5), map(currentValueSlider3, -8, 0, 30, 5), map(currentValueSlider3, -8, 0, 40, 5)];
+    if(currentValueSlider2 <= 0) {
+      irregularList2 = [map(currentValueSlider2, -8, 0, 5, 5), map(currentValueSlider2, -8, 0, 20, 5), map(currentValueSlider2, -8, 0, 30, 5), map(currentValueSlider2, -8, 0, 40, 5)];
       setLineDash(irregularList2);  
     }
 
@@ -2145,10 +2134,10 @@ function draw() {
         else
           susPercent = map(currentValueSlider1, -8, 0, 1.0, 0.1);
         
-        if(currentValueSlider2 > 0)
-          attackTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
+        if(currentValueSlider3 > 0)
+          attackTime = map(currentValueSlider3, 0, 8, 0.0, 3.0);
         else
-          attackTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
+          attackTime = map(currentValueSlider3, -8, 0, 3.0, 0.0);
 
         if(currentValueSlider5 > 0)
           releaseTime = map(currentValueSlider5, 0, 8, 0.0, 3.0);
@@ -2188,10 +2177,10 @@ if (seconds == 8 || seconds > 8){
     if(hoverRight) {
       if(radiosRight_value != null ){
 
-        if(currentValueSlider3 > 0)
-          susPercent = map(currentValueSlider3, 0, 8, 0.1, 1.0);
+        if(currentValueSlider2 > 0)
+          susPercent = map(currentValueSlider2, 0, 8, 0.1, 1.0);
         else
-          susPercent = map(currentValueSlider3, -8, 0, 1.0, 0.1);
+          susPercent = map(currentValueSlider2, -8, 0, 1.0, 0.1);
         
         if(currentValueSlider4 > 0)
           attackTime = map(currentValueSlider4, 0, 8, 0.0, 3.0);
@@ -2270,10 +2259,10 @@ if (seconds == 8 || seconds > 8){
     
     // ORIENTATION
     rectMode(CENTER);
-    let angle = map(currentValueSlider2, 0, 8, 0, 45);
-    if(currentValueSlider2 > 0)
+    let angle = map(currentValueSlider3, 0, 8, 0, 45);
+    if(currentValueSlider3 > 0)
       rotate(PI / 180 * angle);
-    if(currentValueSlider2 <= 0)
+    if(currentValueSlider3 <= 0)
       rotate(PI / 180 * angle);
 
     // ANGULARITY + SYMMETRY
@@ -2326,20 +2315,20 @@ if (seconds == 8 || seconds > 8){
     rotate(PI / 180 * angle2);
 
   // ANGULARITY + SYMMETRY
-  if(currentValueSlider3 < 0) {
+  if(currentValueSlider2 < 0) {
     if(currentValueSlider10 < 0) {
-      square(0, 0, 200, map(currentValueSlider3, -8, 0, 0, 100), map(currentValueSlider3, -8, 0, 0, 100) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider3, -8, 0, 0, 100)* map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider3, -8, 0, 0, 100));
+      square(0, 0, 200, map(currentValueSlider2, -8, 0, 0, 100), map(currentValueSlider2, -8, 0, 0, 100) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider2, -8, 0, 0, 100)* map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider2, -8, 0, 0, 100));
     }
     if(currentValueSlider10 >= 0) {
-      square(0, 0, 200, map(currentValueSlider3, -8, 0, 0, 100), map(currentValueSlider3, -8, 0, 0, 100) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider3, -8, 0, 0, 100)* map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider3, -8, 0, 0, 100));
+      square(0, 0, 200, map(currentValueSlider2, -8, 0, 0, 100), map(currentValueSlider2, -8, 0, 0, 100) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider2, -8, 0, 0, 100)* map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider2, -8, 0, 0, 100));
     }
   }
-  if(currentValueSlider3 >= 0) {
+  if(currentValueSlider2 >= 0) {
     if(currentValueSlider10 < 0) {
-      square(0, 0, 200, map(currentValueSlider3, 0, 8, 100, 0), map(currentValueSlider3, 0, 8, 100, 0) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider3, 0, 8, 100, 0) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider3, 0, 8, 100, 0));
+      square(0, 0, 200, map(currentValueSlider2, 0, 8, 100, 0), map(currentValueSlider2, 0, 8, 100, 0) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider2, 0, 8, 100, 0) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider2, 0, 8, 100, 0));
     }
     if(currentValueSlider10 >= 0) {
-      square(0, 0, 200, map(currentValueSlider3, 0, 8, 100, 0), map(currentValueSlider3, 0, 8, 100, 0) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider3, 0, 8, 100, 0) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider3, 0, 8, 100, 0));
+      square(0, 0, 200, map(currentValueSlider2, 0, 8, 100, 0), map(currentValueSlider2, 0, 8, 100, 0) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider2, 0, 8, 100, 0) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider2, 0, 8, 100, 0));
     }
   }
 
@@ -2360,24 +2349,26 @@ function show(item){
 
 
 function setSliderValue(val, slider) {
-  if(slider == "1")
+
+  if(slider == "1") 
     currentValueSlider1 = val;
-  else if(slider == "2")
-    currentValueSlider2 = val;
-  else if(slider == "3")
+  else if(slider == "3") 
     currentValueSlider3 = val;
-  else if(slider == "4")
-    currentValueSlider4 = val;
   else if(slider == "5")
     currentValueSlider5 = val;
-  else if(slider == "6")
-    currentValueSlider6 = val;
   else if(slider == "7")
     currentValueSlider7 = val;
-  else if(slider == "8")
-    currentValueSlider8 = val;
   else if(slider == "9")
     currentValueSlider9 = val;
+    
+  else if(slider == "2") 
+  currentValueSlider2 = val;
+  else if(slider == "4") 
+    currentValueSlider4 = val; 
+  else if(slider == "6")
+    currentValueSlider6 = val;
+  else if(slider == "8")
+    currentValueSlider8 = val;
   else if(slider == "10")
     currentValueSlider10 = val;
 }
@@ -2573,7 +2564,7 @@ function saveTestChoices(testName){
   else if(fullTestSound){
     findTest(testName).slider1double = radiosLeft_value;
     findTest(testName).slider2double = radiosRight_value;
-    findTest(testName).slider1double = Math.abs(map(currentValueSlider2, -8, 8, -10, 10)); 
+    findTest(testName).slider1double = Math.abs(map(currentValueSlider3, -8, 8, -10, 10)); 
     findTest(testName).slider2double = Math.abs(map(currentValueSlider4, -8, 8, -10, 10));
     findTest(testName).slider5 = Math.abs(map(currentValueSlider5, -8, 8, -10, 10));
     findTest(testName).slider6 = Math.abs(map(currentValueSlider6, -8, 8, -10, 10));
@@ -2581,7 +2572,7 @@ function saveTestChoices(testName){
     findTest(testName).slider8 = Math.abs(map(currentValueSlider8, -8, 8, -10, 10));
   }
   else if(fullTestVisuals){
-    findTest(testName).slider1double = Math.abs(map(currentValueSlider2, -8, 8, -10, 10));
+    findTest(testName).slider1double = Math.abs(map(currentValueSlider3, -8, 8, -10, 10));
     findTest(testName).slider2double = Math.abs(map(currentValueSlider4, -8, 8, -10, 10));
     findTest(testName).slider5 = Math.abs(map(currentValueSlider5, -8, 8, -10, 10));
     findTest(testName).slider6 = Math.abs(map(currentValueSlider6, -8, 8, -10, 10));
@@ -2591,14 +2582,14 @@ function saveTestChoices(testName){
     findTest(testName).slider10 = Math.abs(map(currentValueSlider10, -8, 8, -10, 10));
   }
   else{
-    findTest(testName).slider1double = Math.abs(map(currentValueSlider2, -8, 8, -10, 10));
+    findTest(testName).slider1double = Math.abs(map(currentValueSlider3, -8, 8, -10, 10));
     findTest(testName).slider2double = Math.abs(map(currentValueSlider4, -8, 8, -10, 10));
   }
   findTest(testName).slider1 = Math.abs(map(currentValueSlider1, -8, 8, -10, 10));
   findTest(testName).tension = outputSliderTensionLeft.innerHTML;
   findTest(testName).grid = lastCheckedGrid1Cell;
   
-  findTest(testName).slider2 = Math.abs(map(currentValueSlider3, -8, 8, -10, 10));
+  findTest(testName).slider2 = Math.abs(map(currentValueSlider2, -8, 8, -10, 10));
   findTest(testName).tension2 = outputSliderTensionRight.innerHTML;
   findTest(testName).grid2 = lastCheckedGrid2Cell;
 }
@@ -2650,7 +2641,7 @@ function chooseNextTest(){
 
   // save test choices
   saveTestChoices(currentTestBol);
-  //console.log("SAVED FOR TEST" + currentTestBol + " and slider left is " + currentValueSlider1 + " and slider right is " + currentValueSlider3);
+  //console.log("SAVED FOR TEST" + currentTestBol + " and slider left is " + currentValueSlider1 + " and slider right is " + currentValueSlider2);
 
 
   while(!chosen){
@@ -2718,10 +2709,10 @@ function next(newTestBol) {
     setSliderValue(newSliderCircular1Value,"1");
     newSliderCircular2Value = randomIntFromInterval(-8,8);
     sliderCircular2.redrawAllSlidersCircular(newSliderCircular2Value);
-    setSliderValue(newSliderCircular2Value,"2");
+    setSliderValue(newSliderCircular2Value,"2"); //slider 1 from right
     newSliderCircular3Value = randomIntFromInterval(-8,8);
     sliderCircular3.redrawAllSlidersCircular(newSliderCircular3Value);
-    setSliderValue(newSliderCircular3Value,"3");
+    setSliderValue(newSliderCircular3Value,"3"); //slider 2 from left
     newSliderCircular4Value = randomIntFromInterval(-8,8);
     sliderCircular4.redrawAllSlidersCircular(newSliderCircular4Value);
     setSliderValue(newSliderCircular4Value,"4");
@@ -2955,8 +2946,7 @@ if(this.DOMselector === "#app10"){
       // Calculate sliderCircular circumference
       const circumference = sliderCircular.radius * this.tau;
 
-      if(this.DOMselector === "#app")
-        console.log("initValSlider1 = " + sliderCircular.initialValue);
+    
       // Calculate initial angle
       const initialAngle = Math.floor( ( sliderCircular.initialValue / (sliderCircular.max - sliderCircular.min) ) * 360 )-180;
 
@@ -3183,13 +3173,13 @@ if(this.DOMselector === "#app10"){
     // corresponds to the 2nd slider of the Left
     else if(this.DOMselector === "#app3"){
       if(targetsliderCircular == 0 && typeof currentValue === 'number')
-        currentValueSlider2 = currentValue;
+        currentValueSlider3 = currentValue;
     }
 
     // corresponds to the 1st slider of the Right
     else if(this.DOMselector === "#app2"){
       if(targetsliderCircular == 0 && typeof currentValue === 'number')
-        currentValueSlider3 = currentValue;
+        currentValueSlider2 = currentValue;
     }
     // corresponds to the 2nd slider of the Right    
     else if(this.DOMselector === "#app4"){
