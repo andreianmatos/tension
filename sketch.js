@@ -16,8 +16,7 @@ let doneFullTests = 0;
 
 
 let playLeftButton, playRightButton, loopLeftButton, loopRightButton;
-let hoverLeft = 0, hoverRight = 0;
-var loopingLeft = 0, loopingRight = 0, isStarted = 0;
+let hoverLeft = 0, hoverRight = 0, triggerLeft = false, triggerRight = true;
 var w, osc, env;
 
 let slider = 0, sliderDouble = 0, radioButtons = 0;
@@ -32,21 +31,20 @@ let freq;
 let sliderCircular1;
 
 var output1, output1double, output2, output2double, output5, output6, output7, output8, output9, output10;
-var currentValueSlider1, currentValueSlider1double, currentValueSlider2, currentValueSlider2double,
+var currentValueSlider1, currentValueSlider2, currentValueSlider3, currentValueSlider4,
 currentValueSlider5, currentValueSlider6,currentValueSlider7, currentValueSlider8, currentValueSlider9, currentValueSlider10;
 var sliderTensionLeft, sliderTensionRight, outputsliderTensionLeft, outputsliderTensionRight;
 
-var initialSlider1 = randomIntFromInterval(-8,8), 
-initialSlider1double = randomIntFromInterval(-8,8), 
-initialSlider2 = randomIntFromInterval(-8,8), 
-initialSlider2double = randomIntFromInterval(-8,8);
-
-initialSlider5 = randomIntFromInterval(-8,8),
-initialSlider6 = randomIntFromInterval(-8,8),
-initialSlider7 = randomIntFromInterval(-8,8),
-initialSlider8 = randomIntFromInterval(-8,8),
-initialSlider9 = randomIntFromInterval(-8,8),
-initialSlider10 = randomIntFromInterval(-8,8);
+var newSliderCircular1Value = randomIntFromInterval(-8,8), 
+newSliderCircular2Value = randomIntFromInterval(-8,8), 
+newSliderCircular3Value = randomIntFromInterval(-8,8), 
+newSliderCircular4Value = randomIntFromInterval(-8,8),
+newSliderCircular5Value = randomIntFromInterval(-8,8),
+newSliderCircular6Value = randomIntFromInterval(-8,8),
+newSliderCircular7Value = randomIntFromInterval(-8,8),
+newSliderCircular8Value = randomIntFromInterval(-8,8),
+newSliderCircular9Value = randomIntFromInterval(-8,8),
+newSliderCircular10Value = randomIntFromInterval(-8,8);
 
 //C3 C4 C5 o C2(36) é um pouco baixo (?) 
 var midiNotesConsidered = Array(48, 60, 72);
@@ -62,7 +60,7 @@ var seconds; // between notes
           min: -8,
           max: 8,
           step: 1,
-          initialValue: initialSlider1,
+          initialValue: newSliderCircular1Value,
           color: '',
           displayName: 'Slider 1'
       }
@@ -77,7 +75,7 @@ var seconds; // between notes
           min: -8,
           max: 8,
           step: 1,
-          initialValue: initialSlider1double,
+          initialValue: newSliderCircular2Value,
           color: '',
           displayName: 'Slider 3'
       }
@@ -93,7 +91,7 @@ var seconds; // between notes
           min: -8,
           max: 8,
           step: 1,
-          initialValue: initialSlider2,
+          initialValue: newSliderCircular3Value,
           color: '',
           displayName: 'Slider 2'
       }
@@ -108,7 +106,7 @@ var seconds; // between notes
           min: -8,
           max: 8,
           step: 1,
-          initialValue: initialSlider2double,
+          initialValue: newSliderCircular4Value,
           color: '',
           displayName: 'Slider 4'
       }
@@ -124,7 +122,7 @@ var seconds; // between notes
           min: -8,
           max: 8,
           step: 1,
-          initialValue: initialSlider5,
+          initialValue: newSliderCircular5Value,
           color: '',
           displayName: 'Slider 5'
       },
@@ -139,7 +137,7 @@ var seconds; // between notes
         min: -8,
         max: 8,
         step: 1,
-        initialValue: initialSlider6,
+        initialValue: newSliderCircular6Value,
         color: '',
         displayName: 'Slider 6'
     }
@@ -154,7 +152,7 @@ var seconds; // between notes
           min: -8,
           max: 8,
           step: 1,
-          initialValue: initialSlider7,
+          initialValue: newSliderCircular7Value,
           color: '',
           displayName: 'Slider 7'
       }
@@ -170,7 +168,7 @@ var seconds; // between notes
           min: -8,
           max: 8,
           step: 1,
-          initialValue: initialSlider8,
+          initialValue: newSliderCircular8Value,
           color: '',
           displayName: 'Slider 8'
       }
@@ -186,7 +184,7 @@ const opts9 = {
           min: -8,
           max: 8,
           step: 1,
-          initialValue: initialSlider9,
+          initialValue: newSliderCircular9Value,
           color: '',
           displayName: 'Slider 8'
       }
@@ -201,7 +199,7 @@ const opts10 = {
           min: -8,
           max: 8,
           step: 1,
-          initialValue: initialSlider10,
+          initialValue: newSliderCircular10Value,
           color: '',
           displayName: 'Slider 8'
       }
@@ -266,21 +264,23 @@ function setup() {
   slider2double = document.getElementById("myRange2double");
   output2double = document.getElementById("demo2double");
 
-  setSliderValue(initialSlider1,"1");
-  setSliderValue(initialSlider1double,"1double");
-  setSliderValue(initialSlider2,"2");
-  setSliderValue(initialSlider2double,"2double");
-  setSliderValue(initialSlider5,"5");
-  setSliderValue(initialSlider6,"6");
-  setSliderValue(initialSlider7,"7");
-  setSliderValue(initialSlider8,"8");
-  setSliderValue(initialSlider9,"9");
-  setSliderValue(initialSlider10,"10");
+  setSliderValue(newSliderCircular1Value,"1");
+  setSliderValue(newSliderCircular2Value,"2");
+  setSliderValue(newSliderCircular3Value,"3");
+  setSliderValue(newSliderCircular4Value,"4");
+  setSliderValue(newSliderCircular5Value,"5");
+  setSliderValue(newSliderCircular6Value,"6");
+  setSliderValue(newSliderCircular7Value,"7");
+  setSliderValue(newSliderCircular8Value,"8");
+  setSliderValue(newSliderCircular9Value,"9");
+  setSliderValue(newSliderCircular10Value,"10");
 
   for(let i=1; i < 23; i++)
     tests.push(new Test('test' + i + 'Bol'));
 
-  var randtestNr = randomIntFromInterval(1,20);
+  // first test is always an image test now, to avoid issues
+  // because the hover doesn't require any clicking, which doesn't let the audio context begin for the webpage automatically
+  var randtestNr = randomIntFromInterval(11,20); 
   currentTestBol = 'test' + randtestNr + 'Bol';
   findTest(currentTestBol).active = 1;
   currentTest(currentTestBol);
@@ -298,9 +298,9 @@ function setup() {
   loopRightButton =  document.getElementById("loopR");
 
   playLeftButton.onmouseover = function(){
-    hoverLeft = true; 
     osc.start(0.1);
-    env.triggerAttack(osc); 
+    hoverLeft = true; 
+    triggerLeft = true;
     playLeftButton.innerHTML = '<span style="font-size: 1vw;">Unhover to</span><br>STOP';
   };
 
@@ -311,9 +311,9 @@ function setup() {
   };
 
   playRightButton.onmouseover = function(){
-    hoverRight = true; 
     osc.start(0.1);
-    env.triggerAttack(osc); 
+    hoverRight = true; 
+    triggerRight = true;
     playRightButton.innerHTML = '<span style="font-size: 1vw;">Unhover to</span><br>STOP';
   };
   playRightButton.onmouseout = function(){
@@ -342,16 +342,16 @@ function draw() {
   if(imageTest){
     document.getElementById("playL").style.display = 'none';
     document.getElementById("playR").style.display = 'none'; 
-    document.getElementById("loopL").style.display = 'none';
-    document.getElementById("loopR").style.display = 'none';   
+    //document.getElementById("loopL").style.display = 'none';
+    //document.getElementById("loopR").style.display = 'none';   
     document.getElementById("textQ2").innerHTML = '<h2>&#8595; First consider the chosen image on the left &#8595;</h2>';  
     document.getElementById("textQ5").innerHTML = '<h2>&#8595; Now consider the chosen image on the right &#8595;</h2>';  
   }
   if(soundTest){
     document.getElementById("playL").style.display = 'block';
     document.getElementById("playR").style.display = 'block';  
-    document.getElementById("loopL").style.display = 'block';
-    document.getElementById("loopR").style.display = 'block';  
+    //document.getElementById("loopL").style.display = 'block';
+    //document.getElementById("loopR").style.display = 'block';  
     document.getElementById("textQ2").innerHTML = '<h2>&#8595; First consider the chosen sound on the left &#8595;</h2>';  
     document.getElementById("textQ5").innerHTML = '<h2>&#8595; Now consider the chosen sound on the right &#8595;</h2>';  
   }
@@ -372,13 +372,13 @@ function draw() {
     output1.innerHTML = this.value;
   }
   slider1double.oninput = function() {
-    currentValueSlider1double = this.value;
+    currentValueSlider2 = this.value;
   } 
   slider2.oninput = function() {
-    currentValueSlider2 = this.value;
+    currentValueSlider3 = this.value;
   }
   slider2double.oninput = function() {
-    currentValueSlider2double = this.value;
+    currentValueSlider4 = this.value;
   */
 
   // deletee
@@ -540,11 +540,10 @@ function draw() {
   }
 
 
-  // in between always stop the oscillator
-  if(isStarted && !loopingLeft && !loopingRight && !hoverLeft && !hoverRight){
+  /* in between always stop the oscillator
+  if(!hoverLeft && !hoverRight){
     osc.stop(0.1);
-    isStarted = 0;
-  }
+  }*/
 
   // TEST 1 | WAVEFORM + ATTACK 
   if(findTest("test1Bol").active) {
@@ -561,7 +560,7 @@ function draw() {
 
 
     // keeping these levels always up to the maximum (0.0 and 1.0)
-    let attackLevel = 1.0; // to make the note end all the way up (1)
+    let attackLevel = 0.5; // to make the note end all the way up (1)
     let releaseLevel = 0.0; // to make the note end all the way to silence (0)
     let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
@@ -571,13 +570,15 @@ function draw() {
     let decayTime = 0.5;
     let releaseTime = 1.5;
 
-    if(loopingLeft || hoverLeft){
+    if(hoverLeft){
 
       if(radiosLeft_value != null){ 
         if(currentValueSlider1 > 0)
           attackTime = map(currentValueSlider1, 0, 8, 0, 3.0);
         else
           attackTime = map(currentValueSlider1, -8, 0, 3.0, 0);
+
+        console.log(attackTime)
 
         // WAVEFORM
         if(radiosLeft_value == "1.1")
@@ -597,21 +598,20 @@ function draw() {
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
         env.setRange(attackLevel, releaseLevel); 
 
-       if(loopingLeft){
-          if (seconds == 8 || seconds > 8){   
-            env.play(0,0,1);
-            seconds=0;
-          }
-        }       
+        if(triggerLeft){
+          env.triggerAttack(osc);
+          triggerLeft = false;
+        }
+        
       }
     }
-    if(loopingRight || hoverRight) {
+    if(hoverRight) {
 
       if(radiosRight_value != null ){
-        if(currentValueSlider2 > 0)
-          attackTime = map(currentValueSlider2, 0, 8, 0, 3.0);
+        if(currentValueSlider3 > 0)
+          attackTime = map(currentValueSlider3, 0, 8, 0, 3.0);
         else
-          attackTime = map(currentValueSlider2, -8, 0, 3.0, 0);
+          attackTime = map(currentValueSlider3, -8, 0, 3.0, 0);
 
         // WAVEFORM
         if(radiosRight_value == "2.1")
@@ -629,12 +629,11 @@ function draw() {
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setRange(attackLevel, releaseLevel);
 
-        if(loopingRight){
-          if (seconds == 8 || seconds > 8){   
-            env.play(0,0,1);
-            seconds=0;
-          }
+        if(triggerRight){
+          env.triggerAttack(osc);
+          triggerRight = false;
         }
+
       }
     }
   }
@@ -653,7 +652,7 @@ function draw() {
     sliderDouble = 0;
 
      // keeping these levels always up to the maximum (0.0 and 1.0)
-     let attackLevel = 1.0;
+     let attackLevel = 0.5;
      let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
      let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
@@ -663,7 +662,7 @@ function draw() {
      let decayTime = 0.5; // half value from the total 1.0 of the decay tests
      let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
-   if(loopingLeft || hoverLeft){
+   if(hoverLeft){
 
       if(radiosLeft_value != null){
         if(currentValueSlider1 > 0)
@@ -686,21 +685,20 @@ function draw() {
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
         env.setRange(attackLevel, releaseLevel); 
 
-       if(loopingLeft){
-          if (seconds == 8 || seconds > 8){   
-            env.play(0,0,1);
-            seconds=0;
-          }
-        } 
+        if(triggerLeft){
+          env.triggerAttack(osc);
+          triggerLeft = false;
+        }
+
       }
     }
-    if(loopingRight || hoverRight) {
+    if(hoverRight) {
 
       if(radiosRight_value != null ){
-        if(currentValueSlider2 > 0)
-          releaseTime = map(currentValueSlider2, 0, 8, 0, 3.0);
+        if(currentValueSlider3 > 0)
+          releaseTime = map(currentValueSlider3, 0, 8, 0, 3.0);
         else
-          releaseTime = map(currentValueSlider2, -8, 0, 3.0, 0);
+          releaseTime = map(currentValueSlider3, -8, 0, 3.0, 0);
         // WAVEFORM
         if(radiosRight_value == "2.1")
           osc.setType('sine');
@@ -717,15 +715,15 @@ function draw() {
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
         env.setRange(attackLevel, releaseLevel);
 
-        if(loopingRight){
-          if (seconds == 8 || seconds > 8){   
-            env.play(0,0,1);
-            seconds=0;
-          }
+        if(triggerRight){
+          env.triggerAttack(osc);
+          triggerRight = false;
         }
-      }
+
     }
   }
+
+}
 
   // TEST 3 | WAVEFORM + FREQUENCY
   if(findTest("test3Bol").active) {
@@ -741,7 +739,7 @@ function draw() {
     sliderDouble = 0;
 
      // keeping these levels always up to the maximum (0.0 and 1.0)
-     let attackLevel = 1.0; // to make the note end all the way up (1)
+     let attackLevel = 0.5; // to make the note end all the way up (1)
      let releaseLevel = 0.0; // to make the note end all the way to silence (0)
      let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
@@ -752,11 +750,9 @@ function draw() {
     let decayTime = 0.5;
     let releaseTime = 1.5;
 
-   if(loopingLeft || hoverLeft){
+   if(hoverLeft){
       if(radiosLeft_value != null){
         freq = getNote(currentValueSlider1);
-
-        console.log(freq)
 
         // WAVEFORM
         if(radiosLeft_value == "1.1")
@@ -774,19 +770,17 @@ function draw() {
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime)
         env.setRange(attackLevel, releaseLevel);
 
-        if(loopingLeft){
-          if (seconds == 8 || seconds > 8){   
-            env.play(0,0,1);
-            seconds=0;
-          }
-        } 
+        if(triggerLeft){
+          env.triggerAttack(osc);
+          triggerLeft = false;
+        }
 
       }
     }
-    if(loopingRight || hoverRight) {
+    if(hoverRight) {
       if(radiosRight_value != null ){
         
-        freq = getNote(currentValueSlider2);
+        freq = getNote(currentValueSlider3);
 
         // WAVEFORM
         if(radiosRight_value == "2.1")
@@ -804,11 +798,9 @@ function draw() {
         env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
         env.setRange(attackLevel, releaseLevel);
 
-        if(loopingRight){
-          if (seconds == 8 || seconds > 8){   
-            env.play(0,0,1);
-            seconds=0;
-          }
+        if(triggerRight){
+          env.triggerAttack(osc);
+          triggerRight = false;
         }
 
       }
@@ -829,7 +821,7 @@ function draw() {
     sliderDouble = 0;
 
      // keeping these levels always up to the maximum (0.0 and 1.0)
-     let attackLevel = 1.0;
+     let attackLevel = 0.5;
      let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
      let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
@@ -839,7 +831,7 @@ function draw() {
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
     let releaseTime = 1.5; // half value from the total 3.0 of the release tests
     
-   if(loopingLeft || hoverLeft){
+   if(hoverLeft){
       if(radiosLeft_value != null){
         if(currentValueSlider1 > 0)
           attackLevel = map(currentValueSlider1, 0, 8, 0.1, 1.0);
@@ -864,21 +856,19 @@ function draw() {
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
         env.setRange(attackLevel, releaseLevel);
 
-        if(loopingLeft){
-          if (seconds == 8 || seconds > 8){   
-            env.play(0,0,1);
-            seconds=0;
-          }
-        } 
+        if(triggerLeft){
+          env.triggerAttack(osc);
+          triggerLeft = false;
+        }
 
       }
     }
-    if(loopingRight || hoverRight) {
+    if(hoverRight) {
       if(radiosRight_value != null ){
-        if(currentValueSlider2 > 0)
-          attackLevel = map(currentValueSlider2, 0, 8, 0.1, 1.0);
+        if(currentValueSlider3 > 0)
+          attackLevel = map(currentValueSlider3, 0, 8, 0.1, 1.0);
         else
-          attackLevel = map(currentValueSlider2, -8, 0, 1.0, 0.1);
+          attackLevel = map(currentValueSlider3, -8, 0, 1.0, 0.1);
         // WAVEFORM
         if(radiosRight_value == "2.1")
           osc.setType('sine');
@@ -896,12 +886,11 @@ function draw() {
         env.setRange(attackLevel, releaseLevel);
         env.setADSR(attackTime, decayTime, susPercent, releaseTime);
 
-        if(loopingRight){
-          if (seconds == 8 || seconds > 8){   
-            env.play(0,0,1);
-            seconds=0;
-          }
+        if(triggerRight){
+          env.triggerAttack(osc);
+          triggerRight = false;
         }
+
       }
     }
   }
@@ -920,7 +909,7 @@ function draw() {
     sliderDouble = 1;
 
     // keeping these levels always up to the maximum (0.0 and 1.0)
-    let attackLevel = 1.0;
+    let attackLevel = 0.5;
     let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
     let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
@@ -930,16 +919,16 @@ function draw() {
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
     let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
-   if(loopingLeft || hoverLeft){
+   if(hoverLeft){
       if(currentValueSlider1 > 0)
         attackTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
         attackTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
-      if(currentValueSlider1double > 0)
-        releaseTime = map(currentValueSlider1double, 0, 8, 0.0, 3.0);
+      if(currentValueSlider2 > 0)
+        releaseTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
       else
-        releaseTime = map(currentValueSlider1double, -8, 0, 3.0, 0.0);
+        releaseTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
       
       osc.setType('sine');
       osc.amp(env);
@@ -948,24 +937,22 @@ function draw() {
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       env.setRange(attackLevel, releaseLevel);
 
-      if(loopingLeft){
-        if (seconds == 8 || seconds > 8){   
-          env.play(0,0,1);
-          seconds=0;
-        }
+      if(triggerLeft){
+        env.triggerAttack(osc);
+        triggerLeft = false;
       }
 
     }
-    if(loopingRight || hoverRight) {
-      if(currentValueSlider2 > 0)
-        attackTime = map(currentValueSlider2, 0, 8, 0, 3.0);
+    if(hoverRight) {
+      if(currentValueSlider3 > 0)
+        attackTime = map(currentValueSlider3, 0, 8, 0, 3.0);
       else
-        attackTime = map(currentValueSlider2, -8, 0, 3.0, 0);
+        attackTime = map(currentValueSlider3, -8, 0, 3.0, 0);
 
-      if(currentValueSlider2double > 0)
-        releaseTime = map(currentValueSlider2double, 0, 8, 0, 3.0);
+      if(currentValueSlider4 > 0)
+        releaseTime = map(currentValueSlider4, 0, 8, 0, 3.0);
       else
-        releaseTime = map(currentValueSlider2double, -8, 0, 3.0, 0);
+        releaseTime = map(currentValueSlider4, -8, 0, 3.0, 0);
 
       osc.setType('sine');
       osc.amp(env);
@@ -974,12 +961,11 @@ function draw() {
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       env.setRange(attackLevel, releaseLevel);
 
-      if(loopingRight){
-        if (seconds == 8 || seconds > 8){   
-          env.play(0,0,1);
-          seconds=0;
-        }
-      }     
+      if(triggerRight){
+        env.triggerAttack(osc);
+        triggerRight = false;
+      }
+
     }
   }
 
@@ -997,7 +983,7 @@ function draw() {
     sliderDouble = 1;
 
     // keeping these levels always up to the maximum (0.0 and 1.0)
-    let attackLevel = 1.0;
+    let attackLevel = 0.5;
     let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
     let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
@@ -1007,13 +993,13 @@ function draw() {
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
     let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
-   if(loopingLeft || hoverLeft){
+   if(hoverLeft){
       if(currentValueSlider1 > 0)
         attackTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
         attackTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
-      freq = getNote(currentValueSlider1double);
+      freq = getNote(currentValueSlider2);
 
       osc.setType('sine');
       osc.amp(env);
@@ -1022,21 +1008,20 @@ function draw() {
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       env.setRange(attackLevel, releaseLevel);
 
-      if(loopingLeft){
-        if (seconds == 8 || seconds > 8){   
-          env.play(0,0,1);
-          seconds=0;
-        }
+      if(triggerLeft){
+        env.triggerAttack(osc);
+        triggerLeft = false;
       }
 
-    }
-    if(loopingRight || hoverRight) {
-      if(currentValueSlider2 > 0)
-        attackTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
-      else
-        attackTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
-      freq = getNote(currentValueSlider2double);
+    }
+    if(hoverRight) {
+      if(currentValueSlider3 > 0)
+        attackTime = map(currentValueSlider3, 0, 8, 0.0, 3.0);
+      else
+        attackTime = map(currentValueSlider3, -8, 0, 3.0, 0.0);
+
+      freq = getNote(currentValueSlider4);
 
       osc.setType('sine');
       osc.amp(env);
@@ -1045,12 +1030,11 @@ function draw() {
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       env.setRange(attackLevel, releaseLevel);
 
-      if(loopingRight){
-        if (seconds == 8 || seconds > 8){   
-          env.play(0,0,1);
-          seconds=0;
-        }
-      }     
+      if(triggerRight){
+        env.triggerAttack(osc);
+        triggerRight = false;
+      }
+
     }
   }
  
@@ -1068,7 +1052,7 @@ function draw() {
     sliderDouble = 1;
 
     // keeping these levels always up to the maximum (0.0 and 1.0)
-    let attackLevel = 1.0;
+    let attackLevel = 0.5;
     let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
     let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
@@ -1078,16 +1062,16 @@ function draw() {
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
     let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
-   if(loopingLeft || hoverLeft){
+   if(hoverLeft){
       if(currentValueSlider1 > 0)
         attackTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
         attackTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
-      if(currentValueSlider1double > 0)
-        attackLevel = map(currentValueSlider1double, 0, 8, 0.1, 1.0);
+      if(currentValueSlider2 > 0)
+        attackLevel = map(currentValueSlider2, 0, 8, 0.1, 1.0);
       else
-        attackLevel = map(currentValueSlider1double, -8, 0, 1.0, 0.1);
+        attackLevel = map(currentValueSlider2, -8, 0, 1.0, 0.1);
       
       osc.setType('sine');
       osc.amp(env);
@@ -1098,24 +1082,22 @@ function draw() {
       env.setADSR(attackTime, decayTime, susPercent, releaseTime);
       env.setRange(attackLevel, releaseLevel);
 
-      if(loopingLeft){
-        if (seconds == 8 || seconds > 8){   
-          env.play(0,0,1);
-          seconds=0;
-        }
+      if(triggerLeft){
+        env.triggerAttack(osc);
+        triggerLeft = false;
       }
 
     }
-    if(loopingRight || hoverRight) {
-      if(currentValueSlider2 > 0)
-        attackTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
+    if(hoverRight) {
+      if(currentValueSlider3 > 0)
+        attackTime = map(currentValueSlider3, 0, 8, 0.0, 3.0);
       else
-        attackTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
+        attackTime = map(currentValueSlider3, -8, 0, 3.0, 0.0);
 
-      if(currentValueSlider2double > 0)
-        attackLevel = map(currentValueSlider2double, 0, 8, 0.1, 1.0);
+      if(currentValueSlider4 > 0)
+        attackLevel = map(currentValueSlider4, 0, 8, 0.1, 1.0);
       else
-        attackLevel = map(currentValueSlider2double, -8, 0, 1.0, 0.1);
+        attackLevel = map(currentValueSlider4, -8, 0, 1.0, 0.1);
       
       osc.setType('sine');
       osc.amp(env);
@@ -1124,12 +1106,11 @@ function draw() {
       env.setRange(attackLevel, releaseLevel);
       env.setADSR(attackTime, decayTime, susPercent, releaseTime);
 
-      if(loopingRight){
-        if (seconds == 8 || seconds > 8){   
-          env.play(0,0,1);
-          seconds=0;
-        }
+      if(triggerRight){
+        env.triggerAttack(osc);
+        triggerRight = false;
       }
+
     }
   }
 
@@ -1147,7 +1128,7 @@ function draw() {
     sliderDouble = 1;
 
    // keeping these levels always up to the maximum (0.0 and 1.0)
-   let attackLevel = 1.0;
+   let attackLevel = 0.5;
    let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
    let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
@@ -1160,13 +1141,13 @@ function draw() {
     //let dryWet;
     let reverbTime, decayRate = 2;
 
-   if(loopingLeft || hoverLeft){
+   if(hoverLeft){
       if(currentValueSlider1 > 0)
         releaseTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
         releaseTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
-      freq = getNote(currentValueSlider1double);
+      freq = getNote(currentValueSlider2);
 
       osc.setType('sine');
       osc.amp(env);
@@ -1175,21 +1156,19 @@ function draw() {
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       env.setRange(attackLevel, releaseLevel);
 
-      if(loopingLeft){
-        if (seconds == 8 || seconds > 8){   
-          env.play(0,0,1);
-          seconds=0;
-        }
+      if(triggerLeft){
+        env.triggerAttack(osc);
+        triggerLeft = false;
       }
 
     }
-    if(loopingRight || hoverRight) {
-      if(currentValueSlider2 > 0)
-        releaseTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
+    if(hoverRight) {
+      if(currentValueSlider3 > 0)
+        releaseTime = map(currentValueSlider3, 0, 8, 0.0, 3.0);
       else
-        releaseTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
+        releaseTime = map(currentValueSlider3, -8, 0, 3.0, 0.0);
 
-      freq = getNote(currentValueSlider2double);
+      freq = getNote(currentValueSlider4);
 
       
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
@@ -1200,11 +1179,9 @@ function draw() {
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       env.setRange(attackLevel, releaseLevel);
 
-      if(loopingRight){
-        if (seconds == 8 || seconds > 8){   
-          env.play(0,0,1);
-          seconds=0;
-        }
+      if(triggerRight){
+        env.triggerAttack(osc);
+        triggerRight = false;
       }
 
     }
@@ -1224,7 +1201,7 @@ function draw() {
     sliderDouble = 1;
 
    // keeping these levels always up to the maximum (0.0 and 1.0)
-   let attackLevel = 1.0;
+   let attackLevel = 0.5;
    let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
    let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
@@ -1234,16 +1211,16 @@ function draw() {
    let decayTime = 0.5; // half value from the total 1.0 of the decay tests
    let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
-   if(loopingLeft || hoverLeft){
+   if(hoverLeft){
       if(currentValueSlider1 > 0)
         releaseTime = map(currentValueSlider1, 0, 8, 0.0, 3.0);
       else
         releaseTime = map(currentValueSlider1, -8, 0, 3.0, 0.0);
 
-      if(currentValueSlider1double > 0)
-        attackLevel = map(currentValueSlider1double, 0, 8, 0.1, 1.0);
+      if(currentValueSlider2 > 0)
+        attackLevel = map(currentValueSlider2, 0, 8, 0.1, 1.0);
       else
-        attackLevel = map(currentValueSlider1double, -8, 0, 1.0, 0.1);
+        attackLevel = map(currentValueSlider2, -8, 0, 1.0, 0.1);
         
       env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       osc.setType('sine');
@@ -1252,25 +1229,24 @@ function draw() {
       osc.freq(midiToFreq(int(60)));
       env.setRange(attackLevel, releaseLevel);
       env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-      
-      if(loopingLeft){
-        if (seconds == 8 || seconds > 8){   
-          env.play(0,0,1);
-          seconds=0;
-        }
+
+      if(triggerLeft){
+        env.triggerAttack(osc);
+        triggerLeft = false;
       }
 
-    }
-    if(loopingRight || hoverRight) {
-      if(currentValueSlider2 > 0)
-        releaseTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
-      else
-        releaseTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
-      if(currentValueSlider2double > 0)
-        attackLevel = map(currentValueSlider2double, 0, 8, 0.1, 1.0);
+    }
+    if(hoverRight) {
+      if(currentValueSlider3 > 0)
+        releaseTime = map(currentValueSlider3, 0, 8, 0.0, 3.0);
       else
-        attackLevel = map(currentValueSlider2double, -8, 0, 1.0, 0.1);
+        releaseTime = map(currentValueSlider3, -8, 0, 3.0, 0.0);
+
+      if(currentValueSlider4 > 0)
+        attackLevel = map(currentValueSlider4, 0, 8, 0.1, 1.0);
+      else
+        attackLevel = map(currentValueSlider4, -8, 0, 1.0, 0.1);
 
       osc.setType('sine');
       osc.amp(env);
@@ -1279,11 +1255,9 @@ function draw() {
       env.setRange(attackLevel, releaseLevel);
       env.setADSR(attackTime, decayTime, susPercent, releaseTime);
 
-      if(loopingRight){
-        if (seconds == 8 || seconds > 8){   
-          env.play(0,0,1);
-          seconds=0;
-        }
+      if(triggerRight){
+        env.triggerAttack(osc);
+        triggerRight = false;
       }
       
     }
@@ -1303,7 +1277,7 @@ function draw() {
     sliderDouble = 1;
 
     // keeping these levels always up to the maximum (0.0 and 1.0)
-   let attackLevel = 1.0;
+   let attackLevel = 0.5;
    let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
    let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
@@ -1314,14 +1288,14 @@ function draw() {
    let releaseTime = 1.5; // half value from the total 3.0 of the release tests
 
 
-   if(loopingLeft || hoverLeft){
+   if(hoverLeft){
       
       freq = getNote(currentValueSlider1);
    
-      if(currentValueSlider1double > 0)
-        attackLevel = map(currentValueSlider1double, 0, 8, 0.1, 1.0);
+      if(currentValueSlider2 > 0)
+        attackLevel = map(currentValueSlider2, 0, 8, 0.1, 1.0);
       else
-        attackLevel = map(currentValueSlider1double, -8, 0, 1.0, 0.1);
+        attackLevel = map(currentValueSlider2, -8, 0, 1.0, 0.1);
       
       osc.setType('sine');
       osc.amp(env);
@@ -1330,22 +1304,21 @@ function draw() {
       env.setRange(attackLevel, releaseLevel);
       env.setADSR(attackTime, decayTime, susPercent, releaseTime);
 
-      if(loopingLeft){
-        if (seconds == 8 || seconds > 8){   
-          env.play(0,0,1);
-          seconds=0;
-        }
+      if(triggerLeft){
+        env.triggerAttack(osc);
+        triggerLeft = false;
       }
+
      
     }
-    if(loopingRight || hoverRight) {
+    if(hoverRight) {
       
-      freq = getNote(currentValueSlider2);
+      freq = getNote(currentValueSlider3);
 
-      if(currentValueSlider2double > 0)
-        attackLevel = map(currentValueSlider2double, 0, 8, 0.1, 1);
+      if(currentValueSlider4 > 0)
+        attackLevel = map(currentValueSlider4, 0, 8, 0.1, 1);
       else
-        attackLevel = map(currentValueSlider2double, -8, 0, 1, 0.1);
+        attackLevel = map(currentValueSlider4, -8, 0, 1, 0.1);
         
       osc.setType('sine');
       osc.amp(env);
@@ -1354,11 +1327,9 @@ function draw() {
       env.setRange(attackLevel, releaseLevel);
       env.setADSR(attackTime, decayTime, susPercent, releaseTime);
 
-      if(loopingRight){
-        if (seconds == 8 || seconds > 8){   
-          env.play(0,0,1);
-          seconds=0;
-        }
+      if(triggerRight){
+        env.triggerAttack(osc);
+        triggerRight = false;
       }
       
     }
@@ -1382,10 +1353,10 @@ function draw() {
     push();
     noFill();
     translate(width/5, height/2);
-    if(currentValueSlider1double > 0)
-      sw = int(map(currentValueSlider1double, 0, 8, 1, 25));
-    if(currentValueSlider1double <= 0)
-      sw = int(map(currentValueSlider1double, -8, 0, 25, 1));
+    if(currentValueSlider2 > 0)
+      sw = int(map(currentValueSlider2, 0, 8, 1, 25));
+    if(currentValueSlider2 <= 0)
+      sw = int(map(currentValueSlider2, -8, 0, 25, 1));
     strokeWeight(sw);
     if(currentValueSlider1 < 0) 
       arc(0, 0, map(currentValueSlider1, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
@@ -1397,15 +1368,15 @@ function draw() {
     push();
     noFill();
     translate(width/1.25, height/2);
-    if(currentValueSlider2double > 0)
-      sw = int(map(currentValueSlider2double, 0, 8, 1, 25));
-    if(currentValueSlider2double <= 0)
-      sw = int(map(currentValueSlider2double, -8, 0, 25, 1));
+    if(currentValueSlider4 > 0)
+      sw = int(map(currentValueSlider4, 0, 8, 1, 25));
+    if(currentValueSlider4 <= 0)
+      sw = int(map(currentValueSlider4, -8, 0, 25, 1));
     strokeWeight(sw);
-    if(currentValueSlider2 < 0) 
-      arc(0, 0, map(currentValueSlider2, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(currentValueSlider2 >= 0) 
-      arc(0, 0, map(currentValueSlider2, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider3 < 0) 
+      arc(0, 0, map(currentValueSlider3, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider3 >= 0) 
+      arc(0, 0, map(currentValueSlider3, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
     arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
     pop()
   }
@@ -1427,10 +1398,10 @@ function draw() {
     noFill();
     translate(width/5, height/2);
     strokeWeight(10);
-    let angle = map(currentValueSlider1double, 0, 8, 0, 180);
-    if(currentValueSlider1double > 0)
+    let angle = map(currentValueSlider2, 0, 8, 0, 180);
+    if(currentValueSlider2 > 0)
       rotate(PI / 180 * angle);
-    if(currentValueSlider1double <= 0)
+    if(currentValueSlider2 <= 0)
     rotate(PI / 180 * angle);
     if(currentValueSlider1 < 0) 
       arc(0, 0, map(currentValueSlider1, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
@@ -1444,15 +1415,15 @@ function draw() {
     translate(width/1.25, height/2);
 
     strokeWeight(10);
-    let angle2 = map(currentValueSlider2double, 0, 8, 0, 180);
-    if(currentValueSlider2double > 0)
+    let angle2 = map(currentValueSlider4, 0, 8, 0, 180);
+    if(currentValueSlider4 > 0)
       rotate(PI / 180 * angle2);
-    if(currentValueSlider2double <= 0)
+    if(currentValueSlider4 <= 0)
       rotate(PI / 180 * angle2);
-    if(currentValueSlider2 < 0) 
-      arc(0, 0, map(currentValueSlider2, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(currentValueSlider2 >= 0) 
-      arc(0, 0, map(currentValueSlider2, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider3 < 0) 
+      arc(0, 0, map(currentValueSlider3, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider3 >= 0) 
+      arc(0, 0, map(currentValueSlider3, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
     arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
 
     pop();
@@ -1475,15 +1446,16 @@ function draw() {
     noFill();
     translate(width/5, height/2);
     strokeWeight(10);
-    //console.log(lerp(5, 5, map(currentValueSlider1double, -8, 0, 0, 1)));
+    //console.log(lerp(5, 5, map(currentValueSlider2, -8, 0, 0, 1)));
     let irregularList;
    
-    if(currentValueSlider1double > 0) {
-      irregularList = [map(currentValueSlider1double, 0, 8, 5, 5), map(currentValueSlider1double, 0, 8, 5, 20), map(currentValueSlider1double, 0, 8, 5, 30), map(currentValueSlider1double, 0, 8, 5, 40)];
+    if(currentValueSlider2 > 0) {
+      //irregularList = [map(currentValueSlider2, 0, 8, 5, 5), map(currentValueSlider2, 0, 8, 5, 20), map(currentValueSlider2, 0, 8, 5, 30), map(currentValueSlider2, 0, 8, 5, 40)];
+      irregularList = [1, map(currentValueSlider2, 0, 8, 5, 25),1];
       setLineDash(irregularList);  
     }
-    if(currentValueSlider1double <= 0) {
-      irregularList = [map(currentValueSlider1double, -8, 0, 5, 5), map(currentValueSlider1double, -8, 0, 20, 5), map(currentValueSlider1double, -8, 0, 30, 5), map(currentValueSlider1double, -8, 0, 40, 5)];
+    if(currentValueSlider2 <= 0) {
+      irregularList = [1, map(currentValueSlider2, -8, 0, 25, 5),1];
       setLineDash(irregularList);  
     }
     beginShape();
@@ -1500,22 +1472,76 @@ function draw() {
     translate(width/1.25, height/2);
 
     strokeWeight(10);
-    //console.log(lerp(5, 5, map(currentValueSlider2double, -8, 0, 0, 1)));
+
     let irregularList2;
+
+    randomSeed(99);
    
-    if(currentValueSlider2double > 0) {
-      irregularList2 = [map(currentValueSlider2double, 0, 8, 5, 5), map(currentValueSlider2double, 0, 8, 5, 20), map(currentValueSlider2double, 0, 8, 5, 30), map(currentValueSlider2double, 0, 8, 5, 40)];
+    if(currentValueSlider4 < 0) {
+      irregularList2 = [4, 
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4,
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4,
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4,
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
+        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4))];
       setLineDash(irregularList2);  
     }
-    if(currentValueSlider2double <= 0) {
-      irregularList2 = [map(currentValueSlider2double, -8, 0, 5, 5), map(currentValueSlider2double, -8, 0, 20, 5), map(currentValueSlider2double, -8, 0, 30, 5), map(currentValueSlider2double, -8, 0, 40, 5)];
+    if(currentValueSlider4 >= 0) {
+      irregularList2 = [5, 
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5,
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5,
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5,
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5,
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
+        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15)];
       setLineDash(irregularList2);  
     }
-    if(currentValueSlider2 < 0) 
-      arc(0, 0, map(currentValueSlider2, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(currentValueSlider2 >= 0) 
-      arc(0, 0, map(currentValueSlider2, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
-    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+  
+    /*if(currentValueSlider3 < 0) 
+      arc(0, 0, map(currentValueSlider3, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
+    if(currentValueSlider3 >= 0) 
+      arc(0, 0, map(currentValueSlider3, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
+    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);*/
+    angleMode(DEGREES);
+    noFill();
+    beginShape();
+    let x;
+    for(let a= 0; a < 360; a+=10){
+      if(a > 180)
+        x = 100 * sin(a);
+        else{
+          if(currentValueSlider3 < 0) 
+            x =  map(currentValueSlider3, -8, 0, 100, 150) * sin(a);
+          else
+            x = map(currentValueSlider3, 0, 8, 150, 100) * sin(a);
+        }
+      let y = 100 * cos(a);
+      vertex(x,y);
+    }
+    endShape(CLOSE);
     pop();
 
   }
@@ -1551,11 +1577,11 @@ function draw() {
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(currentValueSlider1double <= 0) {
-        angleChange = map(currentValueSlider1double, -8, 0, 50, 150);
+      if(currentValueSlider2 <= 0) {
+        angleChange = map(currentValueSlider2, -8, 0, 50, 150);
       }
-      if(currentValueSlider1double > 0) {
-        angleChange = map(currentValueSlider1double, 0, 8, 150, 50);
+      if(currentValueSlider2 > 0) {
+        angleChange = map(currentValueSlider2, 0, 8, 150, 50);
       }
 
       if(currentValueSlider1 <= 0) {
@@ -1575,7 +1601,7 @@ function draw() {
         vertex(x, y);
       }
       
-      if(currentValueSlider1double > 4 || currentValueSlider1double < -4 ){
+      if(currentValueSlider2 > 4 || currentValueSlider2 < -4 ){
         if(i == 0)
           rotate(PI / 180 * 70);
         star(0, 0, 150 - angleChange + 30, 100, 10, asymmetry2);
@@ -1608,20 +1634,20 @@ function draw() {
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(currentValueSlider2double <= 0) {
-        angleChange2 = map(currentValueSlider2double, -8, 0, 50, 150);
+      if(currentValueSlider4 <= 0) {
+        angleChange2 = map(currentValueSlider4, -8, 0, 50, 150);
       }
-      if(currentValueSlider2double > 0) {
-        angleChange2 = map(currentValueSlider2double, 0, 8, 150, 50);
+      if(currentValueSlider4 > 0) {
+        angleChange2 = map(currentValueSlider4, 0, 8, 150, 50);
       }
 
-      if(currentValueSlider2 <= 0) {
-        asymmetry3 = map(currentValueSlider2, -8, 0, 0, 50)
-        asymmetry4 = map(currentValueSlider2, -8, 0, 0, 10)
+      if(currentValueSlider3 <= 0) {
+        asymmetry3 = map(currentValueSlider3, -8, 0, 0, 50)
+        asymmetry4 = map(currentValueSlider3, -8, 0, 0, 10)
       }
-      if(currentValueSlider2 > 0) {
-        asymmetry3 = map(currentValueSlider2, 0, 8, 50, 0)
-        asymmetry4 = map(currentValueSlider2, 0, 8, 10, 0)
+      if(currentValueSlider3 > 0) {
+        asymmetry3 = map(currentValueSlider3, 0, 8, 50, 0)
+        asymmetry4 = map(currentValueSlider3, 0, 8, 10, 0)
       }
 
       const angle = i * spacing;
@@ -1632,7 +1658,7 @@ function draw() {
         vertex(x, y);
       }
       
-      if(currentValueSlider2double > 4 || currentValueSlider2double < -4 ){
+      if(currentValueSlider4 > 4 || currentValueSlider4 < -4 ){
         if(i == 0)
           rotate(PI / 180 * 70);
         star(0, 0, 150 - angleChange2 + 30, 100, 10, asymmetry4);
@@ -1671,10 +1697,10 @@ function draw() {
     noFill();
     translate(width/5, height/2);
     rectMode(CENTER);
-    if(currentValueSlider1double > 0)
-      sw = int(map(currentValueSlider1double, 0, 8, 1, 25));
-    if(currentValueSlider1double <= 0)
-      sw = int(map(currentValueSlider1double, -8, 0, 25, 1));
+    if(currentValueSlider2 > 0)
+      sw = int(map(currentValueSlider2, 0, 8, 1, 25));
+    if(currentValueSlider2 <= 0)
+      sw = int(map(currentValueSlider2, -8, 0, 25, 1));
     strokeWeight(sw);
     let angle = map(currentValueSlider1, 0, 8, 0, 45);
     if(currentValueSlider1 > 0)
@@ -1688,15 +1714,15 @@ function draw() {
     noFill();
     translate(width/1.25, height/2);
     rectMode(CENTER);
-    if(currentValueSlider2double > 0)
-      sw = int(map(currentValueSlider2double, 0, 8, 1, 25));
-    if(currentValueSlider2double <= 0)
-      sw = int(map(currentValueSlider2double, -8, 0, 25, 1));
+    if(currentValueSlider4 > 0)
+      sw = int(map(currentValueSlider4, 0, 8, 1, 25));
+    if(currentValueSlider4 <= 0)
+      sw = int(map(currentValueSlider4, -8, 0, 25, 1));
     strokeWeight(sw);
-    let angle2 = map(currentValueSlider2, 0, 8, 0, 45);
-    if(currentValueSlider2 > 0)
+    let angle2 = map(currentValueSlider3, 0, 8, 0, 45);
+    if(currentValueSlider3 > 0)
       rotate(PI / 180 * angle2);
-    if(currentValueSlider2 <= 0)
+    if(currentValueSlider3 <= 0)
     rotate(PI / 180 * angle2);
     rect(0, 0, 200, 200);
     pop()
@@ -1721,12 +1747,12 @@ function draw() {
     noFill();
     translate(width/5, height/2);
    
-    if(currentValueSlider1double > 0) {
-      irregularList = [map(currentValueSlider1double, 0, 8, 5, 5), map(currentValueSlider1double, 0, 8, 5, 20), map(currentValueSlider1double, 0, 8, 5, 30), map(currentValueSlider1double, 0, 8, 5, 40)];
+    if(currentValueSlider2 > 0) {
+      irregularList = [map(currentValueSlider2, 0, 8, 5, 5), map(currentValueSlider2, 0, 8, 5, 20), map(currentValueSlider2, 0, 8, 5, 30), map(currentValueSlider2, 0, 8, 5, 40)];
       setLineDash(irregularList);  
     }
-    if(currentValueSlider1double <= 0) {
-      irregularList = [map(currentValueSlider1double, -8, 0, 5, 5), map(currentValueSlider1double, -8, 0, 20, 5), map(currentValueSlider1double, -8, 0, 30, 5), map(currentValueSlider1double, -8, 0, 40, 5)];
+    if(currentValueSlider2 <= 0) {
+      irregularList = [map(currentValueSlider2, -8, 0, 5, 5), map(currentValueSlider2, -8, 0, 20, 5), map(currentValueSlider2, -8, 0, 30, 5), map(currentValueSlider2, -8, 0, 40, 5)];
       setLineDash(irregularList);  
     }
     if(currentValueSlider1 > 0) 
@@ -1741,18 +1767,18 @@ function draw() {
     noFill();
     translate(width/1.25, height/2);output1double
 
-    if(currentValueSlider2double > 0) {
-      irregularList2 = [map(currentValueSlider2double, 0, 8, 5, 5), map(currentValueSlider2double, 0, 8, 5, 20), map(currentValueSlider2double, 0, 8, 5, 30), map(currentValueSlider2double, 0, 8, 5, 40)];
+    if(currentValueSlider4 > 0) {
+      irregularList2 = [map(currentValueSlider4, 0, 8, 5, 5), map(currentValueSlider4, 0, 8, 5, 20), map(currentValueSlider4, 0, 8, 5, 30), map(currentValueSlider4, 0, 8, 5, 40)];
       setLineDash(irregularList2);  
     }
-    if(currentValueSlider2double <= 0) {
-      irregularList2 = [map(currentValueSlider2double, -8, 0, 5, 5), map(currentValueSlider2double, -8, 0, 20, 5), map(currentValueSlider2double, -8, 0, 30, 5), map(currentValueSlider2double, -8, 0, 40, 5)];
+    if(currentValueSlider4 <= 0) {
+      irregularList2 = [map(currentValueSlider4, -8, 0, 5, 5), map(currentValueSlider4, -8, 0, 20, 5), map(currentValueSlider4, -8, 0, 30, 5), map(currentValueSlider4, -8, 0, 40, 5)];
       setLineDash(irregularList2);  
     }
-    if(currentValueSlider2 > 0) 
-      sw = int(map(currentValueSlider2, 0, 8, 1, 25));
-    if(currentValueSlider2 <= 0) 
-      sw = int(map(currentValueSlider2, -8, 0, 25, 1));
+    if(currentValueSlider3 > 0) 
+      sw = int(map(currentValueSlider3, 0, 8, 1, 25));
+    if(currentValueSlider3 <= 0) 
+      sw = int(map(currentValueSlider3, -8, 0, 25, 1));
     strokeWeight(sw);
     ellipse(0,0, 200, 200);
     pop();  
@@ -1792,11 +1818,11 @@ function draw() {
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(currentValueSlider1double <= 0) {
-        angleChange = map(currentValueSlider1double, -8, 0, 50, 150);
+      if(currentValueSlider2 <= 0) {
+        angleChange = map(currentValueSlider2, -8, 0, 50, 150);
       }
-      if(currentValueSlider1double > 0) {
-        angleChange = map(currentValueSlider1double, 0, 8, 150, 50);
+      if(currentValueSlider2 > 0) {
+        angleChange = map(currentValueSlider2, 0, 8, 150, 50);
       }
 
       const angle = i * spacing;
@@ -1805,7 +1831,7 @@ function draw() {
 
       if(i == 0)
         vertex(x, y);
-      else if(currentValueSlider1double > 4 || currentValueSlider1double < -4 ){
+      else if(currentValueSlider2 > 4 || currentValueSlider2 < -4 ){
         star(0, 0, 150 - angleChange + 30, 100, 10, 0);
       }
       else{
@@ -1824,21 +1850,21 @@ function draw() {
     noFill();
     translate(width/1.25, height/2);
     
-    if(currentValueSlider2 > 0)
-      sw = int(map(currentValueSlider2, 0, 8, 1, 25));
-    if(currentValueSlider2 <= 0)
-      sw = int(map(currentValueSlider2, -8, 0, 25, 1));
+    if(currentValueSlider3 > 0)
+      sw = int(map(currentValueSlider3, 0, 8, 1, 25));
+    if(currentValueSlider3 <= 0)
+      sw = int(map(currentValueSlider3, -8, 0, 25, 1));
     strokeWeight(sw);
 
     beginShape();
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(currentValueSlider2double <= 0) {
-        angleChange = map(currentValueSlider2double, -8, 0, 50, 150);
+      if(currentValueSlider4 <= 0) {
+        angleChange = map(currentValueSlider4, -8, 0, 50, 150);
       }
-      if(currentValueSlider2double > 0) {
-        angleChange = map(currentValueSlider2double, 0, 8, 150, 50);
+      if(currentValueSlider4 > 0) {
+        angleChange = map(currentValueSlider4, 0, 8, 150, 50);
       }
 
       const angle = i * spacing;
@@ -1847,7 +1873,7 @@ function draw() {
 
       if(i == 0)
         vertex(x, y);
-      else if(currentValueSlider2double > 4 || currentValueSlider2double < -4 ){
+      else if(currentValueSlider4 > 4 || currentValueSlider4 < -4 ){
         star(0, 0, 150 - angleChange + 30, 100, 10, 0);
       }
       else{
@@ -1885,12 +1911,12 @@ function draw() {
     rectMode(CENTER);
     strokeWeight(10);
    
-    if(currentValueSlider1double > 0) {
-      irregularList = [map(currentValueSlider1double, 0, 8, 5, 5), map(currentValueSlider1double, 0, 8, 5, 20), map(currentValueSlider1double, 0, 8, 5, 30), map(currentValueSlider1double, 0, 8, 5, 40)];
+    if(currentValueSlider2 > 0) {
+      irregularList = [map(currentValueSlider2, 0, 8, 5, 5), map(currentValueSlider2, 0, 8, 5, 20), map(currentValueSlider2, 0, 8, 5, 30), map(currentValueSlider2, 0, 8, 5, 40)];
       setLineDash(irregularList);  
     }
-    if(currentValueSlider1double <= 0) {
-      irregularList = [map(currentValueSlider1double, -8, 0, 5, 5), map(currentValueSlider1double, -8, 0, 20, 5), map(currentValueSlider1double, -8, 0, 30, 5), map(currentValueSlider1double, -8, 0, 40, 5)];
+    if(currentValueSlider2 <= 0) {
+      irregularList = [map(currentValueSlider2, -8, 0, 5, 5), map(currentValueSlider2, -8, 0, 20, 5), map(currentValueSlider2, -8, 0, 30, 5), map(currentValueSlider2, -8, 0, 40, 5)];
       setLineDash(irregularList);  
     }
     let angle = map(currentValueSlider1, 0, 8, 0, 45);
@@ -1908,18 +1934,18 @@ function draw() {
     rectMode(CENTER);
     strokeWeight(10);
 
-    if(currentValueSlider2double > 0) {
-      irregularList2 = [map(currentValueSlider2double, 0, 8, 5, 5), map(currentValueSlider2double, 0, 8, 5, 20), map(currentValueSlider2double, 0, 8, 5, 30), map(currentValueSlider2double, 0, 8, 5, 40)];
+    if(currentValueSlider4 > 0) {
+      irregularList2 = [map(currentValueSlider4, 0, 8, 5, 5), map(currentValueSlider4, 0, 8, 5, 20), map(currentValueSlider4, 0, 8, 5, 30), map(currentValueSlider4, 0, 8, 5, 40)];
       setLineDash(irregularList2);  
     }
-    if(currentValueSlider2double <= 0) {
-      irregularList2 = [map(currentValueSlider2double, -8, 0, 5, 5), map(currentValueSlider2double, -8, 0, 20, 5), map(currentValueSlider2double, -8, 0, 30, 5), map(currentValueSlider2double, -8, 0, 40, 5)];
+    if(currentValueSlider4 <= 0) {
+      irregularList2 = [map(currentValueSlider4, -8, 0, 5, 5), map(currentValueSlider4, -8, 0, 20, 5), map(currentValueSlider4, -8, 0, 30, 5), map(currentValueSlider4, -8, 0, 40, 5)];
       setLineDash(irregularList2);  
     }
-    let angle2 = map(currentValueSlider2, 0, 8, 0, 45);
-    if(currentValueSlider2 > 0)
+    let angle2 = map(currentValueSlider3, 0, 8, 0, 45);
+    if(currentValueSlider3 > 0)
       rotate(PI / 180 * angle2);
-    if(currentValueSlider2 <= 0)
+    if(currentValueSlider3 <= 0)
       rotate(PI / 180 * angle2);
     rect(0, 0, 200, 200);
     pop();  
@@ -1944,10 +1970,10 @@ function draw() {
     translate(width/5, height/2);
     strokeWeight(10);
     rectMode(CENTER);
-    let angle = map(currentValueSlider1double, 0, 8, 0, 45);
-    if(currentValueSlider1double > 0)
+    let angle = map(currentValueSlider2, 0, 8, 0, 45);
+    if(currentValueSlider2 > 0)
       rotate(PI / 180 * angle);
-    if(currentValueSlider1double <= 0)
+    if(currentValueSlider2 <= 0)
       rotate(PI / 180 * angle);
     if(currentValueSlider1 < 0) 
       square(0, 0, 200, map(currentValueSlider1, -8, 0, 0, 100));
@@ -1961,15 +1987,15 @@ function draw() {
 
     strokeWeight(10);
     rectMode(CENTER);
-    let angle2 = map(currentValueSlider2double, 0, 8, 0, 45);
-    if(currentValueSlider2double > 0)
+    let angle2 = map(currentValueSlider4, 0, 8, 0, 45);
+    if(currentValueSlider4 > 0)
       rotate(PI / 180 * angle2);
-    if(currentValueSlider2double <= 0)
+    if(currentValueSlider4 <= 0)
       rotate(PI / 180 * angle2);
-    if(currentValueSlider2 < 0) 
-      square(0, 0, 200, map(currentValueSlider2, -8, 0, 0, 100));
-    if(currentValueSlider2 >= 0) 
-      square(0, 0, 200, map(currentValueSlider2, 0, 8, 100, 0));
+    if(currentValueSlider3 < 0) 
+      square(0, 0, 200, map(currentValueSlider3, -8, 0, 0, 100));
+    if(currentValueSlider3 >= 0) 
+      square(0, 0, 200, map(currentValueSlider3, 0, 8, 100, 0));
     pop();
   }
   
@@ -2012,11 +2038,11 @@ function draw() {
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(currentValueSlider1double <= 0) {
-        angleChange = map(currentValueSlider1double, -8, 0, 50, 150);
+      if(currentValueSlider2 <= 0) {
+        angleChange = map(currentValueSlider2, -8, 0, 50, 150);
       }
-      if(currentValueSlider1double > 0) {
-        angleChange = map(currentValueSlider1double, 0, 8, 150, 50);
+      if(currentValueSlider2 > 0) {
+        angleChange = map(currentValueSlider2, 0, 8, 150, 50);
       }
 
       const angle = i * spacing;
@@ -2025,7 +2051,7 @@ function draw() {
 
       if(i == 0)
         vertex(x, y);
-      else if(currentValueSlider1double > 4 || currentValueSlider1double < -4 ){
+      else if(currentValueSlider2 > 4 || currentValueSlider2 < -4 ){
         star(0, 0, 150 - angleChange + 30, 100, 10, 0);
       }
       else{
@@ -2046,12 +2072,12 @@ function draw() {
 
     strokeWeight(10);
     
-    if(currentValueSlider2 > 0) {
-      irregularList2 = [map(currentValueSlider2, 0, 8, 5, 5), map(currentValueSlider2, 0, 8, 5, 20), map(currentValueSlider2, 0, 8, 5, 30), map(currentValueSlider2, 0, 8, 5, 40)];
+    if(currentValueSlider3 > 0) {
+      irregularList2 = [map(currentValueSlider3, 0, 8, 5, 5), map(currentValueSlider3, 0, 8, 5, 20), map(currentValueSlider3, 0, 8, 5, 30), map(currentValueSlider3, 0, 8, 5, 40)];
       setLineDash(irregularList2);  
     }
-    if(currentValueSlider2 <= 0) {
-      irregularList2 = [map(currentValueSlider2, -8, 0, 5, 5), map(currentValueSlider2, -8, 0, 20, 5), map(currentValueSlider2, -8, 0, 30, 5), map(currentValueSlider2, -8, 0, 40, 5)];
+    if(currentValueSlider3 <= 0) {
+      irregularList2 = [map(currentValueSlider3, -8, 0, 5, 5), map(currentValueSlider3, -8, 0, 20, 5), map(currentValueSlider3, -8, 0, 30, 5), map(currentValueSlider3, -8, 0, 40, 5)];
       setLineDash(irregularList2);  
     }
 
@@ -2059,11 +2085,11 @@ function draw() {
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(currentValueSlider2double <= 0) {
-        angleChange = map(currentValueSlider2double, -8, 0, 50, 150);
+      if(currentValueSlider4 <= 0) {
+        angleChange = map(currentValueSlider4, -8, 0, 50, 150);
       }
-      if(currentValueSlider2double > 0) {
-        angleChange = map(currentValueSlider2double, 0, 8, 150, 50);
+      if(currentValueSlider4 > 0) {
+        angleChange = map(currentValueSlider4, 0, 8, 150, 50);
       }
 
       const angle = i * spacing;
@@ -2072,7 +2098,7 @@ function draw() {
 
       if(i == 0)
         vertex(x, y);
-      else if(currentValueSlider2double > 4 || currentValueSlider2double < -4 ){
+      else if(currentValueSlider4 > 4 || currentValueSlider4 < -4 ){
         star(0, 0, 150 - angleChange + 30, 100, 10, 0);
       }
       else{
@@ -2102,7 +2128,7 @@ function draw() {
     sliderDouble = 0;
 
      // keeping these levels always up to the maximum (0.0 and 1.0)
-     let attackLevel = 1.0;
+     let attackLevel = 0.5;
      let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
      let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
@@ -2112,17 +2138,17 @@ function draw() {
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
     let releaseTime = 1.5; // half value from the total 3.0 of the release tests
     
-   if(loopingLeft || hoverLeft){
+   if(hoverLeft){
       if(radiosLeft_value != null){
         if(currentValueSlider1 > 0)
           susPercent = map(currentValueSlider1, 0, 8, 0.1, 1.0);
         else
           susPercent = map(currentValueSlider1, -8, 0, 1.0, 0.1);
         
-        if(currentValueSlider1double > 0)
-          attackTime = map(currentValueSlider1double, 0, 8, 0.0, 3.0);
+        if(currentValueSlider2 > 0)
+          attackTime = map(currentValueSlider2, 0, 8, 0.0, 3.0);
         else
-          attackTime = map(currentValueSlider1double, -8, 0, 3.0, 0.0);
+          attackTime = map(currentValueSlider2, -8, 0, 3.0, 0.0);
 
         if(currentValueSlider5 > 0)
           releaseTime = map(currentValueSlider5, 0, 8, 0.0, 3.0);
@@ -2159,18 +2185,18 @@ if (seconds == 8 || seconds > 8){
         }
       }
     }
-    if(loopingRight || hoverRight) {
+    if(hoverRight) {
       if(radiosRight_value != null ){
 
-        if(currentValueSlider2 > 0)
-          susPercent = map(currentValueSlider2, 0, 8, 0.1, 1.0);
+        if(currentValueSlider3 > 0)
+          susPercent = map(currentValueSlider3, 0, 8, 0.1, 1.0);
         else
-          susPercent = map(currentValueSlider2, -8, 0, 1.0, 0.1);
+          susPercent = map(currentValueSlider3, -8, 0, 1.0, 0.1);
         
-        if(currentValueSlider2double > 0)
-          attackTime = map(currentValueSlider2double, 0, 8, 0.0, 3.0);
+        if(currentValueSlider4 > 0)
+          attackTime = map(currentValueSlider4, 0, 8, 0.0, 3.0);
         else
-          attackTime = map(currentValueSlider2double, -8, 0, 3.0, 0.0);
+          attackTime = map(currentValueSlider4, -8, 0, 3.0, 0.0);
 
         if(currentValueSlider6 > 0)
           releaseTime = map(currentValueSlider6, 0, 8, 0.0, 3.0);
@@ -2192,7 +2218,6 @@ if (seconds == 8 || seconds > 8){
         else if(radiosRight_value == "2.4")
           osc.setType('sawtooth') ;
 
-        console.log("susPerc:"+ susPercent + " attack:" + attackTime + " release:" + releaseTime + " decay:" + decayTime);
 
         osc.amp(env);
 
@@ -2245,10 +2270,10 @@ if (seconds == 8 || seconds > 8){
     
     // ORIENTATION
     rectMode(CENTER);
-    let angle = map(currentValueSlider1double, 0, 8, 0, 45);
-    if(currentValueSlider1double > 0)
+    let angle = map(currentValueSlider2, 0, 8, 0, 45);
+    if(currentValueSlider2 > 0)
       rotate(PI / 180 * angle);
-    if(currentValueSlider1double <= 0)
+    if(currentValueSlider2 <= 0)
       rotate(PI / 180 * angle);
 
     // ANGULARITY + SYMMETRY
@@ -2294,27 +2319,27 @@ if (seconds == 8 || seconds > 8){
   
   // ORIENTATION
   rectMode(CENTER);
-  let angle2 = map(currentValueSlider2double, 0, 8, 0, 45);
-  if(currentValueSlider2double > 0)
+  let angle2 = map(currentValueSlider4, 0, 8, 0, 45);
+  if(currentValueSlider4 > 0)
     rotate(PI / 180 * angle2);
-  if(currentValueSlider2double <= 0)
+  if(currentValueSlider4 <= 0)
     rotate(PI / 180 * angle2);
 
   // ANGULARITY + SYMMETRY
-  if(currentValueSlider2 < 0) {
+  if(currentValueSlider3 < 0) {
     if(currentValueSlider10 < 0) {
-      square(0, 0, 200, map(currentValueSlider2, -8, 0, 0, 100), map(currentValueSlider2, -8, 0, 0, 100) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider2, -8, 0, 0, 100)* map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider2, -8, 0, 0, 100));
+      square(0, 0, 200, map(currentValueSlider3, -8, 0, 0, 100), map(currentValueSlider3, -8, 0, 0, 100) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider3, -8, 0, 0, 100)* map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider3, -8, 0, 0, 100));
     }
     if(currentValueSlider10 >= 0) {
-      square(0, 0, 200, map(currentValueSlider2, -8, 0, 0, 100), map(currentValueSlider2, -8, 0, 0, 100) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider2, -8, 0, 0, 100)* map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider2, -8, 0, 0, 100));
+      square(0, 0, 200, map(currentValueSlider3, -8, 0, 0, 100), map(currentValueSlider3, -8, 0, 0, 100) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider3, -8, 0, 0, 100)* map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider3, -8, 0, 0, 100));
     }
   }
-  if(currentValueSlider2 >= 0) {
+  if(currentValueSlider3 >= 0) {
     if(currentValueSlider10 < 0) {
-      square(0, 0, 200, map(currentValueSlider2, 0, 8, 100, 0), map(currentValueSlider2, 0, 8, 100, 0) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider2, 0, 8, 100, 0) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider2, 0, 8, 100, 0));
+      square(0, 0, 200, map(currentValueSlider3, 0, 8, 100, 0), map(currentValueSlider3, 0, 8, 100, 0) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider3, 0, 8, 100, 0) * map(currentValueSlider10, -8, 0, 0, 1), map(currentValueSlider3, 0, 8, 100, 0));
     }
     if(currentValueSlider10 >= 0) {
-      square(0, 0, 200, map(currentValueSlider2, 0, 8, 100, 0), map(currentValueSlider2, 0, 8, 100, 0) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider2, 0, 8, 100, 0) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider2, 0, 8, 100, 0));
+      square(0, 0, 200, map(currentValueSlider3, 0, 8, 100, 0), map(currentValueSlider3, 0, 8, 100, 0) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider3, 0, 8, 100, 0) * map(currentValueSlider10, 0, 8, 1, 0), map(currentValueSlider3, 0, 8, 100, 0));
     }
   }
 
@@ -2333,20 +2358,16 @@ function show(item){
   }
 }  
 
-function startOscillator(){
-  osc.start(0.1);
-  isStarted = 1;
-}
 
 function setSliderValue(val, slider) {
   if(slider == "1")
     currentValueSlider1 = val;
-  else if(slider == "1double")
-    currentValueSlider1double = val;
   else if(slider == "2")
     currentValueSlider2 = val;
-  else if(slider == "2double")
-    currentValueSlider2double = val;
+  else if(slider == "3")
+    currentValueSlider3 = val;
+  else if(slider == "4")
+    currentValueSlider4 = val;
   else if(slider == "5")
     currentValueSlider5 = val;
   else if(slider == "6")
@@ -2552,16 +2573,16 @@ function saveTestChoices(testName){
   else if(fullTestSound){
     findTest(testName).slider1double = radiosLeft_value;
     findTest(testName).slider2double = radiosRight_value;
-    findTest(testName).slider1double = Math.abs(map(currentValueSlider1double, -8, 8, -10, 10)); 
-    findTest(testName).slider2double = Math.abs(map(currentValueSlider2double, -8, 8, -10, 10));
+    findTest(testName).slider1double = Math.abs(map(currentValueSlider2, -8, 8, -10, 10)); 
+    findTest(testName).slider2double = Math.abs(map(currentValueSlider4, -8, 8, -10, 10));
     findTest(testName).slider5 = Math.abs(map(currentValueSlider5, -8, 8, -10, 10));
     findTest(testName).slider6 = Math.abs(map(currentValueSlider6, -8, 8, -10, 10));
     findTest(testName).slider7 = Math.abs(map(currentValueSlider7, -8, 8, -10, 10));
     findTest(testName).slider8 = Math.abs(map(currentValueSlider8, -8, 8, -10, 10));
   }
   else if(fullTestVisuals){
-    findTest(testName).slider1double = Math.abs(map(currentValueSlider1double, -8, 8, -10, 10));
-    findTest(testName).slider2double = Math.abs(map(currentValueSlider2double, -8, 8, -10, 10));
+    findTest(testName).slider1double = Math.abs(map(currentValueSlider2, -8, 8, -10, 10));
+    findTest(testName).slider2double = Math.abs(map(currentValueSlider4, -8, 8, -10, 10));
     findTest(testName).slider5 = Math.abs(map(currentValueSlider5, -8, 8, -10, 10));
     findTest(testName).slider6 = Math.abs(map(currentValueSlider6, -8, 8, -10, 10));
     findTest(testName).slider7 = Math.abs(map(currentValueSlider7, -8, 8, -10, 10));
@@ -2570,14 +2591,14 @@ function saveTestChoices(testName){
     findTest(testName).slider10 = Math.abs(map(currentValueSlider10, -8, 8, -10, 10));
   }
   else{
-    findTest(testName).slider1double = Math.abs(map(currentValueSlider1double, -8, 8, -10, 10));
-    findTest(testName).slider2double = Math.abs(map(currentValueSlider2double, -8, 8, -10, 10));
+    findTest(testName).slider1double = Math.abs(map(currentValueSlider2, -8, 8, -10, 10));
+    findTest(testName).slider2double = Math.abs(map(currentValueSlider4, -8, 8, -10, 10));
   }
   findTest(testName).slider1 = Math.abs(map(currentValueSlider1, -8, 8, -10, 10));
   findTest(testName).tension = outputSliderTensionLeft.innerHTML;
   findTest(testName).grid = lastCheckedGrid1Cell;
   
-  findTest(testName).slider2 = Math.abs(map(currentValueSlider2, -8, 8, -10, 10));
+  findTest(testName).slider2 = Math.abs(map(currentValueSlider3, -8, 8, -10, 10));
   findTest(testName).tension2 = outputSliderTensionRight.innerHTML;
   findTest(testName).grid2 = lastCheckedGrid2Cell;
 }
@@ -2591,16 +2612,14 @@ function sendTestResults(){
                 + currentdate.getHours() + ":"  
                 + currentdate.getMinutes() + ":" 
                 + currentdate.getSeconds();
-  let testResults;
+  let testResults = "";
   //testResults += "<p><b>" + datetime +"</b></p>" + "\n";
   for(let i = 0; i < 20; i++){
-    console.log("here1")
     let j = i+1;
-    testResults += "TEST" + j + "," + tests[i].slider1 + "," + tests[i].slider1double + "," +  tests[i].tension + "," + tests[i].grid + ",X," + 
-    tests[i].slider2 + "," + tests[i].slider2double + "," +  tests[i].tension2 + "," + tests[i].grid2+ "\n";
+    testResults += "TEST" + j + "," + tests[i].slider1 + "," + tests[i].slider1double + "," +  tests[i].tension + "," + tests[i].grid + ",-,-,-," + "X," + 
+    tests[i].slider2 + "," + tests[i].slider2double + "," +  tests[i].tension2 + "," + tests[i].grid2+ ",-,-,-," + "\n";
   }
   for(let i = 20; i < 22; i++){
-    console.log("here2")
     let j = i+1;
     testResults += "TEST" + j + "," + tests[i].slider1 + "," + tests[i].slider1double + "," + tests[i].slider5 + "," + tests[i].slider7 + "," + tests[i].slider9 + "," +   tests[i].tension + "," + tests[i].grid  + ",X," + 
      tests[i].slider2 + "," + tests[i].slider2double +  "," + tests[i].slider6 + "," + tests[i].slider8 + "," + tests[i].slider10 + "," +  tests[i].tension2 + "," + tests[i].grid2+ "\n";
@@ -2625,51 +2644,13 @@ function submit(){
 }
 
 
-function loopLeft() {
-  loopingLeft = !loopingLeft;
-
-  seconds = 8;
-  
- if(loopingLeft || hoverLeft){
-    document.getElementById("loopL").innerHTML = '<span style="font-size: 1vw;">Click to</span><br>STOP';
-    playLeftButton.disabled = true;
-    playRightButton.disabled = true;
-    loopRightButton.disabled = true;
-  }
-  else {
-    document.getElementById("loopL").innerHTML = '<span style="font-size: 1vw;">Click to</span><br>LOOP';
-    playLeftButton.disabled = false;
-    playRightButton.disabled = false;
-    loopRightButton.disabled = false;
-  }
-}
-
-function loopRight() {
-  loopingRight = !loopingRight;
-
-  seconds = 8;
-  
-  if(loopingRight || hoverRight){
-    document.getElementById("loopR").innerHTML = '<span style="font-size: 1vw;">Click to</span><br>STOP';
-    playRightButton.disabled = true;
-    playLeftButton.disabled = true;
-    loopLeftButton.disabled = true;
-  }
-  else {
-    document.getElementById("loopR").innerHTML = '<span style="font-size: 1vw;">Click to</span><br>LOOP';
-    playRightButton.disabled = false;
-    playLeftButton.disabled = false;
-    loopLeftButton.disabled = false;
-  }
-}
-
 function chooseNextTest(){
 
   chosen = 0;
 
   // save test choices
   saveTestChoices(currentTestBol);
-  //console.log("SAVED FOR TEST" + currentTestBol + " and slider left is " + currentValueSlider1 + " and slider right is " + currentValueSlider2);
+  //console.log("SAVED FOR TEST" + currentTestBol + " and slider left is " + currentValueSlider1 + " and slider right is " + currentValueSlider3);
 
 
   while(!chosen){
@@ -2708,11 +2689,6 @@ function chooseNextTest(){
 
 function next(newTestBol) {
 
-  if(loopingRight || hoverRight)
-    loopRight();
- if(loopingLeft || hoverLeft)
-    loopLeft();
-
   for(let i=0; i < 22; i++)
     tests[i].active = 0;
   findTest(newTestBol).active = 1;
@@ -2737,26 +2713,36 @@ function next(newTestBol) {
     radiosRight[Math.floor(Math.random() * 4 )].checked = true;
     // clear round sliders
     
-    /* IS GIVING PROBLEMS DRAWING THE SLIDER
-    sliderCircular1.redrawActiveSliderCircularTestBeginning(randomIntFromInterval(-8,8));
-    setSliderValue(randomIntFromInterval(-8,8),"1");
-    setSliderValue(randomIntFromInterval(-8,8),"1double");
-    setSliderValue(randomIntFromInterval(-8,8),"2");
-    setSliderValue(randomIntFromInterval(-8,8),"2double");
-    setSliderValue(randomIntFromInterval(-8,8),"5");
-    setSliderValue(randomIntFromInterval(-8,8),"6");
-    setSliderValue(randomIntFromInterval(-8,8),"7");
-    setSliderValue(randomIntFromInterval(-8,8),"8");*/
-    setSliderValue(initialSlider1,"1");
-    setSliderValue(initialSlider1double,"1double");
-    setSliderValue(initialSlider2,"2");
-    setSliderValue(initialSlider2double,"2double");
-    setSliderValue(initialSlider5,"5");
-    setSliderValue(initialSlider6,"6");
-    setSliderValue(initialSlider7,"7");
-    setSliderValue(initialSlider8,"8");
-    setSliderValue(initialSlider9,"9");
-    setSliderValue(initialSlider10,"10");
+    newSliderCircular1Value = randomIntFromInterval(-8,8);
+    sliderCircular1.redrawAllSlidersCircular(newSliderCircular1Value);
+    setSliderValue(newSliderCircular1Value,"1");
+    newSliderCircular2Value = randomIntFromInterval(-8,8);
+    sliderCircular2.redrawAllSlidersCircular(newSliderCircular2Value);
+    setSliderValue(newSliderCircular2Value,"2");
+    newSliderCircular3Value = randomIntFromInterval(-8,8);
+    sliderCircular3.redrawAllSlidersCircular(newSliderCircular3Value);
+    setSliderValue(newSliderCircular3Value,"3");
+    newSliderCircular4Value = randomIntFromInterval(-8,8);
+    sliderCircular4.redrawAllSlidersCircular(newSliderCircular4Value);
+    setSliderValue(newSliderCircular4Value,"4");
+    newSliderCircular5Value = randomIntFromInterval(-8,8);
+    sliderCircular5.redrawAllSlidersCircular(newSliderCircular5Value);
+    setSliderValue(newSliderCircular5Value,"5");
+    newSliderCircular5Value = randomIntFromInterval(-8,8);
+    sliderCircular6.redrawAllSlidersCircular(newSliderCircular6Value);
+    setSliderValue(newSliderCircular6Value,"6");
+    newSliderCircular7Value = randomIntFromInterval(-8,8);
+    sliderCircular7.redrawAllSlidersCircular(newSliderCircular7Value);
+    setSliderValue(newSliderCircular7Value,"7");
+    newSliderCircular8Value = randomIntFromInterval(-8,8);
+    sliderCircular8.redrawAllSlidersCircular(newSliderCircular8Value);
+    setSliderValue(newSliderCircular8Value,"8");
+    newSliderCircular9Value = randomIntFromInterval(-8,8);
+    sliderCircular9.redrawAllSlidersCircular(newSliderCircular9Value);
+    setSliderValue(newSliderCircular9Value,"9");
+    newSliderCircular10Value = randomIntFromInterval(-8,8);
+    sliderCircular10.redrawAllSlidersCircular(newSliderCircular10Value);
+    setSliderValue(newSliderCircular10Value,"10");
   }
   // move on to next test
   currentTest(newTestBol); 
@@ -2969,6 +2955,8 @@ if(this.DOMselector === "#app10"){
       // Calculate sliderCircular circumference
       const circumference = sliderCircular.radius * this.tau;
 
+      if(this.DOMselector === "#app")
+        console.log("initValSlider1 = " + sliderCircular.initialValue);
       // Calculate initial angle
       const initialAngle = Math.floor( ( sliderCircular.initialValue / (sliderCircular.max - sliderCircular.min) ) * 360 )-180;
 
@@ -3109,13 +3097,13 @@ if(this.DOMselector === "#app10"){
   }
 
 
-   /** ATTEMPT : COME BACK
+   /* ATTEMPT : COME BACK
    * Redraw sliderCircular AT THE BEGINNING OF A TEST WITH RANDOM VALUE
    * 
    * @param {element} activesliderCircular
    * @param {obj} rmc
-   *
-    redrawActiveSliderCircularTestBeginning(newRandomValue) {
+   */
+    redrawAllSlidersCircular(newRandomValue) {
 
       let container;
 
@@ -3143,17 +3131,24 @@ if(this.DOMselector === "#app10"){
       if(this.DOMselector === "#app8"){
         container = document.querySelector('.sliderCircular__data8');
       }
-      
+      if(this.DOMselector === "#app9"){
+        container = document.querySelector('.sliderCircular__data9');
+      }
+      if(this.DOMselector === "#app10"){
+        container = document.querySelector('.sliderCircular__data10');
+      }
+
       let sliderCircularGroups = Array.from(container.querySelectorAll('g'));
 
       const activePath = sliderCircularGroups[0].querySelector('.sliderCircularSinglePathActive');
       const radius = +sliderCircularGroups[0].getAttribute('rad');
-       
-      const currentAngle = Math.floor( (newRandomValue / (sliderCircular.max - sliderCircular.min) ) * 360 )-180;
- 
+
+      const currentAngle = Math.floor( (newRandomValue / (8 - (-8)) ) * 360 )-180;
+
+    
       // Redraw handle
       const handle = sliderCircularGroups[0].querySelector('.sliderCircularHandle');
-      const handleCenter = this.calculateHandleCenter(currentAngle, radius);
+      const handleCenter = this.calculateHandleCenter(currentAngle * this.tau / 360, radius);
       handle.setAttribute('cx', handleCenter.x);
       handle.setAttribute('cy', handleCenter.y);
 
@@ -3162,15 +3157,18 @@ if(this.DOMselector === "#app10"){
 
       this.updateSliderValues(currentAngle);
   
-    } */
+    } 
 
   /**
    * MY FUNCTION - ANDREIA
    * 
+   * 
    * @param {number} currentAngle 
    */
   updateSliderValues(currentAngle) {
-    const targetsliderCircular = this.activesliderCircular.getAttribute('data-sliderCircular');
+   
+    //const targetsliderCircular = this.activesliderCircular.getAttribute('data-sliderCircular');
+    const targetsliderCircular = 0;
     const currentsliderCircular = this.sliderCirculars[targetsliderCircular];
     const currentsliderCircularRange = currentsliderCircular.max - currentsliderCircular.min;
     let currentValue = currentAngle / this.tau * currentsliderCircularRange;
@@ -3185,18 +3183,18 @@ if(this.DOMselector === "#app10"){
     // corresponds to the 2nd slider of the Left
     else if(this.DOMselector === "#app3"){
       if(targetsliderCircular == 0 && typeof currentValue === 'number')
-        currentValueSlider1double = currentValue;
+        currentValueSlider2 = currentValue;
     }
 
     // corresponds to the 1st slider of the Right
     else if(this.DOMselector === "#app2"){
       if(targetsliderCircular == 0 && typeof currentValue === 'number')
-        currentValueSlider2 = currentValue;
+        currentValueSlider3 = currentValue;
     }
     // corresponds to the 2nd slider of the Right    
     else if(this.DOMselector === "#app4"){
       if(targetsliderCircular == 0 && typeof currentValue === 'number')
-        currentValueSlider2double = currentValue;
+        currentValueSlider4 = currentValue;
     }
 
     // corresponds to the 3rd slider of the Left    
@@ -3435,6 +3433,7 @@ if(this.DOMselector === "#app10"){
    * @returns {number} angle
    */
   calculateMouseAngle(rmc) {
+
       const angle = Math.atan2(rmc.y - this.cy, rmc.x - this.cx);
 
       if (angle > - this.tau / 2 && angle < - this.tau / 4) 
