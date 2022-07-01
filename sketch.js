@@ -1339,6 +1339,8 @@ function draw() {
 
     let sw; 
 
+    angleMode(RADIANS);
+
     push();
     noFill();
     translate(width/5, height/2);
@@ -1382,6 +1384,8 @@ function draw() {
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
+    
+    angleMode(RADIANS);
 
     push();
     noFill();
@@ -1431,28 +1435,75 @@ function draw() {
     slider = 1;
     sliderDouble = 1;
 
+    angleMode(DEGREES);
+
+    randomSeed(99);
+
     push();
     noFill();
     translate(width/5, height/2);
     strokeWeight(10);
-    //console.log(lerp(5, 5, map(currentValueSlider3, -8, 0, 0, 1)));
+
     let irregularList;
    
-    if(currentValueSlider3 > 0) {
-      //irregularList = [map(currentValueSlider3, 0, 8, 5, 5), map(currentValueSlider3, 0, 8, 5, 20), map(currentValueSlider3, 0, 8, 5, 30), map(currentValueSlider3, 0, 8, 5, 40)];
-      irregularList = [1, map(currentValueSlider3, 0, 8, 5, 25),1];
-      setLineDash(irregularList);  
-    }
     if(currentValueSlider3 <= 0) {
-      irregularList = [1, map(currentValueSlider3, -8, 0, 25, 5),1];
+      irregularList = [4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4,
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4,
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4,
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14)];
       setLineDash(irregularList);  
     }
+    if(currentValueSlider3 > 0) {
+      irregularList = [4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3))];
+      setLineDash(irregularList);  
+    } 
+    
+    noFill();
     beginShape();
-    if(currentValueSlider1 < 0) 
-      arc(0, 0, map(currentValueSlider1, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(currentValueSlider1 >= 0) 
-      arc(0, 0, map(currentValueSlider1, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
-    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);
+    let x1;
+    for(let a= 0; a < 360; a+=10){
+      if(a > 180)
+        x1 = 100 * sin(a);
+        else{
+          if(currentValueSlider1 < 0) 
+            x1 =  map(currentValueSlider1, -8, 0, 100, 150) * sin(a);
+          else
+            x1 = map(currentValueSlider1, 0, 8, 150, 100) * sin(a);
+        }
+      let y1 = 100 * cos(a);
+      vertex(x1,y1);
+    }
     endShape(CLOSE);
     pop();
 
@@ -1463,58 +1514,50 @@ function draw() {
     strokeWeight(10);
 
     let irregularList2;
-
-    randomSeed(99);
    
-    if(currentValueSlider4 < 0) {
+    if(currentValueSlider4 <= 0) {
       irregularList2 = [4, 
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4,
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4,
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4,
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4)), 4, 
-        map(currentValueSlider4, -8, 0, 14, 14 + random(14,-34*currentValueSlider4))];
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4,
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4,
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4,
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14)];
       setLineDash(irregularList2);  
     }
-    if(currentValueSlider4 >= 0) {
-      irregularList2 = [5, 
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5,
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5,
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5,
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5,
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15), 5, 
-        map(currentValueSlider4, 0, 8, 15 + random(15,15*currentValueSlider4), 15)];
+    if(currentValueSlider4 > 0) {
+      irregularList2 = [4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4))];
       setLineDash(irregularList2);  
-    }
-  
-    /*if(currentValueSlider2 < 0) 
-      arc(0, 0, map(currentValueSlider2, -8, 0, 200, 300), 200, PI + HALF_PI, HALF_PI);
-    if(currentValueSlider2 >= 0) 
-      arc(0, 0, map(currentValueSlider2, 0, 8, 300, 200), 200, PI + HALF_PI, HALF_PI);
-    arc(0, 0, 200, 200, HALF_PI, PI + HALF_PI);*/
-    angleMode(DEGREES);
+    } 
+
     noFill();
     beginShape();
     let x;
@@ -1550,6 +1593,8 @@ function draw() {
 
     const numVertices = 10;
     const spacing = 360 / numVertices;
+
+    angleMode(RADIANS);
 
     push();
     noFill();
@@ -1682,6 +1727,8 @@ function draw() {
 
     let sw; 
 
+    angleMode(RADIANS);
+
     push();
     noFill();
     translate(width/5, height/2);
@@ -1732,18 +1779,56 @@ function draw() {
 
     let sw, irregularList;
 
+    angleMode(RADIANS);
+    randomSeed(99);
+
     push();
     noFill();
     translate(width/5, height/2);
    
-    if(currentValueSlider3 > 0) {
-      irregularList = [map(currentValueSlider3, 0, 8, 5, 5), map(currentValueSlider3, 0, 8, 5, 20), map(currentValueSlider3, 0, 8, 5, 30), map(currentValueSlider3, 0, 8, 5, 40)];
-      setLineDash(irregularList);  
-    }
     if(currentValueSlider3 <= 0) {
-      irregularList = [map(currentValueSlider3, -8, 0, 5, 5), map(currentValueSlider3, -8, 0, 20, 5), map(currentValueSlider3, -8, 0, 30, 5), map(currentValueSlider3, -8, 0, 40, 5)];
+      irregularList = [4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4,
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4,
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4,
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14)];
       setLineDash(irregularList);  
     }
+    if(currentValueSlider3 > 0) {
+      irregularList = [4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3))];
+      setLineDash(irregularList);  
+    } 
+
     if(currentValueSlider1 > 0) 
       sw = int(map(currentValueSlider1, 0, 8, 1, 25));
     if(currentValueSlider1 <= 0) 
@@ -1756,14 +1841,48 @@ function draw() {
     noFill();
     translate(width/1.25, height/2);output1double
 
-    if(currentValueSlider4 > 0) {
-      irregularList2 = [map(currentValueSlider4, 0, 8, 5, 5), map(currentValueSlider4, 0, 8, 5, 20), map(currentValueSlider4, 0, 8, 5, 30), map(currentValueSlider4, 0, 8, 5, 40)];
-      setLineDash(irregularList2);  
-    }
     if(currentValueSlider4 <= 0) {
-      irregularList2 = [map(currentValueSlider4, -8, 0, 5, 5), map(currentValueSlider4, -8, 0, 20, 5), map(currentValueSlider4, -8, 0, 30, 5), map(currentValueSlider4, -8, 0, 40, 5)];
+      irregularList2 = [4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4,
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4,
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4,
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14)];
       setLineDash(irregularList2);  
     }
+    if(currentValueSlider4 > 0) {
+      irregularList2 = [4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4))];
+      setLineDash(irregularList2);  
+    } 
     if(currentValueSlider2 > 0) 
       sw = int(map(currentValueSlider2, 0, 8, 1, 25));
     if(currentValueSlider2 <= 0) 
@@ -1785,6 +1904,8 @@ function draw() {
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
+
+    angleMode(RADIANS);
 
 
     const numVertices = 10;
@@ -1893,6 +2014,9 @@ function draw() {
 
     let sw, irregularList;
 
+    angleMode(RADIANS);
+    randomSeed(99);
+
     push();
     noFill();
     translate(width/5, height/2);
@@ -1900,14 +2024,49 @@ function draw() {
     rectMode(CENTER);
     strokeWeight(10);
    
-    if(currentValueSlider3 > 0) {
-      irregularList = [map(currentValueSlider3, 0, 8, 5, 5), map(currentValueSlider3, 0, 8, 5, 20), map(currentValueSlider3, 0, 8, 5, 30), map(currentValueSlider3, 0, 8, 5, 40)];
-      setLineDash(irregularList);  
-    }
     if(currentValueSlider3 <= 0) {
-      irregularList = [map(currentValueSlider3, -8, 0, 5, 5), map(currentValueSlider3, -8, 0, 20, 5), map(currentValueSlider3, -8, 0, 30, 5), map(currentValueSlider3, -8, 0, 40, 5)];
+      irregularList = [4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4,
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4,
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4,
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14)];
       setLineDash(irregularList);  
     }
+    if(currentValueSlider3 > 0) {
+      irregularList = [4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3))];
+      setLineDash(irregularList);  
+    } 
+
     let angle = map(currentValueSlider1, 0, 8, 0, 45);
     if(currentValueSlider1 > 0)
       rotate(PI / 180 * angle);
@@ -1923,14 +2082,49 @@ function draw() {
     rectMode(CENTER);
     strokeWeight(10);
 
-    if(currentValueSlider4 > 0) {
-      irregularList2 = [map(currentValueSlider4, 0, 8, 5, 5), map(currentValueSlider4, 0, 8, 5, 20), map(currentValueSlider4, 0, 8, 5, 30), map(currentValueSlider4, 0, 8, 5, 40)];
-      setLineDash(irregularList2);  
-    }
     if(currentValueSlider4 <= 0) {
-      irregularList2 = [map(currentValueSlider4, -8, 0, 5, 5), map(currentValueSlider4, -8, 0, 20, 5), map(currentValueSlider4, -8, 0, 30, 5), map(currentValueSlider4, -8, 0, 40, 5)];
+      irregularList2 = [4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4,
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4,
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4,
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14)];
       setLineDash(irregularList2);  
     }
+    if(currentValueSlider4 > 0) {
+      irregularList2 = [4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4))];
+      setLineDash(irregularList2);  
+    } 
+
     let angle2 = map(currentValueSlider2, 0, 8, 0, 45);
     if(currentValueSlider2 > 0)
       rotate(PI / 180 * angle2);
@@ -1953,6 +2147,8 @@ function draw() {
     radioButtons = 0;
     slider = 1;
     sliderDouble = 1;
+
+    angleMode(RADIANS);
 
     push();
     noFill();
@@ -2001,6 +2197,9 @@ function draw() {
     slider = 1;
     sliderDouble = 1;
 
+    angleMode(RADIANS);
+    randomSeed(99);
+
     const numVertices = 10;
     let radius = 100;
     const spacing = 360 / numVertices;
@@ -2013,25 +2212,59 @@ function draw() {
     translate(width/5, height/2);
 
     strokeWeight(10);
-    
-    if(currentValueSlider1 > 0) {
-      irregularList2 = [map(currentValueSlider1, 0, 8, 5, 5), map(currentValueSlider1, 0, 8, 5, 20), map(currentValueSlider1, 0, 8, 5, 30), map(currentValueSlider1, 0, 8, 5, 70)];
-      setLineDash(irregularList2);  
+
+    if(currentValueSlider3 <= 0) {
+      irregularList = [4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4,
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4,
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4,
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14), 4, 
+        map(currentValueSlider3, -8, 0, 14 + random(14,-15*currentValueSlider3), 14)];
+      setLineDash(irregularList);  
     }
-    if(currentValueSlider1 <= 0) {
-      irregularList2 = [map(currentValueSlider1, -8, 0, 5, 5), map(currentValueSlider1, -8, 0, 20, 5), map(currentValueSlider1, -8, 0, 30, 5), map(currentValueSlider1, -8, 0, 70, 5)];
-      setLineDash(irregularList2);  
-    }
+    if(currentValueSlider3 > 0) {
+      irregularList = [4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4,
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3)), 4, 
+        map(currentValueSlider3, 0, 8, 14, 14 + random(15,15*currentValueSlider3))];
+      setLineDash(irregularList);  
+    } 
 
     beginShape();
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(currentValueSlider3 <= 0) {
-        angleChange = map(currentValueSlider3, -8, 0, 50, 150);
+      if(currentValueSlider1 <= 0) {
+        angleChange = map(currentValueSlider1, -8, 0, 50, 150);
       }
-      if(currentValueSlider3 > 0) {
-        angleChange = map(currentValueSlider3, 0, 8, 150, 50);
+      if(currentValueSlider1 > 0) {
+        angleChange = map(currentValueSlider1, 0, 8, 150, 50);
       }
 
       const angle = i * spacing;
@@ -2040,7 +2273,7 @@ function draw() {
 
       if(i == 0)
         vertex(x, y);
-      else if(currentValueSlider3 > 4 || currentValueSlider3 < -4 ){
+      else if(currentValueSlider1 > 4 || currentValueSlider1 < -4 ){
         star(0, 0, 150 - angleChange + 30, 100, 10, 0);
       }
       else{
@@ -2061,24 +2294,58 @@ function draw() {
 
     strokeWeight(10);
     
-    if(currentValueSlider2 > 0) {
-      irregularList2 = [map(currentValueSlider2, 0, 8, 5, 5), map(currentValueSlider2, 0, 8, 5, 20), map(currentValueSlider2, 0, 8, 5, 30), map(currentValueSlider2, 0, 8, 5, 40)];
+    if(currentValueSlider4 <= 0) {
+      irregularList2 = [4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4,
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4,
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4,
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14), 4, 
+        map(currentValueSlider4, -8, 0, 14 + random(14,-15*currentValueSlider4), 14)];
       setLineDash(irregularList2);  
     }
-    if(currentValueSlider2 <= 0) {
-      irregularList2 = [map(currentValueSlider2, -8, 0, 5, 5), map(currentValueSlider2, -8, 0, 20, 5), map(currentValueSlider2, -8, 0, 30, 5), map(currentValueSlider2, -8, 0, 40, 5)];
+    if(currentValueSlider4 > 0) {
+      irregularList2 = [4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4,
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4)), 4, 
+        map(currentValueSlider4, 0, 8, 14, 14 + random(15,15*currentValueSlider4))];
       setLineDash(irregularList2);  
-    }
+    } 
 
     beginShape();
 
     for(let i = 0; i < numVertices+1; i++) {
 
-      if(currentValueSlider4 <= 0) {
-        angleChange = map(currentValueSlider4, -8, 0, 50, 150);
+      if(currentValueSlider2 <= 0) {
+        angleChange = map(currentValueSlider2, -8, 0, 50, 150);
       }
-      if(currentValueSlider4 > 0) {
-        angleChange = map(currentValueSlider4, 0, 8, 150, 50);
+      if(currentValueSlider2 > 0) {
+        angleChange = map(currentValueSlider2, 0, 8, 150, 50);
       }
 
       const angle = i * spacing;
@@ -2087,7 +2354,7 @@ function draw() {
 
       if(i == 0)
         vertex(x, y);
-      else if(currentValueSlider4 > 4 || currentValueSlider4 < -4 ){
+      else if(currentValueSlider2 > 4 || currentValueSlider2 < -4 ){
         star(0, 0, 150 - angleChange + 30, 100, 10, 0);
       }
       else{
@@ -2236,19 +2503,56 @@ if (seconds == 8 || seconds > 8){
     slider = 0;
     sliderDouble = 0;
 
+    angleMode(DEGREES);
+    randomSeed(99);
+
     push();
     noFill();
     translate(width/5, height/2);
 
     //IRREGULARITY
-    if(currentValueSlider5 > 0) {
-      irregularList = [map(currentValueSlider5, 0, 8, 5, 5), map(currentValueSlider5, 0, 8, 5, 20), map(currentValueSlider5, 0, 8, 5, 50), map(currentValueSlider5, 0, 8, 5, 70), map(currentValueSlider5, 0, 8, 50, 90)];
-      setLineDash(irregularList);  
-    }
     if(currentValueSlider5 <= 0) {
-      irregularList = [map(currentValueSlider5, -8, 0, 5, 5), map(currentValueSlider5, -8, 0, 20, 5), map(currentValueSlider5, -8, 0, 30, 5), map(currentValueSlider5, -8, 0, 40, 5)];
+      irregularList = [4, 
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4,
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4, 
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4, 
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4, 
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4, 
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4, 
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4,
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4, 
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4, 
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4, 
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4, 
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4, 
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4,
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4, 
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4, 
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14), 4, 
+        map(currentValueSlider5, -8, 0, 14 + random(14,-15*currentValueSlider5), 14)];
       setLineDash(irregularList);  
     }
+    if(currentValueSlider5 > 0) {
+      irregularList = [4, 
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4,
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4, 
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4, 
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4, 
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4, 
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4, 
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4,
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4, 
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4, 
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4,
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4, 
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4, 
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4,
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4, 
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4, 
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5)), 4, 
+        map(currentValueSlider5, 0, 8, 14, 14 + random(15,15*currentValueSlider5))];
+      setLineDash(irregularList);  
+    } 
 
     // THICKNESS
     if(currentValueSlider7 > 0)
@@ -2259,6 +2563,7 @@ if (seconds == 8 || seconds > 8){
     
     // ORIENTATION
     rectMode(CENTER);
+    angleMode(RADIANS);
     let angle = map(currentValueSlider3, 0, 8, 0, 45);
     if(currentValueSlider3 > 0)
       rotate(PI / 180 * angle);
@@ -2290,12 +2595,46 @@ if (seconds == 8 || seconds > 8){
     translate(width/1.25, height/2);
 
    //IRREGULARITY
-   if(currentValueSlider6 > 0) {
-    irregularList = [map(currentValueSlider6, 0, 8, 5, 5), map(currentValueSlider6, 0, 8, 5, 20), map(currentValueSlider6, 0, 8, 5, 50), map(currentValueSlider6, 0, 8, 5, 70), map(currentValueSlider6, 0, 8, 50, 90)];
+   if(currentValueSlider6 <= 0) {
+    irregularList = [4, 
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4,
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4, 
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4, 
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4, 
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4, 
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4, 
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4,
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4, 
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4, 
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4, 
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4, 
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4, 
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4,
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4, 
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4, 
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14), 4, 
+      map(currentValueSlider6, -8, 0, 14 + random(14,-15*currentValueSlider6), 14)];
     setLineDash(irregularList);  
   }
-  if(currentValueSlider6 <= 0) {
-    irregularList = [map(currentValueSlider6, -8, 0, 5, 5), map(currentValueSlider6, -8, 0, 20, 5), map(currentValueSlider6, -8, 0, 30, 5), map(currentValueSlider6, -8, 0, 40, 5)];
+  if(currentValueSlider6 > 0) {
+    irregularList = [4, 
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4,
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4, 
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4, 
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4, 
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4, 
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4, 
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4,
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4, 
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4, 
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4,
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4, 
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4, 
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4,
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4, 
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4, 
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6)), 4, 
+      map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6))];
     setLineDash(irregularList);  
   }
 
