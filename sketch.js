@@ -548,16 +548,13 @@ function draw() {
     sliderDouble = 0;
 
 
-    // keeping these levels always up to the maximum (0.0 and 1.0)
-    let attackLevel = 0.5; // to make the note end all the way up (1)
+    let attackLevel = 0.5; // so that there's a difference from the amplitude test's max (1.0)
     let releaseLevel = 0.0; // to make the note end all the way to silence (0)
-    let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
-    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
-    //let susPercent = 0.5;
+    let decayLevel = 0.5 // decay level 
 
-    let attackTime = 1.5;
+    let attackTime = 1.5; // half of max value 3 when changed
+    let releaseTime = 1.5; // half of max value 3 when changed
     let decayTime = 0.5;
-    let releaseTime = 1.5;
 
     if(hoverLeft){
 
@@ -645,7 +642,7 @@ function draw() {
      let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
      let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
-    //let susPercent = 0.5;
+    let susPercent = 0.5;
  
      let attackTime = 1.5; // half value from the total 3.0 of the attack tests
      let decayTime = 0.5; // half value from the total 1.0 of the decay tests
@@ -732,7 +729,7 @@ function draw() {
      let releaseLevel = 0.0; // to make the note end all the way to silence (0)
      let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
-    //let susPercent = 0.5;
+    let susPercent = 0.5;
  
     // these are half of the range in which they can be manipulated
     let attackTime = 1.5;
@@ -902,7 +899,7 @@ function draw() {
     let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
     let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
-    //let susPercent = 0.5;
+    let susPercent = 0.5;
  
     let attackTime = 1.5; // half value from the total 3.0 of the attack tests
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
@@ -976,7 +973,7 @@ function draw() {
     let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
     let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
     // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
-    //let susPercent = 0.5;
+    let susPercent = 0.5;
  
     let attackTime = 1.5; // half value from the total 3.0 of the attack tests
     let decayTime = 0.5; // half value from the total 1.0 of the decay tests
@@ -1121,7 +1118,7 @@ function draw() {
    let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
    let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
-   //let susPercent = 0.5;
+   let susPercent = 0.5;
 
    let attackTime = 1.5; // half value from the total 3.0 of the attack tests
    let decayTime = 0.5; // half value from the total 1.0 of the decay tests
@@ -1142,8 +1139,8 @@ function draw() {
       osc.amp(env);
 
       osc.freq(freq);
-      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       env.setRange(attackLevel, releaseLevel);
+      env.setADSR(attackTime, decayTime, susPercent, releaseTime);
 
       if(triggerLeft){
         env.triggerAttack(osc);
@@ -1165,8 +1162,8 @@ function draw() {
       osc.amp(env);
 
       osc.freq(freq);
-      env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
       env.setRange(attackLevel, releaseLevel);
+      env.setADSR(attackTime, decayTime, susPercent, releaseTime);
 
       if(triggerRight){
         env.triggerAttack(osc);
@@ -1390,7 +1387,7 @@ function draw() {
     push();
     noFill();
     translate(width/5, height/2);
-    strokeWeight(10);
+    strokeWeight(12.5);
     let angle = map(currentValueSlider3, 0, 8, 0, 180);
     if(currentValueSlider3 > 0)
       rotate(PI / 180 * angle);
@@ -1407,7 +1404,7 @@ function draw() {
     noFill();
     translate(width/1.25, height/2);
 
-    strokeWeight(10);
+    strokeWeight(12.5);
     let angle2 = map(currentValueSlider4, 0, 8, 0, 180);
     if(currentValueSlider4 > 0)
       rotate(PI / 180 * angle2);
@@ -1442,7 +1439,7 @@ function draw() {
     push();
     noFill();
     translate(width/5, height/2);
-    strokeWeight(10);
+    strokeWeight(12.5);
 
     let irregularList;
    
@@ -1511,7 +1508,7 @@ function draw() {
     noFill();
     translate(width/1.25, height/2);
 
-    strokeWeight(10);
+    strokeWeight(12.5);
 
     let irregularList2;
    
@@ -1599,7 +1596,7 @@ function draw() {
     push();
     noFill();
     translate(width/5, height/2);
-    strokeWeight(10);
+    strokeWeight(12.5);
 
    
     let radius = 100;
@@ -1657,7 +1654,7 @@ function draw() {
     noFill();
     translate(width/1.25, height/2);
 
-    strokeWeight(10);
+    strokeWeight(12.5);
 
     let radius2 = 100;
 
@@ -2022,7 +2019,7 @@ function draw() {
     translate(width/5, height/2);
 
     rectMode(CENTER);
-    strokeWeight(10);
+    strokeWeight(12.5);
    
     if(currentValueSlider3 <= 0) {
       irregularList = [4, 
@@ -2080,7 +2077,7 @@ function draw() {
     translate(width/1.25, height/2);
 
     rectMode(CENTER);
-    strokeWeight(10);
+    strokeWeight(12.5);
 
     if(currentValueSlider4 <= 0) {
       irregularList2 = [4, 
@@ -2153,7 +2150,7 @@ function draw() {
     push();
     noFill();
     translate(width/5, height/2);
-    strokeWeight(10);
+    strokeWeight(12.5);
     rectMode(CENTER);
     let angle = map(currentValueSlider3, 0, 8, 0, 45);
     if(currentValueSlider3 > 0)
@@ -2170,7 +2167,7 @@ function draw() {
     noFill();
     translate(width/1.25, height/2);
 
-    strokeWeight(10);
+    strokeWeight(12.5);
     rectMode(CENTER);
     let angle2 = map(currentValueSlider4, 0, 8, 0, 45);
     if(currentValueSlider4 > 0)
@@ -2211,7 +2208,7 @@ function draw() {
     noFill();
     translate(width/5, height/2);
 
-    strokeWeight(10);
+    strokeWeight(12.5);
 
     if(currentValueSlider3 <= 0) {
       irregularList = [4, 
@@ -2292,7 +2289,7 @@ function draw() {
     noFill();
     translate(width/1.25, height/2);
 
-    strokeWeight(10);
+    strokeWeight(12.5);
     
     if(currentValueSlider4 <= 0) {
       irregularList2 = [4, 
@@ -2383,24 +2380,26 @@ function draw() {
     slider = 0;
     sliderDouble = 0;
 
-     // keeping these levels always up to the maximum (0.0 and 1.0)
-     let attackLevel = 0.5;
-     let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
-     let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
-    // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
-    let susPercent = 0.5;
- 
-    let attackTime = 1.5; // half value from the total 3.0 of the attack tests
-    let decayTime = 0.5; // half value from the total 1.0 of the decay tests
-    let releaseTime = 1.5; // half value from the total 3.0 of the release tests
+    // keeping these levels always up to the maximum (0.0 and 1.0)
+    let attackLevel = 0.5; // to make the note end all the way up (1)
+    let releaseLevel = 0.0; // to make the note end all the way to silence (0)
+    let decayLevel = 0.5 // decay level (0 is the level at the end of the decay) 
+   // o decayLevel a meio dos 2 acima é como se o sustainLevel estivesse a 0.5
+   let susPercent = 0.5;
+
+   // these are half of the range in which they can be manipulated
+   let attackTime = 1.5;
+   let decayTime = 0.5;
+   let releaseTime = 1.5;
     
    if(hoverLeft){
       if(radiosLeft_value != null){
+
         if(currentValueSlider1 > 0)
-          susPercent = map(currentValueSlider1, 0, 8, 0.1, 1.0);
+          attackLevel = map(currentValueSlider1, 0, 8, 0.1, 1);
         else
-          susPercent = map(currentValueSlider1, -8, 0, 1.0, 0.1);
-        
+          attackLevel = map(currentValueSlider1, -8, 0, 1, 0.1);
+          
         if(currentValueSlider3 > 0)
           attackTime = map(currentValueSlider3, 0, 8, 0.0, 3.0);
         else
@@ -2411,10 +2410,7 @@ function draw() {
         else
           releaseTime = map(currentValueSlider5, -8, 0, 3.0, 0.0);
 
-        if(currentValueSlider7 > 0)
-          decayTime = map(currentValueSlider7, 0, 8, 0.0, 1.0);
-        else
-          decayTime = map(currentValueSlider7, -8, 0, 1.0, 0.0);
+        freq = getNote(currentValueSlider7);
 
         // WAVEFORM
         if(radiosLeft_value == "1.1")
@@ -2425,30 +2421,28 @@ function draw() {
           osc.setType('square');
         else if(radiosLeft_value == "1.4")
           osc.setType('sawtooth') ;
-
-        //console.log("susPerc:"+ susPercent + " attack:" + attackTime + " release:" + releaseTime + " decay:" + decayTime);
         
         osc.amp(env);
 
-if (seconds == 8 || seconds > 8){
-          osc.freq(midiToFreq(int(60)));
-          //here is the other way around to keep the sustainTime
-          //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
-          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.setRange(attackLevel, releaseLevel);
-          env.play(0,0,1);
-          seconds = 0;
+        osc.freq(freq);
+        env.setRange(attackLevel, releaseLevel);
+        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+
+        if(triggerLeft){
+          env.triggerAttack(osc);
+          triggerLeft = false;
         }
+
       }
     }
     if(hoverRight) {
       if(radiosRight_value != null ){
 
         if(currentValueSlider2 > 0)
-          susPercent = map(currentValueSlider2, 0, 8, 0.1, 1.0);
+          attackLevel = map(currentValueSlider2, 0, 8, 0.1, 1);
         else
-          susPercent = map(currentValueSlider2, -8, 0, 1.0, 0.1);
-        
+          attackLevel = map(currentValueSlider2, -8, 0, 1, 0.1);
+          
         if(currentValueSlider4 > 0)
           attackTime = map(currentValueSlider4, 0, 8, 0.0, 3.0);
         else
@@ -2459,10 +2453,7 @@ if (seconds == 8 || seconds > 8){
         else
           releaseTime = map(currentValueSlider6, -8, 0, 3.0, 0.0);
 
-        if(currentValueSlider8 > 0)
-          decayTime = map(currentValueSlider8, 0, 8, 0.0, 1.0);
-        else
-          decayTime = map(currentValueSlider8, -8, 0, 1.0, 0.0);
+        freq = getNote(currentValueSlider8);
 
         // WAVEFORM
         if(radiosRight_value == "2.1")
@@ -2474,16 +2465,15 @@ if (seconds == 8 || seconds > 8){
         else if(radiosRight_value == "2.4")
           osc.setType('sawtooth') ;
 
-
         osc.amp(env);
 
- if (seconds == 8 || seconds > 8){
-          osc.freq(midiToFreq(int(60)));
-          //env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
-          env.setRange(attackLevel, releaseLevel);
-          env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-          env.play(0,0,1);
-          seconds = 0;
+        osc.freq(freq);
+        env.setRange(attackLevel, releaseLevel);
+        env.setADSR(attackTime, decayTime, susPercent, releaseTime);
+
+        if(triggerRight){
+          env.triggerAttack(osc);
+          triggerRight = false;
         }
       }
     }
