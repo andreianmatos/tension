@@ -19,7 +19,7 @@ function setup() {
   env = new p5.Envelope();
 
   radiosSound = document.getElementsByName('radiosSoundCheck');
-  radiosSound[2].checked = true;
+  radiosSound[3].checked = true;
 }
 
 function draw() {
@@ -39,10 +39,18 @@ function draw() {
   let susPercent = 0.2;
   let releaseTime = 0;
 
-  if(radiosSound_value == "1.1")
+  if(radiosSound_value == "1.1"){
     osc.setType('sine');
-  else if(radiosSound_value == "1.2")
+    osc.freq(midiToFreq(36));
+  }
+  else if(radiosSound_value == "1.2"){
     osc.setType('square');
+    osc.freq(midiToFreq(60));
+  }
+  else if(radiosSound_value == "1.3"){
+    osc.setType('sine');
+    osc.freq(midiToFreq(108));
+  }
 
   console.log(radiosSound_value)
 
@@ -50,7 +58,6 @@ function draw() {
 
   // C - G - D - A - E (before) C2 C3 C4 (now)
   if (frameCount % 100 == 0){
-    osc.freq(midiToFreq(int(random(48, 60))));
     env.set(attackTime, attackLevel, decayTime, decayLevel, releaseTime);
     env.setRange(attackLevel, releaseLevel);
     env.setADSR(attackTime, decayTime, susPercent, releaseTime);

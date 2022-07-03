@@ -391,6 +391,10 @@ body, html {
   left: 31.5%;
 }
 
+.radio-itemSoundCheck.fourthOption {
+  left: 39.5%;
+}
+
 .radio-itemSoundCheck input[type='radio'] {
   display: none;  
 }

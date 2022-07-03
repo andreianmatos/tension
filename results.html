@@ -15,7 +15,7 @@
         
         <div class="about">
 
-            <p class="title"><b>Thank you for participating in this study!</b></p>
+            <p class="title" id="title"><b>1 more second...</b></p>
             
             <div  id="resultsSend" style="display:none">
                 <p>Please copy the results below and email them to: <em>andreianmatos@tecnico.ulisboa.pt</em></p> 
@@ -36,6 +36,10 @@
         var hasSent = 0;
 
         var emailSent = 0;
+
+        setTimeout(function(){
+            document.getElementById("title").innerHTML = "<b>It's done! Thank you for participating in this study!</b>";
+        }, 2000);
 
         function getTestResults() {
             document.getElementById("results").innerHTML = window.localStorage.getItem('testResults');

@@ -2895,12 +2895,12 @@ function saveTestChoices(testName){
   else if(fullTestSound){
     findTest(testName).slider1double = radiosLeft_value;
     findTest(testName).slider2double = radiosRight_value;
-    findTest(testName).slider1double = Math.abs(map(currentValueSlider3, -8, 8, -10, 10)); 
-    findTest(testName).slider2double = Math.abs(map(currentValueSlider4, -8, 8, -10, 10));
     findTest(testName).slider5 = Math.abs(map(currentValueSlider5, -8, 8, -10, 10));
     findTest(testName).slider6 = Math.abs(map(currentValueSlider6, -8, 8, -10, 10));
     findTest(testName).slider7 = Math.abs(map(currentValueSlider7, -8, 8, -10, 10));
     findTest(testName).slider8 = Math.abs(map(currentValueSlider8, -8, 8, -10, 10));
+    findTest(testName).slider9 = Math.abs(map(currentValueSlider3, -8, 8, -10, 10));
+    findTest(testName).slider10 = Math.abs(map(currentValueSlider4, -8, 8, -10, 10));
   }
   else if(fullTestVisuals){
     findTest(testName).slider1double = Math.abs(map(currentValueSlider3, -8, 8, -10, 10));
