@@ -2719,27 +2719,29 @@ function getNote(sliderValue){
   if(midiNotesConsidered.length==1)
     midiNotesConsidered.push(48, 60, 72)
   return note;*/
-  //C9 - C1 
+  //C8 - C1 (piano keys Cs) 
   var note;
+  var sliderValue = map(sliderValue, -8, 8, -7, 7);
 
-  if(int(Math.abs(sliderValue)) == 8)
-    note = midiToFreq(120);
-  if(int(Math.abs(sliderValue)) == 7)
-    note =  midiToFreq(108);
-  if(int(Math.abs(sliderValue)) == 6)
-    note = midiToFreq(96);
-  if(int(Math.abs(sliderValue)) == 5)
-    note = midiToFreq(84);
-  if(int(Math.abs(sliderValue)) == 4) //middle C used normally
-    note = midiToFreq(72);
-  if(int(Math.abs(sliderValue)) == 3)
-    note = midiToFreq(60);
-  if(int(Math.abs(sliderValue)) == 2)
-    note = midiToFreq(48);
-  if(int(Math.abs(sliderValue)) == 1)
-    note = midiToFreq(36);
-  if(int(Math.abs(sliderValue)) == 0)
+  if(Math.abs(sliderValue) == 0) // c1
     note = midiToFreq(24);
+  else if(Math.abs(sliderValue) < 1) // c2
+    note = midiToFreq(36);
+  else if(Math.abs(sliderValue) < 2) // c3
+    note = midiToFreq(48);
+  else if(Math.abs(sliderValue) < 4) //middle C used normally
+    note = midiToFreq(60);
+  else if(Math.abs(sliderValue) < 5) //c5
+    note = midiToFreq(72);
+  else if(Math.abs(sliderValue) < 6 ) //c6
+    note = midiToFreq(84);
+  else if(Math.abs(sliderValue) < 7) //c7
+    note = midiToFreq(96);
+  else if(Math.abs(sliderValue) == 7) //c8
+    note =  midiToFreq(108); 
+  
+    console.log(Math.abs(sliderValue) + "n:" + freqToMidi(note))
+
 
   return note;
 }
