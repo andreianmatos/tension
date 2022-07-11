@@ -333,16 +333,12 @@ function draw() {
     document.getElementById("playR").style.display = 'none'; 
     //document.getElementById("loopL").style.display = 'none';
     //document.getElementById("loopR").style.display = 'none';   
-    document.getElementById("textQ2").innerHTML = '<h2>&#8595; First consider the chosen image on the left &#8595;</h2>';  
-    document.getElementById("textQ5").innerHTML = '<h2>&#8595; Now consider the chosen image on the right &#8595;</h2>';  
   }
   if(soundTest){
     document.getElementById("playL").style.display = 'block';
     document.getElementById("playR").style.display = 'block';  
     //document.getElementById("loopL").style.display = 'block';
     //document.getElementById("loopR").style.display = 'block';  
-    document.getElementById("textQ2").innerHTML = '<h2>&#8595; First consider the chosen sound on the left &#8595;</h2>';  
-    document.getElementById("textQ5").innerHTML = '<h2>&#8595; Now consider the chosen sound on the right &#8595;</h2>';  
   }
 
   // tension sliders update value
@@ -1237,7 +1233,7 @@ function draw() {
       osc.setType('sine');
       osc.amp(env);
 
-      osc.freq(midiToFreq(int(120)));
+      osc.freq(midiToFreq(int(60)));
       env.setRange(attackLevel, releaseLevel);
       env.setADSR(attackTime, decayTime, susPercent, releaseTime);
 
@@ -2927,14 +2923,7 @@ function saveTestChoices(testName){
 
 //TO DO save to document
 function sendTestResults(){
-  var currentdate = new Date(); 
-  var datetime = currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/" 
-                + currentdate.getFullYear() + " @ "  
-                + currentdate.getHours() + ":"  
-                + currentdate.getMinutes() + ":" 
-                + currentdate.getSeconds();
-  let testResults = "";
+  testResults = window.localStorage.getItem('testResults')+ "\n";
   //testResults += "<p><b>" + datetime +"</b></p>" + "\n";
   for(let i = 0; i < 20; i++){
     let j = i+1;

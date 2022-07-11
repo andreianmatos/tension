@@ -290,7 +290,7 @@ body, html {
 
 #textSlider1 {
   position: absolute;
-  margin-left: 15%;    
+  margin-left: 7%;    
   top: 60%;
 }
 .slidecontainer1 {
@@ -305,7 +305,7 @@ body, html {
 
 #textSlider2 {
   position: absolute;
-  margin-left: 64.5%;    
+  margin-left: 57.5%;    
   top: 60%;
 }
 .slidecontainer2 {
@@ -609,7 +609,7 @@ label {
   position: absolute;
   float: center;
   top: 90%;
-  left: 13vw
+  left: 18vw
 }
 
 
@@ -640,6 +640,10 @@ label {
   left:4%;
 }
 
+#volumeInput{
+  font-size: 30px;
+}
+
 #resultsText{
   font-size: 10px;
 }
@@ -658,7 +662,7 @@ label {
 
 #textQ5 {
   position: absolute;
-  left: 63%;    
+  left: 68%;    
   top: 90%;
 }
 
