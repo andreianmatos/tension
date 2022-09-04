@@ -109,3 +109,16 @@ function registerSound(){
   testResults += "VOLUME:" + document.getElementById('volumeInput').value; + "\n";
   window.localStorage.setItem('testResults', testResults);
 }
+
+function registerSoundPartTwo(){
+  var currentdate = new Date(); 
+  var datetime = currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+  let testResults = "";
+  testResults += "VOLUME:" + document.getElementById('volumeInput').value; + "\n";
+  window.localStorage.setItem('testResultsPartTwo', testResults);
+}

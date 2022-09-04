@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TENSION</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+  <script src="p5/p5.js"></script>
+  <script src="p5/p5.sound.js"></script> 
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+  <!--<link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />-->
+  <!-- JS -->
+  <!-- P5 -->
+  <script type="text/javascript" src="sketchPartTwo.js"></script>
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+  <!-- JSPSYCH 
+  <script src="jspsych/jspsych.js"></script>
+  <script src="jspsych/plugin-html-keyboard-response.js"></script>-->
+
+<body> 
+  <main>
+
+    <div id="alignCenter">
+      
+      <div id="testButtons">
+          <!-- add disabled="true" -->
+        <button disabled="true" class="custombutton2" id="definitions" onclick="definitionOpen(); show('definitionPopUp');">?</button> 
+        <button disabled="true" class="custombutton2" id="test1Bol" style="background-color: #f0d696;" onclick="next('test1Bol');">01</button> 
+        <button disabled="true" class="custombutton2" id="test2Bol" style="background-color: #f0d696;" onclick="next('test2Bol');">02</button>
+        <button disabled="true" class="custombutton2" id="test3Bol" style="background-color: #f0d696;" onclick="next('test3Bol');">03</button>
+        <button disabled="true" class="custombutton2" id="test4Bol" style="background-color: #f0d696;" onclick="next('test4Bol');">04</button>
+        <button disabled="true" class="custombutton2" id="test5Bol" style="background-color: #f0d696;" onclick="next('test5Bol');">05</button>
+        <button disabled="true" class="custombutton2" id="test6Bol" style="background-color: #f0d696;" onclick="next('test6Bol');">06</button>
+        <button disabled="true" class="custombutton2" id="test7Bol" style="background-color: #f0d696;" onclick="next('test7Bol');">07</button>
+        <button disabled="true" class="custombutton2" id="test8Bol" style="background-color: #f0d696;" onclick="next('test8Bol');">08</button>
+        <button disabled="true" class="custombutton2" id="test9Bol" style="background-color: #f0d696;" onclick="next('test9Bol');">09</button>
+        <button disabled="true" class="custombutton2" id="test10Bol" style="background-color: #f0d696;" onclick="next('test10Bol');">10</button>
+        <button disabled="true" class="custombutton2" id="test11Bol" style="background-color: #f0d696;" onclick="next('test11Bol');">11</button>
+        <button disabled="true" class="custombutton2" id="test12Bol" style="background-color: #f0d696;" onclick="next('test12Bol');">12</button>
+        <button disabled="true" class="custombutton2" id="submit" onclick="submit();">SUBMIT</button>
+      </div> 
+    </div>
+
+  <div id="definitionPopUp" style="display: none;">
+    Click back on the <b>?</b> button to unsee.
+    <p class="red"><b>DEFINITIONS</b></p>
+    <p><b>AROUSAL: </b>A state of excitement or energy spent on an emotion. Related to the intensity of the stimulus.</p>
+    <p><b>VALENCE: </b>The inate attractiveness (positive valence) or averseness (negative valence) of the stimulus.</p>
+
+    <p><b>TENSION: </b>The emotional state which relates to conflict, instability or uncertainty; that creates a desire for resolution; that increases as does expectaction, anticipation, 
+        which consequently holds an important place in the creation and management of dynamics in artistic practices.</p>
+        
+    <p>In this test, you must consider felt tension when answering, as opposed to perceived tension.</p>
+    <p><b>FELT TENSION: </b>Your own subjective emotional experience.</p>
+    <p><b>PERCEIVED TENSION: </b>The tension you assume the stimulus is supposed to express. </p>
+    <p class="red"><b>INSTRUCTIONS</b></p>
+    <P>Each test will present to you one image or one sound repeated twice, that is, the left and right image/sound are the same.The sound test includes a button which functions like a piano key, you hover (not click!) the mouse over it to begin the sound and it will play as long as your mouse is over the button. It will stop once the mouse leaves the button.</P>
+    <P>You will have to use the given sliders to manipulate the image/sound on the left to be the most tense possible and on the right to be the least tense possible. Underneath each there is a questionnaire regarding your reaction to it, namely the tension you felt. There is also a grid in which you must click on the cell that better suits your underlying emotional state when considering the image or sound.
+    <P>Every time you finish a test, click on <em>Next test!</em> at the bottom of the page and another will be randomly chosen.
+    At the end, you will be able to manually select any test by clicking on the test number and update your answers if you want to. If you do this, save your answers at the end of every test!</P>
+  </div>
+
+ <!--NEEDED TO BEGIN SOUND CONTEXT-->
+  <div id="startPopUp">
+    <button class="custombutton" id="startButton" style="top: 30%;" onclick="beginTests();">CLICK TO START!</button>
+  </div>
+
+    <div id="sketchUnique"></div>
+
+    <!--<button class="soundButton2" id="playL" onclick=""><span style="font-size: 1vw;">Hover to</span><br>PLAY</button>-->
+
+    <!--<button class="soundButton2" id="playR" onclick=""><span style="font-size: 1vw;">Hover to</span><br>PLAY</button>-->
+
+    <div id="leftQuestionnaire">
+
+    <div id="textQ1Unique">
+      <h2>From 1 to 10, how would you <span class="red">rate</span> it in terms of <span class="red">tension</span>?</h2>
+      <div>
+        <p id="tensionValueLeft"></p>
+        <hr noshade width="50" size="2.5" style="margin-top: -3vh;">
+      </div>
+      <span class="slidecontainer" id="tensionLeft">
+        <input type="range" min="1" max="10" value="1" class="slider" id="myRangeTensionLeft">
+      </span>
+      <h2 style="color:gray; margin-left:-50vh; margin-top: 5vh;">Not Tense at All</h2>
+      <h2 style="color:gray; margin-left: 50vh; margin-top: -4.5vh;">Extremely Tense</h2>
+    </div>
+
+    <div id="textQ2Unique">
+      <h2>In the grid below, place a <span class="red">cross</span> where it better represents <span class="red">the way it makes you feel</span>.</h2>
+    </div>
+
+    <div id="gridtags"> 
+      <div id="textGridTopU"><b>High Arousal</b></div>
+      <div id="textGridBottomU"><b>Sleepiness</b></div>
+      <div id="textGridLeftU"><b>Unpleasant<br>Feelings</b></div>
+      <div id="textGridRightU"><b>Pleasant<br>Feelings</b></div>
+      <div id="textGridTopRU"><b>Excitement</b></div>
+      <div id="textGridTopLU"><b>Stress</b></div>    
+      <div id="textGridBottomRU"><b>Relaxation</b></div>
+      <div id="textGridBottomLU"><b>Depression</b></div>
+    </div>
+
+      <div id="affectGridUnique">
+        <input type="text" readonly class="gridCell" id="1" onclick="checkGrid('1');">
+        <input type="text" readonly class="gridCell" id="2" onclick="checkGrid('2');">
+        <input type="text" readonly class="gridCell" id="3" onclick="checkGrid('3');">
+        <input type="text" readonly class="gridCell" id="4" onclick="checkGrid('4');">
+        <input type="text" readonly class="gridCell" id="5" onclick="checkGrid('5');"><br>
+        <input type="text" readonly class="gridCell" id="6" onclick="checkGrid('6');">
+        <input type="text" readonly class="gridCell" id="7" onclick="checkGrid('7');">
+        <input type="text" readonly class="gridCell" id="8" onclick="checkGrid('8');">
+        <input type="text" readonly class="gridCell" id="9" onclick="checkGrid('9');">
+        <input type="text" readonly class="gridCell" id="10" onclick="checkGrid('10');"><br>
+        <input type="text" readonly class="gridCell" id="11" onclick="checkGrid('11');">
+        <input type="text" readonly class="gridCell" id="12" onclick="checkGrid('12');">
+        <input type="text" readonly class="gridCell" id="13" onclick="checkGrid('13');">
+        <input type="text" readonly class="gridCell" id="14" onclick="checkGrid('14');">
+        <input type="text" readonly class="gridCell" id="15" onclick="checkGrid('15');"><br>
+        <input type="text" readonly class="gridCell" id="16" onclick="checkGrid('16');">
+        <input type="text" readonly class="gridCell" id="17" onclick="checkGrid('17');">
+        <input type="text" readonly class="gridCell" id="18" onclick="checkGrid('18');">
+        <input type="text" readonly class="gridCell" id="19" onclick="checkGrid('19');">
+        <input type="text" readonly class="gridCell" id="20" onclick="checkGrid('20');"><br>
+        <input type="text" readonly class="gridCell" id="21" onclick="checkGrid('21');">
+        <input type="text" readonly class="gridCell" id="22" onclick="checkGrid('22');">
+        <input type="text" readonly class="gridCell" id="23" onclick="checkGrid('23');">
+        <input type="text" readonly class="gridCell" id="24" onclick="checkGrid('24');">
+        <input type="text" readonly class="gridCell" id="25" onclick="checkGrid('25');"><br>
+      </div>   
+      
+  </div>  
+
+    <div id="startU">
+      <button class="soundButton" id="showTest"><span style="font-size: 1vw;">Hover to</span><br>SHOW</button>
+    </div>
+
+    <div id="textNextU">
+      <button class="custombutton3" id="testNext" onclick="chooseNextTest()">NEXT TEST!</button>
+      <h3 id="lastTest">You have done all the tests! Now please click the red button "SUBMIT".</h3>
+      <button class="custombutton2" id="updateAnswers" onclick="updateAnswers()">SAVE ANSWERS</button>
+      <h3 id="lastTest2">When you are done, please submit!</h3>
+    </div>
+
+  </main>
+
+</body>
+<script>
+
+</script>
+
+</html>
