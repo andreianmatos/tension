@@ -31,6 +31,8 @@ let downloaded = 0;
 
 let hoverShow = 0, trigger = false;
 
+let recorder, soundFile;
+
 //C3 C4 C5 o C2(36) é um pouco baixo (?) 
 var midiNotesConsidered = Array(48, 60, 72);
 var seconds; // between notes, before the setinterval: worked: frameCount % 100 == 0
@@ -61,7 +63,7 @@ function setup() {
 
   showTestButton.onmouseout = function(){
     downloaded = 1;
-    env.triggerRelease(osc); 
+    //env.triggerRelease(osc); 
         hoverShow = false; 
         //showTestButton.disabled = false;
         showTestButton.innerHTML = '<span style="font-size: 1vw;">Hover to</span><br>SHOW';
@@ -83,6 +85,14 @@ function setup() {
   osc = new p5.Oscillator();
   env = new p5.Envelope();
 
+  // create a sound recorder
+  recorder = new p5.SoundRecorder();
+  // connect the mic to the recorder
+  recorder.setInput(osc);
+
+  // create an empty sound file that we will use to playback the recording
+  soundFile = new p5.SoundFile();
+
   seconds = 0;
   //increment the seconds
   setInterval(incrementSeconds, 1000);
@@ -92,6 +102,15 @@ function setup() {
 function draw() {
 
   background(white); 
+
+  window.onkeydown= function(gfg){
+    if(gfg.keyCode === 32){
+      console.log("spaceBar");
+      recorder.stop();
+      soundFile.play();
+      saveSound(soundFile, '/UsersFiguresSounds/sounds/user1LeastTense.wav'); // save file
+    };
+};
 
   angularityValue = map(1.25, 0, 10, 0, 8);
   orientationValue = map(7.5, 0, 10, 0, 8);
@@ -105,11 +124,11 @@ function draw() {
   thicknessValue = map(1.25, 0, 10, 0, 8);
   simmetryValue = map(8.75, 0, 10, 0, 8);*/
   //SOUND
-  attackTimeValue = Math.abs(map(5, -10, 10, -8, 8));
-  releaseTimeValue = Math.abs(map(5, -10, 10, -8, 8));
-  frequencyValue = Math.abs(map(5, -10, 10, -8, 8));
-  amplitudeValue = Math.abs(map(5, -10, 10, -8, 8));
-  waveformValue = "1.4";  
+  amplitudeValue = Math.abs(map(1.25, 0, 10, 0, 8));
+  waveformValue = "1.1";  
+  releaseTimeValue = Math.abs(map(8.75, 0, 10, 0, 8));
+  frequencyValue = Math.abs(map(4.25, 0, 10, 0, 8));
+  attackTimeValue = Math.abs(map(0.1, 0, 10, 0, 8));
 
   if(hoverShow){
 
@@ -219,7 +238,7 @@ function draw() {
     }
 
     if(!downloaded)
-      saveCanvas('canvas', 'png')
+      //saveCanvas('canvas', 'png')
 
 
     //S O U N D
@@ -258,7 +277,8 @@ function draw() {
     env.setADSR(attackTime, decayTime, susPercent, releaseTime);
 
     if(trigger){
-      env.triggerAttack(osc);
+      recorder.record(soundFile);
+      env.play(osc,0,1);
       trigger = false;
     }   
     
