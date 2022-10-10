@@ -112,7 +112,7 @@ function draw() {
     };
 };
 
-  angularityValue = map(1.25, 0, 10, 0, 8);
+  angularityValue = map(1.5, 0, 10, 0, 8);
   orientationValue = map(7.5, 0, 10, 0, 8);
   irregularityValue = map(1.25, 0, 10, 0, 8);
   thicknessValue = map(7.5, 0, 10, 0, 8);
@@ -124,11 +124,11 @@ function draw() {
   thicknessValue = map(1.25, 0, 10, 0, 8);
   simmetryValue = map(8.75, 0, 10, 0, 8);*/
   //SOUND
-  amplitudeValue = Math.abs(map(1.25, 0, 10, 0, 8));
+  amplitudeValue = Math.abs(map(2.5, 0, 10, 0, 8));
   waveformValue = "1.1";  
-  releaseTimeValue = Math.abs(map(8.75, 0, 10, 0, 8));
-  frequencyValue = Math.abs(map(4.25, 0, 10, 0, 8));
-  attackTimeValue = Math.abs(map(0.1, 0, 10, 0, 8));
+  releaseTimeValue = Math.abs(map(10, 0, 10, 0, 8));
+  frequencyValue = Math.abs(map(3.75, 0, 10, 0, 8));
+  attackTimeValue = Math.abs(map(1.25, 0, 10, 0, 8));
 
   if(hoverShow){
 
