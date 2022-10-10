@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TENSION</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+  <script src="p5/p5.js"></script>
+  <script src="p5/p5.sound.js"></script> 
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+  <!--<link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />-->
+  <!-- JS -->
+  <!-- P5 -->
+  <script type="text/javascript" src="sketchFinal.js"></script>
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+  <!-- JSPSYCH 
+  <script src="jspsych/jspsych.js"></script>
+  <script src="jspsych/plugin-html-keyboard-response.js"></script>-->
+
+<body> 
+  <main>
+
+ <!--NEEDED TO BEGIN SOUND CONTEXT
+  <div id="startPopUp">
+    <button class="custombutton" id="startButton" style="top: 30%;" onclick="beginTests();">CLICK TO START!</button>
+  </div>-->
+                
+  <div id="sketch"></div>
+
+  <a style=" color: darkred; justify-content: center;display: flex;" href="UsersFiguresSounds.zip">
+    <p>DOWNLOAD LIBRARY OF USER'S MOST AND LEAST TENSE FIGURES AND SOUNDS</p> 
+  </a>
+
+  <a id = "textLibrary">
+    <p><b>SLIDE TO GENERATE...</b></p>
+  </a>
+
+
+  <a id = "soundText">
+    <p><b>SOUND</b></p>
+  </a>
+
+  <a id = "imageText">
+    <p><b>FIGURE</b></p>
+  </a>
+
+
+
+  <!--<button id="soundButtonFinal" class="soundButtonFinal"><span style="font-size: 1vw;">Click to</span><br>PLAY</button>-->
+
+  <div>
+    <span class="slidecontainerFinalSound">
+    <input type="range" min="1" max="3" value="2" class="slider" id="sliderTensionSound">
+    <h2 style="color:BLACK; margin-left:-40vh; margin-top: 0vh; text-align: center;">LEAST<br/>TENSE</h2>
+    <h2 style="color:BLACK; margin-left: 30vh; margin-top: -10.5vh; text-align: center;">MOST<br/> TENSE</h2>
+    </span>
+  </div>
+  <div>
+    <span class="slidecontainerFinalVisual">
+    <input type="range" min="1" max="3" value="2" class="slider" id="sliderTension">
+    <h2 style="color:BLACK; margin-left:-40vh; margin-top: 0vh; text-align: center;">LEAST<br/>TENSE</h2>
+    <h2 style="color:BLACK; margin-left: 30vh; margin-top: -10.5vh; text-align: center;">MOST<br/> TENSE</h2>
+    </span>
+  </div>
+
+</body>
+<script>
+
+</script>
+
+</html>

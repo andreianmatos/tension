@@ -16,6 +16,8 @@ let doneFullTests = 0;
 
 var w, osc, env;
 
+let pg;
+
 let slider = 0, sliderDouble = 0, radioButtons = 0;
 var radiosLeft_value, radiosRight_value;
 
@@ -25,6 +27,8 @@ let tests = [], undoneTests = [1,2,3,4,5,6,7,8,9,10,11,12];
 let end = 0;
 let freq;
 
+let downloaded = 0;
+
 let hoverShow = 0, trigger = false;
 
 //C3 C4 C5 o C2(36) é um pouco baixo (?) 
@@ -33,7 +37,7 @@ var seconds; // between notes, before the setinterval: worked: frameCount % 100 
 
 function setup() {
 
-  var canvas = createCanvas(0.85*windowWidth, 0.68*windowHeight);
+  var canvas = createCanvas(0.35*windowWidth, 0.48*windowHeight);
 
   // define colors
   black = color('rgb(17, 17, 17)');
@@ -56,14 +60,12 @@ function setup() {
   };
 
   showTestButton.onmouseout = function(){
+    downloaded = 1;
     env.triggerRelease(osc); 
-    setTimeout(
-      function() {
         hoverShow = false; 
-        showTestButton.disabled = false;
+        //showTestButton.disabled = false;
         showTestButton.innerHTML = '<span style="font-size: 1vw;">Hover to</span><br>SHOW';
-      }, releaseTime*1000);
-      showTestButton.disabled = true;
+      //showTestButton.disabled = true;
   };
   
   for(let i=1; i < 13; i++)
@@ -91,221 +93,23 @@ function draw() {
 
   background(white); 
 
-  // tension sliders update value
+  angularityValue = map(1.25, 0, 10, 0, 8);
+  orientationValue = map(7.5, 0, 10, 0, 8);
+  irregularityValue = map(1.25, 0, 10, 0, 8);
+  thicknessValue = map(7.5, 0, 10, 0, 8);
+  simmetryValue = map(8.75, 0, 10, 0, 8);
 
-  sliderTension.oninput = function() {
-    outputSliderTension.innerHTML = this.value;
-  }
-
-  /* in between always stop the oscillator
-  if(!hoverLeft && !hoverRight){
-    osc.stop(0.1);
-  }*/
-
-  // TESTE 1 | SYMMETRY + THICKNESS
-  if(findTest("test1Bol").active) {
-     //VISUALS
-     irregularityValue = Math.abs(map(int(random(0,10)), -10, 10, -8, 8));
-     thicknessValue = Math.abs(map(int(random(0,10)), -10, 10, -8, 8));
-     angularityValue = Math.abs(map(int(random(0,10)), -10, 10, -8, 8));
-     orientationValue = Math.abs(map(int(random(0,10)), -10, 10, -8, 8));
-     simmetryValue = Math.abs(map(int(random(0,10)), -10, 10, -8, 8));
- 
-     //SOUND
-     attackTimeValue = Math.abs(map(int(random(0,10)), -10, 10, -8, 8));
-     releaseTimeValue = Math.abs(map(int(random(0,10)), -10, 10, -8, 8));
-     frequencyValue = Math.abs(map(int(random(0,10)), -10, 10, -8, 8));
-     amplitudeValue = Math.abs(map(int(random(0,10)), -10, 10, -8, 8));
-     waveformValue = "1.1";
-  }
-
-  
-  // TESTE 2 | SYMMETRY + ORIENTATION
-  if(findTest("test2Bol").active) {
-    //VISUALS
-    irregularityValue = Math.abs(map(int(random(0,10)), -10, 10, -8, 8));
-    thicknessValue = Math.abs(map(int(random(0,10)), -10, 10, -8, 8));
-    angularityValue = Math.abs(map(int(random(0,10)), -10, 10, -8, 8));
-    orientationValue = Math.abs(map(int(random(0,10)), -10, 10, -8, 8));
-    simmetryValue = Math.abs(map(int(random(0,10)), -10, 10, -8, 8));
-
-    //SOUND
-    attackTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    releaseTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    frequencyValue = Math.abs(map(10, -10, 10, -8, 8));
-    amplitudeValue = Math.abs(map(10, -10, 10, -8, 8));
-    waveformValue = "1.1";
-  }
-
-  // TESTE 3 | SYMMETRY + THICKNESS
-  if(findTest("test3Bol").active) {
-    //VISUALS
-    irregularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    thicknessValue = Math.abs(map(0, -10, 10, -8, 8));
-    angularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    orientationValue = Math.abs(map(0, -10, 10, -8, 8));
-    simmetryValue = Math.abs(map(0, -10, 10, -8, 8));
-
-    //SOUND
-    attackTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    releaseTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    frequencyValue = Math.abs(map(10, -10, 10, -8, 8));
-    amplitudeValue = Math.abs(map(10, -10, 10, -8, 8));
-    waveformValue = "1.1";
-  }
-
-  // TESTE 4 | SYMMETRY + ORIENTATION
-  if(findTest("test4Bol").active) {
-    //VISUALS
-    irregularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    thicknessValue = Math.abs(map(0, -10, 10, -8, 8));
-    angularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    orientationValue = Math.abs(map(0, -10, 10, -8, 8));
-    simmetryValue = Math.abs(map(0, -10, 10, -8, 8));
-
-    //SOUND
-    attackTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    releaseTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    frequencyValue = Math.abs(map(10, -10, 10, -8, 8));
-    amplitudeValue = Math.abs(map(10, -10, 10, -8, 8));
-    waveformValue = "1.1";
-  }
-
-  // TESTE 5 | SYMMETRY + THICKNESS
-  if(findTest("test5Bol").active) {
-    //VISUALS
-    irregularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    thicknessValue = Math.abs(map(0, -10, 10, -8, 8));
-    angularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    orientationValue = Math.abs(map(0, -10, 10, -8, 8));
-    simmetryValue = Math.abs(map(0, -10, 10, -8, 8));
-
-    //SOUND
-    attackTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    releaseTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    frequencyValue = Math.abs(map(10, -10, 10, -8, 8));
-    amplitudeValue = Math.abs(map(10, -10, 10, -8, 8));
-    waveformValue = "1.1";
-  }
-
-  // TESTE 6 | SYMMETRY + ORIENTATION
-  if(findTest("test6Bol").active) {
-    //VISUALS
-    irregularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    thicknessValue = Math.abs(map(0, -10, 10, -8, 8));
-    angularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    orientationValue = Math.abs(map(0, -10, 10, -8, 8));
-    simmetryValue = Math.abs(map(0, -10, 10, -8, 8));
-
-    //SOUND
-    attackTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    releaseTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    frequencyValue = Math.abs(map(10, -10, 10, -8, 8));
-    amplitudeValue = Math.abs(map(10, -10, 10, -8, 8));
-    waveformValue = "1.1";
-  }
-
-  // TESTE 7 | SYMMETRY + THICKNESS
-  if(findTest("test7Bol").active) {
-      //VISUALS
-     irregularityValue = Math.abs(map(0, -10, 10, -8, 8));
-     thicknessValue = Math.abs(map(0, -10, 10, -8, 8));
-     angularityValue = Math.abs(map(0, -10, 10, -8, 8));
-     orientationValue = Math.abs(map(0, -10, 10, -8, 8));
-     simmetryValue = Math.abs(map(0, -10, 10, -8, 8));
- 
-     //SOUND
-     attackTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-     releaseTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-     frequencyValue = Math.abs(map(10, -10, 10, -8, 8));
-     amplitudeValue = Math.abs(map(10, -10, 10, -8, 8));
-     waveformValue = "1.1";
-  }
-
-  // TESTE 8 | SYMMETRY + ORIENTATION
-  if(findTest("test8Bol").active) {
-    //VISUALS
-    irregularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    thicknessValue = Math.abs(map(0, -10, 10, -8, 8));
-    angularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    orientationValue = Math.abs(map(0, -10, 10, -8, 8));
-    simmetryValue = Math.abs(map(0, -10, 10, -8, 8));
-
-    //SOUND
-    attackTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    releaseTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    frequencyValue = Math.abs(map(10, -10, 10, -8, 8));
-    amplitudeValue = Math.abs(map(10, -10, 10, -8, 8));
-    waveformValue = "1.1";
-  }
-
-  // TESTE 9 | SYMMETRY + THICKNESS
-  if(findTest("test9Bol").active) {
-      //VISUALS
-     irregularityValue = Math.abs(map(0, -10, 10, -8, 8));
-     thicknessValue = Math.abs(map(0, -10, 10, -8, 8));
-     angularityValue = Math.abs(map(0, -10, 10, -8, 8));
-     orientationValue = Math.abs(map(0, -10, 10, -8, 8));
-     simmetryValue = Math.abs(map(0, -10, 10, -8, 8));
- 
-     //SOUND
-     attackTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-     releaseTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-     frequencyValue = Math.abs(map(10, -10, 10, -8, 8));
-     amplitudeValue = Math.abs(map(10, -10, 10, -8, 8));
-     waveformValue = "1.1";
-  }
-
-  // TESTE 10 | SYMMETRY + ORIENTATION
-  if(findTest("test10Bol").active) {
-    //VISUALS
-    irregularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    thicknessValue = Math.abs(map(0, -10, 10, -8, 8));
-    angularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    orientationValue = Math.abs(map(0, -10, 10, -8, 8));
-    simmetryValue = Math.abs(map(0, -10, 10, -8, 8));
-
-    //SOUND
-    attackTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    releaseTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    frequencyValue = Math.abs(map(10, -10, 10, -8, 8));
-    amplitudeValue = Math.abs(map(10, -10, 10, -8, 8));
-    waveformValue = "1.1";
-  }
-
-  // TESTE 11 | SYMMETRY + THICKNESS
-  if(findTest("test11Bol").active) {
-    //VISUALS
-    irregularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    thicknessValue = Math.abs(map(0, -10, 10, -8, 8));
-    angularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    orientationValue = Math.abs(map(0, -10, 10, -8, 8));
-    simmetryValue = Math.abs(map(0, -10, 10, -8, 8));
-
-    //SOUND
-    attackTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    releaseTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    frequencyValue = Math.abs(map(10, -10, 10, -8, 8));
-    amplitudeValue = Math.abs(map(10, -10, 10, -8, 8));
-    waveformValue = "1.1";
-  }
-
-  // TESTE 12 | SYMMETRY + ORIENTATION
-  if(findTest("test12Bol").active) {
-    //VISUALS
-    irregularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    thicknessValue = Math.abs(map(0, -10, 10, -8, 8));
-    angularityValue = Math.abs(map(0, -10, 10, -8, 8));
-    orientationValue = Math.abs(map(0, -10, 10, -8, 8));
-    simmetryValue = Math.abs(map(0, -10, 10, -8, 8));
-
-    //SOUND
-    attackTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    releaseTimeValue = Math.abs(map(10, -10, 10, -8, 8));
-    frequencyValue = Math.abs(map(10, -10, 10, -8, 8));
-    amplitudeValue = Math.abs(map(10, -10, 10, -8, 8));
-    waveformValue = "1.1";
-  }
+  /*angularityValue = map(8.75, 0, 10, 0, 8);
+  orientationValue = map(1.25, 0, 10, 0, 8);
+  irregularityValue = map(7.5, 0, 10, 0, 8);
+  thicknessValue = map(1.25, 0, 10, 0, 8);
+  simmetryValue = map(8.75, 0, 10, 0, 8);*/
+  //SOUND
+  attackTimeValue = Math.abs(map(5, -10, 10, -8, 8));
+  releaseTimeValue = Math.abs(map(5, -10, 10, -8, 8));
+  frequencyValue = Math.abs(map(5, -10, 10, -8, 8));
+  amplitudeValue = Math.abs(map(5, -10, 10, -8, 8));
+  waveformValue = "1.4";  
 
   if(hoverShow){
 
@@ -324,11 +128,13 @@ function draw() {
 
     push();
     noFill();
-    translate(width/1.25, height/2);
+    translate(width/2, height/2);
 
-    //V I S U A LS
+    angleMode(DEGREES);
+
     //IRREGULARITY
-    if(irregularityValue <= 0) {
+    //randomSeed(99);
+    if(irregularityValue < 0) {
       irregularList = [4, 
         map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4,
         map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
@@ -347,7 +153,6 @@ function draw() {
         map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
         map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
         map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14)];
-      setLineDash(irregularList);  
     }
     if(irregularityValue > 0) {
       irregularList = [4, 
@@ -367,8 +172,13 @@ function draw() {
         map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
         map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
         map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue))];
-      setLineDash(irregularList);  
+        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue))]; 
+    }
+    if(abs(irregularityValue) > 3) {
+      setLineDash(irregularList); 
+    }
+    else{
+      setLineDash([]);  
     }
 
     // THICKNESS
@@ -377,14 +187,17 @@ function draw() {
     if(thicknessValue <= 0)
       sw = int(map(thicknessValue, -8, 0, 25, 1));
     strokeWeight(sw);
-    
+
     // ORIENTATION
     rectMode(CENTER);
-    let angle2 = map(orientationValue, 0, 8, 0, 45);
+    angleMode(RADIANS);
+    let angle2 = map(orientationValue, 0, 8, 0, 180);
     if(orientationValue > 0)
       rotate(PI / 180 * angle2);
     if(orientationValue <= 0)
       rotate(PI / 180 * angle2);
+
+    console.log("ang:" + angularityValue)
 
     // ANGULARITY + SYMMETRY
     if(angularityValue < 0) {
@@ -396,6 +209,7 @@ function draw() {
       }
     }
     if(angularityValue >= 0) {
+      console.log("symmetry:" + simmetryValue)
       if(simmetryValue < 0) {
         square(0, 0, 200, map(angularityValue, 0, 8, 100, 0), map(angularityValue, 0, 8, 100, 0) * map(simmetryValue, -8, 0, 0, 1), map(angularityValue, 0, 8, 100, 0) * map(simmetryValue, -8, 0, 0, 1), map(angularityValue, 0, 8, 100, 0));
       }
@@ -403,6 +217,10 @@ function draw() {
         square(0, 0, 200, map(angularityValue, 0, 8, 100, 0), map(angularityValue, 0, 8, 100, 0) * map(simmetryValue, 0, 8, 1, 0), map(angularityValue, 0, 8, 100, 0) * map(simmetryValue, 0, 8, 1, 0), map(angularityValue, 0, 8, 100, 0));
       }
     }
+
+    if(!downloaded)
+      saveCanvas('canvas', 'png')
+
 
     //S O U N D
 
@@ -722,8 +540,7 @@ function chooseNextTest(){
 
 function next(newTestBol) {
 
-  for(let i=0; i < 12; i++)
-    tests[i].active = 0;
+  
   findTest(newTestBol).active = 1;
 
   window.scrollTo({ top: 0, behavior: 'smooth' });

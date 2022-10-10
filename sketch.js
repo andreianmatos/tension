@@ -633,6 +633,8 @@ function draw() {
     slider = 1;
     sliderDouble = 0;
 
+    
+
      // keeping these levels always up to the maximum (0.0 and 1.0)
      let attackLevel = 0.5;
      let releaseLevel = 0.0; // to make the note end all the way to silence (0 is the level at the end of the release)
@@ -1384,9 +1386,9 @@ function draw() {
     noFill();
     translate(width/5, height/2);
     strokeWeight(12.5);
-    let angle = map(currentValueSlider3, 0, 8, 0, 180);
+    let angle = map(currentValueSlider3, 0, 8, 0, 45);
     if(currentValueSlider3 > 0)
-      rotate(PI / 180 * angle);
+      rotate(PI / 180 * -angle);
     if(currentValueSlider3 <= 0)
     rotate(PI / 180 * angle);
     if(currentValueSlider1 < 0) 
@@ -2574,7 +2576,7 @@ function draw() {
       }
     }
 
-    pop();
+    pop(); 
 
     push();
     noFill();
@@ -2623,6 +2625,8 @@ function draw() {
       map(currentValueSlider6, 0, 8, 14, 14 + random(15,15*currentValueSlider6))];
     setLineDash(irregularList);  
   }
+
+
 
   // THICKNESS
   if(currentValueSlider8 > 0)
