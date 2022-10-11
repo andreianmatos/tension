@@ -124,14 +124,14 @@ function draw() {
   thicknessValue = map(1.25, 0, 10, 0, 8);
   simmetryValue = map(8.75, 0, 10, 0, 8);*/
   //SOUND
-  amplitudeValue = Math.abs(map(0, 0, 10, 0, 8));
-  waveformValue = "1.4";  
-  releaseTimeValue = Math.abs(map(0, 0, 10, 0, 8));
-  frequencyValue = Math.abs(map(3.75, 0, 10, 0, 8));
-  attackTimeValue = Math.abs(map(1.25, 0, 10, 0, 8));
+  amplitudeValue = Math.abs(map(0.1, 0, 10, 0, 8));
+  waveformValue = "1.1";  
+  releaseTimeValue = Math.abs(map(3.75, 0, 10, 0, 8));
+  frequencyValue = Math.abs(map(5, 0, 10, 0, 8));
+  attackTimeValue = Math.abs(map(3.75, 0, 10, 0, 8));
 
   if(hoverShow){
-
+222
     //attackLevel = 0.5; // so that there's a difference from the amplitude test's max (1.0)
     releaseLevel = 0.0; // to make the note end all the way to silence (0)
     decayLevel = 0.5 // decay level 
