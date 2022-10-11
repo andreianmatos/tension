@@ -101,6 +101,13 @@ function draw() {
       adjustTime = 1;
     }, 4000); 
   }   
+
+  
+  window.onkeydown= function(gfg){
+    if(gfg.keyCode === 32){
+      saveCanvas('canvas', 'png')
+    };
+  };
  
   /*setTimeout(function(){
     frameRate(0);
@@ -155,7 +162,8 @@ function draw() {
 
   if(sliderTensionSound.value == 1){ // least tense
     //soundButtonFinal.disabled = false;
-    document.getElementById("soundText").innerHTML ="<b>PLAYING</b>";    
+    let left = 9 - seconds;
+    document.getElementById("soundText").innerHTML ="<b>PLAYING | "+left+"</b>";    
     attackMean = 1.692175;
     attackStandardDeviation =  1.03998;
     releaseMean = 1.6672;
@@ -168,7 +176,8 @@ function draw() {
   }
   else if(sliderTensionSound.value == 3){ // most tense
     //soundButtonFinal.disabled = false;
-    document.getElementById("soundText").innerHTML ="<b>PLAYING</b>";    
+    let left = 9 - seconds;
+    document.getElementById("soundText").innerHTML =="<b>PLAYING | "+left+"</b>";   
     attackMean = 1.33125;
     attackStandardDeviation =  1.034575;
     releaseMean = 1,3547;
@@ -325,7 +334,7 @@ function draw() {
       // ORIENTATION
       rectMode(CENTER);
       angleMode(RADIANS);
-      let angle2 = map(orientationValue, 0, 8, 0, 180);
+      let angle2 = map(orientationValue, 0, 8, 0, 45);
       rotate(PI / 180 * angle2);
 
       // ANGULARITY + SYMMETRY
@@ -529,7 +538,7 @@ function randomGaussianPositive(m,sd){
 function randomGaussianPositiveSound(m,sd){
   value = randomGaussian(m,sd);
   if(value < 0)
-    return 0;
+    return 0.1;
   if(value > 3)
     return 3;
   return value;

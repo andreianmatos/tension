@@ -39,7 +39,7 @@ var seconds; // between notes, before the setinterval: worked: frameCount % 100 
 
 function setup() {
 
-  var canvas = createCanvas(0.35*windowWidth, 0.48*windowHeight);
+  var canvas = createCanvas(0.20*windowWidth, 0.48*windowHeight);
 
   // define colors
   black = color('rgb(17, 17, 17)');
@@ -64,7 +64,7 @@ function setup() {
   showTestButton.onmouseout = function(){
     downloaded = 1;
     //env.triggerRelease(osc); 
-        hoverShow = false; 
+        //hoverShow = false; 
         //showTestButton.disabled = false;
         showTestButton.innerHTML = '<span style="font-size: 1vw;">Hover to</span><br>SHOW';
       //showTestButton.disabled = true;
@@ -109,14 +109,15 @@ function draw() {
       recorder.stop();
       soundFile.play();
       saveSound(soundFile, '/UsersFiguresSounds/sounds/user1LeastTense.wav'); // save file
+      saveCanvas('canvas', 'png')
     };
 };
 
-  angularityValue = map(1.5, 0, 10, 0, 8);
-  orientationValue = map(7.5, 0, 10, 0, 8);
-  irregularityValue = map(1.25, 0, 10, 0, 8);
-  thicknessValue = map(7.5, 0, 10, 0, 8);
-  simmetryValue = map(8.75, 0, 10, 0, 8);
+angularityValue = map(10, 0, 10, 0, 8);
+orientationValue = map(0, 0, 10, 0, 8);
+irregularityValue = map(1.25, 0, 10, 0, 8);
+thicknessValue = map(1.25, 0, 10, 0, 8);
+simmetryValue = map(7.5, 0, 10, 0, 8);
 
   /*angularityValue = map(8.75, 0, 10, 0, 8);
   orientationValue = map(1.25, 0, 10, 0, 8);
@@ -124,11 +125,11 @@ function draw() {
   thicknessValue = map(1.25, 0, 10, 0, 8);
   simmetryValue = map(8.75, 0, 10, 0, 8);*/
   //SOUND
-  amplitudeValue = Math.abs(map(0.1, 0, 10, 0, 8));
-  waveformValue = "1.1";  
-  releaseTimeValue = Math.abs(map(3.75, 0, 10, 0, 8));
-  frequencyValue = Math.abs(map(5, 0, 10, 0, 8));
-  attackTimeValue = Math.abs(map(3.75, 0, 10, 0, 8));
+  amplitudeValue = Math.abs(map(8.75, 0, 10, 0, 8));
+  waveformValue = "1.4";  
+  releaseTimeValue = Math.abs(map(1.25, 0, 10, 0, 8));
+  frequencyValue = Math.abs(map(10, 0, 10, 0, 8));
+  attackTimeValue = Math.abs(map(10, 0, 10, 0, 8));
 
   if(hoverShow){
 222
@@ -151,95 +152,48 @@ function draw() {
 
     angleMode(DEGREES);
 
-    //IRREGULARITY
-    //randomSeed(99);
-    if(irregularityValue < 0) {
-      irregularList = [4, 
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4,
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4,
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4,
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14), 4, 
-        map(irregularityValue, -8, 0, 14 + random(14,-15*irregularityValue), 14)];
-    }
-    if(irregularityValue > 0) {
-      irregularList = [4, 
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4,
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4,
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4,
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4,
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
-        map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue))]; 
-    }
+    
+    randomSeed(99);
+    
+    irregularList = [4, 
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4,
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4,
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4,
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4,
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue)), 4, 
+      map(irregularityValue, 0, 8, 14, 14 + random(15,15*irregularityValue))]; 
+    
     if(abs(irregularityValue) > 3) {
       setLineDash(irregularList); 
     }
     else{
       setLineDash([]);  
     }
-
+    
     // THICKNESS
     if(thicknessValue > 0)
       sw = int(map(thicknessValue, 0, 8, 1, 25));
-    if(thicknessValue <= 0)
-      sw = int(map(thicknessValue, -8, 0, 25, 1));
     strokeWeight(sw);
 
     // ORIENTATION
     rectMode(CENTER);
     angleMode(RADIANS);
-    let angle2 = map(orientationValue, 0, 8, 0, 180);
-    if(orientationValue > 0)
-      rotate(PI / 180 * angle2);
-    if(orientationValue <= 0)
-      rotate(PI / 180 * angle2);
-
-    console.log("ang:" + angularityValue)
+    let angle2 = map(orientationValue, 0, 8, 0, 45);
+    rotate(PI / 180 * angle2);
 
     // ANGULARITY + SYMMETRY
-    if(angularityValue < 0) {
-      if(simmetryValue < 0) {
-        square(0, 0, 200, map(angularityValue, -8, 0, 0, 100), map(angularityValue, -8, 0, 0, 100) * map(simmetryValue, -8, 0, 0, 1), map(angularityValue, -8, 0, 0, 100)* map(simmetryValue, -8, 0, 0, 1), map(angularityValue, -8, 0, 0, 100));
-      }
-      if(simmetryValue >= 0) {
-        square(0, 0, 200, map(angularityValue, -8, 0, 0, 100), map(angularityValue, -8, 0, 0, 100) * map(simmetryValue, 0, 8, 1, 0), map(angularityValue, -8, 0, 0, 100)* map(simmetryValue, 0, 8, 1, 0), map(angularityValue, -8, 0, 0, 100));
-      }
-    }
-    if(angularityValue >= 0) {
-      console.log("symmetry:" + simmetryValue)
-      if(simmetryValue < 0) {
-        square(0, 0, 200, map(angularityValue, 0, 8, 100, 0), map(angularityValue, 0, 8, 100, 0) * map(simmetryValue, -8, 0, 0, 1), map(angularityValue, 0, 8, 100, 0) * map(simmetryValue, -8, 0, 0, 1), map(angularityValue, 0, 8, 100, 0));
-      }
-      if(simmetryValue >= 0) {
-        square(0, 0, 200, map(angularityValue, 0, 8, 100, 0), map(angularityValue, 0, 8, 100, 0) * map(simmetryValue, 0, 8, 1, 0), map(angularityValue, 0, 8, 100, 0) * map(simmetryValue, 0, 8, 1, 0), map(angularityValue, 0, 8, 100, 0));
-      }
-    }
-
-    if(!downloaded)
-      //saveCanvas('canvas', 'png')
-
+    square(0, 0, 200, map(angularityValue, 0, 8, 100, 0), map(angularityValue, 0, 8, 100, 0) * map(simmetryValue, 0, 8, 0, 1), map(angularityValue, 0, 8, 100, 0) * map(simmetryValue, 0, 8, 0, 1), map(angularityValue, 0, 8, 100, 0));
 
     //S O U N D
 
