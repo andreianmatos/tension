@@ -177,7 +177,7 @@ function draw() {
   else if(sliderTensionSound.value == 3){ // most tense
     //soundButtonFinal.disabled = false;
     let left = 9 - seconds;
-    document.getElementById("soundText").innerHTML =="<b>PLAYING | "+left+"</b>";   
+    document.getElementById("soundText").innerHTML ="<b>PLAYING | "+left+"</b>";    
     attackMean = 1.33125;
     attackStandardDeviation =  1.034575;
     releaseMean = 1,3547;
