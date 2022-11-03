@@ -134,11 +134,11 @@ function draw() {
     thicknessStandardDeviation = 3.068505;
     angularityMean = 3.578125;
     angularityStandardDeviation = 2.744948;
-    symmetryMean = 8.770825;
+    symmetryMean = 8.770825+1;
     symmetryStandardDeviation = 2.565962;
     irregularityMean = 4.255175-2;
     irregularityStandardDeviation = 3.938052;
-    orientationMean = 2.963575-1;
+    orientationMean = 2.963575-2;
     orientationStandardDeviation = 3.261007;
   }
   else if(sliderTension.value == 3){ // most tense
@@ -207,7 +207,7 @@ function draw() {
     if(adjustTime){
       
       setTimeout(function(){
-        adjustTime = 0;
+        //adjustTime = 0;
         stroke(black);
         console.log("stopped");   
       }, 4000);    
@@ -277,6 +277,7 @@ function draw() {
       }
       else{ //is equal
           orientationCurrentGoal = parseFloat(randomGaussianPositive(orientationMean, orientationStandardDeviation).toFixed(1));
+          adjustTime = 0;
       }
       
 
