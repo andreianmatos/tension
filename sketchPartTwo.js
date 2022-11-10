@@ -27,6 +27,87 @@ let tests = [], undoneTests = [1,2,3,4,5,6,7,8,9,10,11,12];
 let end = 0;
 let freq;
 
+let userSoundAnswers = ["5,1.3,2.5,10,2.5,10,6,5,2.1,5,2,7.5,1,24",
+                        "10,1.4,2.5,10,5,9,1,3.75,2.2,7.5,1.25,2.5,2,24",
+                        "2.5,1.3,7.5,7.5,10,7,7,3.75,2.1,7.5,2.5,8.75,2,25",
+                        "5,1.4,2.5,10,5,8,6,3.75,2.1,10,5,8.75,1,20",
+                        "6.25,1.4,0,8.75,7.5,9,1,7.5,2.1,5,5,5,1,19",
+                        "3.75,1.3,5,8.75,10,10,1,1.25,2.1,6.25,3.75,7.5,1,25",
+                        "10,1.4,0,3.75,0,8,2,5,2.1,10,1.25,10,2,19",
+                        "7.5,1.1,7.5,8.75,7.5,10,6,0,2.2,1.25,0,3.75,2,19",
+                        "5,1.1,8.75,8.75,5,7,1,6.25,2.1,3.75,0,10,1,13",
+                        "5,1.3,3.75,10,3.75,7,12,10,2.2,0,0,0,1,25",
+                        "5,1.4,7.5,3.75,7.5,8,7,1.25,2.3,3.75,0,8.75,4,12",
+                        "1.25,1.3,10,8.75,3.75,10,1,7.5,2.1,2.5,2.5,10,2,18",
+                        "8.75,1.4,8.75,10,6.25,7,7,1.25,2.1,2.5,2.5,5,1,19",
+                        "10,1.4,10,0,0,1,6,0,2.1,1.25,5,2.5,1,24",
+                        "10,1.4,10,0,10,10,1,0,2.1,10,5,5,1,25",
+                        "8.75,1.1,2.5,10,8.75,7,7,1.25,2.3,0,6.25,2.5,3,13",
+                        "7.5,1.4,3.75,0,7.5,9,2,3.75,2.1,6.25,3.75,3.75,4,21",
+                        "5,1.4,7.5,0,1.25,8,6,0,2.1,7.5,2.5,10,1,25",
+                        "10,1.4,10,10,10,10,1,2.5,2.1,1.25,1.25,1.25,2,19",
+                        "7.5,1.4,10,10,2.5,10,1,5,2.1,10,0,10,2,18",
+                        "10,1.4,10,10,10,10,1,10,2.1,0,1.25,0,1,22",
+                        "3.75,1.1,1.25,2.5,3.75,9,6,8.75,2.2,1.25,3.75,10,1,19",
+                        "6.25,1.4,1.25,8.75,10,9,11,8.75,2.1,6.25,0,1.25,1,25",
+                        "7.5,1.4,8.75,8.75,2.5,10,1,2.5,2.1,0,2.5,0,3,13",
+                        "10,1.4,10,0,0,9,6,5,2.1,5,5,5,2,24",
+                        "10,1.4,10,10,10,9,1,8.75,2.1,5,0,5,1,20",
+                        "8.75,1.4,10,10,8.75,8,1,7.5,2.1,1.25,3.75,8.75,2,15",
+                        "6.25,1.4,7.5,6.25,3.75,10,1,7.5,2.1,7.5,2.5,8.75,1,25",
+                        "7.5,1.4,2.5,7.5,3.75,10,1,0,2.1,10,6.25,8.75,1,18",
+                        "5,1.3,10,8.75,6.25,7,7,0,2.1,1.25,3.75,0,1,25",
+                        "3.75,1.4,8.75,7.5,5,6,1,10,2.1,5,3.75,6.25,4,2",
+                        "7.5,1.4,2.5,7.5,3.75,10,1,0,2.1,10,6.25,8.75,1,18",
+                        "7.5,1.4,6.25,5,5,9,1,0,2.1,10,5,7.5,1,19",
+                        "10,1.4,0,10,0,10,1,0,2.1,10,0,10,1,4",
+                        "8.75,1.4,10,10,8.75,10,1,0,2.1,7.5,2.5,10,3,18",
+                        "10,1.4,0,10,0,10,1,0,2.1,10,0,10,1,4",
+                        "10,1.4,10,10,10,10,1,0,2.1,0,0,0,1,25",
+                        "5,1.4,10,7.5,5,8,6,1.25,2.1,2.5,7.5,2.5,2,18",
+                        ]
+let userVisualAnswers = ["1.25,7.5,8.75,0,5,8,7,3.75,0,0,2.5,1.25,2,14",
+                          "3.75,3.75,8.75,0,3.75,9,2,0,1.25,0,5,0,3,22",
+                          "8.75,6.25,2.5,8.75,10,5,9,0,8.75,0,10,0,1,14",
+                          "0,10,2.5,8.75,10,7,16,10,0,0,10,0,1,15",
+                          "1.25,6.25,10,10,7.5,7,7,6.25,0,1.25,5,0,1,25",
+                          "5,6.25,10,8.75,1.25,3,13,1.25,0,1.25,1.25,7.5,1,13",
+                          "2.5,2.5,10,2.5,10,8,2,8.75,0,2.5,5,3.75,2,14",
+                          "8.75,8.75,8.75,8.75,6.25,8,12,10,1.25,0,5,0,1,20",
+                          "7.5,0,10,7.5,8.75,3,12,1.25,0,0,2.5,0,1,19",
+                          "5,1.3,3.75,10,3.75,7,12,10,2.2,0,0,0,1,25",
+                          "10,6.25,8.75,3.75,2.5,7,14,10,0,2.5,0,8.75,2,19",
+                          "3.75,3.75,8.75,6.25,10,4,7,0,3.75,2.5,3.75,1.25,2,13",
+                          "10,8.75,1.25,0,8.75,6,7,0,0,5,10,1.25,2,19",
+                          "7.5,8.75,10,0,2.5,7,7,10,0,1.25,7.5,10,2,19",
+                          "10,10,0,10,10,10,1,0,0,10,0,0,1,25",
+                          "2.5,6.25,10,10,6.25,4,12,10,0,0,2.5,10,2,14",
+                          "10,6.25,0,7.5,7.5,6,21,2.5,1.25,8.75,0,2.5,2,25",
+                          "6.25,6.25,10,0,8.75,5,7,10,0,1.25,3.75,5,1,14",
+                          "8.75,1.25,8.75,8.75,5,7,12,5,0,0,0,0,3,13",
+                          "0,2.5,1.25,0,3.75,6,12,2.5,8.75,10,5,7.5,1,5",
+                          "8.75,1.3,10,0,7.5,7,6,3.75,2.4,1.25,2.5,0,1,15",
+                          "1.25,6.25,10,10,6.25,5,13,3.75,0,2.5,6.25,2.5,1,13",
+                          "5,6.25,10,1.25,10,7,11,8.75,0,1.25,10,6.25,2,15",
+                          "2.5,6.25,1.25,7.5,5,3,18,1.25,8.75,8.75,7.5,1.25,1,23",
+                          "2.5,2.5,2.5,10,7.5,8,21,2.5,0,0,2.5,2.5,2,19",
+                          "6.25,5,6.25,3.75,10,5,13,0,5,0,3.75,0,1,19",
+                          "10,10,1.25,10,5,7,11,7.5,1.25,10,0,7.5,1,20",
+                          "6.25,3.75,7.5,6.25,3.75,10,1,7.5,8.75,7.5,2.5,1.25,1,25",
+                          "1.25,1.25,1.25,10,3.75,3,18,0,0,3.75,1.25,0,1,19",
+                          "8.75,6.25,8.75,8.75,5,7,12,0,0,2.5,0,1.25,1,25",
+                          "10,3.75,1.25,10,10,5,2,8.75,0,2.5,0,1.25,3,8",
+                          "1.25,1.25,1.25,10,3.75,3,18,0,0,3.75,1.25,0,1,19",
+                          "10,3.75,8.75,6.25,3.75,8,7,10,0,1.25,10,7.5,2,19",
+                          "10,1.25,0,0,7.5,7,6,0,0,10,10,1.25,1,24",
+                          "10,10,0,0,10,7,15,2.5,0,10,10,10,2,13",
+                          "10,1.25,0,0,7.5,7,6,0,0,10,10,1.25,1,24",
+                          "3.75,2.5,10,0,6.25,7,7,1.25,0,0,2.5,8.75,2,24",
+                          "10,10,1.25,10,6.25,1,10,5,0,8.75,0,7.5,1,16"
+                        ]
+let currentUser = 38; //started at 22
+let least = 0;
+
 let downloaded = 0;
 
 let hoverShow = 0, trigger = false;
@@ -99,37 +180,43 @@ function setup() {
 
 }
 
-function draw() {
+function draw() { 
 
   background(white); 
 
-  window.onkeydown= function(gfg){
-    if(gfg.keyCode === 32){
-      console.log("spaceBar");
-      recorder.stop();
-      soundFile.play();
-      saveSound(soundFile, '/UsersFiguresSounds/sounds/user1LeastTense.wav'); // save file
-      saveCanvas('canvas', 'png')
-    };
+let userSound = userSoundAnswers[currentUser];
+let userVisual = userVisualAnswers[currentUser];
+var userSoundSplit = userSound.split(',');
+var userVisualSplit = userVisual.split(',');
+
+let indexes = [0,1,2,3,4]; let name = "user"+str(currentUser+22)+"MostTense.wav";
+if(least == 1){
+   indexes = [7,8,9,10,11]; name = "user"+str(currentUser+22)+"LeastTense.wav";
+}
+
+window.onkeydown= function(gfg){
+  if(gfg.keyCode === 32){
+    console.log("spaceBar");
+    recorder.stop();
+    //soundFile.play();
+    saveSound(soundFile, name); // save file
+    saveCanvas('canvas', 'png')
+    least = 1;
+  };
 };
 
-angularityValue = map(10, 0, 10, 0, 8);
-orientationValue = map(0, 0, 10, 0, 8);
-irregularityValue = map(1.25, 0, 10, 0, 8);
-thicknessValue = map(1.25, 0, 10, 0, 8);
-simmetryValue = map(7.5, 0, 10, 0, 8);
+angularityValue = map(parseFloat(userVisualSplit[indexes[0]]), 0, 10, 0, 8);
+orientationValue = map(parseFloat(userVisualSplit[indexes[1]]), 0, 10, 0, 8);
+irregularityValue = map(parseFloat(userVisualSplit[indexes[2]]), 0, 10, 0, 8);
+thicknessValue = map(parseFloat(userVisualSplit[indexes[3]]), 0, 10, 0, 8);
+simmetryValue = map(parseFloat(userVisualSplit[indexes[4]]), 0, 10, 0, 8);
 
-  /*angularityValue = map(8.75, 0, 10, 0, 8);
-  orientationValue = map(1.25, 0, 10, 0, 8);
-  irregularityValue = map(7.5, 0, 10, 0, 8);
-  thicknessValue = map(1.25, 0, 10, 0, 8);
-  simmetryValue = map(8.75, 0, 10, 0, 8);*/
-  //SOUND
-  amplitudeValue = Math.abs(map(8.75, 0, 10, 0, 8));
-  waveformValue = "1.4";  
-  releaseTimeValue = Math.abs(map(1.25, 0, 10, 0, 8));
-  frequencyValue = Math.abs(map(10, 0, 10, 0, 8));
-  attackTimeValue = Math.abs(map(10, 0, 10, 0, 8));
+//SOUND
+amplitudeValue = Math.abs(map(parseFloat(userSoundSplit[indexes[0]]), 0, 10, 0, 8));
+waveformValue = userSoundSplit[indexes[1]];  
+releaseTimeValue = Math.abs(map(parseFloat(userSoundSplit[indexes[2]]), 0, 10, 0, 8));
+frequencyValue = Math.abs(map(parseFloat(userSoundSplit[indexes[3]]), 0, 10, 0, 8));
+attackTimeValue = Math.abs(map(parseFloat(userSoundSplit[indexes[4]]), 0, 10, 0, 8));
 
   if(hoverShow){
 222
@@ -182,7 +269,7 @@ simmetryValue = map(7.5, 0, 10, 0, 8);
     }
     
     // THICKNESS
-    if(thicknessValue > 0)
+    if(thicknessValue >= 0)
       sw = int(map(thicknessValue, 0, 8, 1, 25));
     strokeWeight(sw);
 
@@ -193,7 +280,7 @@ simmetryValue = map(7.5, 0, 10, 0, 8);
     rotate(PI / 180 * angle2);
 
     // ANGULARITY + SYMMETRY
-    square(0, 0, 200, map(angularityValue, 0, 8, 100, 0), map(angularityValue, 0, 8, 100, 0) * map(simmetryValue, 0, 8, 0, 1), map(angularityValue, 0, 8, 100, 0) * map(simmetryValue, 0, 8, 0, 1), map(angularityValue, 0, 8, 100, 0));
+    square(0, 0, 200, map(angularityValue, 0, 8, 100, 0), map(angularityValue, 0, 8, 100, 0) * map(simmetryValue, 0, 8, 1, 0), map(angularityValue, 0, 8, 100, 0) * map(simmetryValue, 0, 8, 1, 0), map(angularityValue, 0, 8, 100, 0));
 
     //S O U N D
 
@@ -215,13 +302,13 @@ simmetryValue = map(7.5, 0, 10, 0, 8);
     freq = getNote(frequencyValue);
 
     // WAVEFORM
-    if(waveformValue == "1.1")
+    if(waveformValue == "1.1" || waveformValue == "2.1")
       osc.setType('sine');
-    else if(waveformValue == "1.2")
+    else if(waveformValue == "1.2" || waveformValue == "2.2")
       osc.setType('triangle');
-    else if(waveformValue == "1.3")
+    else if(waveformValue == "1.3" || waveformValue == "2.3")
       osc.setType('square');
-    else if(waveformValue == "1.4")
+    else if(waveformValue == "1.4" || waveformValue == "2.4")
       osc.setType('sawtooth') ;
     
     osc.amp(env);
