@@ -1,3 +1,9 @@
-# andreianmatos.github.io/tension
+# User tests done through:
 
-Research project for master thesis at Instituto Superior Técnico. 2021-2022 (ONGOING).
+andreianmatos.github.io/tension
+
+# Users library for the additional visual and acoustic tests available in:
+
+andreianmatos.github.io/tension/usersLibrary
+
+Research project for master thesis at Instituto Superior Técnico. 2021-2022.
