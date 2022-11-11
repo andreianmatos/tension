@@ -187,7 +187,7 @@ body, html {
   /* next button */
 
   .custombutton  {
-    position: absolute;
+    position: relative;
     margin: 56px auto 0;
     padding: 10px 20px;
     appearance: none;
