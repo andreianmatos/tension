@@ -1,6 +1,6 @@
 # User tests
 
-User tests were conducted through the website: [w](tension)
+User tests were conducted through the website: andreianmatos.github.io/tension
 
 # Users library
 
