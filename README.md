@@ -1,6 +1,6 @@
 # User tests
 
-User tests were conducted through the website: andreianmatos.github.io/tension
+User tests were conducted through: andreianmatos.github.io/tension
 
 # Users library
 
